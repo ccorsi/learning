@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>plogger</artifactId>
+        <groupId>org.valhalla.instrumentation</groupId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>plogger-agent</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <properties>
+        <agent-main-class>org.valhalla.instrumentation.plogger.agent.Agent</agent-main-class>
+    </properties>
+
+    <build>
+<!--        <pluginManagement>-->
+<!--            <plugins>-->
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                    <version>3.8.1</version>-->
+<!--                    <configuration>-->
+<!--                        &lt;!&ndash; Do I really need to set this here since the part already sets it? &ndash;&gt;-->
+<!--                        <source>1.7</source>-->
+<!--                        <target>1.7</target>-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>compile-java-9</id>-->
+<!--                            <goals>-->
+<!--                                <goal>compile</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                <release>9</release>-->
+<!--                                <compileSourceRoots>-->
+<!--                                    <compilerSourceRoot>${project.basedir}/src/main/java9</compilerSourceRoot>-->
+<!--                                </compileSourceRoots>-->
+<!--                                <multiReleaseOutput>true</multiReleaseOutput>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-jar-plugin</artifactId>-->
+<!--                    <version>3.2.0</version>-->
+<!--                    <configuration>-->
+<!--                        <archive>-->
+<!--                            <manifest>-->
+<!--                                <mainClass>${agent-main-class}</mainClass>-->
+<!--                            </manifest>-->
+<!--                            <manifestEntries>-->
+<!--&lt;!&ndash;                                <Multi-Release>true</Multi-Release>&ndash;&gt;-->
+<!--                                <Premain-Class>${agent-main-class}</Premain-Class>-->
+<!--&lt;!&ndash;                                <Agent-Class>${agent-main-class}</Agent-Class>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <Launcher-Agent-Class>${agent-main-class}</Launcher-Agent-Class>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <Can-Redefine-Classes>true</Can-Redefine-Classes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <Can-Retransform-Classes>true</Can-Retransform-Classes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <Boot-Class-Path></Boot-Class-Path>&ndash;&gt;-->
+<!--                            </manifestEntries>-->
+<!--                        </archive>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
+<!--            </plugins>-->
+<!--        </pluginManagement>-->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <!-- Do I really need to set this here since the part already sets it? -->
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>compile-java-9</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <release>9</release>
+                            <compileSourceRoots>
+                                <compilerSourceRoot>${project.basedir}/src/main/java9</compilerSourceRoot>
+                            </compileSourceRoots>
+                            <multiReleaseOutput>true</multiReleaseOutput>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${agent-main-class}</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <!--                                <Multi-Release>true</Multi-Release>-->
+                            <Premain-Class>${agent-main-class}</Premain-Class>
+                            <!--                                <Agent-Class>${agent-main-class}</Agent-Class>-->
+                            <!--                                <Launcher-Agent-Class>${agent-main-class}</Launcher-Agent-Class>-->
+                            <!--                                <Can-Redefine-Classes>true</Can-Redefine-Classes>-->
+                            <!--                                <Can-Retransform-Classes>true</Can-Retransform-Classes>-->
+                            <!--                                <Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>-->
+                            <!--                                <Boot-Class-Path></Boot-Class-Path>-->
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>9</source>-->
+<!--                    <target>9</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+    </build>
+
+</project>
