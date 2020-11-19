@@ -1,14 +1,38 @@
 package org.valhalla.plogger.instrumentation.bytecode.attributes;
 
+/*
+MIT License
+
+Copyright (c) 2020 Claudio Corsi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+
 public interface VerificationTypeTag {
-    public static final int TOP = 0;
-    public static final int INTEGER = 1;
-    public static final int FLOAT = 2;
-    public static final int DOUBLE = 3;
-    public static final int LONG = 4;
-    public static final int NULL = 5;
-    public static final int UNINITIALIZED_THIS = 6;
-    public static final int OBJECT = 7;
-    public static final int UNINITIALIZED = 8;
+    int TOP = 0;
+    int INTEGER = 1;
+    int FLOAT = 2;
+    int DOUBLE = 3;
+    int LONG = 4;
+    int NULL = 5;
+    int UNINITIALIZED_THIS = 6;
+    int OBJECT = 7;
+    int UNINITIALIZED = 8;
 
 }
