@@ -24,8 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Arrays;
@@ -37,18 +35,6 @@ public class ConstantDouble implements ConstantPoolEntry {
     public ConstantDouble(byte[] highBytes, byte[] lowBytes) {
         this.highBytes = highBytes;
         this.lowBytes = lowBytes;
-    }
-
-    @Override
-    public void validate() throws ConstantPoolEntryException {
-        try {
-            byte bytes[] = new byte[highBytes.length + lowBytes.length];
-            System.arraycopy(highBytes,0, bytes, 0, highBytes.length);
-            System.arraycopy(lowBytes, 0, bytes, highBytes.length, lowBytes.length);
-            new DataInputStream(new ByteArrayInputStream(bytes)).readDouble();
-        } catch (Throwable t) {
-            throw new ConstantPoolEntryException(t);
-        }
     }
 
     @Override

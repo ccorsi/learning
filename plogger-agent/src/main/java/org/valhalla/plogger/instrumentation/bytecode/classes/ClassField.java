@@ -64,4 +64,20 @@ public class ClassField {
                 ", attributes=" + Arrays.toString(attributes) +
                 '}';
     }
+
+    public int getAccessFlags() {
+        return accessFlags;
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public int getDescriptorIndex() {
+        return descriptionIndex;
+    }
+
+    public ClassAttribute[] getAttributes() {
+        return attributes;
+    }
 }

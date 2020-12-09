@@ -29,7 +29,15 @@ import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
 import java.io.DataOutput;
 import java.io.IOException;
 
+// TODO: Insure that the offset is updated when the byte code array is being
+//  updated.
 public class UninitializedVariable implements VerificationType {
+
+    /**
+     * This is the offset within the byte code array in which its
+     * associated StackMapTable in which the new instruction that
+     * create the object that is being stored.
+     */
     private final int offset;
     private final ClassFile classFile;
 
@@ -59,5 +67,9 @@ public class UninitializedVariable implements VerificationType {
         return "UninitializedVariable{" +
                 "offset=" + offset +
                 '}';
+    }
+
+    public int getOffSet() {
+        return offset;
     }
 }

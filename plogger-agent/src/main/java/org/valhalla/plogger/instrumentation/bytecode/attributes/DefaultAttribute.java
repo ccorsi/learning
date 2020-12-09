@@ -55,4 +55,12 @@ public class DefaultAttribute implements ClassAttribute {
                 ", nameIndex=" + nameIndex +
                 '}';
     }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
 }

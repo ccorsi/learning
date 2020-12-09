@@ -31,7 +31,7 @@ import java.io.IOException;
 
 public class ConstantPoolEntryFactory implements ConstantPoolEntryTag {
 
-    public static ConstantPoolEntry create(ClassFile classFile, DataInputStream dis) throws IOException, ConstantPoolEntryException {
+    public static ConstantPoolEntry create(DataInputStream dis) throws IOException, ConstantPoolEntryException {
         int tag = dis.readUnsignedByte();
         int len;
         byte buf[], buf2[];
@@ -42,7 +42,7 @@ public class ConstantPoolEntryFactory implements ConstantPoolEntryTag {
                 dis.read(buf);
                 return new ConstantUtf8(len, buf);
             case STRING:
-                return new ConstantString(classFile, dis.readUnsignedShort());
+                return new ConstantString(dis.readUnsignedShort());
             case INTEGER:
                 buf = new byte[4];
                 dis.read(buf);
@@ -64,27 +64,27 @@ public class ConstantPoolEntryFactory implements ConstantPoolEntryTag {
                 dis.read(buf);
                 return new ConstantDouble(buf,buf2);
             case CLASS:
-                return new ConstantClass(classFile, dis.readUnsignedShort());
+                return new ConstantClass(dis.readUnsignedShort());
             case FIELD:
-                return new ConstantFieldRef(classFile, dis.readUnsignedShort(), dis.readUnsignedShort());
+                return new ConstantFieldRef(dis.readUnsignedShort(), dis.readUnsignedShort());
             case METHOD:
-                return new ConstantMethodRef(classFile, dis.readUnsignedShort(), dis.readUnsignedShort());
+                return new ConstantMethodRef(dis.readUnsignedShort(), dis.readUnsignedShort());
             case INTERFACE_METHOD:
-                return new ConstantInterfaceMethodRef(classFile, dis.readUnsignedShort(), dis.readUnsignedShort());
+                return new ConstantInterfaceMethodRef(dis.readUnsignedShort(), dis.readUnsignedShort());
             case NAME_AND_TYPE:
-                return new ConstantNameAndType(classFile, dis.readUnsignedShort(), dis.readUnsignedShort());
+                return new ConstantNameAndType(dis.readUnsignedShort(), dis.readUnsignedShort());
             case METHOD_HANDLE:
-                return new ConstantMethodHandle(classFile, dis.readUnsignedByte(), dis.readUnsignedShort());
+                return new ConstantMethodHandle(dis.readUnsignedByte(), dis.readUnsignedShort());
             case METHOD_TYPE:
-                return new ConstantMethodType(classFile, dis.readUnsignedShort());
+                return new ConstantMethodType(dis.readUnsignedShort());
             case DYNAMIC:
-                return new ConstantDynamic(classFile, dis.readUnsignedShort(), dis.readUnsignedShort());
+                return new ConstantDynamic(dis.readUnsignedShort(), dis.readUnsignedShort());
             case INVOKE_DYNAMIC:
-                return new ConstantInvokeDynamic(classFile, dis.readUnsignedShort(), dis.readUnsignedShort());
+                return new ConstantInvokeDynamic(dis.readUnsignedShort(), dis.readUnsignedShort());
             case MODULE:
-                return new ConstantModule(classFile, dis.readUnsignedShort());
+                return new ConstantModule(dis.readUnsignedShort());
             case PACKAGE:
-                return new ConstantPackage(classFile, dis.readUnsignedShort());
+                return new ConstantPackage(dis.readUnsignedShort());
             default:
                 throw new ConstantPoolEntryException("Invalid Constant Pool Entry: " + tag);
         }

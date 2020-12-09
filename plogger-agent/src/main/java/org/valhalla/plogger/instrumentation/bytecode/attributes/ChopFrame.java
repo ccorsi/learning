@@ -50,4 +50,13 @@ public class ChopFrame extends AbstractStackMapFrame {
                 ", frameType=" + frameType +
                 '}';
     }
+
+    @Override
+    public int getOffSet() {
+        return offset;
+    }
+
+    public int getFrameType() {
+        return frameType;
+    }
 }

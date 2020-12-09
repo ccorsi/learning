@@ -43,6 +43,14 @@ public class LineNumberTableEntry implements ClassFileWriter {
         this.lineNumber = lineNumber;
     }
 
+    public int getStartPc() {
+        return startPc;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
     @Override
     public void write(DataOutput os) throws IOException {
         os.writeShort(startPc);

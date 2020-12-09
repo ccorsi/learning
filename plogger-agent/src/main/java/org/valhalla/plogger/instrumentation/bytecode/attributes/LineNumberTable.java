@@ -45,6 +45,14 @@ public class LineNumberTable implements ClassAttribute {
         this.entries = entries;
     }
 
+    public LineNumberTableEntry[] getEntries() {
+        return entries;
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
     @Override
     public void write(DataOutput os) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

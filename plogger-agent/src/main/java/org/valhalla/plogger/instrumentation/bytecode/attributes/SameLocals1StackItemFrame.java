@@ -25,6 +25,7 @@ SOFTWARE.
  */
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
+import org.valhalla.plogger.instrumentation.bytecode.manager.StackMapFrameManagerFactory;
 
 import java.io.DataOutput;
 import java.io.IOException;
@@ -49,5 +50,14 @@ public class SameLocals1StackItemFrame extends AbstractStackMapFrame {
                 "verificationType=" + verificationType +
                 ", frameType=" + frameType +
                 '}';
+    }
+
+    @Override
+    public int getOffSet() {
+        return frameType - 64;
+    }
+
+    public VerificationType getVerificationType() {
+        return verificationType;
     }
 }

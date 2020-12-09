@@ -30,9 +30,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class StackMapTable implements ClassAttribute {
+
     private final int nameIndex;
     private final StackMapFrame[] entries;
     private final ClassFile classFile;
@@ -68,5 +72,18 @@ public class StackMapTable implements ClassAttribute {
                 "nameIndex=" + nameIndex +
                 ", entries=" + Arrays.toString(entries) +
                 '}';
+    }
+
+    public List<StackMapFrame> getStackFrames() {
+        List<StackMapFrame> frames = new ArrayList<StackMapFrame>(entries.length);
+        for (StackMapFrame entry : entries) {
+            frames.add(entry);
+        }
+
+        return Collections.unmodifiableList(frames);
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
     }
 }

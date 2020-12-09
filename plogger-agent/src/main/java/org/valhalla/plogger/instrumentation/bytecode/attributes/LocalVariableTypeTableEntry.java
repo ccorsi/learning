@@ -59,6 +59,25 @@ public class LocalVariableTypeTableEntry implements ClassFileWriter {
         this.signatureIndex = signatureIndex;
         this.index = index;
     }
+    public int getStartPc() {
+        return startPc;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public int getSignatureIndex() {
+        return signatureIndex;
+    }
+
+    public int getIndex() {
+        return index;
+    }
 
     @Override
     public void write(DataOutput os) throws IOException {

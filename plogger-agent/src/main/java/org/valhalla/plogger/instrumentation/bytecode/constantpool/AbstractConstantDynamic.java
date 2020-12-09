@@ -24,8 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
@@ -33,24 +31,22 @@ public abstract class AbstractConstantDynamic implements ConstantPoolEntry {
 
     protected final int bootstrapMethodAttributeIndex;
     protected final int nameAndTypeIndex;
-    protected final ClassFile classFile;
 
-    protected AbstractConstantDynamic(ClassFile classFile, int bootstrapMethodAttributeIndex, int nameAndTypeIndex) {
-        this.classFile = classFile;
+    protected AbstractConstantDynamic(int bootstrapMethodAttributeIndex, int nameAndTypeIndex) {
         this.bootstrapMethodAttributeIndex = bootstrapMethodAttributeIndex;
         this.nameAndTypeIndex = nameAndTypeIndex;
     }
 
-    @Override
-    public void validate() throws ConstantPoolEntryException {
-        ConstantPoolEntry[] cpool = classFile.getConstantPool();
-        // TODO: Update the ConstantEntry check to include the class file to be able to
-        //       correctly validate that the bootstrap method attribute index is referencing
-        //       a valid entry within the class file boot strap method table.
-        if ( ! (cpool[nameAndTypeIndex] instanceof ConstantNameAndType)) {
-            throw new ConstantPoolEntryException("Invalid name index type.");
-        }
-    }
+//    @Override
+//    public void validate() throws ConstantPoolEntryException {
+//        ConstantPoolEntry[] cpool = classFile.getConstantPool();
+//        // TODO: Update the ConstantEntry check to include the class file to be able to
+//        //       correctly validate that the bootstrap method attribute index is referencing
+//        //       a valid entry within the class file boot strap method table.
+//        if ( ! (cpool[nameAndTypeIndex] instanceof ConstantNameAndType)) {
+//            throw new ConstantPoolEntryException("Invalid name index type.");
+//        }
+//    }
 
     @Override
     public int entries() {
@@ -63,7 +59,7 @@ public abstract class AbstractConstantDynamic implements ConstantPoolEntry {
         os.writeShort(nameAndTypeIndex);
     }
 
-    public ConstantNameAndType getNameAndType(ConstantPoolEntry[] cpool) {
-        return (ConstantNameAndType) cpool[nameAndTypeIndex];
+    public ConstantNameAndType getNameAndType(ConstantPoolEntry[] constantPool) {
+        return (ConstantNameAndType) constantPool[nameAndTypeIndex];
     }
 }

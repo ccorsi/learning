@@ -27,6 +27,11 @@ SOFTWARE.
 import java.util.List;
 
 public class LoggerManager {
+    public static void init() {
+        LoggerStorageManager.addShutdownHookThread();
+        LoggerStorageManager.startLoggerStorageManagerThread();
+    }
+
     private static ThreadLocal<List<String>> buffers = new ThreadLocal<List<String>>() {
 
         @Override

@@ -31,14 +31,12 @@ import org.valhalla.plogger.instrumentation.bytecode.constantpool.*;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class ClassFile {
     private byte[] magic;
     private int vminor;
-    private int vmajar;
+    private int vmajor;
     private ConstantPoolEntry[] cpools;
     private int accessFlags;
     private int thisClassIndex;
@@ -68,7 +66,7 @@ public class ClassFile {
             }
             // Extract the class file version
             classFile.vminor = dis.readUnsignedShort();
-            classFile.vmajar = dis.readUnsignedShort();
+            classFile.vmajor = dis.readUnsignedShort();
             // Extract the class file constant pool entries
             classFile.cpools = loadConstantPool(classFile, dis);
             // Extract the class file access flags
@@ -112,7 +110,6 @@ public class ClassFile {
     private static void validateInterface(ClassFile classFile, int interfaceIndex) throws ClassFileException {
         ConstantPoolEntry[] cp = classFile.getConstantPool();
         if (interfaceIndex < 1 || interfaceIndex >= cp.length) {
-            // TODO: throw exception
             throw new ClassFileException("Invalid interface index");
         }
     }
@@ -121,7 +118,7 @@ public class ClassFile {
         int constant_pool_count = dis.readUnsignedShort();
         ConstantPoolEntry[] cpool = new ConstantPoolEntry[constant_pool_count];
         for( int idx = 1 ; idx < constant_pool_count ; ) {
-            cpool[idx] = ConstantPoolEntryFactory.create(classFile, dis);
+            cpool[idx] = ConstantPoolEntryFactory.create(dis);
             // System.out.println("Created Constant Pool Entry: " + cpool[idx]);
             idx += cpool[idx].entries();
         }
@@ -133,7 +130,7 @@ public class ClassFile {
     }
 
     public int getMajorVersion() {
-        return vmajar;
+        return vmajor;
     }
 
     public ConstantPoolEntry[] getConstantPool() {
@@ -145,7 +142,7 @@ public class ClassFile {
         return "ClassFile{" +
                 "magic=" + Arrays.toString(magic) +
                 ", minor version=" + vminor +
-                ", majar version=" + vmajar +
+                ", major version=" + vmajor +
                 ", Constant Pool Entries=" + Arrays.toString(cpools) +
                 ", accessFlags=" + accessFlags +
                 ", thisClassIndex=" + thisClassIndex +
@@ -172,21 +169,23 @@ public class ClassFile {
     }
 
     public Iterator<ClassMethod> getMethods() {
+        // This is not an expected iterator implementation but the methods array
+        // is final so it does not matter that the iterator implementation is not
+        // what is expected.
         Iterator<ClassMethod> iterator = new Iterator<ClassMethod>() {
-            ClassMethod[] methods = ClassFile.this.methods.clone();
-            int idx = 0;
+           int idx = 0;
 
             @Override
             public boolean hasNext() {
-                return idx < methods.length;
+                return idx < ClassFile.this.methods.length;
             }
 
             @Override
             public ClassMethod next() {
-                if (idx >= methods.length) {
+                if (idx >= ClassFile.this.methods.length) {
                     throw new NoSuchElementException("No element remain");
                 }
-                return methods[idx++];
+                return ClassFile.this.methods[idx++];
             }
 
             @Override
@@ -195,5 +194,41 @@ public class ClassFile {
             }
         };
         return iterator;
+    }
+
+    public int getAccessFlags() {
+        return accessFlags;
+    }
+
+    public int getThisClassIndex() {
+        return thisClassIndex;
+    }
+
+    public int getSuperClassIndex() {
+        return superClassIndex;
+    }
+
+    public int[] getInterfaces() {
+        return interfaces;
+    }
+
+    public List<ClassAttribute> getAttributes() {
+        List<ClassAttribute> list = new ArrayList<ClassAttribute>(attributes.length);
+
+        for(ClassAttribute attribute : attributes) {
+            list.add(attribute);
+        }
+
+        return list;
+    }
+
+    public List<ClassField> getFields() {
+        List<ClassField> list = new ArrayList<ClassField>(fields.length);
+
+        for(ClassField field : fields) {
+            list.add(field);
+        }
+
+        return list;
     }
 }

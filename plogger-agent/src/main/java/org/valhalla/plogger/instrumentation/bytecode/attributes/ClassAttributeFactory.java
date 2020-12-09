@@ -58,6 +58,7 @@ public class ClassAttributeFactory {
         }
         return attribute;
     }
+
     public static ClassAttribute loadCodeAttributes(ClassFile classFile, CodeAttribute code, DataInputStream dis) throws IOException, ClassAttributeException, ClassFileException {
         // Extract the attribute index into the constant pool
         int nameIndex = dis.readUnsignedShort();

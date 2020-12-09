@@ -28,7 +28,7 @@ import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 
 public interface ConstantPoolEntry extends ConstantPoolEntryTag, ClassFileWriter {
 
-    void validate() throws ConstantPoolEntryException;
+//    void validate() throws ConstantPoolEntryException;
 
     int entries();
 

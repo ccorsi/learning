@@ -37,6 +37,7 @@ import java.util.Arrays;
 
 public class ClassMethod {
     private int accessFlags;
+
     private int nameIndex;
     private int descriptorIndex;
     private ClassAttribute[] attributes;
@@ -54,6 +55,10 @@ public class ClassMethod {
             method.attributes[idx] = ClassAttributeFactory.load(classFile, dis);
         }
         return method;
+    }
+
+    public int getAccessFlags() {
+        return accessFlags;
     }
 
     @Override
@@ -83,5 +88,27 @@ public class ClassMethod {
             return utf8.getString();
         }
         return "n/a";
+    }
+
+    public String getSignature(ClassFile classFile) {
+        ConstantPoolEntry[] cpool = classFile.getConstantPool();
+        ConstantPoolEntry entry = cpool[descriptorIndex];
+        if (entry instanceof ConstantUtf8) {
+            ConstantUtf8 utf8 = (ConstantUtf8) entry;
+            return utf8.getString();
+        }
+        return "n/a";
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public int getDescriptorIndex() {
+        return descriptorIndex;
+    }
+
+    public ClassAttribute[] getAttributes() {
+        return this.attributes;
     }
 }

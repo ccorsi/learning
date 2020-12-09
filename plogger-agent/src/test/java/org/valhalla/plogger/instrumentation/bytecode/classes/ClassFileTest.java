@@ -30,16 +30,19 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.valhalla.plogger.instrumentation.bytecode.attributes.CodeAttribute;
 import org.valhalla.plogger.instrumentation.bytecode.attributes.StackMapTable;
 
-class ClassFileTest {
+public class ClassFileTest {
 
     private byte[] classData;
     private String className;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     void setUp() throws IOException {
         className = ConcurrentHashMap.class.getName().replace('.', '/');
         InputStream is = ClassLoader.getSystemResourceAsStream(className + ".class");
@@ -52,17 +55,17 @@ class ClassFileTest {
         classData = bos.toByteArray();
     }
 
-    @org.junit.jupiter.api.AfterEach
+    @AfterEach
     void tearDown() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void load() throws ClassFileException {
         ClassFile classFile = ClassFile.load(className, classData);
         String thisClassName = classFile.getThisClassName();
         String superClassName = classFile.getSuperClassName();
-        System.out.println("This Class Name: " + thisClassName);
-        System.out.println("Super Class Name: " + superClassName);
+//        System.out.println("This Class Name: " + thisClassName);
+//        System.out.println("Super Class Name: " + superClassName);
         for (Iterator<ClassMethod> it = classFile.getMethods(); it.hasNext(); ) {
             ClassMethod method = it.next();
             CodeAttribute code = method.getCode();

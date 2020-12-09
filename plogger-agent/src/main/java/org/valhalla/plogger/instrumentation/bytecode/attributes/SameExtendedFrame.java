@@ -41,4 +41,9 @@ public class SameExtendedFrame extends AbstractStackMapFrame {
         super(classFile, code, frameType);
         this.offset = offset;
     }
+
+    @Override
+    public int getOffSet() {
+        return offset;
+    }
 }

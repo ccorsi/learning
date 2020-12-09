@@ -24,20 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
 public class ConstantInterfaceMethodRef extends AbstractConstantRef {
-    public ConstantInterfaceMethodRef(ClassFile classFile, int classIndex, int nameAndTypeIndex) {
-        super(classFile, classIndex, nameAndTypeIndex);
-    }
-
-    @Override
-    public void validate() throws ConstantPoolEntryException {
-        super.validate();
-        // TODO: complete check
+    public ConstantInterfaceMethodRef(int classIndex, int nameAndTypeIndex) {
+        super(INTERFACE_METHOD, classIndex, nameAndTypeIndex);
     }
 
     @Override
@@ -46,11 +38,5 @@ public class ConstantInterfaceMethodRef extends AbstractConstantRef {
                 "classIndex=" + classIndex +
                 ", nameAndTypeIndex=" + nameAndTypeIndex +
                 '}';
-    }
-
-    @Override
-    public void write(DataOutput os) throws IOException {
-        os.writeByte(INTERFACE_METHOD);
-        super.write(os);
     }
 }

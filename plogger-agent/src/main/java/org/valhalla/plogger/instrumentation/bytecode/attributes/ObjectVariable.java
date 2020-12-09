@@ -30,6 +30,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class ObjectVariable implements VerificationType {
+
     private final int cpIndex;
     private final ClassFile classFile;
 
@@ -59,5 +60,9 @@ public class ObjectVariable implements VerificationType {
     public void write(DataOutput os) throws IOException {
         os.write(VerificationTypeTag.OBJECT);
         os.writeShort(cpIndex);
+    }
+
+    public int getConstantPoolIndex() {
+        return cpIndex;
     }
 }

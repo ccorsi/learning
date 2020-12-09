@@ -24,17 +24,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
 public class ConstantPackage implements ConstantPoolEntry {
     private final int nameIndex;
-    private final ClassFile classFile;
 
-    public ConstantPackage(ClassFile classFile, int nameIndex) {
-        this.classFile = classFile;
+    public ConstantPackage(int nameIndex) {
         this.nameIndex = nameIndex;
     }
 
@@ -56,15 +52,15 @@ public class ConstantPackage implements ConstantPoolEntry {
                 '}';
     }
 
-    @Override
-    public void validate() throws ConstantPoolEntryException {
-        ConstantPoolEntry[] cpool = classFile.getConstantPool();
-        if (nameIndex < 1 || nameIndex >= cpool.length) {
-            throw new ConstantPoolEntryException("Invalid name index: " + nameIndex + " should be between [0,"
-                    + cpool.length + "].");
-        }
-        if ( ! (cpool[nameIndex] instanceof  ConstantUtf8) ) {
-            throw new ConstantPoolEntryException("Invalid name index reference it is supposed to be referencing a constant utf8 entry.");
-        }
-    }
+//    @Override
+//    public void validate() throws ConstantPoolEntryException {
+//        ConstantPoolEntry[] cpool = classFile.getConstantPool();
+//        if (nameIndex < 1 || nameIndex >= cpool.length) {
+//            throw new ConstantPoolEntryException("Invalid name index: " + nameIndex + " should be between [0,"
+//                    + cpool.length + "].");
+//        }
+//        if ( ! (cpool[nameIndex] instanceof  ConstantUtf8) ) {
+//            throw new ConstantPoolEntryException("Invalid name index reference it is supposed to be referencing a constant utf8 entry.");
+//        }
+//    }
 }

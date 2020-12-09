@@ -24,7 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import com.sun.tools.javac.jvm.Code;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
 
 import java.io.DataOutput;
@@ -67,4 +66,18 @@ public class FullFrame extends AbstractStackMapFrame {
                 ", frameType=" + frameType +
                 '}';
     }
+
+    @Override
+    public int getOffSet() {
+        return offset;
+    }
+
+    public VerificationType[] getLocalItems() {
+        return locals;
+    }
+
+    public VerificationType[] getStackItems() {
+        return stackItems;
+    }
+
 }

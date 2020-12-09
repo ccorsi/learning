@@ -30,7 +30,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
 
 public class CodeAttribute implements ClassAttribute {
     private final int nameIndex;
@@ -59,7 +59,7 @@ public class CodeAttribute implements ClassAttribute {
         this.maxStack = maxStack;
         this.maxLocals = maxLocals;
         this.code = code;
-        this.exceptions = exceptions;
+        this.exceptions = (exceptions != null) ? exceptions : new CodeExceptionTable[0];
         this.attributes = attributes;
     }
 
@@ -101,5 +101,38 @@ public class CodeAttribute implements ClassAttribute {
         }
 
         return table;
+    }
+
+    public int getMaxLocals() {
+        return maxLocals;
+    }
+
+    public int getMaxStack() {
+        return maxStack;
+    }
+
+    public Collection<CodeExceptionTable> getExceptionTables() {
+        List<CodeExceptionTable> collection = new ArrayList<CodeExceptionTable>(this.exceptions.length);
+        for(CodeExceptionTable entry : this.exceptions) {
+            collection.add(entry);
+        }
+        return Collections.unmodifiableCollection(collection);
+    }
+
+    public List<ClassAttribute> getCodeAttributes() {
+        // TODO: This should cache the list for subsequent calls to this method
+        List<ClassAttribute> list = new ArrayList<ClassAttribute>(this.attributes.length);
+        for(ClassAttribute attribute : attributes) {
+            list.add(attribute);
+        }
+        return list;
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public byte[] getCode() {
+        return this.code;
     }
 }

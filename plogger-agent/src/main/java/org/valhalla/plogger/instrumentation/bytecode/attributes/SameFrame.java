@@ -45,4 +45,9 @@ public class SameFrame extends AbstractStackMapFrame {
                 "frameType=" + frameType +
                 '}';
     }
+
+    @Override
+    public int getOffSet() {
+        return frameType; // This is also the offset.
+    }
 }

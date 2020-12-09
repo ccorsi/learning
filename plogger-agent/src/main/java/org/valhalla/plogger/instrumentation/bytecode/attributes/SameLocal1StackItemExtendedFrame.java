@@ -54,4 +54,14 @@ public class SameLocal1StackItemExtendedFrame extends AbstractStackMapFrame {
                 ", frameType=" + frameType +
                 '}';
     }
+
+    @Override
+    public int getOffSet() {
+        return offset;
+    }
+
+    public VerificationType getVerificationType() {
+        return verificationType;
+    }
+
 }

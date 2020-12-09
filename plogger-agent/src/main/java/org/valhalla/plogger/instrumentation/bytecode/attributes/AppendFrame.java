@@ -71,4 +71,17 @@ public class AppendFrame extends AbstractStackMapFrame {
                 ", frameType=" + frameType +
                 '}';
     }
+
+    @Override
+    public int getOffSet() {
+        return offset;
+    }
+
+    public VerificationType[] getVerificationTypes() {
+        return verificationTypes;
+    }
+
+    public int getFrameType() {
+        return frameType;
+    }
 }

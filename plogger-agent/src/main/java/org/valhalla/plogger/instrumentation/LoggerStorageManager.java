@@ -49,6 +49,7 @@ public class LoggerStorageManager {
     public synchronized static void startLoggerStorageManagerThread() {
         if (storageManagerThread == null) {
             storageManagerThread = new LoggerStorageManagerThread("LoggerStorageManagerThread");
+            storageManagerThread.setDaemon(true);
             storageManagerThread.start();
         }
     }

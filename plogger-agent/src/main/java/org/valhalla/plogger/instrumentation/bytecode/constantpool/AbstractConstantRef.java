@@ -24,46 +24,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
 public abstract class AbstractConstantRef implements ConstantPoolEntry {
+
     protected final int classIndex;
     protected final int nameAndTypeIndex;
-    protected final ClassFile classFile;
+    protected final int tag;
 
-    protected AbstractConstantRef(ClassFile classFile, int classIndex, int nameAndTypeIndex) {
-        this.classFile = classFile;
+    protected AbstractConstantRef(int tag, int classIndex, int nameAndTypeIndex) {
+        this.tag = tag;
         this.classIndex = classIndex;
         this.nameAndTypeIndex = nameAndTypeIndex;
     }
 
     @Override
-    public void validate() throws ConstantPoolEntryException {
-        ConstantPoolEntry[] cpool = classFile.getConstantPool();
-        if (classIndex < 1 || classIndex >= cpool.length) {
-            throw new ConstantPoolEntryException("Invalid class index range, has to be between [0," + (cpool.length - 1)
-                    + "].");
-        }
-        if ( !(cpool[classIndex] instanceof ConstantClass) ) {
-            throw new ConstantPoolEntryException("Referencing Invalid Constant Pool Entry at index: " + classIndex
-                    + " should be a Constant Class Entry.");
-        }
-        if (nameAndTypeIndex < 1 || nameAndTypeIndex >= cpool.length) {
-            throw new ConstantPoolEntryException("Invalid name and type index range, has to be between [0.,"
-                    + (cpool.length - 1) + "].");
-        }
-        if ( !(cpool[nameAndTypeIndex] instanceof ConstantNameAndType) ) {
-            throw new ConstantPoolEntryException("Referencing Invalid Constant Pool Entry at index: " + nameAndTypeIndex
-                    + " should be a Constant Name And Type Entry.");
-        }
+    public int entries() {
+        return 1;
     }
 
     @Override
-    public int entries() {
-        return 1;
+    public void write(DataOutput os) throws IOException {
+        os.writeByte(tag);
+        os.writeShort(classIndex);
+        os.writeShort(nameAndTypeIndex);
     }
 
     public ConstantClass getClass(ConstantPoolEntry[] cpool) {
@@ -74,9 +59,11 @@ public abstract class AbstractConstantRef implements ConstantPoolEntry {
         return (ConstantNameAndType) cpool[nameAndTypeIndex];
     }
 
-    @Override
-    public void write(DataOutput os) throws IOException {
-        os.writeShort(classIndex);
-        os.writeShort(nameAndTypeIndex);
+    public int getClassIndex() {
+        return classIndex;
+    }
+
+    public int getNameAndTypeIndex() {
+        return nameAndTypeIndex;
     }
 }

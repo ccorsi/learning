@@ -37,6 +37,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
         System.out.println("Calling transform method for class: " + className);
         try {
             ClassFile classFile = ClassFile.load(className, classfileBuffer);
+            int accessFlags = classFile.getAccessFlags();
         } catch (ClassFileException e) {
             e.printStackTrace(System.out);
         }

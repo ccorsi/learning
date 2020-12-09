@@ -38,7 +38,8 @@ public class ConstantUtf8 implements ConstantPoolEntry {
 
     @Override
     public void write(DataOutput os) throws IOException {
-        os.writeByte(UTF8);
+        os.write(UTF8);
+        os.writeShort(bytes.length);
         os.write(bytes);
     }
 
@@ -54,15 +55,6 @@ public class ConstantUtf8 implements ConstantPoolEntry {
                 // ", bytes=" + Arrays.toString(bytes) +
                 ", string=" + new String(bytes) +
                 '}';
-    }
-
-    @Override
-    public void validate() throws ConstantPoolEntryException {
-        try {
-            new String(bytes);
-        } catch (Throwable t) {
-            throw new ConstantPoolEntryException(t);
-        }
     }
 
     public String getString() {

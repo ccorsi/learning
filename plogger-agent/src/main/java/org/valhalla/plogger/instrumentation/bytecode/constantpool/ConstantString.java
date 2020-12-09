@@ -24,17 +24,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
 public class ConstantString implements ConstantPoolEntry {
     private final int stringIndex;
-    private final ClassFile classFile;
 
-    public ConstantString(ClassFile classFile, int stringIndex) {
-        this.classFile = classFile;
+    public ConstantString(int stringIndex) {
         this.stringIndex = stringIndex;
     }
 
@@ -42,6 +38,15 @@ public class ConstantString implements ConstantPoolEntry {
     public void write(DataOutput os) throws IOException {
         os.writeByte(STRING);
         os.writeShort(stringIndex);
+    }
+
+    public int getStringIndex() {
+        return stringIndex;
+    }
+
+    public String getString(ConstantPoolEntry[] entries) {
+        ConstantUtf8 utf8 = (ConstantUtf8) entries[stringIndex];
+        return utf8.getString();
     }
 
     @Override
@@ -56,15 +61,15 @@ public class ConstantString implements ConstantPoolEntry {
                 '}';
     }
 
-    @Override
-    public void validate() throws ConstantPoolEntryException {
-        ConstantPoolEntry[] cpool = classFile.getConstantPool();
-        if (stringIndex < 1 || stringIndex >= cpool.length) {
-            throw new ConstantPoolEntryException("Invalid String Index range: " + stringIndex + " should be between [0,"
-                    + (cpool.length - 1) + "].");
-        }
-        if ( ! (cpool[stringIndex] instanceof ConstantUtf8) ) {
-            throw new ConstantPoolEntryException("Invalid string index reference, not referencing a constant utf8 entry.");
-        }
-    }
+//    @Override
+//    public void validate() throws ConstantPoolEntryException {
+//        ConstantPoolEntry[] cpool = classFile.getConstantPool();
+//        if (stringIndex < 1 || stringIndex >= cpool.length) {
+//            throw new ConstantPoolEntryException("Invalid String Index range: " + stringIndex + " should be between [0,"
+//                    + (cpool.length - 1) + "].");
+//        }
+//        if ( ! (cpool[stringIndex] instanceof ConstantUtf8) ) {
+//            throw new ConstantPoolEntryException("Invalid string index reference, not referencing a constant utf8 entry.");
+//        }
+//    }
 }

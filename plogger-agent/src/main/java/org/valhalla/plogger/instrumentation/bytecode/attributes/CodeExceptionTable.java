@@ -30,6 +30,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class CodeExceptionTable {
+
     private final int startPc;
     private final int endPc;
     private final int handlerPc;
@@ -62,4 +63,21 @@ public class CodeExceptionTable {
         dos.writeShort(handlerPc);
         dos.writeShort(catchType);
     }
+
+    public int getStartPc() {
+        return startPc;
+    }
+
+    public int getEndPc() {
+        return endPc;
+    }
+
+    public int getHandlerPc() {
+        return handlerPc;
+    }
+
+    public int getCatchType() {
+        return catchType;
+    }
+
 }

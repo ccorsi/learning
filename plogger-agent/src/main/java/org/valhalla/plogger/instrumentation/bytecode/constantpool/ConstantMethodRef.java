@@ -24,14 +24,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-
-import java.io.DataOutput;
-import java.io.IOException;
-
 public class ConstantMethodRef extends AbstractConstantRef {
-    public ConstantMethodRef(ClassFile classFile, int classIndex, int nameAndTypeIndex) {
-        super(classFile, classIndex, nameAndTypeIndex);
+    public ConstantMethodRef(int classIndex, int nameAndTypeIndex) {
+        super(METHOD, classIndex, nameAndTypeIndex);
     }
 
     @Override
@@ -40,18 +35,5 @@ public class ConstantMethodRef extends AbstractConstantRef {
                 "classIndex=" + classIndex +
                 ", nameAndTypeIndex=" + nameAndTypeIndex +
                 '}';
-    }
-
-    @Override
-    public void validate() throws ConstantPoolEntryException {
-        super.validate();
-        // TODO: complete checks.
-        ConstantPoolEntry[] cpool = classFile.getConstantPool();
-    }
-
-    @Override
-    public void write(DataOutput os) throws IOException {
-        os.writeByte(METHOD);
-        super.write(os);
     }
 }

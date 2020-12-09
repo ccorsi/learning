@@ -21,10 +21,26 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.6.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <properties>
         <agent-main-class>org.valhalla.plogger.instrumentation.AgentMain</agent-main-class>
+        <test.app7.classpath>
+            ${project.basedir}${file.separator}target${file.separator}test-app7
+        </test.app7.classpath>
+        <test.app9.classpath>
+            ${project.basedir}${file.separator}target${file.separator}test-app9
+        </test.app9.classpath>
+        <plogger.agent.jar>
+            ${project.basedir}${file.separator}target${file.separator}${project.build.finalName}.jar
+        </plogger.agent.jar>
     </properties>
 
     <build>
@@ -36,6 +52,9 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                    <compilerArgs>
+                        <compilerArg>-Xlint:unchecked</compilerArg>
+                    </compilerArgs>
                 </configuration>
                 <executions>
                     <execution>
@@ -119,8 +138,9 @@
                         </goals>
                         <configuration>
                             <systemPropertyVariables>
-                                <test.app7.classpath>${project.basedir}/target/test-app7</test.app7.classpath>
-                                <test.app9.classpath>${project.basedir}/target/test-app9</test.app9.classpath>
+                                <test.app7.classpath>${test.app7.classpath}</test.app7.classpath>
+                                <test.app9.classpath>${test.app9.classpath}</test.app9.classpath>
+                                <plogger.agent.jar>${plogger.agent.jar}</plogger.agent.jar>
                             </systemPropertyVariables>
                         </configuration>
                     </execution>

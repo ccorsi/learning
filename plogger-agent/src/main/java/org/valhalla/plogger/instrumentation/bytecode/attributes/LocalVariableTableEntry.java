@@ -49,6 +49,26 @@ public class LocalVariableTableEntry implements ClassFileWriter {
         this.index = index;
     }
 
+    public int getStartPc() {
+        return startPc;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public int getDescriptorIndex() {
+        return descriptorIndex;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
     @Override
     public void write(DataOutput os) throws IOException {
         os.writeShort(startPc);

@@ -36,6 +36,8 @@ public class LoggerITCase {
     public void itestLoggerWrite() throws IOException, InterruptedException {
         // This test will just start a java process and determine if it failed or not.
         System.out.println("Executing an integration test");
+        System.out.println("plogger agent jar: " +
+                System.getProperty("plogger.agent.jar"));
 //        System.out.println("Test Application Class Path for jdk 7: " +
 //                System.getProperty("test.app7.classpath"));
 //        System.out.println("Test Application Class Path for jdk 9: " +

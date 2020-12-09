@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-public class ClassFileException extends Throwable {
+public class ClassFileException extends RuntimeException {
     public ClassFileException(String message) {
         super(message);
     }

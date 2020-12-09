@@ -47,20 +47,10 @@ class LoggerTest {
 
     @Test
     void testWriteClassSingleParameter() throws InterruptedException {
-        LoggerThreadTest thread = new LoggerThreadTest(new Runnable() {
-            @Override
-            public void run() {
-                Logger.write(Integer.class, "parseInt", new Object[] { "101" });
-                for(String entry : LoggerManager.getEntriesBuffer()) {
-                    System.out.println(entry);
-                }
-            }
-        });
-        thread.start();
-        thread.join();
-        List<String> entries = thread.getEntries();
-        Assertions.assertNotNull(entries);
-        Assertions.assertEquals(1, entries.size());
+        LoggerWriterParameter[] parameters  = new LoggerWriterParameter[] {
+                new LoggerWriterClassParameter(Integer.class, "parseInt", new Object[] {"101"}),
+        };
+        List<String> entries = executeLoggerWriterParameters(parameters);
         String message = entries.get(0);
         Assertions.assertTrue(message.contains(Integer.class.getName()), "Missing Integer class");
     }
@@ -70,20 +60,11 @@ class LoggerTest {
         final Integer i = Integer.valueOf(1003);
         final Integer o = Integer.valueOf(1001);
 
-        LoggerThreadTest thread = new LoggerThreadTest(new Runnable() {
-            @Override
-            public void run() {
-                Logger.write(i, "compareTo", new Object[] {o});
-                for(String entry : LoggerManager.getEntriesBuffer()) {
-                    System.out.println(entry);
-                }
-            }
-        });
-        thread.start();
-        thread.join();
-        List<String> entries = thread.getEntries();
-        Assertions.assertNotNull(entries);
-        Assertions.assertEquals(1, entries.size());
+
+        LoggerWriterParameter[] parameters  = new LoggerWriterParameter[] {
+                new LoggerWriterInstanceParameter(i, "compareTo", new Object[] {o}),
+        };
+        List<String> entries = executeLoggerWriterParameters(parameters);
         String message = entries.get(0);
         String string = i.getClass().getName() + "@" + System.identityHashCode(i);
         Assertions.assertTrue(message.contains(string), "Missing Integer instance");
@@ -91,20 +72,10 @@ class LoggerTest {
 
     @Test
     void testWriteClassMultipleParameters() throws InterruptedException {
-        LoggerThreadTest thread = new LoggerThreadTest(new Runnable() {
-            @Override
-            public void run() {
-                Logger.write(Integer.class, "getInteger", new Object[] { "101", 10 });
-                for(String entry : LoggerManager.getEntriesBuffer()) {
-                    System.out.println(entry);
-                }
-            }
-        });
-        thread.start();
-        thread.join();
-        List<String> entries = thread.getEntries();
-        Assertions.assertNotNull(entries);
-        Assertions.assertEquals(1, entries.size());
+        LoggerWriterParameter[] parameters  = new LoggerWriterParameter[] {
+                new LoggerWriterClassParameter(Integer.class, "getInteger", new Object[] {"101", 10}),
+        };
+        List<String> entries = executeLoggerWriterParameters(parameters);
         String message = entries.get(0);
         Assertions.assertTrue(message.contains(Integer.class.getName()), "Missing Integer class");
     }
@@ -114,20 +85,10 @@ class LoggerTest {
         final Integer i = Integer.valueOf(1003);
         final Integer o = Integer.valueOf(1001);
 
-        LoggerThreadTest thread = new LoggerThreadTest(new Runnable() {
-            @Override
-            public void run() {
-                Logger.write(i, "compareTo", new Object[] {o, 101});
-                for(String entry : LoggerManager.getEntriesBuffer()) {
-                    System.out.println(entry);
-                }
-            }
-        });
-        thread.start();
-        thread.join();
-        List<String> entries = thread.getEntries();
-        Assertions.assertNotNull(entries);
-        Assertions.assertEquals(1, entries.size());
+        LoggerWriterParameter[] parameters  = new LoggerWriterParameter[] {
+                new LoggerWriterInstanceParameter(i, "compareTo", new Object[] {o, 101}),
+        };
+        List<String> entries = executeLoggerWriterParameters(parameters);
         String message = entries.get(0);
         String string = i.getClass().getName() + "@" + System.identityHashCode(i);
         Assertions.assertTrue(message.contains(string), "Missing Integer instance");
@@ -138,36 +99,139 @@ class LoggerTest {
         final Integer i = Integer.valueOf(1003);
         final Integer o = Integer.valueOf(1001);
 
-        LoggerThreadTest thread = new LoggerThreadTest(new Runnable() {
-            @Override
-            public void run() {
-                Logger.write(i, "compareTo", new Object[] {o, 101});
-                Logger.write(i, "compareTo", new Object[] {o, 102});
-                for(String entry : LoggerManager.getEntriesBuffer()) {
-                    System.out.println(entry);
-                }
-            }
-        });
-        thread.start();
-        thread.join();
-        List<String> entries = thread.getEntries();
-        Assertions.assertNotNull(entries);
-        Assertions.assertEquals(2, entries.size());
+        LoggerWriterParameter[] parameters  = new LoggerWriterParameter[] {
+                new LoggerWriterInstanceParameter(i, "compareTo", new Object[] {o, 101}),
+                new LoggerWriterInstanceParameter(i, "compareTo", new Object[] {o, 102}),
+        };
+        List<String> entries = executeLoggerWriterParameters(parameters);
         String message = entries.get(0);
         String string = i.getClass().getName() + "@" + System.identityHashCode(i);
         Assertions.assertTrue(message.contains(string), "Missing Integer instance");
     }
 
+    @Test
+    public void testBooleanArray() throws InterruptedException {
+        final boolean[] values = new boolean[] {true, false, true, true, true};
+        LoggerWriterParameter[] parameters  = new LoggerWriterParameter[] {
+                new LoggerWriterInstanceParameter(this, "run", new Object[] { values }),
+        };
+        List<String> entries = executeLoggerWriterParameters(parameters);
+        String message = entries.get(0);
+        StringBuilder sb = new StringBuilder("Array[type=boolean,values=[");
+        sb.append(values[0]);
+        for(int idx = 1 ; idx < values.length ; idx++) {
+            sb.append(',').append(values[idx]);
+        }
+        sb.append(']');
+        String string = sb.toString();
+        Assertions.assertTrue(message.contains(string), "Missing boolean array instance");
+    }
+
+    @Test
+    public void testBooleanTrimArray() throws InterruptedException {
+        final boolean[] values = new boolean[] {true, false, true, true, true, false, true, true, true};
+        LoggerWriterParameter[] parameters  = new LoggerWriterParameter[] {
+                new LoggerWriterInstanceParameter(this, "run", new Object[] { values }),
+        };
+        List<String> entries = executeLoggerWriterParameters(parameters);
+        String message = entries.get(0);
+        StringBuilder sb = new StringBuilder("Array[type=boolean,values=[");
+        sb.append(values[0]);
+        for(int idx = 1; idx < Logger.DEFAULT_MAX_SIZE; idx++) {
+            sb.append(',').append(values[idx]);
+        }
+        sb.append(",...]");
+        String string = sb.toString();
+        Assertions.assertTrue(message.contains(string), "Missing trimmed boolean array instance");
+    }
+
+    @Test
+    public void testBooleanMultiArray() throws InterruptedException {
+        final boolean[][] values = new boolean[][] {
+                new boolean[] {true, false, true, true, true},
+                new boolean[] {true, false, true, true},
+                new boolean[] {true, false, true},
+                new boolean[] {true, false},
+        };
+        LoggerWriterParameter[] parameters  = new LoggerWriterParameter[] {
+                new LoggerWriterInstanceParameter(this, "run", new Object[] { values }),
+        };
+        List<String> entries = executeLoggerWriterParameters(parameters);
+        String message = entries.get(0);
+        StringBuilder sb = new StringBuilder("Array[type=boolean,values=[");
+        sb.append(values[0]);
+        for(int idx = 1 ; idx < values.length ; idx++) {
+            sb.append(',').append(values[idx]);
+        }
+        sb.append(']');
+        String string = sb.toString();
+        System.out.println("MESSAGE = " + message);
+        System.out.println("STRING  = " + string);
+        Assertions.assertTrue(message.contains(string), "Missing boolean array instance");
+    }
+
+    private List<String> executeLoggerWriterParameters(LoggerWriterParameter[] parameters) throws InterruptedException {
+        LoggerThreadTest thread = new LoggerThreadTest(parameters);
+        thread.start();
+        thread.join();
+        List<String> entries = thread.getEntries();
+        Assertions.assertNotNull(entries);
+        Assertions.assertEquals(parameters.length, entries.size());
+        return entries;
+    }
+
+    interface LoggerWriterParameter {
+        void execute();
+    }
+
+    static class LoggerWriterInstanceParameter implements LoggerWriterParameter {
+
+        private final Object object;
+        private final String methodName;
+        private final Object[] parameters;
+
+        LoggerWriterInstanceParameter(Object object, String methodName, Object[] parameters) {
+            this.object = object;
+            this.methodName = methodName;
+            this.parameters = parameters;
+        }
+
+        @Override
+        public void execute() {
+            Logger.write(object, methodName, parameters);
+        }
+    }
+
+    static class LoggerWriterClassParameter implements LoggerWriterParameter {
+
+        private final Class<?> object;
+        private final String methodName;
+        private final Object[] parameters;
+
+        LoggerWriterClassParameter(Class<?> object, String methodName, Object[] parameters) {
+            this.object = object;
+            this.methodName = methodName;
+            this.parameters = parameters;
+        }
+
+        @Override
+        public void execute() {
+            Logger.write(object, methodName, parameters);
+        }
+    }
+
     static class LoggerThreadTest extends Thread {
+
+        private final LoggerWriterParameter[] parameters;
+        private List<String> entries;
+
+        LoggerThreadTest(LoggerWriterParameter[] parameters) {
+            super();
+            this.parameters = parameters;
+        }
 
         public List<String> getEntries() {
             return entries;
-        }
-
-        private List<String> entries;
-
-        LoggerThreadTest(Runnable runnable) {
-            super(runnable);
         }
 
         @Override
@@ -175,7 +239,9 @@ class LoggerTest {
             // Initialize the entries list
             entries = LoggerManager.getEntriesBuffer();
             try {
-                super.run();
+                for (LoggerWriterParameter parameter : parameters) {
+                    parameter.execute();
+                }
             } finally {
                 // Clear the created entries buffer
                 LoggerManager.remove();

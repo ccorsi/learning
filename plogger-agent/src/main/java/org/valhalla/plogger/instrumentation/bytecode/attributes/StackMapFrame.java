@@ -26,5 +26,19 @@ SOFTWARE.
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 
+/**
+ * This is the base interface that all the different StackMapFrame
+ * implementations will implement.  This will contain the common methods
+ * that need to be implemented by each implementation.
+ */
 public interface StackMapFrame extends ClassFileWriter {
+
+    /**
+     * This method will return the current StackFrame
+     * offset relative to the prior StackFrame.
+     *
+     * @return The will return the StackFrame offset
+     */
+    int getOffSet();
+
 }

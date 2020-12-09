@@ -68,4 +68,13 @@ public class LocalVariableTable implements ClassAttribute {
                 ", entries=" + Arrays.toString(entries) +
                 '}';
     }
+
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public LocalVariableTableEntry[] getEntries() {
+        return entries;
+    }
+
 }

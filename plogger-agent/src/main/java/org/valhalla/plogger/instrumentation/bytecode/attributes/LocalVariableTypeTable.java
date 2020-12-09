@@ -45,6 +45,14 @@ public class LocalVariableTypeTable implements ClassAttribute {
         this.types = types;
     }
 
+    public int getNameIndex() {
+        return nameIndex;
+    }
+
+    public LocalVariableTypeTableEntry[] getEntries() {
+        return types;
+    }
+
     @Override
     public void write(DataOutput os) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

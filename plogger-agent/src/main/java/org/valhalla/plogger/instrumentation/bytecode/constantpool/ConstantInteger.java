@@ -24,9 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-
-import java.io.*;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class ConstantInteger implements ConstantPoolEntry {
@@ -36,14 +35,14 @@ public class ConstantInteger implements ConstantPoolEntry {
         this.bytes = bytes;
     }
 
-    @Override
-    public void validate() throws ConstantPoolEntryException {
-        try {
-            new DataInputStream(new ByteArrayInputStream(bytes)).readInt();
-        } catch (Throwable t) {
-            throw new ConstantPoolEntryException(t);
-        }
-    }
+//    @Override
+//    public void validate() throws ConstantPoolEntryException {
+//        try {
+//            new DataInputStream(new ByteArrayInputStream(bytes)).readInt();
+//        } catch (Throwable t) {
+//            throw new ConstantPoolEntryException(t);
+//        }
+//    }
 
     @Override
     public String toString() {
