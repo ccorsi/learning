@@ -29,6 +29,8 @@ import org.valhalla.plogger.instrumentation.utils.PrintStreamThread;
 import org.valhalla.plogger.instrumentation.utils.Utils;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoggerITCase {
 
@@ -48,7 +50,12 @@ public class LoggerITCase {
         String[] paths = new String[] {
                 System.getProperty("test.app7.classpath")
         };
-        Process process = Utils.createJavaProcess(mainClassName, paths);
+        List<String> jvmOptions =  new ArrayList<String>(2);
+//        jvmOptions.add("-verbose");
+        jvmOptions.add("-Xshare:off"); // insure that class sharing is not enabled.
+        jvmOptions.add(String.format("-javaagent:%s", System.getProperty("plogger.agent.jar")));
+        Process process = Utils.createJavaProcess(mainClassName, paths, jvmOptions.toArray(Utils.EMPTY_STRING_ARRAY),
+                Utils.EMPTY_STRING_ARRAY);
         new PrintStreamThread("out: ", process.getInputStream()).start();
         new PrintStreamThread("err: ", process.getErrorStream()).start();
         System.out.println("Exit code: " + process.waitFor());

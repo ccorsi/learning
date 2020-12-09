@@ -24,22 +24,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
+import org.valhalla.plogger.instrumentation.bytecode.manager.ClassManager;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 public class AgentClassFileTransformer implements ClassFileTransformer {
-    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer)
-            throws IllegalClassFormatException {
-        System.out.println("Calling transform method for class: " + className);
-        try {
-            ClassFile classFile = ClassFile.load(className, classfileBuffer);
-            int accessFlags = classFile.getAccessFlags();
-        } catch (ClassFileException e) {
-            e.printStackTrace(System.out);
+    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) {
+        if (! className.startsWith("org/valhalla/plogger/instrumentation") && ! className.startsWith("java/lang")) {
+            try {
+                ClassManager classManager = new ClassManager(className, classfileBuffer);
+                if (classManager.instrument()) {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    try (DataOutputStream dos = new DataOutputStream(bos)) {
+                        classManager.write(dos);
+                    }
+                    System.out.println("Instrumented class: " + className);
+                    return bos.toByteArray();
+                }
+            } catch (Throwable e) {
+                System.out.println("An exception was thrown when transforming class: " + className);
+                e.printStackTrace(System.out);
+            }
         }
         return null;
     }

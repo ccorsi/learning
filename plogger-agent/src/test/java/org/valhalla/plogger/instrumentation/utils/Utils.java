@@ -29,10 +29,15 @@ import org.junit.jupiter.api.Assertions;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Utils {
+
+    public static final String JAVA_EXECUTABLE = "java" + ((File.separatorChar == '\\') ? ".exe" : "");
+    public static final String[] EMPTY_STRING_ARRAY = new String[0];
+
     public static String getJavaCommand() {
-        final String javaExecutableName = "java" + ((File.separatorChar == '\\') ? ".exe" : "");
         String javaHome = System.getProperty("java.home");
         File dir = new File(javaHome);
         File[] dirs = dir.listFiles(new FileFilter() {
@@ -49,7 +54,7 @@ public class Utils {
                     new FileFilter() {
                         @Override
                         public boolean accept(File file) {
-                            return javaExecutableName.equals(file.getName());
+                            return JAVA_EXECUTABLE.equals(file.getName());
                         }
                     }
             );
@@ -62,6 +67,10 @@ public class Utils {
     }
 
     public static Process createJavaProcess(String mainClassName, String[] paths) throws IOException {
+        return createJavaProcess(mainClassName, paths, EMPTY_STRING_ARRAY, EMPTY_STRING_ARRAY);
+    }
+
+    public static Process createJavaProcess(String mainClassName, String[] paths, String[] jvmOptions, String[] args) throws IOException {
         ProcessBuilder builder = new ProcessBuilder();
         String javaCmd = getJavaCommand();
         StringBuilder classPaths = new StringBuilder(System.getProperty("java.class.path"));
@@ -69,7 +78,19 @@ public class Utils {
             classPaths.append(File.pathSeparator).append(path);
         }
         String classPath =  classPaths.toString();
-        Process process = builder.command(javaCmd, "-cp", classPath, mainClassName).start();
+        List<String> commands = new LinkedList<String>();
+        commands.add(javaCmd);
+        for(String jvmOption : jvmOptions) {
+            commands.add(jvmOption);
+        }
+        commands.add("-cp");
+        commands.add(classPath);
+        commands.add(mainClassName);
+        for(String arg : args) {
+            commands.add(arg);
+        }
+        System.out.println(String.format("Starting process: %s", commands));
+        Process process = builder.command(commands).start();
         return process;
     }
 }
