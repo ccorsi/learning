@@ -53,23 +53,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             } catch (Throwable e) {
                 System.out.println("An exception was thrown when transforming class: " + className);
                 e.printStackTrace(System.out);
-                try {
-                    ProcessBuilder processBuilder = new ProcessBuilder("java", "-s", "-c", "-l", "-verbose",
-                            "-p", className.replace('/', '.'));
-                    processBuilder.redirectError();
-                    File file = File.createTempFile("prefix","javap");
-                    processBuilder.redirectOutput(file);
-                    Process process = processBuilder.start();
-                    process.waitFor();
-                    FileReader fr = new FileReader(file);
-                    try (BufferedReader br = new BufferedReader(fr)) {
-                        for(String line = br.readLine() ; line != null ; line = br.readLine()) {
-                            System.out.println(line);
-                        }
-                    }
-                } catch (IOException | InterruptedException ie) {
-                    ie.printStackTrace();
-                }
+                decompileJavaClass(className);
             }
         }
         return null;
@@ -92,26 +76,33 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             } catch (Throwable e) {
                 System.out.println("An exception was thrown when transforming class: " + className);
                 e.printStackTrace(System.out);
-                try {
-                    ProcessBuilder processBuilder = new ProcessBuilder("java", "-s", "-c", "-l", "-verbose",
-                            "-p", className.replace('/', '.'));
-                    processBuilder.redirectError();
-                    File file = File.createTempFile("prefix","javap");
-                    processBuilder.redirectOutput(file);
-                    Process process = processBuilder.start();
-                    process.waitFor();
-                    FileReader fr = new FileReader(file);
-                    try (BufferedReader br = new BufferedReader(fr)) {
-                        for(String line = br.readLine() ; line != null ; line = br.readLine()) {
-                            System.out.println(line);
-                        }
-                    }
-                } catch (IOException | InterruptedException ie) {
-                    ie.printStackTrace();
-                }
+                decompileJavaClass(className);
             }
         }
         return null;
+    }
+
+    private void decompileJavaClass(String className) {
+        try {
+            System.out.println("Printing out decompiled class");
+            ProcessBuilder processBuilder = new ProcessBuilder("java", "-s", "-c", "-l", "-verbose",
+                    "-p", className.replace('/', '.'));
+            processBuilder.redirectError();
+            String fileName = className.replace('/','.') + ".javap";
+            File file = new File(fileName);
+            processBuilder.redirectOutput(file);
+            Process process = processBuilder.start();
+            process.waitFor();
+            FileReader fr = new FileReader(fileName);
+            try (BufferedReader br = new BufferedReader(fr)) {
+                for(String line = br.readLine() ; line != null ; line = br.readLine()) {
+                    System.out.println(line);
+                }
+            }
+            file.delete();
+        } catch (IOException | InterruptedException ie) {
+            ie.printStackTrace();
+        }
     }
 
     @Override

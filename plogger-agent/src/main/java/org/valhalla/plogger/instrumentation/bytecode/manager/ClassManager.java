@@ -69,58 +69,60 @@ public class ClassManager implements ClassFileWriter {
 
     public ClassManager(String className, byte[] bytes) throws ClassFileException {
         this.className = className;
-            ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-            try (DataInputStream dis = new DataInputStream(is)) {
-                byte[] magic = new byte[4];
-                int read = dis.read(magic);
-                if (read != magic.length) {
-                    throw new ClassFileException("Unable to read magic value for class: " + className);
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        try (DataInputStream dis = new DataInputStream(is)) {
+            byte[] magic = new byte[4];
+            int read = dis.read(magic);
+            if (read != magic.length) {
+                throw new ClassFileException("Unable to read magic value for class: " + className);
+            }
+            // validate magic string
+            for (int idx = 0; idx < expectedMagic.length; idx++) {
+                if (magic[idx] != expectedMagic[idx]) {
+                    throw new ClassFileException("Invalid class file magic value for class: " + className);
                 }
-                // validate magic string
-                for(int idx = 0; idx < expectedMagic.length ; idx++) {
-                    if (magic[idx] != expectedMagic[idx]) {
-                        throw new ClassFileException("Invalid class file magic value for class: " + className);
-                    }
-                }
-                // Extract the class file version
-                minorVersion = dis.readUnsignedShort();
-                majorVersion = dis.readUnsignedShort();
-                // Extract the class file constant pool entries
-                constantPoolManager = new ConstantPoolManager(dis);
-                // Extract the class file access flags
-                accessFlags = dis.readUnsignedShort();
-                // Extract the class file this class constant pool entry index
-                thisClassIndex = dis.readUnsignedShort();
-                // Extract the class file super class constant pool entry index
-                superClassIndex = dis.readUnsignedShort();
-                // Extract the class file interfaces
-                int size = dis.readUnsignedShort();
-                int[] interfaces = new int[size];
+            }
+            // Extract the class file version
+            minorVersion = dis.readUnsignedShort();
+            majorVersion = dis.readUnsignedShort();
+            // Extract the class file constant pool entries
+            constantPoolManager = new ConstantPoolManager(dis);
+            // Extract the class file access flags
+            accessFlags = dis.readUnsignedShort();
+            // Extract the class file this class constant pool entry index
+            thisClassIndex = dis.readUnsignedShort();
+            // Extract the class file super class constant pool entry index
+            superClassIndex = dis.readUnsignedShort();
+            // Extract the class file interfaces
+            int size = dis.readUnsignedShort();
+            int[] interfaces = new int[size];
 //                for(int idx = 0 ; idx < size ; idx++) {
 //                    interfaces[idx] = dis.readUnsignedShort();
 //                    // TODO: Validate each interface.
 ////                    validateInterface(classFile, classFile.interfaces[idx]);
 //                }
-                interfaceManager = new InterfaceManager(interfaces);
-                // Extract the class file fields
-                size = dis.readUnsignedShort();
-                this.fieldManagers = new FieldManager[size];
-                for(int idx = 0 ; idx < size ; idx++) {
-                    fieldManagers[idx] = new FieldManager(constantPoolManager, dis);
-                }
-                // Extract the class file methods
-                size = dis.readUnsignedShort();
-                this.methodManagers = new MethodManager[size];
-                for(int idx = 0 ; idx < size ; idx++) {
-                    methodManagers[idx] = new MethodManager(constantPoolManager, dis);
-                }
-                // Extract the class file attributes
-                size = dis.readUnsignedShort();
-                this.attributeManagers = new AttributeManager[size];
-                for(int idx = 0 ; idx < size ; idx++) {
-                    attributeManagers[idx] = AttributeManagerFactory.create(dis, constantPoolManager);
-                }
-        } catch(IOException ioe) {
+            interfaceManager = new InterfaceManager(interfaces);
+            // Extract the class file fields
+            size = dis.readUnsignedShort();
+            this.fieldManagers = new FieldManager[size];
+            for (int idx = 0; idx < size; idx++) {
+                fieldManagers[idx] = new FieldManager(constantPoolManager, dis);
+            }
+            // Extract the class file methods
+            size = dis.readUnsignedShort();
+            this.methodManagers = new MethodManager[size];
+            for (int idx = 0; idx < size; idx++) {
+                methodManagers[idx] = new MethodManager(constantPoolManager, dis);
+            }
+            // Extract the class file attributes
+            size = dis.readUnsignedShort();
+            this.attributeManagers = new AttributeManager[size];
+            for (int idx = 0; idx < size; idx++) {
+                attributeManagers[idx] = AttributeManagerFactory.create(dis, constantPoolManager);
+            }
+        } catch (ClassFileException e) {
+            throw e;
+        } catch (IOException ioe) {
             throw new ClassFileException(ioe);
         }
     }

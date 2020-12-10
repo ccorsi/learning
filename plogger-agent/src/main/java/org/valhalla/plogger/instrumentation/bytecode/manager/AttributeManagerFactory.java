@@ -88,7 +88,9 @@ public class AttributeManagerFactory {
                     }
                     attribute = new DefaultAttributeManager(nameIndex, data);
             }
-            return  attribute;
+            return attribute;
+        } catch (ClassFileException e) {
+            throw e;
         } catch(Throwable t) {
             throw new ClassFileException(t);
         }
@@ -122,6 +124,8 @@ public class AttributeManagerFactory {
             }
 
             return new CodeAttributeManager(nameIndex, maxStack, maxLocals, code, exceptionTableManager, attributes);
+        } catch (ClassFileException e) {
+            throw e;
         } catch(Throwable t) {
             throw new ClassFileException(t);
         }
