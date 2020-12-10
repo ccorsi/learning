@@ -60,7 +60,6 @@ public class GotoWInstruction extends AbstractInstruction {
                 current -= instruction.size();
             }
         } else {
-            current = size();
             for ( ; instruction != null && current < branchPc ; instruction = instruction.getNext() ) {
                 current += instruction.size();
             }
@@ -83,7 +82,7 @@ public class GotoWInstruction extends AbstractInstruction {
                 });
             }
         } else {
-            throw new ClassFileException(String.format("No instruction with branch offset %s found"));
+            throw new ClassFileException(String.format("No instruction with branch offset %d found", branchPc));
         }
     }
 

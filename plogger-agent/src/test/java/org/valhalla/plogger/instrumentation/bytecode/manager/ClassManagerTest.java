@@ -117,6 +117,16 @@ public class ClassManagerTest {
         loadInstrumentAndCallClass(className, constructorParameterTypes, constructorParameters, methodDefinitions);
     }
 
+    @Test
+    void loadLauncherHelperClass() throws IOException {
+        String className = "sun/launcher/LauncherHelper";
+        classManagerUtil = new ClassManagerUtil(className);
+        ClassFile classFile = classManagerUtil.getClassFile();
+        ClassMethod classMethod = classFile.getMethods().next();
+        ClassManager classManager = classManagerUtil.getClassManager();
+        Assertions.assertTrue(classManager.instrument(), "Unable to instrument class LauncherHelper");
+    }
+
     private void loadInstrumentAndCallClass(String className, Class<?>[] constructorParameterTypes,
                                             Object[] constructorParameters, MethodDefinition[] methodDefinitions)
             throws IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {

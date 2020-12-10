@@ -47,7 +47,6 @@ public class GotoInstruction extends AbstractInstruction {
                 current -= instruction.size();
             }
         } else {
-            current = size();
             for ( ; instruction != null && current < branchPc ; instruction = instruction.getNext() ) {
                 current += instruction.size();
             }
@@ -70,7 +69,7 @@ public class GotoInstruction extends AbstractInstruction {
                 });
             }
         } else {
-            throw new ClassFileException(String.format("No instruction with branch offset %s found"));
+            throw new ClassFileException(String.format("No instruction with branch offset %d found", branchPc));
         }
     }
 
@@ -91,5 +90,12 @@ public class GotoInstruction extends AbstractInstruction {
     public void write(DataOutput os) throws IOException {
         super.write(os);
         os.writeInt(branchPc);
+    }
+
+    @Override
+    public String toString() {
+        return "GotoInstruction{" +
+                "branchPc=" + branchPc +
+                '}';
     }
 }

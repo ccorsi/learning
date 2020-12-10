@@ -117,25 +117,32 @@ public class MethodManager implements ClassFileWriter {
     private static final int ACC_ABSTRACT = 0x0400;
 
     public boolean instrument(ClassManager classManager) {
-        // TODO: We need to allow the users the ability to determine which methods can be instrumented.
-        ConstantPoolManager constantPoolManager = classManager.getConstantPoolManager();
-        // Only process a method that are public and parameters are being passed.
-        if ((accessFlags & ACC_PUBLIC) != 0 && ! signature.contains("()")) {
-            // Check that the method is not abstract, native, ...
-            if ((accessFlags & ACC_NATIVE) == 0 && (accessFlags & ACC_ABSTRACT) == 0) {
+        try {
+            // TODO: We need to allow the users the ability to determine which methods can be instrumented.
+            ConstantPoolManager constantPoolManager = classManager.getConstantPoolManager();
+            // Only process a method that are public and parameters are being passed.
+            if ((accessFlags & ACC_PUBLIC) != 0 && !signature.contains("()")) {
+                // Check that the method is not abstract, native, ...
+                if ((accessFlags & ACC_NATIVE) == 0 && (accessFlags & ACC_ABSTRACT) == 0) {
+                    // We are now ready to instrument the current method.
+                    CodeAttributeManager codeAttributeManager = getCodeAttributeManager();
+                    if (codeAttributeManager != null) {
+                        return codeAttributeManager.instrument(classManager, this);
+                    }
+                }
+            } else if ((accessFlags & ACC_NATIVE) == 0) {
                 // We are now ready to instrument the current method.
                 CodeAttributeManager codeAttributeManager = getCodeAttributeManager();
                 if (codeAttributeManager != null) {
                     return codeAttributeManager.instrument(classManager, this);
                 }
             }
-        } else if ((accessFlags & ACC_NATIVE) == 0) {
-            // We are now ready to instrument the current method.
-            CodeAttributeManager codeAttributeManager = getCodeAttributeManager();
-            if (codeAttributeManager != null) {
-                return codeAttributeManager.instrument(classManager, this);
-            }
+        } catch (ClassFileException e) {
+            // TODO: Make this conditional
+            System.out.println("An exception was raised when instrumenting method: " + getName());
+            throw e;
         }
+
         return false;
     }
 

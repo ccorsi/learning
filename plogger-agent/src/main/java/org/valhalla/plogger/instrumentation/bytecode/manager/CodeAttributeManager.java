@@ -457,14 +457,14 @@ public class CodeAttributeManager implements AttributeManager {
                                 start = cnt + 1;
                                 break;
                             case 'L':
-                                arrayClassName = signature.substring(cnt, signature.indexOf(';'));
+                                arrayClassName = signature.substring(cnt, signature.indexOf(';', cnt));
                                 start = cnt + arrayClassName.length() + 1;
                                 break;
                         }
                         parameters.add(new ClassParameter(arrayClassName));
                         break;
                     case 'L':
-                        String className = signature.substring(start, signature.indexOf(';'));
+                        String className = signature.substring(start, signature.indexOf(';', start));
                         start += className.length() + 1;
                         parameters.add(new ClassParameter(className));
                         break;

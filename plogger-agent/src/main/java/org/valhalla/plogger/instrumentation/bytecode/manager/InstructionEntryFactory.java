@@ -614,7 +614,7 @@ public class InstructionEntryFactory {
                         entry);
             // Control instructions
             case GOTO:
-                return new GotoInstruction(opCode, 0, "GOTO", dis.readUnsignedShort(), entry);
+                return new GotoInstruction(opCode, 0, "GOTO", dis.readShort(), entry);
             case JSR:
                 return new JsrInstruction(opCode, "JSR", dis.readShort(), entry);
             case RET:

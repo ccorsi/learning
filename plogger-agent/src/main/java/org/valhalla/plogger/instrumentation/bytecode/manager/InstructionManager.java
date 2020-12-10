@@ -130,13 +130,23 @@ public class InstructionManager {
             } catch (IOException e) {
                 throw new ClassFileException(e);
             }
-            for (AbstractInstruction entry = headInstruction ; entry != null ; entry = entry.getNext()) {
-                // Synchronize the instructions by passing the entries to each instruction
-                // This is to allow the different instructions to sync themselves with
-                // other instructions that require syncing.
-                entry.sync();
-                if (cnt < 0) throw new ClassFileException("Infinite loop issue.");
-                cnt--;
+            try {
+                for (AbstractInstruction entry = headInstruction; entry != null; entry = entry.getNext()) {
+                    // Synchronize the instructions by passing the entries to each instruction
+                    // This is to allow the different instructions to sync themselves with
+                    // other instructions that require syncing.
+                    entry.sync();
+                    if (cnt < 0) throw new ClassFileException("Infinite loop issue.");
+                    cnt--;
+                }
+            } catch (ClassFileException e) {
+                // TODO: Make these conditional
+                int pos = 0;
+                for (AbstractInstruction entry = headInstruction ; entry != null ; entry = entry.getNext()) {
+                    System.out.println(String.format("%-5d: %s", pos, entry));
+                    pos += entry.size();
+                }
+                throw e;
             }
         }
     }
