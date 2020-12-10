@@ -27,12 +27,15 @@ SOFTWARE.
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.manager.ClassManager;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
+import java.lang.instrument.IllegalClassFormatException;
 
 public class AgentClassFileTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
@@ -50,6 +53,23 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             } catch (Throwable e) {
                 System.out.println("An exception was thrown when transforming class: " + className);
                 e.printStackTrace(System.out);
+                try {
+                    ProcessBuilder processBuilder = new ProcessBuilder("java", "-s", "-c", "-l", "-verbose",
+                            "-p", className.replace('/', '.'));
+                    processBuilder.redirectError();
+                    File file = File.createTempFile("prefix","javap");
+                    processBuilder.redirectOutput(file);
+                    Process process = processBuilder.start();
+                    process.waitFor();
+                    FileReader fr = new FileReader(file);
+                    try (BufferedReader br = new BufferedReader(fr)) {
+                        for(String line = br.readLine() ; line != null ; line = br.readLine()) {
+                            System.out.println(line);
+                        }
+                    }
+                } catch (IOException | InterruptedException ie) {
+                    ie.printStackTrace();
+                }
             }
         }
         return null;
@@ -72,6 +92,23 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             } catch (Throwable e) {
                 System.out.println("An exception was thrown when transforming class: " + className);
                 e.printStackTrace(System.out);
+                try {
+                    ProcessBuilder processBuilder = new ProcessBuilder("java", "-s", "-c", "-l", "-verbose",
+                            "-p", className.replace('/', '.'));
+                    processBuilder.redirectError();
+                    File file = File.createTempFile("prefix","javap");
+                    processBuilder.redirectOutput(file);
+                    Process process = processBuilder.start();
+                    process.waitFor();
+                    FileReader fr = new FileReader(file);
+                    try (BufferedReader br = new BufferedReader(fr)) {
+                        for(String line = br.readLine() ; line != null ; line = br.readLine()) {
+                            System.out.println(line);
+                        }
+                    }
+                } catch (IOException | InterruptedException ie) {
+                    ie.printStackTrace();
+                }
             }
         }
         return null;
