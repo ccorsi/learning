@@ -59,6 +59,10 @@ public class LoggerITCase {
         new PrintStreamThread("out: ", process.getInputStream()).start();
         new PrintStreamThread("err: ", process.getErrorStream()).start();
         System.out.println("Exit code: " + process.waitFor());
+        process = Utils.createJavaProcess("--version", paths);
+        new PrintStreamThread("out: ", process.getInputStream()).start();
+        new PrintStreamThread("err: ", process.getErrorStream()).start();
+        System.out.println("Exit code: " + process.waitFor());
     }
 
 }
