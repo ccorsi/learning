@@ -60,7 +60,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
     private void decompileJavaClass(String className) {
         try {
             System.out.println("Printing out decompiled class");
-            ProcessBuilder processBuilder = new ProcessBuilder("java", "-s", "-c", "-l", "-verbose",
+            ProcessBuilder processBuilder = new ProcessBuilder("javap", "-s", "-c", "-l", "-verbose",
                     "-p", className.replace('/', '.'));
             processBuilder = processBuilder.redirectErrorStream(true);
             String fileName = className.replace('/','.') + ".javap";
