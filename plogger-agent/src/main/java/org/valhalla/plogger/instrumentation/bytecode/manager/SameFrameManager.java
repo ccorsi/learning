@@ -36,6 +36,7 @@ import java.io.IOException;
 public class SameFrameManager implements StackMapFrameManager {
     // values 0-63 are SameFrame while value greater than 63 are SameFrameExtended
     private int frameType;
+    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
 
     public SameFrameManager(int frameType) {
         this.frameType = frameType;
@@ -58,6 +59,9 @@ public class SameFrameManager implements StackMapFrameManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
+        if (debug) {
+            System.out.println(this);
+        }
         if (frameType < 64) {
             // Store a SameFrame stack map frame
             os.write(frameType);

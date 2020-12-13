@@ -130,6 +130,31 @@ public abstract class AbstractInstruction implements InstructionEntry {
         }
     }
 
+    protected AbstractInstruction getOffsetInstruction(int offset) {
+        int current = 0;
+        AbstractInstruction instruction = this;
+
+        if (offset < 0) {
+            do {
+                instruction = instruction.getPrior();
+                if (instruction == null) {
+                    break; // break out of the loop
+                }
+                current -= instruction.size();
+            } while ( current > offset);
+        } else {
+            for (; instruction != null && current < offset; instruction = instruction.getNext() ) {
+                current += instruction.size();
+            }
+        }
+
+        if (current != offset) {
+            throw new ClassFileException(String.format("No instruction with offset %d found from instruction %s",
+                    offset, this));
+        }
+        return instruction;
+    }
+
     @Override
     public void write(DataOutput os) throws IOException {
         // store instruction opCodeS

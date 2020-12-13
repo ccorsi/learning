@@ -115,7 +115,7 @@ public class LocalVariableTypeTableManager implements AttributeManager {
         }
 
         public void sync(AbstractInstruction instruction, int pos) {
-            if (pos == startPc) {
+            if (startPc != 0 && pos == startPc) {
                 instruction.addListener(new InstructionListener() {
                     public void event(InstructionEntry instruction, int newPos) {
                         // update the startPc

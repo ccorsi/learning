@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
@@ -40,5 +38,12 @@ public class ObjectVariableManager extends BasicVariableInfoManager {
     public void write(DataOutput os) throws IOException {
         super.write(os);
         os.writeShort(constantPoolIndex);
+    }
+
+    @Override
+    public String toString() {
+        return "ObjectVariableManager{" +
+                "constantPoolIndex=" + constantPoolIndex +
+                '}';
     }
 }

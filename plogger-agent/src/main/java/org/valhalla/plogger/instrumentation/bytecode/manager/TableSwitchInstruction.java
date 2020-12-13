@@ -85,39 +85,25 @@ public class TableSwitchInstruction extends AbstractInstruction {
 
     @Override
     protected void sync() {
-        int current = 0;
-        AbstractInstruction instruction = this;
+        AbstractInstruction instruction = getOffsetInstruction(defaultPc);
+
         if (defaultPc < 0) {
-            for ( instruction = instruction.getPrior() ; // Don't include the size of the TableSwitchInstruction
-                  instruction != null && current > defaultPc ;
-                  instruction = instruction.getPrior() ) {
-                current -= instruction.size();
-            }
+            addListener(new OffsetInstructionListener(instruction) {
+                @Override
+                protected void offset(int offset) {
+                    defaultPc = 0;
+                    defaultPc -= offset;
+                }
+            });
         } else {
-            for ( ; instruction != null && current < defaultPc ; instruction = instruction.getNext() ) {
-                current += instruction.size();
-            }
+            instruction.addListener(new OffsetInstructionListener(this) {
+                @Override
+                protected void offset(int offset) {
+                    defaultPc = offset;
+                }
+            });
         }
-        if (current == defaultPc) {
-            if (defaultPc < 0) {
-                addListener(new OffsetInstructionListener(instruction) {
-                    @Override
-                    protected void offset(int offset) {
-                        defaultPc = 0;
-                        defaultPc -= offset;
-                    }
-                });
-            } else {
-                instruction.addListener(new OffsetInstructionListener(this) {
-                    @Override
-                    protected void offset(int offset) {
-                        defaultPc = offset;
-                    }
-                });
-            }
-        } else {
-            throw new ClassFileException(String.format("No instruction with default branch offset found"));
-        }
+
         for(int idx = 0 ; idx < this.offsets.length ; idx++) {
             addListenerForOffsetsOffset(idx);
         }
@@ -132,39 +118,23 @@ public class TableSwitchInstruction extends AbstractInstruction {
     }
 
     private void addListenerForOffsetsOffset(final int idx) {
-        int current = 0;
-        AbstractInstruction instruction = this;
-        int branchPc = offsets[idx];
-        if (branchPc < 0) {
-            for ( instruction = instruction.getPrior() ; // Don't include this instruction size
-                  instruction != null && current > branchPc ;
-                  instruction = instruction.getPrior() ) {
-                current -= instruction.size();
-            }
+        AbstractInstruction instruction = getOffsetInstruction(offsets[idx]);
+
+        if (offsets[idx] < 0) {
+            addListener(new OffsetInstructionListener(instruction) {
+                @Override
+                protected void offset(int offset) {
+                    offsets[idx] = 0;
+                    offsets[idx] -= offset;
+                }
+            });
         } else {
-            for ( ; instruction != null && current < branchPc ; instruction = instruction.getNext() ) {
-                current += instruction.size();
-            }
-        }
-        if (current == branchPc) {
-            if (branchPc < 0) {
-                addListener(new OffsetInstructionListener(instruction) {
-                    @Override
-                    protected void offset(int offset) {
-                        offsets[idx] = 0;
-                        offsets[idx] -= offset;
-                    }
-                });
-            } else {
-                instruction.addListener(new OffsetInstructionListener(this) {
-                    @Override
-                    protected void offset(int offset) {
-                        offsets[idx] = offset;
-                    }
-                });
-            }
-        } else {
-            throw new ClassFileException(String.format("No instruction with default branch offset found"));
+            instruction.addListener(new OffsetInstructionListener(this) {
+                @Override
+                protected void offset(int offset) {
+                    offsets[idx] = offset;
+                }
+            });
         }
     }
 

@@ -24,7 +24,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.valhalla.plogger.instrumentation.bytecode.manager.StackMapTableManager;
 import org.valhalla.plogger.instrumentation.utils.PrintStreamThread;
 import org.valhalla.plogger.instrumentation.utils.Utils;
 
@@ -38,8 +40,7 @@ public class LoggerITCase {
     public void itestLoggerWrite() throws IOException, InterruptedException {
         // This test will just start a java process and determine if it failed or not.
         System.out.println("Executing an integration test");
-        System.out.println("plogger agent jar: " +
-                System.getProperty("plogger.agent.jar"));
+        System.out.println("plogger agent jar: " + System.getProperty("plogger.agent.jar"));
 //        System.out.println("Test Application Class Path for jdk 7: " +
 //                System.getProperty("test.app7.classpath"));
 //        System.out.println("Test Application Class Path for jdk 9: " +
@@ -50,19 +51,77 @@ public class LoggerITCase {
         String[] paths = new String[] {
                 System.getProperty("test.app7.classpath")
         };
-        List<String> jvmOptions =  new ArrayList<String>(2);
-//        jvmOptions.add("-verbose");
-        jvmOptions.add("-Xshare:off"); // insure that class sharing is not enabled.
-        jvmOptions.add(String.format("-javaagent:%s", System.getProperty("plogger.agent.jar")));
-        Process process = Utils.createJavaProcess(mainClassName, paths, jvmOptions.toArray(Utils.EMPTY_STRING_ARRAY),
-                Utils.EMPTY_STRING_ARRAY);
-        new PrintStreamThread("out: ", process.getInputStream()).start();
-        new PrintStreamThread("err: ", process.getErrorStream()).start();
-        System.out.println("Exit code: " + process.waitFor());
-        process = Utils.createJavaProcess("--version", paths);
-        new PrintStreamThread("out: ", process.getInputStream()).start();
-        new PrintStreamThread("err: ", process.getErrorStream()).start();
-        System.out.println("Exit code: " + process.waitFor());
+        String[] jvmOptions = {
+//                String.format("-D%s=true", StackMapTableManager.DEBUG_PROPERTY_NAME),
+                "-Xverify:all",
+                "-Xshare:off", // insure that class sharing is not enabled.
+                String.format("-javaagent:%s", System.getProperty("plogger.agent.jar")),
+        };
+        String[] args = Utils.EMPTY_STRING_ARRAY;
+        executeTest(mainClassName, paths, jvmOptions, args);
     }
 
+    @Test
+    public void testLoggerWriteFlushForJava7() throws Throwable {
+        System.out.println("Executing an integration test");
+        System.out.println("plogger agent jar: " + System.getProperty("plogger.agent.jar"));
+        String mainClassName = "org.valhalla.plogger.test.Main";
+        String[] paths = new String[] {
+                System.getProperty("test.app7.classpath")
+        };
+        String[] jvmOptions = {
+                "-Xverify:all",
+                "-Xshare:off", // insure that class sharing is not enabled.
+                String.format("-javaagent:%s", System.getProperty("plogger.agent.jar"))
+        };
+        String[] args = {
+                "150"
+        };
+        executeTest(mainClassName, paths, jvmOptions, args);
+    }
+
+    @Test
+    public void testLoggerWriteRolloverLogFileForJava7() throws Throwable {
+        System.out.println("Executing an integration test");
+        System.out.println("plogger agent jar: " + System.getProperty("plogger.agent.jar"));
+        String mainClassName = "org.valhalla.plogger.test.Main";
+        String[] paths = new String[] {
+                System.getProperty("test.app7.classpath")
+        };
+        String[] jvmOptions = {
+                "-Xverify:all",
+                "-Xshare:off", // insure that class sharing is not enabled.
+                String.format("-javaagent:%s", System.getProperty("plogger.agent.jar"))
+        };
+        String[] args = {
+                "1100"
+        };
+        executeTest(mainClassName, paths, jvmOptions, args);
+    }
+
+    private void executeTest(String mainClassName, String[] paths, String[] jvmOptions, String[] args) throws IOException, InterruptedException {
+        Process process = Utils.createJavaProcess(mainClassName, paths, jvmOptions, args);
+        PrintStreamThread[] streams = {
+                new PrintStreamThread("out: ", process.getInputStream()),
+                new PrintStreamThread("err: ", process.getErrorStream()),
+        };
+        for (PrintStreamThread stream : streams) {
+            stream.start();
+        }
+        for (PrintStreamThread stream : streams) {
+            stream.join();
+        }
+        int exitCode = process.waitFor();
+        System.out.println("Exit code: " + exitCode);
+        Assertions.assertEquals(0, exitCode, "Test exited with an error");
+//        process = Utils.createJavaProcess("--version", paths);
+//        streams =  new PrintStreamThread[] {
+//                new PrintStreamThread("out: ", process.getInputStream()),
+//                new PrintStreamThread("err: ", process.getErrorStream()),
+//        };
+//        for(PrintStreamThread stream : streams) {
+//            stream.start();
+//        }
+//        System.out.println("Exit code: " + process.waitFor());
+    }
 }

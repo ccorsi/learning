@@ -36,6 +36,7 @@ public class FullFrameManager implements StackMapFrameManager {
     private int offset;
     private final VerificationTypeManager[] locals;
     private final VerificationTypeManager[] stack;
+    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
 
     public FullFrameManager(DataInputStream dis) {
         try {
@@ -47,8 +48,13 @@ public class FullFrameManager implements StackMapFrameManager {
             }
             size = dis.readUnsignedShort();
             stack = new VerificationTypeManager[size];
-            for(int idx = 0 ; idx < locals.length ; idx++) {
-                stack[idx] = VerificationTypeManagerFactory.create(dis);
+            for(int idx = 0 ; idx < stack.length ; idx++) {
+                try {
+                    stack[idx] = VerificationTypeManagerFactory.create(dis);
+                } catch (ClassFileException cfe) {
+                    System.out.println("Raised exception when trying to create verification entry: " + idx);
+                    throw cfe;
+                }
             }
         } catch (IOException e) {
             throw new ClassFileException(e);
@@ -83,6 +89,9 @@ public class FullFrameManager implements StackMapFrameManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
+        if (debug) {
+            System.out.println(this);
+        }
         os.write(frameType);
         os.writeShort(offset);
         os.writeShort(locals.length);

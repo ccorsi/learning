@@ -29,6 +29,7 @@ import java.io.IOException;
 public class ChopFrameManager implements StackMapFrameManager {
     private final int frameType;
     private int offset;
+    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
 
     public ChopFrameManager(int frameType, int offset) {
         this.frameType = frameType;
@@ -52,6 +53,9 @@ public class ChopFrameManager implements StackMapFrameManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
+        if (debug) {
+            System.out.println(this);
+        }
         os.write(frameType);
         os.writeShort(offset);
     }

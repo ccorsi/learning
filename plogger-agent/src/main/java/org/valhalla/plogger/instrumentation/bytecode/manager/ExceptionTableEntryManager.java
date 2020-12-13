@@ -57,14 +57,16 @@ public class ExceptionTableEntryManager implements ClassFileWriter {
                     startPc = newPos;
                 }
             });
-        } else if(endPc == pos) {
+        }
+        if(endPc == pos) {
             instruction.addListener(new InstructionListener() {
                 @Override
                 public void event(InstructionEntry instruction, int newPos) {
                     endPc = newPos;
                 }
             });
-        } else if(handlePc == pos) {
+        }
+        if(handlePc == pos) {
             instruction.addListener(new InstructionListener() {
                 @Override
                 public void event(InstructionEntry instruction, int newPos) {

@@ -34,6 +34,7 @@ public class AppendFrameManager implements StackMapFrameManager {
     private final int frameType;
     private int offset;
     private final VerificationTypeManager[] entries;
+    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
 
     public AppendFrameManager(int frameType, DataInputStream dis) {
         this.frameType = frameType;
@@ -74,6 +75,9 @@ public class AppendFrameManager implements StackMapFrameManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
+        if (debug) {
+            System.out.println(this);
+        }
         os.write(frameType);
         os.writeShort(offset);
         for (VerificationTypeManager type : entries) {

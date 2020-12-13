@@ -60,7 +60,13 @@ public class FieldManager implements ClassFileWriter {
             int size = dis.readUnsignedShort();
             this.attributes = new AttributeManager[size];
             for(int idx = 0 ; idx < size ; idx++) {
-                this.attributes[idx] = AttributeManagerFactory.create(dis, constantPoolManager);
+                try {
+                    this.attributes[idx] = AttributeManagerFactory.create(dis, constantPoolManager);
+                } catch (RuntimeException re) {
+                    System.out.println("An exception was raised while processing attribute " + idx +
+                            " out of " + size + " for field at index " + this.nameIndex);
+                    throw re;
+                }
             }
         } catch (IOException e) {
             throw new ClassFileException(e);

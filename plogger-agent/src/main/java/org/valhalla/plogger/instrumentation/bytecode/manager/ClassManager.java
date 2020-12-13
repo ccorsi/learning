@@ -32,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -69,7 +70,7 @@ public class ClassManager implements ClassFileWriter {
 
     public ClassManager(String className, byte[] bytes) throws ClassFileException {
         this.className = className;
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        ClassManagerInputStream is = new ClassManagerInputStream(new ByteArrayInputStream(bytes));
         try (DataInputStream dis = new DataInputStream(is)) {
             byte[] magic = new byte[4];
             int read = dis.read(magic);
@@ -96,23 +97,26 @@ public class ClassManager implements ClassFileWriter {
             // Extract the class file interfaces
             int size = dis.readUnsignedShort();
             int[] interfaces = new int[size];
-//                for(int idx = 0 ; idx < size ; idx++) {
-//                    interfaces[idx] = dis.readUnsignedShort();
-//                    // TODO: Validate each interface.
-////                    validateInterface(classFile, classFile.interfaces[idx]);
-//                }
+            for (int idx = 0; idx < size; idx++) {
+                interfaces[idx] = dis.readUnsignedShort();
+                // TODO: Validate each interface.
+//                    validateInterface(classFile, classFile.interfaces[idx]);
+            }
             interfaceManager = new InterfaceManager(interfaces);
             // Extract the class file fields
             size = dis.readUnsignedShort();
             this.fieldManagers = new FieldManager[size];
             for (int idx = 0; idx < size; idx++) {
                 fieldManagers[idx] = new FieldManager(constantPoolManager, dis);
+//                System.out.println(String.format("Class: %s field: %s", className,
+//                        fieldManagers[idx].getName(constantPoolManager)));
             }
             // Extract the class file methods
             size = dis.readUnsignedShort();
             this.methodManagers = new MethodManager[size];
             for (int idx = 0; idx < size; idx++) {
                 methodManagers[idx] = new MethodManager(constantPoolManager, dis);
+//                System.out.println(String.format("Class: %s method: %s", className, methodManagers[idx].getName()));
             }
             // Extract the class file attributes
             size = dis.readUnsignedShort();
@@ -121,8 +125,12 @@ public class ClassManager implements ClassFileWriter {
                 attributeManagers[idx] = AttributeManagerFactory.create(dis, constantPoolManager);
             }
         } catch (ClassFileException e) {
+            System.out.println(String.format("An exception was raised for class: %s at byte %d",
+                    className, is.getCount()));
             throw e;
         } catch (IOException ioe) {
+            System.out.println(String.format("An exception was raised for class: %s at byte %d",
+                    className, is.getCount()));
             throw new ClassFileException(ioe);
         }
     }
@@ -240,5 +248,30 @@ public class ClassManager implements ClassFileWriter {
 
     public MethodManager[] getMethods() {
         return methodManagers;
+    }
+
+    private class ClassManagerInputStream extends InputStream {
+        private final InputStream is;
+        private long count;
+
+        public ClassManagerInputStream(InputStream is) {
+            this.is = is;
+            count = 0;
+        }
+
+        @Override
+        public int read() throws IOException {
+            count++;
+            return is.read();
+        }
+
+        @Override
+        public void close() throws IOException {
+            is.close();
+        }
+
+        public long getCount() {
+            return count;
+        }
     }
 }

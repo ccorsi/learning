@@ -24,12 +24,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class LoggerManager {
+
+    private static final ThreadLocal<Boolean> state = new BooleanThreadLocal();
+
+    private static class BooleanThreadLocal extends ThreadLocal<Boolean> {
+        @Override
+        protected Boolean initialValue() {
+            return Boolean.FALSE;
+        }
+    }
+
     public static void init() {
-        LoggerStorageManager.addShutdownHookThread();
-        LoggerStorageManager.startLoggerStorageManagerThread();
+//        System.out.println("ENTERED LOGGER MANAGER INIT");
+        enter();
+        try {
+//            System.out.println("BEFORE CALLING LOGGER STORAGE MANAGER");
+            LoggerStorageManager.addShutdownHookThread();
+//            System.out.println("NEXT CALLING LOGGER STORAGE MANAGER");
+            LoggerStorageManager.startLoggerStorageManagerThread();
+//            System.out.println("AFTER CALLING LOGGER STORAGE MANAGER");
+            // Allow static initialization to be loaded and avoid core dumps.
+//            System.out.println("CALLING LOGGER WRITE");
+            Logger.write(LoggerManager.class, "init");
+//            System.out.println("CALLED LOGGER WRITE");
+            exit();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (Throwable t) {
+            t.printStackTrace();
+            throw new RuntimeException(t);
+        } finally {
+//            System.out.println("EXITING LOGGER MANAGER INIT");
+        }
     }
 
     private static ThreadLocal<List<String>> buffers = new ThreadLocal<List<String>>() {
@@ -44,8 +75,10 @@ public class LoggerManager {
         public List<String> get() {
             List<String> buffer = super.get();
             if (buffer.size() > 99) {
+//                System.out.println("BUFFER FULL");
                 LoggerStorageManager.store(buffer);
                 buffer = LoggerStorageManager.createEntriesBuffer();
+                set(buffer);
             }
             return buffer;
         }
@@ -54,4 +87,19 @@ public class LoggerManager {
     public static List<String> getEntriesBuffer() {
         return buffers.get();
     }
+
+    public static boolean enter() {
+        if (state != null && state.get() == Boolean.FALSE) {
+            state.set(Boolean.TRUE);
+            return true;
+        }
+        return false;
+    }
+
+    public static void exit() {
+        if (state != null && state.get() == Boolean.TRUE) {
+            state.set(Boolean.FALSE);
+        }
+    }
+
 }

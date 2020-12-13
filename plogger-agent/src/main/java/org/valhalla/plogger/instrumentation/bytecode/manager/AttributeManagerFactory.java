@@ -58,10 +58,10 @@ public class AttributeManagerFactory {
         try {
             // Extract the attribute index into the constant pool
             int nameIndex = dis.readUnsignedShort();
-            int length = dis.readInt();
-            // this will through a ClassCastException if it can't sub class the instance to ConstantUtf8
+            // this will cause a ClassCastException if it can't sub class the instance to ConstantUtf8
             ConstantUtf8 utf8 = constantPoolManager.getEntry(nameIndex);
             String name = utf8.getString();
+            int length = dis.readInt();
             AttributeManager attribute;
             switch (name) {
                 case "Code":
@@ -84,7 +84,9 @@ public class AttributeManagerFactory {
                     int copiedCount = dis.read(data);
                     // confirm that bytes were read
                     if (copiedCount != length) {
-                        throw new ClassFileException("Unable to read all attribute data");
+                        throw new ClassFileException(
+                                String.format("Unable to read all attribute data read %d expected %d", copiedCount,
+                                        length));
                     }
                     attribute = new DefaultAttributeManager(nameIndex, data);
             }

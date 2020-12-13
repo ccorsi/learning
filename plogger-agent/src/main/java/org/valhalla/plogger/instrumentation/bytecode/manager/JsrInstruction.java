@@ -50,38 +50,23 @@ public class JsrInstruction extends AbstractInstruction {
 
     @Override
     protected void sync() {
-        int current = 0;
-        AbstractInstruction instruction = this;
+        AbstractInstruction instruction = getOffsetInstruction(branchPc);
+
         if (branchPc < 0) {
-            for ( instruction = instruction.getPrior() ; // Don't include this size
-                  instruction != null && current > branchPc ; instruction = instruction.getPrior() ) {
-                current -= instruction.size();
-            }
+            addListener(new OffsetInstructionListener(instruction) {
+                @Override
+                protected void offset(int offset) {
+                    branchPc = 0;
+                    branchPc -= offset;
+                }
+            });
         } else {
-            current = size();
-            for ( ; instruction != null && current < branchPc ; instruction = instruction.getNext() ) {
-                current += instruction.size();
-            }
-        }
-        if (current == branchPc) {
-            if (branchPc < 0) {
-                addListener(new OffsetInstructionListener(instruction) {
-                    @Override
-                    protected void offset(int offset) {
-                        branchPc = 0;
-                        branchPc -= offset;
-                    }
-                });
-            } else {
-                instruction.addListener(new OffsetInstructionListener(this) {
-                    @Override
-                    protected void offset(int offset) {
-                        branchPc = offset;
-                    }
-                });
-            }
-        } else {
-            throw new ClassFileException(String.format("No instruction with branch offset %s found"));
+            instruction.addListener(new OffsetInstructionListener(this) {
+                @Override
+                protected void offset(int offset) {
+                    branchPc = offset;
+                }
+            });
         }
     }
 

@@ -37,6 +37,26 @@ public class LoggerManager {
         }
     };
 
+    private static final ThreadLocal<Boolean> enters = new ThreadLocal<Boolean>() {
+
+        @Override
+        protected Boolean initialValue() {
+            return Boolean.FALSE;
+        }
+    };
+
+    public static boolean enter() {
+        if (enters.get() == Boolean.FALSE) {
+            enters.set(Boolean.TRUE);
+            return true;
+        }
+        return false;
+    }
+
+    public static void exit() {
+        enters.set(Boolean.FALSE);
+    }
+
     public static List<String> getEntriesBuffer() {
         return buffers.get();
     }

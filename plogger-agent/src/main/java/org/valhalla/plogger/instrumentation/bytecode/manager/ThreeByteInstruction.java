@@ -23,22 +23,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
 public class ThreeByteInstruction extends AbstractInstruction {
-    private final int[] data;
+    private final int index;
     private final int operandStackChange;
 
     //  TODO: Replace byte1 and byte2 parameters with an int array instead.
-    public ThreeByteInstruction(int opCode, int byte1, int byte2, int operandStackChange, String name,
+    public ThreeByteInstruction(int opCode, int index, int operandStackChange, String name,
                                 InstructionEntry entry) {
         super(opCode, name, entry);
-        this.data = new int[2];
-        this.data[0] = byte1;
-        this.data[1] = byte2;
+        this.index = index;
         this.operandStackChange = operandStackChange;
     }
 
@@ -60,8 +56,6 @@ public class ThreeByteInstruction extends AbstractInstruction {
     @Override
     public void write(DataOutput os) throws IOException {
         super.write(os);
-        for (int value : data) {
-            os.write(value);
-        }
+        os.writeShort(index);
     }
 }

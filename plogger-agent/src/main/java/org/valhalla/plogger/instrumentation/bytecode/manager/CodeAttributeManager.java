@@ -92,33 +92,44 @@ public class CodeAttributeManager implements AttributeManager {
     private static final int JDK_5_VERSION = 49;
     private static final int JDK_6_VERSION = 50;
 
-    public boolean instrument(ClassManager classManager, MethodManager methodManager) {
-        // ok we are finally ready to instrument the method.
-        // let us determine if this is a static or instance method.
-        int accessFlags = methodManager.getAccessFlags();
-        int majorVersion = classManager.getMajorVersion();
-        if ((accessFlags & ACC_STATIC) != 0) {
-            // let us determine which class version this method is part of.
-            // classes generated for jdk 1.4 or earlier will require different
-            // instrumentation updates than class versions for jdk 1.5 or newer.
-            if (majorVersion < JDK_5_VERSION) {
-                // This class file can't use the concise instruction to get
-                // a reference to the class class instance.  We need to use
-                // the Class.forName(<className>) method call instead.
-                return instrumentJdk4VersionStaticMethod(classManager, methodManager);
-            } else {
-                // This class file can use the concise instruction to get
-                // a reference to the class class instance.  This will make
-                // the code more concise.
+    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
 
-                // This class file may or may not contain a StackMapTable so
-                // we need to worry about updating this attribute.
-                return instrumentJdk5VersionStaticMethod(classManager, methodManager);
+    public boolean instrument(ClassManager classManager, MethodManager methodManager) {
+        if (debug) {
+            System.out.println("Instrumenting method: " + methodManager.getName());
+        }
+        try {
+            // ok we are finally ready to instrument the method.
+            // let us determine if this is a static or instance method.
+            int accessFlags = methodManager.getAccessFlags();
+            int majorVersion = classManager.getMajorVersion();
+            if ((accessFlags & ACC_STATIC) != 0) {
+                // let us determine which class version this method is part of.
+                // classes generated for jdk 1.4 or earlier will require different
+                // instrumentation updates than class versions for jdk 1.5 or newer.
+                if (majorVersion < JDK_5_VERSION) {
+                    // This class file can't use the concise instruction to get
+                    // a reference to the class class instance.  We need to use
+                    // the Class.forName(<className>) method call instead.
+                    return instrumentJdk4VersionStaticMethod(classManager, methodManager);
+                } else {
+                    // This class file can use the concise instruction to get
+                    // a reference to the class class instance.  This will make
+                    // the code more concise.
+
+                    // This class file may or may not contain a StackMapTable so
+                    // we need to worry about updating this attribute.
+                    return instrumentJdk5VersionStaticMethod(classManager, methodManager);
+                }
+            } else {
+                // let us then instrument this instance method.
+                // we are instrumenting a method that may or may not contain a stack map table
+                return instrumentInstanceMethod(classManager, methodManager);
             }
-        } else {
-            // let us then instrument this instance method.
-            // we are instrumenting a method that may or may not contain a stack map table
-            return instrumentInstanceMethod(classManager, methodManager);
+        } finally {
+            if (debug) {
+                System.out.println("Instrumented method: " + methodManager.getName());
+            }
         }
     }
 
@@ -311,8 +322,8 @@ public class CodeAttributeManager implements AttributeManager {
 
     private AbstractInstruction addLdcInstruction(int index, AbstractInstruction instruction) {
         if (index > 255) {
-            return new ThreeByteInstruction(InstructionEntryFactory.LDC_W, (index / 256) >> 8,
-                    index % 256, 1, "LDC_W", instruction);
+            return new ThreeByteInstruction(InstructionEntryFactory.LDC_W, index, 1, "LDC_W",
+                    instruction);
         } else {
             return new TwoByteInstruction(InstructionEntryFactory.LDC, index, 1, "LDC",
                     instruction);
@@ -488,14 +499,14 @@ public class CodeAttributeManager implements AttributeManager {
                             "LLOAD", instruction);
                 }
             };
-            ParameterInstruction IntegerParameter = new AbstractParameterInstruction(2) {
+            ParameterInstruction IntegerParameter = new AbstractParameterInstruction(1) {
                 @Override
                 public AbstractInstruction createInstruction(ClassManager classManager, MethodManager methodManager, Slot slot, AbstractInstruction instruction) {
                     return addPrimitiveInstruction(classManager, slot, "java/lang/Integer", "(I)Ljava/lang/Integer;",  InstructionEntryFactory.ILOAD, InstructionEntryFactory.ILOAD_0,
                             "ILOAD", instruction);
                 }
             };
-            ParameterInstruction FloatParameter = new AbstractParameterInstruction(2) {
+            ParameterInstruction FloatParameter = new AbstractParameterInstruction(1) {
                 @Override
                 public AbstractInstruction createInstruction(ClassManager classManager, MethodManager methodManager, Slot slot, AbstractInstruction instruction) {
                     return addPrimitiveInstruction(classManager, slot, "java/lang/Float", "(F)Ljava/lang/Float;", InstructionEntryFactory.FLOAD, InstructionEntryFactory.FLOAD_0,

@@ -36,8 +36,10 @@ import java.lang.instrument.ClassFileTransformer;
 import java.security.ProtectionDomain;
 
 public class AgentClassFileTransformer implements ClassFileTransformer {
+
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) {
-        if (! className.startsWith("org/valhalla/plogger/instrumentation") && ! className.startsWith("java/lang")) {
+        if (! className.startsWith("org/valhalla/plogger/instrumentation")
+                && ! className.contains("sun/launcher/LauncherHelper") && ! className.startsWith("java/lang")) {
             try {
                 ClassManager classManager = new ClassManager(className, classfileBuffer);
                 if (classManager.instrument()) {

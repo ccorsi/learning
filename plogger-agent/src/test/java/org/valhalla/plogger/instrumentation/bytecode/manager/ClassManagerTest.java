@@ -127,6 +127,48 @@ public class ClassManagerTest {
         Assertions.assertTrue(classManager.instrument(), "Unable to instrument class LauncherHelper");
     }
 
+    @Test
+    void loadIssueClasses() throws IOException {
+        String[] classNames = {
+                "jdk/internal/loader/AbstractClassLoaderValue$Memoizer",
+                "jdk/internal/loader/BuiltinClassLoader$5",
+                "jdk/internal/module/SystemModuleFinders$SystemModuleReader",
+                "jdk/internal/module/ModulePatcher$PatchedModuleReader",
+                "jdk/internal/jimage/ImageReaderFactory$1",
+                "jdk/internal/jimage/ImageReader",
+                "jdk/internal/jimage/BasicImageReader",
+                "jdk/internal/jimage/BasicImageReader$1",
+                "jdk/internal/jimage/NativeImageBuffer$1",
+                "jdk/internal/jimage/ImageStringsReader",
+                "jdk/internal/jimage/ImageReaderFactory$1",
+        };
+
+        for(String className : classNames) {
+            System.out.println("Loading class " + className);
+            classManagerUtil = new ClassManagerUtil(className);
+            ClassFile classFile = classManagerUtil.getClassFile();
+            ClassMethod classMethod = classFile.getMethods().next();
+            ClassManager classManager = classManagerUtil.getClassManager();
+            Assertions.assertTrue(classManager.instrument(), "Unable to instrument class " + className);
+            classManagerUtil.close();
+        }
+    }
+
+    @Test
+    void loadLauncherClass() throws IOException {
+//        System.setProperty(StackMapTableManager.DEBUG_PROPERTY_NAME, "true");
+        try {
+            String className = "sun/launcher/LauncherHelper";
+            classManagerUtil = new ClassManagerUtil(className);
+            ClassFile classFile = classManagerUtil.getClassFile();
+            ClassMethod classMethod = classFile.getMethods().next();
+            ClassManager classManager = classManagerUtil.getClassManager();
+            Assertions.assertTrue(classManager.instrument(), "Unable to instrument class " + className);
+        } finally {
+//            System.setProperty(StackMapTableManager.DEBUG_PROPERTY_NAME, "false");
+        }
+    }
+
     private void loadInstrumentAndCallClass(String className, Class<?>[] constructorParameterTypes,
                                             Object[] constructorParameters, MethodDefinition[] methodDefinitions)
             throws IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {

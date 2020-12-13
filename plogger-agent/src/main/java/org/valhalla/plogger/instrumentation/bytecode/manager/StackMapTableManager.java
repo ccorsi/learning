@@ -32,13 +32,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StackMapTableManager implements AttributeManager {
+    public static final String DEBUG_PROPERTY_NAME = "stack.map.table.debug";
     private final int nameIndex;
     private final StackMapFrameManager[] frameManagers;
     private int frameIdx;
     private int framePos;
     private AbstractInstruction priorInstruction;
+    private boolean debug = Boolean.getBoolean(DEBUG_PROPERTY_NAME);
 
     public StackMapTableManager(StackMapTable stackMapTable) {
+        // TODO: remove this ctor
         // Deals with the case that the original method code attribute
         // does not contain a StackMapTable for whatever reason.
         nameIndex = stackMapTable.getNameIndex();
@@ -50,6 +53,7 @@ public class StackMapTableManager implements AttributeManager {
         frameIdx = 0;
         framePos = frameManagers[frameIdx].offset();
         priorInstruction = null;
+//        System.out.println("FIRST STACK MAP FRAME: " + frameManagers[frameIdx]);
     }
 
     public StackMapTableManager(int nameIndex, DataInputStream dis) {
@@ -59,26 +63,45 @@ public class StackMapTableManager implements AttributeManager {
             int size = dis.readUnsignedShort();
             frameManagers = new StackMapFrameManager[size];
             for(int idx = 0 ; idx < frameManagers.length ; idx++) {
-                frameManagers[idx] = StackMapFrameManagerFactory.create(dis);
+                try {
+                    frameManagers[idx] = StackMapFrameManagerFactory.create(dis);
+                } catch (ClassFileException cfe) {
+//                    System.out.println("Exception was raised when creating StackMapFrame: " + idx);
+//                    for(int cnt = 0 ; cnt < idx ; cnt++) {
+//                        System.out.println(frameManagers[cnt]);
+//                    }
+                    throw cfe;
+                }
             }
         } catch(IOException e) {
             throw new ClassFileException(e);
         }
+        frameIdx = 0;
+        framePos = frameManagers[frameIdx].offset();
+        priorInstruction = null;
+//        System.out.println("FIRST STACK MAP FRAME: " + frameManagers[frameIdx]);
     }
 
     public void sync(AbstractInstruction instruction, int pos) {
         if (framePos == pos) {
-            StackMapFrameListener listener = new StackMapFrameListener(frameIdx, priorInstruction, instruction);
-            if (priorInstruction != null) {
-                priorInstruction.addListener(listener);
+            if (debug) {
+                System.out.println("Adding StackMapFrameListener for pos " + pos + " at instruction " + instruction);
             }
+            StackMapFrameListener listener = new StackMapFrameListener(framePos, frameIdx, priorInstruction);
             instruction.addListener(listener);
             priorInstruction = instruction;
             // increment the framePos to point to the next frame
             frameIdx++;
             if (frameIdx < frameManagers.length) {
                 framePos += 1 + frameManagers[frameIdx].offset();
+                if (debug) {
+                    System.out.println(String.format("frameIdx: %d, framePos: %d - %s", frameIdx, framePos,
+                            frameManagers[frameIdx]));
+                }
             }
+        } if (frameIdx < frameManagers.length && pos > framePos) {
+            throw new ClassFileException(String.format("Unable to find stack map frame at position %s for frame %s",
+                    framePos, frameManagers[frameIdx]));
         }
         for(StackMapFrameManager frame : frameManagers) {
             // All this just to be able to sync the Uninitialized variable info verification type!
@@ -98,34 +121,43 @@ public class StackMapTableManager implements AttributeManager {
 
         private final int frameIndex;
         private final AbstractInstruction priorFrameInstruction;
-        private final AbstractInstruction frameInstruction;
-        private int priorFramePos;
+        private final int framePos;
 
-        public StackMapFrameListener(int frameIndex, AbstractInstruction priorFrameInstruction,
-                                     AbstractInstruction frameInstruction) {
+        public StackMapFrameListener(int framePos, int frameIndex, AbstractInstruction priorFrameInstruction) {
+            this.framePos = framePos;
             this.frameIndex = frameIndex;
             this.priorFrameInstruction = priorFrameInstruction;
-            this.frameInstruction = frameInstruction;
-            this.priorFramePos = 0;
         }
 
         @Override
-        public void event(InstructionEntry instruction, int newPos) {
-            if (instruction == priorFrameInstruction) {
-                // store start frame position
-                priorFramePos = newPos;
-            } else if (instruction == frameInstruction) {
-                if (priorFramePos == 0) {
-                    // This is the first frame so we don't add 1 to the offset check
-                    if ((priorFramePos + frameManagers[frameIndex].offset()) != newPos) {
-                        frameManagers[frameIndex].setOffset(newPos);
-                    }
-                } else {
-                    // check that the offset is correct, if not update stack map frame
-                    if ((priorFramePos + frameManagers[frameIndex].offset() + 1) != newPos) {
-                        int offset = newPos - priorFramePos - 1;
-                        frameManagers[frameIndex].setOffset(offset);
-                    }
+        public void event(final InstructionEntry instruction, int newPos) {
+            int offset = 0;
+            if (priorFrameInstruction == null) {
+                // We are in the first stack map frame
+                AbstractInstruction instr = (AbstractInstruction) instruction;
+                for (instr = instr.getPrior() ; instr != null ; instr = instr.getPrior()) {
+                    offset += instr.size();
+                }
+            } else {
+                // This is not the first stack map frame
+                for (AbstractInstruction instr = priorFrameInstruction ;
+                     instr != instruction ; instr = instr.getNext()) {
+                    offset += instr.size();
+                }
+                offset--;
+            }
+            if (debug) {
+                System.out.println("offset: " + offset + " from " + priorFrameInstruction + " to " + instruction);
+            }
+            // check that the offset is correct, if not update stack map frame
+            if (frameManagers[frameIndex].offset() != offset) {
+                if (debug) {
+                    System.out.println("Updating offset " + offset + " for Stack Map Frame "
+                            + frameManagers[frameIndex]);
+                }
+                frameManagers[frameIndex].setOffset(offset);
+                if (debug) {
+                    System.out.println("to Stack Map Frame " + frameManagers[frameIndex]);
                 }
             }
         }
@@ -135,14 +167,16 @@ public class StackMapTableManager implements AttributeManager {
             return "StackMapFrameListener{" +
                     "frameIndex=" + frameIndex +
                     ", priorFrameInstruction=" + priorFrameInstruction +
-                    ", frameInstruction=" + frameInstruction +
-                    ", priorFramePos=" + priorFramePos +
                     '}';
         }
     }
 
     @Override
     public void write(DataOutput os) throws IOException {
+        if (debug) {
+            System.out.println("Storing StackMapTable");
+            System.out.println(this);
+        }
         os.writeShort(nameIndex);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try(DataOutputStream dos = new DataOutputStream(bos)) {

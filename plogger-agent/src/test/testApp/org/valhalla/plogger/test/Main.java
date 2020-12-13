@@ -29,18 +29,36 @@ import org.valhalla.plogger.instrumentation.utils.SampleClass;
 public class Main {
 
     public static void main(String[] args) {
+        int count = 1;
+        if (args.length > 0) {
+            try {
+                count = Integer.parseInt(args[0]);
+            } catch (RuntimeException e) {
+
+            }
+        }
         print();
-        load();
+        while( count-- > 0 )
+            load(count);
+
+        recursive(10, 0);
+
+        System.out.println("Thread: " + Thread.currentThread().getName());
+    }
+
+    private static void recursive(int max, int current) {
+        System.out.println(String.format("Calling recursive call %d", current));
+        if (current < max) recursive(max, ++current);
     }
 
     private static void print() {
         System.out.println("Hello, world!");
     }
 
-    private static void load() {
-        SampleClass sampleClass = new SampleClass("name");
+    private static void load(int c) {
+        SampleClass sampleClass = new SampleClass(String.format("Name:%d", c));
         System.out.println(String.format("SampleClass name: %s", sampleClass.getName()));
-        sampleClass.setName("No name");
+        sampleClass.setName(String.format("Updated Name:%d", c));
         System.out.println(String.format("SampleClass name: %s", sampleClass.getName()));
     }
 }

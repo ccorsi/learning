@@ -34,9 +34,16 @@ import java.io.IOException;
 public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager {
     private int frameType;
     private final VerificationTypeManager verificationTypeManager;
+    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
 
     public SameLocalsOneStackItemFrameManager(int frameType, VerificationTypeManager verificationTypeManager) {
-        this.frameType = frameType;
+        if (frameType > 63 && frameType < 128) {
+            // SameLocal1StackItemFrame stack map frame
+            this.frameType = frameType - 64;
+        } else {
+            // SameLocal1StackItemFrameExtended stack map frame
+            this.frameType = frameType;
+        }
         this.verificationTypeManager = verificationTypeManager;
     }
 
@@ -52,13 +59,14 @@ public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager 
 
     @Override
     public void setOffset(int offset) {
-        if (offset > 63) {
-            // SameLocals1StackItemFrameExtended stack map frame
-            frameType = offset;
-        } else {
-            // SameLocals1StackItemExtended stack map frame
-            frameType = offset + 64;
-        }
+        frameType = offset;
+//        if (offset > 63) {
+//            // SameLocals1StackItemFrameExtended stack map frame
+//            frameType = offset;
+//        } else {
+//            // SameLocals1StackItemExtended stack map frame
+//            frameType = offset;
+//        }
     }
 
     @Override
@@ -68,9 +76,12 @@ public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager 
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (frameType < 128) {
+        if (debug) {
+            System.out.println(this);
+        }
+        if (frameType < 64) {
             // store a SameLocals1StackItemFrame stack map frame
-            os.write(frameType);
+            os.write(frameType + 64);
             verificationTypeManager.write(os);
         } else {
             // store a SameLocals1StackItemFrameExtended stack map frame

@@ -296,15 +296,15 @@ public class InstructionEntryFactory {
             case BIPUSH:
                 return new TwoByteInstruction(opCode, dis.read(), 1, "BIPUSH", entry);
             case SIPUSH:
-                return new ThreeByteInstruction(opCode, dis.read(), dis.read(), 1, "SIPUSH",
+                return new ThreeByteInstruction(opCode, dis.readShort(), 1, "SIPUSH",
                         entry);
             case LDC:
                 return new TwoByteInstruction(opCode, dis.read(), 1, "LDC", entry);
             case LDC_W:
-                return new ThreeByteInstruction(opCode, dis.read(), dis.read(), 1, "LDC_W",
+                return new ThreeByteInstruction(opCode, dis.readUnsignedShort(), 1, "LDC_W",
                         entry);
             case LDC2_W:
-                return new ThreeByteInstruction(opCode, dis.read(), dis.read(), 1, "LDC2_W",
+                return new ThreeByteInstruction(opCode, dis.readUnsignedShort(), 1, "LDC2_W",
                         entry);
             // Load instructions
             case ILOAD:
@@ -577,40 +577,40 @@ public class InstructionEntryFactory {
             case DCMPG:
                 return new StaticInstruction(opCode, -1, "DCMPG", entry);
             case IFEQ:
-                return new IfInstruction(opCode, -1, "IFEQ", dis.readUnsignedShort(), entry);
+                return new IfInstruction(opCode, -1, "IFEQ", dis.readShort(), entry);
             case IFNE:
-                return new IfInstruction(opCode, -1, "IFNE", dis.readUnsignedShort(), entry);
+                return new IfInstruction(opCode, -1, "IFNE", dis.readShort(), entry);
             case IFLT:
-                return new IfInstruction(opCode, -1, "IFLT", dis.readUnsignedShort(), entry);
+                return new IfInstruction(opCode, -1, "IFLT", dis.readShort(), entry);
             case IFGE:
-                return new IfInstruction(opCode, -1, "IFGE", dis.readUnsignedShort(), entry);
+                return new IfInstruction(opCode, -1, "IFGE", dis.readShort(), entry);
             case IFGT:
-                return new IfInstruction(opCode, -1, "IFGT", dis.readUnsignedShort(), entry);
+                return new IfInstruction(opCode, -1, "IFGT", dis.readShort(), entry);
             case IFLE:
-                return new IfInstruction(opCode, -1, "IFLE", dis.readUnsignedShort(), entry);
+                return new IfInstruction(opCode, -1, "IFLE", dis.readShort(), entry);
             case IF_ICMPEQ:
-                return new IfInstruction(opCode, -2, "IF_ICMPEQ", dis.readUnsignedShort(),
+                return new IfInstruction(opCode, -2, "IF_ICMPEQ", dis.readShort(),
                         entry);
             case IF_ICMPNE:
-                return new IfInstruction(opCode, -2, "IF_ICMPNE", dis.readUnsignedShort(),
+                return new IfInstruction(opCode, -2, "IF_ICMPNE", dis.readShort(),
                         entry);
             case IF_ICMPLT:
-                return new IfInstruction(opCode, -2, "IF_ICMPLT", dis.readUnsignedShort(),
+                return new IfInstruction(opCode, -2, "IF_ICMPLT", dis.readShort(),
                         entry);
             case IF_ICMPGE:
-                return new IfInstruction(opCode, -2, "IF_ICMPGE", dis.readUnsignedShort(),
+                return new IfInstruction(opCode, -2, "IF_ICMPGE", dis.readShort(),
                         entry);
             case IF_ICMPGT:
-                return new IfInstruction(opCode, -2, "IF_ICMPTGT", dis.readUnsignedShort(),
+                return new IfInstruction(opCode, -2, "IF_ICMPTGT", dis.readShort(),
                         entry);
             case IF_ICMPLE:
-                return new IfInstruction(opCode, -2, "IF_ICMPLE", dis.readUnsignedShort(),
+                return new IfInstruction(opCode, -2, "IF_ICMPLE", dis.readShort(),
                         entry);
             case IF_ACMPEQ:
-                return new IfInstruction(opCode, -2, "IF_ACMPEQ", dis.readUnsignedShort(),
+                return new IfInstruction(opCode, -2, "IF_ACMPEQ", dis.readShort(),
                         entry);
             case IF_ACMPNE:
-                return new IfInstruction(opCode, -2, "IF_ACMPNE", dis.readUnsignedShort(),
+                return new IfInstruction(opCode, -2, "IF_ACMPNE", dis.readShort(),
                         entry);
             // Control instructions
             case GOTO:

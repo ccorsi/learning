@@ -41,6 +41,7 @@
         <plogger.agent.jar>
             ${project.basedir}${file.separator}target${file.separator}${project.build.finalName}.jar
         </plogger.agent.jar>
+        <agent.helper.jar>${project.artifactId}-${project.version}</agent.helper.jar>
     </properties>
 
     <build>
@@ -119,10 +120,36 @@
                             <Can-Redefine-Classes>true</Can-Redefine-Classes>
                             <Can-Retransform-Classes>true</Can-Retransform-Classes>
                             <Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>
-                            <Boot-Class-Path></Boot-Class-Path>
+                            <Boot-Class-Path>${agent.helper.jar}-loggers.jar</Boot-Class-Path>
                         </manifestEntries>
                     </archive>
+                    <includes>
+                        <include>**/AgentClassFileTransformer.*</include>
+                        <include>**/AgentMain.*</include>
+                        <include>**/module-info.*</include>
+                    </includes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>plogger-helper-classes</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>loggers</classifier>
+                            <finalName>${agent.helper.jar}</finalName>
+                            <includes>
+                                <include>org/valhalla/**</include>
+                                <include>**/module-info.*</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/AgentClassFileTransformer.*</exclude>
+                                <exclude>**/AgentMain.*</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -53,4 +53,11 @@ public class UninitializedVariableManager extends BasicVariableInfoManager {
         super.write(os);
         os.writeShort(offset);
     }
+
+    @Override
+    public String toString() {
+        return "UninitializedVariableManager{" +
+                "offset=" + offset +
+                '}';
+    }
 }

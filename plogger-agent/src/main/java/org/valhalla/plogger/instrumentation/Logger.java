@@ -33,7 +33,9 @@ import java.util.Queue;
 import java.util.Set;
 
 public class Logger {
+
     private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ssSSSZ");
+
     private static final Object[] NONE = new Object[0];
 
     public static void write(Class<?> clz, String methodName) {
@@ -53,40 +55,59 @@ public class Logger {
     }
 
     private static void _write(String objectId, String methodName, Object[] parameters) {
-        try {
-            List<String> entries = LoggerManager.getEntriesBuffer();
-            StringBuilder string = new StringBuilder();
-            // Add Thread Name
-            Thread thread = Thread.currentThread();
-            string.append("Thread[[Id=").append(thread.getId()).append(",").append(thread.getName()).append("]] ");
-            // Add current date and time
-            string.append("[[");
-            string.append(formatter.format(Calendar.getInstance().getTime()));
-            string.append("]] ");
-            string.append(objectId).append('.').append(methodName).append("(");
-            if (parameters != null && parameters.length > 0) {
-                createParameterValue(string, parameters[0]);
-                for (int idx = 1; idx < parameters.length; idx++) {
-                    string.append(',');
-                    createParameterValue(string, parameters[idx]);
+//        System.out.println("Entered _write call");
+        if (LoggerManager.enter()) {
+            try {
+//                System.out.println(String.format("Logging %s %s %s", objectId, methodName, parameters));
+                List<String> entries = LoggerManager.getEntriesBuffer();
+                StringBuilder string = new StringBuilder();
+                // Add Thread Name
+                Thread thread = Thread.currentThread();
+                string.append("Thread[[Id=").append(thread.getId()).append(",").append(thread.getName()).append("]] ");
+                // Add current date and time
+                string.append("[[");
+                string.append(formatter.format(Calendar.getInstance().getTime()));
+                string.append("]] ");
+                string.append(objectId).append('.').append(methodName).append("(");
+                if (parameters != null && parameters.length > 0) {
+                    createParameterValue(string, parameters[0]);
+                    for (int idx = 1; idx < parameters.length; idx++) {
+                        string.append(',');
+                        createParameterValue(string, parameters[idx]);
+                    }
                 }
+                string.append(")");
+                entries.add(string.toString());
+//                System.out.println(string.toString());
+            } catch (Throwable t) {
+                // Insure that no exception is propagated up to the user calling code
+                // TODO: maybe not print this to out.
+                System.out.print("Exception for objectId ");
+                System.out.print(objectId);
+                System.out.print(" method ");
+                System.out.println(methodName);
+                System.out.println("with parameters");
+                for(Object parameter : parameters)
+                    System.out.println(parameter);
+                t.printStackTrace(System.out);
+            } finally {
+                LoggerManager.exit();
             }
-            string.append(")");
-            entries.add(string.toString());
-        } catch (Throwable t) {
-            // Insure that no exception is propagated up to the user calling code
-            // TODO: maybe not print this to out.
-            t.printStackTrace(System.out);
         }
     }
 
     private static void createParameterValue(StringBuilder string, Object parameter) {
-        if (parameter instanceof String) {
+        if (parameter == null) {
+            // Always avoid the possibility of someone passing null parameter values
+            string.append("Null[]");
+        } else if (parameter instanceof String) {
             string.append("String[").append(parameter.toString()).append("]");
         } else if (parameter instanceof Number) {
             string.append(parameter.getClass().getSimpleName()).append("[").append(parameter.toString()).append("]");
         } else if (parameter instanceof Class) {
             string.append("Class[").append(((Class<?>) parameter).getName()).append("]");
+        } else if (parameter instanceof Boolean) {
+            string.append("Boolean[").append(parameter.toString()).append("]");
         } else {
             Class<?> parameterClass = parameter.getClass();
             if (parameterClass.isArray()) {
@@ -126,7 +147,7 @@ public class Logger {
         // TODO: need to deal with the case that we are processing a multi-dimensional array
         //  because index through it will not produce the correct parameter logging information.
         if (arrayParameter instanceof boolean[]) {
-            boolean values[] = (boolean[])arrayParameter;
+            boolean values[] = (boolean[]) arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);

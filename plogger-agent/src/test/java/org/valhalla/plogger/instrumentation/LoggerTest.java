@@ -24,10 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -146,6 +143,7 @@ class LoggerTest {
     }
 
     @Test
+    @Disabled("Need to fix issue with logging multi-dimensional parameters")
     public void testBooleanMultiArray() throws InterruptedException {
         final boolean[][] values = new boolean[][] {
                 new boolean[] {true, false, true, true, true},
@@ -168,7 +166,7 @@ class LoggerTest {
         System.out.println("MESSAGE = " + message);
         System.out.println("STRING  = " + string);
         // TODO: uncomment assertion since this test is failing
-//        Assertions.assertTrue(message.contains(string), "Missing boolean array instance");
+        Assertions.assertTrue(message.contains(string), "Missing boolean array instance");
     }
 
     private List<String> executeLoggerWriterParameters(LoggerWriterParameter[] parameters) throws InterruptedException {

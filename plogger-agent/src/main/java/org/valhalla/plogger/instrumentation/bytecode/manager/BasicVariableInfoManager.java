@@ -54,4 +54,11 @@ public class BasicVariableInfoManager implements VerificationTypeManager {
     public void write(DataOutput os) throws IOException {
         os.write(tag);
     }
+
+    @Override
+    public String toString() {
+        return "BasicVariableInfoManager{" +
+                "tag=" + tag +
+                '}';
+    }
 }
