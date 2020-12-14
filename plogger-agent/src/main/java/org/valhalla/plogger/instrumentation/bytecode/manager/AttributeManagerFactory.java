@@ -23,36 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.*;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantUtf8;
 
 import java.io.DataInputStream;
 
 public class AttributeManagerFactory {
-
-    public static AttributeManager create(ClassAttribute attribute) {
-        if (attribute instanceof StackMapTable) {
-            StackMapTable stackMapTable = (StackMapTable) attribute;
-            return new StackMapTableManager(stackMapTable);
-        } else if (attribute instanceof CodeAttribute) {
-            CodeAttribute codeAttribute = (CodeAttribute) attribute;
-            return new CodeAttributeManager(codeAttribute.getNameIndex(), codeAttribute);
-        } else if (attribute instanceof LocalVariableTable) {
-            LocalVariableTable localVariableTable = (LocalVariableTable) attribute;
-            return new LocalVariableTableManager(localVariableTable);
-        } else if (attribute instanceof LocalVariableTypeTable) {
-            LocalVariableTypeTable localVariableTypeTable = (LocalVariableTypeTable) attribute;
-            return new LocalVariableTypeTableManager(localVariableTypeTable);
-        } else if (attribute instanceof LineNumberTable) {
-            LineNumberTable lineNumberTable = (LineNumberTable) attribute;
-            return new LineNumberTableManager(lineNumberTable);
-        } else if (attribute instanceof DefaultAttribute) {
-            DefaultAttribute defaultAttribute = (DefaultAttribute) attribute;
-            return new DefaultAttributeManager(defaultAttribute);
-        }
-        return null;
-    }
 
     static AttributeManager create(DataInputStream dis, ConstantPoolManager constantPoolManager) {
         try {

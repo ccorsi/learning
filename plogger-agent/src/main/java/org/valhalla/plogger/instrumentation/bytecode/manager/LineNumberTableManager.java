@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.LineNumberTable;
-import org.valhalla.plogger.instrumentation.bytecode.attributes.LineNumberTableEntry;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 
@@ -49,16 +47,6 @@ public class LineNumberTableManager implements AttributeManager {
             }
         } catch(IOException ioe) {
             throw new ClassFileException(ioe);
-        }
-    }
-
-    public LineNumberTableManager(LineNumberTable lineNumberTable) {
-        this.nameIndex = lineNumberTable.getNameIndex();
-        LineNumberTableEntry[] items = lineNumberTable.getEntries();
-        this.entries = new LineNumberTableEntryManager[items.length];
-        for(int idx = 0 ; idx < entries.length ; idx++) {
-            this.entries[idx] = new LineNumberTableEntryManager(items[idx].getStartPc(),
-                    items[idx].getLineNumber());
         }
     }
 

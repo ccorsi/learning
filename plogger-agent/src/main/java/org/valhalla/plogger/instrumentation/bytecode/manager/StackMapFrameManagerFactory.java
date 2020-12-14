@@ -23,39 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.*;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 
 public class StackMapFrameManagerFactory {
-    public static StackMapFrameManager create(StackMapFrame stackMapFrame) {
-        if (stackMapFrame instanceof SameFrame) {
-            return new SameFrameManager(stackMapFrame.getOffSet());
-        } else if (stackMapFrame instanceof SameExtendedFrame) {
-            return new SameFrameManager(stackMapFrame.getOffSet());
-        } else if (stackMapFrame instanceof SameLocals1StackItemFrame) {
-            SameLocals1StackItemFrame frame = (SameLocals1StackItemFrame)stackMapFrame;
-            return new SameLocalsOneStackItemFrameManager(stackMapFrame.getOffSet(),
-                    VerificationTypeManagerFactory.convert(frame.getVerificationType()));
-        } else if (stackMapFrame instanceof SameLocal1StackItemExtendedFrame) {
-            SameLocal1StackItemExtendedFrame frame = (SameLocal1StackItemExtendedFrame)stackMapFrame;
-            return new SameLocalsOneStackItemFrameManager(stackMapFrame.getOffSet() + 64,
-                    VerificationTypeManagerFactory.convert(frame.getVerificationType()));
-        } else if (stackMapFrame instanceof AppendFrame) {
-            AppendFrame frame = (AppendFrame)stackMapFrame;
-            return new AppendFrameManager(frame.getOffSet(),
-                    VerificationTypeManagerFactory.convert(frame.getVerificationTypes()));
-        } else if (stackMapFrame instanceof ChopFrame) {
-            ChopFrame frame = (ChopFrame)stackMapFrame;
-            return new ChopFrameManager(frame.getFrameType(), frame.getOffSet());
-        } else if (stackMapFrame instanceof FullFrame) {
-            FullFrame frame = (FullFrame)stackMapFrame;
-            return new FullFrameManager(frame.getOffSet(), frame.getLocalItems(), frame.getStackItems());
-        }
-        return null;
-    }
 
     public static StackMapFrameManager create(DataInputStream dis) {
         try {

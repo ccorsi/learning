@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.VerificationType;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 
 import java.io.DataInputStream;
@@ -59,12 +58,6 @@ public class FullFrameManager implements StackMapFrameManager {
         } catch (IOException e) {
             throw new ClassFileException(e);
         }
-    }
-
-    public FullFrameManager(int offSet, VerificationType[] locals, VerificationType[] stack) {
-        this.offset = offSet;
-        this.locals = VerificationTypeManagerFactory.convert(locals);
-        this.stack = VerificationTypeManagerFactory.convert(stack);
     }
 
     @Override

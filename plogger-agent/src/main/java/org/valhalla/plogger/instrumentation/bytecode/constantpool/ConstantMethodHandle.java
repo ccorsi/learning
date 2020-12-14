@@ -30,12 +30,10 @@ import java.io.IOException;
 public class ConstantMethodHandle implements ConstantPoolEntry {
     private final int referenceKind;
     private final int referenceIndex;
-//    private final ClassFile classFile;
 
     public ConstantMethodHandle(int referenceKind, int referenceIndex) {
         this.referenceKind = referenceKind;
         this.referenceIndex = referenceIndex;
-//        this.classFile = classFile;
     }
 
 //    @Override

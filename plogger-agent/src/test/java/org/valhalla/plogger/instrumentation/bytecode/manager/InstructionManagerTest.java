@@ -1,14 +1,5 @@
 package org.valhalla.plogger.instrumentation.bytecode.manager;
 
-import org.junit.jupiter.api.*;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassMethod;
-import org.valhalla.plogger.instrumentation.utils.ClassManagerUtil;
-
-import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
-
 /*
 MIT License
 
@@ -33,12 +24,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
+import org.valhalla.plogger.instrumentation.utils.ClassManagerUtil;
+
+import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class InstructionManagerTest {
 
     private static final String testClassName = ConcurrentHashMap.class.getName().replace('.','/');
-    public static final int ACC_STATIC = 0x0008;
     private ClassManagerUtil classManagerUtil;
-    private static final Class<?> testClass = Long.class;
     private ClassManager classManager;
     private MethodManager methodManager;
     private String methodName;
@@ -54,10 +53,8 @@ public class InstructionManagerTest {
         }
 
         classManager = classManagerUtil.getClassManager();
-        ClassFile classFile = classManagerUtil.getClassFile();
-        ClassMethod method = classFile.getMethods().next();
-        methodName = method.getName(classFile);
-        signature = method.getSignature(classFile);
+        methodName = "spread";
+        signature = "(I)I";
         methodManager = classManager.getMethodManager(methodName, signature);
         Assertions.assertNotNull(methodManager,
                 String.format("The returned MethodManager instance was null for method: %s with signature: %s",
@@ -73,7 +70,6 @@ public class InstructionManagerTest {
     }
 
     @Test
-    @Timeout(2)
     public void instantiateInstructionManager() {
         methodManager = classManager.getMethodManager(methodName, signature);
         byte[] code = methodManager.getCodeAttributeManager().getCode();
@@ -81,7 +77,6 @@ public class InstructionManagerTest {
     }
 
     @Test
-    @Timeout(2)
     public void testInstructionManagerIterator() {
         methodManager = classManager.getMethodManager(methodName, signature);
         byte[] code = methodManager.getCodeAttributeManager().getCode();
@@ -95,11 +90,9 @@ public class InstructionManagerTest {
     }
 
     @Test
-    @Timeout(2)
     public void testInstructionStackMethod() {
         byte[] code = methodManager.getCodeAttributeManager().getCode();
         InstructionManager instructionManager = new InstructionManager(classManager, code);
-//        int pos = 0;
         for(AbstractInstruction entry = instructionManager.getFirstInstruction() ; entry != null ;
             entry = entry.getNext()) {
             entry.stack();

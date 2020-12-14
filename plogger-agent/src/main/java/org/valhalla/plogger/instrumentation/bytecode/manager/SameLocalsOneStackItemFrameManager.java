@@ -23,9 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.VerificationType;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
@@ -47,11 +44,6 @@ public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager 
         this.verificationTypeManager = verificationTypeManager;
     }
 
-    public SameLocalsOneStackItemFrameManager(int frameType, VerificationType verificationType) {
-        this.frameType = frameType;
-        this.verificationTypeManager = VerificationTypeManagerFactory.convert(verificationType);
-    }
-
     @Override
     public int offset() {
         return frameType;
@@ -60,13 +52,6 @@ public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager 
     @Override
     public void setOffset(int offset) {
         frameType = offset;
-//        if (offset > 63) {
-//            // SameLocals1StackItemFrameExtended stack map frame
-//            frameType = offset;
-//        } else {
-//            // SameLocals1StackItemExtended stack map frame
-//            frameType = offset;
-//        }
     }
 
     @Override

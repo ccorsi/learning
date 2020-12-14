@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.ClassAttribute;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassField;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantUtf8;
@@ -40,17 +38,6 @@ public class FieldManager implements ClassFileWriter {
     private final int accessFlags;
     private final int descriptorIndex;
     private final AttributeManager[] attributes;
-
-    public FieldManager(ClassField field) {
-        this.accessFlags = field.getAccessFlags();
-        this.nameIndex = field.getNameIndex();
-        this.descriptorIndex = field.getDescriptorIndex();
-        ClassAttribute[] attributes = field.getAttributes();
-        this.attributes = new AttributeManager[attributes.length];
-        for(int idx = 0 ; idx < this.attributes.length ; idx++) {
-            this.attributes[idx] = AttributeManagerFactory.create(attributes[idx]);
-        }
-    }
 
     public FieldManager(ConstantPoolManager constantPoolManager, DataInputStream dis) {
         try {

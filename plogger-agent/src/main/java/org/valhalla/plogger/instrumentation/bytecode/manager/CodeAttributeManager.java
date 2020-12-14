@@ -24,9 +24,6 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.instrumentation.Logger;
-import org.valhalla.plogger.instrumentation.bytecode.attributes.ClassAttribute;
-import org.valhalla.plogger.instrumentation.bytecode.attributes.CodeAttribute;
-import org.valhalla.plogger.instrumentation.bytecode.attributes.CodeExceptionTable;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantMethodRef;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantPoolEntry;
@@ -38,7 +35,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import static org.valhalla.plogger.instrumentation.bytecode.manager.InstructionEntryFactory.*;
@@ -52,20 +48,6 @@ public class CodeAttributeManager implements AttributeManager {
     private byte[] code;
     protected int nameIndex;
     public static final String LOGGER_CLASS_NAME = Logger.class.getName().replace('.', '/');
-
-    public CodeAttributeManager(int nameIndex, CodeAttribute codeAttribute) {
-        this.nameIndex = nameIndex;
-        this.maxStack = codeAttribute.getMaxStack();
-        this.maxLocals = codeAttribute.getMaxLocals();
-        this.code = codeAttribute.getCode();
-        Collection<CodeExceptionTable> items = codeAttribute.getExceptionTables();
-        this.exceptionTableManager = new ExceptionTableManager(items);
-        List<ClassAttribute> attributes = codeAttribute.getCodeAttributes();
-        this.attributes = new AttributeManager[attributes.size()];
-        for(int idx = 0 ; idx < this.attributes.length ; idx++) {
-            this.attributes[idx] = AttributeManagerFactory.create(attributes.get(idx));
-        }
-    }
 
     public CodeAttributeManager(int nameIndex, int maxStack, int maxLocals, byte[] code,
                                 ExceptionTableManager exceptionTableManager, AttributeManager[] attributes) {

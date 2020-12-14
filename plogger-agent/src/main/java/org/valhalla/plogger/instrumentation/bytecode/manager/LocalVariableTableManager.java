@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.LocalVariableTable;
-import org.valhalla.plogger.instrumentation.bytecode.attributes.LocalVariableTableEntry;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 
@@ -52,16 +50,6 @@ public class LocalVariableTableManager implements AttributeManager {
             }
         } catch(IOException ioe) {
             throw new ClassFileException(ioe);
-        }
-    }
-
-    public LocalVariableTableManager(LocalVariableTable localVariableTable) {
-        this.nameIndex = localVariableTable.getNameIndex();
-        LocalVariableTableEntry[] items = localVariableTable.getEntries();
-        entries = new LocalVariableTableEntryManager[items.length];
-        for(int idx = 0 ; idx < entries.length ; idx++) {
-            entries[idx] = new LocalVariableTableEntryManager(items[idx].getStartPc(), items[idx].getLength(),
-                    items[idx].getNameIndex(), items[idx].getDescriptorIndex(), items[idx].getIndex());
         }
     }
 

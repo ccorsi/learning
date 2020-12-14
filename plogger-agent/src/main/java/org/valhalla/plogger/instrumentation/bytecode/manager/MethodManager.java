@@ -23,10 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.ClassAttribute;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassMethod;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantUtf8;
 
 import java.io.DataInputStream;
@@ -42,23 +40,6 @@ public class MethodManager implements ClassFileWriter {
     private int descriptorIndex;
     private AttributeManager[] attributeManagers;
     private int accessFlags;
-
-    public MethodManager(String name, String signature, ClassManager classManager) {
-        this(name, signature, classManager, null);
-    }
-
-    public MethodManager(String name, String signature, ClassManager classManager, ClassMethod classMethod) {
-        this.name = name;
-        this.signature = signature;
-        this.accessFlags = classMethod.getAccessFlags();
-        this.nameIndex = classMethod.getNameIndex();
-        this.descriptorIndex = classMethod.getDescriptorIndex();
-        ClassAttribute[] classAttributes = classMethod.getAttributes();
-        this.attributeManagers = new AttributeManager[classAttributes.length];
-        for (int idx = 0; idx < attributeManagers.length; idx++) {
-            attributeManagers[idx] = AttributeManagerFactory.create(classAttributes[idx]);
-        }
-    }
 
     public MethodManager(ConstantPoolManager constantPoolManager, DataInputStream dis) {
         try {

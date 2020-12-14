@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantClass;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantMethodRef;
@@ -15,9 +14,7 @@ import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantString
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantUtf8;
 import org.valhalla.plogger.instrumentation.utils.ClassManagerUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
 
 /*

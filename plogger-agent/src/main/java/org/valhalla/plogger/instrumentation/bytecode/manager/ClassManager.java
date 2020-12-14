@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.ClassAttribute;
-import org.valhalla.plogger.instrumentation.bytecode.classes.*;
+import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
+import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantClass;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantUtf8;
 
@@ -33,10 +33,7 @@ import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 public class ClassManager implements ClassFileWriter {
 
@@ -53,20 +50,6 @@ public class ClassManager implements ClassFileWriter {
     private final FieldManager[] fieldManagers;
     private final AttributeManager[] attributeManagers;
     private final String className;
-
-    public ClassManager(ClassFile classFile) {
-        this.className = classFile.getThisClassName();
-        this.minorVersion = classFile.getMinorVersion();
-        this.majorVersion = classFile.getMajorVersion();
-        this.constantPoolManager = new ConstantPoolManager(classFile);
-        this.accessFlags = classFile.getAccessFlags();
-        this.thisClassIndex = classFile.getThisClassIndex();
-        this.superClassIndex = classFile.getSuperClassIndex();
-        this.interfaceManager = new InterfaceManager(classFile.getInterfaces());
-        this.fieldManagers = initializeFieldManagerList(classFile);
-        this.methodManagers = initializeMethodManagerList(classFile);
-        this.attributeManagers = initializeAttributeManagerList(classFile);
-    }
 
     public ClassManager(String className, byte[] bytes) throws ClassFileException {
         this.className = className;
@@ -133,34 +116,6 @@ public class ClassManager implements ClassFileWriter {
                     className, is.getCount()));
             throw new ClassFileException(ioe);
         }
-    }
-
-    private AttributeManager[] initializeAttributeManagerList(ClassFile classFile) {
-        List<ClassAttribute> attributes = classFile.getAttributes();
-        AttributeManager[] list = new AttributeManager[attributes.size()];
-
-        for(int idx = 0 ; idx < list.length ; idx++) {
-            list[idx] = AttributeManagerFactory.create(attributes.get(idx));
-        }
-        return list;
-    }
-
-    private FieldManager[] initializeFieldManagerList(ClassFile classFile) {
-        List<ClassField> fields = classFile.getFields();
-        FieldManager list[] = new FieldManager[fields.size()];
-        for(int idx = 0 ; idx < list.length ; idx++) {
-            list[idx] = new FieldManager(fields.get(idx));
-        }
-        return list;
-    }
-
-    private MethodManager[] initializeMethodManagerList(ClassFile classFile) {
-        List<MethodManager> managers = new ArrayList<MethodManager>();
-        for (Iterator<ClassMethod> it = classFile.getMethods(); it.hasNext(); ) {
-            ClassMethod method = it.next();
-            managers.add(new MethodManager(method.getName(classFile), method.getSignature(classFile), this, method ));
-        }
-        return managers.toArray(new MethodManager[managers.size()]);
     }
 
     public int getMajorVersion() {
@@ -250,6 +205,7 @@ public class ClassManager implements ClassFileWriter {
         return methodManagers;
     }
 
+    // TODO: Do I need this class?
     private class ClassManagerInputStream extends InputStream {
         private final InputStream is;
         private long count;

@@ -4,8 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.valhalla.plogger.instrumentation.LoggerManager;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassMethod;
 import org.valhalla.plogger.instrumentation.utils.ClassLoaderClass;
 import org.valhalla.plogger.instrumentation.utils.ClassManagerUtil;
 import org.valhalla.plogger.instrumentation.utils.SampleClass;
@@ -65,11 +63,9 @@ public class ClassManagerTest {
     void getMethodManager() throws IOException {
         String className = "java/lang/Integer";
         classManagerUtil = new ClassManagerUtil(className);
-        ClassFile classFile = classManagerUtil.getClassFile();
-        ClassMethod classMethod = classFile.getMethods().next();
         ClassManager classManager = classManagerUtil.getClassManager();
-        String methodName = classMethod.getName(classFile);
-        String signature = classMethod.getSignature(classFile);
+        String methodName = "toString";
+        String signature = "(II)Ljava/lang/String;";
         MethodManager methodManager = classManager.getMethodManager(methodName, signature);
         Assertions.assertNotNull(methodManager, "Method " + methodName + " was not found");
     }
@@ -121,8 +117,6 @@ public class ClassManagerTest {
     void loadLauncherHelperClass() throws IOException {
         String className = "sun/launcher/LauncherHelper";
         classManagerUtil = new ClassManagerUtil(className);
-        ClassFile classFile = classManagerUtil.getClassFile();
-        ClassMethod classMethod = classFile.getMethods().next();
         ClassManager classManager = classManagerUtil.getClassManager();
         Assertions.assertTrue(classManager.instrument(), "Unable to instrument class LauncherHelper");
     }
@@ -146,8 +140,6 @@ public class ClassManagerTest {
         for(String className : classNames) {
             System.out.println("Loading class " + className);
             classManagerUtil = new ClassManagerUtil(className);
-            ClassFile classFile = classManagerUtil.getClassFile();
-            ClassMethod classMethod = classFile.getMethods().next();
             ClassManager classManager = classManagerUtil.getClassManager();
             Assertions.assertTrue(classManager.instrument(), "Unable to instrument class " + className);
             classManagerUtil.close();
@@ -160,8 +152,6 @@ public class ClassManagerTest {
         try {
             String className = "sun/launcher/LauncherHelper";
             classManagerUtil = new ClassManagerUtil(className);
-            ClassFile classFile = classManagerUtil.getClassFile();
-            ClassMethod classMethod = classFile.getMethods().next();
             ClassManager classManager = classManagerUtil.getClassManager();
             Assertions.assertTrue(classManager.instrument(), "Unable to instrument class " + className);
         } finally {

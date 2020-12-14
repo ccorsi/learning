@@ -24,8 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
-
 import java.io.DataInputStream;
 import java.io.IOException;
 

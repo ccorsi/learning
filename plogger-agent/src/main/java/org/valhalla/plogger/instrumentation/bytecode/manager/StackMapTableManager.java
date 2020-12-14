@@ -23,13 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.StackMapFrame;
-import org.valhalla.plogger.instrumentation.bytecode.attributes.StackMapTable;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 public class StackMapTableManager implements AttributeManager {
     public static final String DEBUG_PROPERTY_NAME = "stack.map.table.debug";
@@ -39,22 +40,6 @@ public class StackMapTableManager implements AttributeManager {
     private int framePos;
     private AbstractInstruction priorInstruction;
     private boolean debug = Boolean.getBoolean(DEBUG_PROPERTY_NAME);
-
-    public StackMapTableManager(StackMapTable stackMapTable) {
-        // TODO: remove this ctor
-        // Deals with the case that the original method code attribute
-        // does not contain a StackMapTable for whatever reason.
-        nameIndex = stackMapTable.getNameIndex();
-        List<StackMapFrame> frames = stackMapTable.getStackFrames();
-        frameManagers = new StackMapFrameManager[frames.size()];
-        for(int idx = 0 ; idx < frameManagers.length ; idx++) {
-            frameManagers[idx] = StackMapFrameManagerFactory.create(frames.get(idx));
-        }
-        frameIdx = 0;
-        framePos = frameManagers[frameIdx].offset();
-        priorInstruction = null;
-//        System.out.println("FIRST STACK MAP FRAME: " + frameManagers[frameIdx]);
-    }
 
     public StackMapTableManager(int nameIndex, DataInputStream dis) {
         // TODO: Implement constructor.

@@ -4,16 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassMethod;
 import org.valhalla.plogger.instrumentation.utils.ClassManagerUtil;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Iterator;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /*
 MIT License
@@ -57,10 +51,8 @@ public class MethodManagerTest {
     @Test
     void getCodeAttributeManager() {
         ClassManager classManager = classManagerUtil.getClassManager();
-        ClassFile classFile = classManagerUtil.getClassFile();
-        ClassMethod method = classFile.getMethods().next();
-        String methodName = method.getName(classFile);
-        String signature = method.getSignature(classFile);
+        String methodName = "compareTo";
+        String signature = "(Ljava/lang/Object;)I";
         MethodManager methodManager = classManager.getMethodManager(methodName, signature);
         Assertions.assertNotNull(methodManager,
                 String.format("The returned MethodManager instance was null for method: %s with signature: %s",

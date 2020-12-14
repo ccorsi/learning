@@ -23,9 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.DefaultAttribute;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Arrays;
@@ -47,11 +44,6 @@ public class DefaultAttributeManager implements AttributeManager {
     public DefaultAttributeManager(int nameIndex, byte[] data) {
         this.nameIndex = nameIndex;
         this.data = data;
-    }
-
-    public DefaultAttributeManager(DefaultAttribute defaultAttribute) {
-        this.nameIndex = defaultAttribute.getNameIndex();
-        this.data = defaultAttribute.getData();
     }
 
     @Override

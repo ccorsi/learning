@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.*;
@@ -35,10 +34,6 @@ import java.util.NoSuchElementException;
 public class ConstantPoolManager implements Iterable<ConstantPoolEntry>, ClassFileWriter {
     private ConstantPoolEntry[] constantPool;
     private boolean debug;
-
-    public ConstantPoolManager(ClassFile classFile) {
-        this.constantPool = classFile.getConstantPool();
-     }
 
     public ConstantPoolManager(DataInputStream dis) {
         int idx = 1;

@@ -24,7 +24,6 @@ SOFTWARE.
 */
 
 import org.junit.jupiter.api.Assertions;
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.manager.ClassManager;
 
@@ -36,7 +35,6 @@ public class ClassManagerUtil {
     private final String className;
     private final InputStream is;
     private final ClassManager classManager;
-    private final ClassFile classFile;
     private final byte[] bytes;
 
     public ClassManagerUtil(String className) throws IOException, ClassFileException {
@@ -50,8 +48,7 @@ public class ClassManagerUtil {
         }
         bytes = bos.toByteArray();
         Assertions.assertNotEquals(0, bytes.length, "The class file was empty");
-        classFile = ClassFile.load(className, bytes);
-        classManager = new ClassManager(classFile);
+        classManager = new ClassManager(className, bytes);
     }
 
     public ClassManager getClassManager() {
@@ -62,10 +59,6 @@ public class ClassManagerUtil {
         if (is != null) {
             is.close();
         }
-    }
-
-    public ClassFile getClassFile() {
-        return classFile;
     }
 
     public byte[] getBytes() {

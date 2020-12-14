@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.attributes.CodeExceptionTable;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 
 import java.io.DataOutput;
@@ -34,13 +33,6 @@ public class ExceptionTableEntryManager implements ClassFileWriter {
     private int endPc;
     private int handlePc;
     private final int catchType;
-
-    public ExceptionTableEntryManager(CodeExceptionTable entry) {
-        this.startPc = entry.getStartPc();
-        this.endPc = entry.getEndPc();
-        this.handlePc = entry.getHandlerPc();
-        this.catchType = entry.getCatchType();
-    }
 
     public ExceptionTableEntryManager(int startPcs, int endPcs, int handlePcs, int catchTypes) {
         this.startPc = startPcs;

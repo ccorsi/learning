@@ -29,10 +29,8 @@ import java.io.IOException;
 
 public class ConstantMethodType implements ConstantPoolEntry {
     private final int descriptorIndex;
-//    private final ClassFile classFile;
 
     public ConstantMethodType(int descriptorIndex) {
-//        this.classFile = classFile;
         this.descriptorIndex = descriptorIndex;
     }
 
