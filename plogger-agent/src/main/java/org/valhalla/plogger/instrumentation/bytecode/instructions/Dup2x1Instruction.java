@@ -23,11 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-
-import java.io.DataOutput;
-import java.io.IOException;
-
 public class Dup2x1Instruction extends AbstractInstruction {
     private int pos; // TODO: is this really required?
     private int stackOperandChange;

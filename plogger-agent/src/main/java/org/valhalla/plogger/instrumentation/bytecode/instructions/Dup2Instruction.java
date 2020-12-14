@@ -43,8 +43,8 @@ public class Dup2Instruction extends AbstractInstruction {
     public int stack() {
         /*
         TODO: The stack size depends on what type of instances that is being
-        dup.  A category 1 type will add 1 to the stack.  While a category 2
-        will add 2 to the stack.  Category 2 type are double and long types.
+            dup.  A category 1 type will add 1 to the stack.  While a category 2
+            will add 2 to the stack.  Category 2 type are double and long types.
          */
 //        return 0;
         throw new ClassFileException("stack method was not implemented");
