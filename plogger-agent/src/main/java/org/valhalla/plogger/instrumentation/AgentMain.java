@@ -34,36 +34,42 @@ public class AgentMain {
         parseArgs(argString);
         // Initialize first
         LoggerManager.init();
-        // Now create the transformer class.
-        AgentClassFileTransformer transformer = new AgentClassFileTransformer();
-        // Get currently loaded classes.
-        Class[] classes = inst.getAllLoadedClasses();
-        // Add transformer
-        inst.addTransformer(transformer);
-        System.out.println("Added Agent Transformer: " + transformer);
+        // Insure that these calls will not cause any logging
+        LoggerManager.enter();
         try {
-            // TODO: This has a huge impact on the system when it is starting because of the amount of
-            //  classes that need to be transformed.  We need to think a of smarter way of including these
-            //  classes or just deal with the fact that we just don't have these instrumented.
-//            int count = 0;
-            // Re-transform the loaded classes
-            for(Class<?> loadedClass : classes) {
-                if (inst.isModifiableClass(loadedClass)) {
-//                    System.out.println("Retransforming class " + loadedClass);
-                    inst.retransformClasses(loadedClass);
-//                } else {
-//                    System.out.println("Unable to transform class " + loadedClass);
-//                    count++;
+            // Now create the transformer class.
+            AgentClassFileTransformer transformer = new AgentClassFileTransformer();
+            // Get currently loaded classes.
+            Class[] classes = inst.getAllLoadedClasses();
+            // Add transformer
+            inst.addTransformer(transformer);
+            System.out.println("Added Agent Transformer: " + transformer);
+            try {
+                if (inst.isRetransformClassesSupported()) {
+                    // TODO: This has a huge impact on the system when it is starting because of the amount of
+                    //  classes that need to be transformed.  We need to think a of smarter way of including these
+                    //  classes or just deal with the fact that we just don't have these instrumented.
+                    //  NOTE: We can't span a thread and execute the retransformClasses call.  The JVM will generate
+                    //      an exception in that case.
+                    // Re-transform the loaded classes
+                    for (Class<?> loadedClass : classes) {
+                        if (inst.isModifiableClass(loadedClass)) {
+                            inst.retransformClasses(loadedClass);
+                        }
+                    }
                 }
-            }
-//            System.out.println("Unable to retransform " + count + " classes.");
-        } catch (UnmodifiableClassException e) {
-            e.printStackTrace(System.out);
+            } catch (UnmodifiableClassException e) {
+                e.printStackTrace(System.out);
 //            throw e;
+            }
+        } finally {
+            LoggerManager.exit();
         }
     }
 
     private static String parseArgs(String args) {
+        // TODO: We should create an option class that can be used to determine what we want to instrument,
+        //  debug levels, appends to use, etc.
         return "";
     }
 }

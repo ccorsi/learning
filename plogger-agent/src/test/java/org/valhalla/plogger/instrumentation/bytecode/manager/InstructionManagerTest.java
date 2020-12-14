@@ -4,14 +4,10 @@ import org.junit.jupiter.api.*;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFile;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassMethod;
-import org.valhalla.plogger.instrumentation.bytecode.manager.code.Instruction;
 import org.valhalla.plogger.instrumentation.utils.ClassManagerUtil;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /*
 MIT License

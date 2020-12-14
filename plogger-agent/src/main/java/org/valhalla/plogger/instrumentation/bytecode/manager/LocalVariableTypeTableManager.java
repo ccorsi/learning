@@ -27,7 +27,6 @@ import org.valhalla.plogger.instrumentation.bytecode.attributes.LocalVariableTyp
 import org.valhalla.plogger.instrumentation.bytecode.attributes.LocalVariableTypeTableEntry;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
-import org.valhalla.plogger.instrumentation.bytecode.manager.code.Instruction;
 
 import java.io.DataInputStream;
 import java.io.DataOutput;
