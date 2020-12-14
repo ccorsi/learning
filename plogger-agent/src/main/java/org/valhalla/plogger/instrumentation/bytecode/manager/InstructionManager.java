@@ -24,10 +24,12 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.EndInstruction;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntryFactory;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This is the instruction manager class that does the bulk of the work to manage
@@ -64,7 +66,6 @@ import java.util.List;
  */
 public class InstructionManager {
     private final ClassManager classManager;
-    // TODO: replace the list with the first instructions
     private AbstractInstruction headInstruction;
     private byte[] code;
 

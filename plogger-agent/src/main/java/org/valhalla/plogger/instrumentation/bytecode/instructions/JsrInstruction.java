@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -23,28 +23,48 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionListener;
+import org.valhalla.plogger.instrumentation.bytecode.manager.OffsetInstructionListener;
 
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class UninitializedVariableManager extends BasicVariableInfoManager {
-    private int offset;
+public class JsrInstruction extends AbstractInstruction {
+    private static final int operandStackChange = 1;
 
-    public UninitializedVariableManager(int offset) {
-        super(UNINITIALIZED, 1);
-        this.offset = offset;
+    private int branchPc;
+
+    public JsrInstruction(int opCode, String name, int branchPc, InstructionEntry entry) {
+        super(opCode, name, entry);
+        this.branchPc = branchPc;
     }
 
     @Override
-    public void sync(AbstractInstruction instruction, int pos) {
-        if (offset == pos) {
-            instruction.addListener(new InstructionListener() {
+    public int size() {
+        return 3;
+    }
+
+    @Override
+    public int stack() {
+        return operandStackChange;
+    }
+
+    @Override
+    public void sync() {
+        AbstractInstruction instruction = getOffsetInstruction(branchPc);
+
+        if (branchPc < 0) {
+            addListener(new OffsetInstructionListener(instruction) {
                 @Override
-                public void event(InstructionEntry instruction, int pos) {
-                    UninitializedVariableManager.this.offset = pos;
+                protected void offset(int offset) {
+                    branchPc = 0;
+                    branchPc -= offset;
+                }
+            });
+        } else {
+            instruction.addListener(new OffsetInstructionListener(this) {
+                @Override
+                protected void offset(int offset) {
+                    branchPc = offset;
                 }
             });
         }
@@ -53,13 +73,6 @@ public class UninitializedVariableManager extends BasicVariableInfoManager {
     @Override
     public void write(DataOutput os) throws IOException {
         super.write(os);
-        os.writeShort(offset);
-    }
-
-    @Override
-    public String toString() {
-        return "UninitializedVariableManager{" +
-                "offset=" + offset +
-                '}';
+        os.writeShort(branchPc);
     }
 }

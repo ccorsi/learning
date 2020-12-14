@@ -28,6 +28,7 @@ import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantMethodRef;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantPoolEntry;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantPoolEntryException;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutput;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.valhalla.plogger.instrumentation.bytecode.manager.InstructionEntryFactory.*;
+import static org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntryFactory.*;
 
 public class CodeAttributeManager implements AttributeManager {
 
@@ -163,7 +164,7 @@ public class CodeAttributeManager implements AttributeManager {
             index = constantPool.getEntryIndex(entry);
             // Don't reassign instruction since we are passing the first instruction to the
             // addRemainingLoggerWriteInstructions method.
-            /* instruction = */ new InvokeStaticInstruction( classManager, 0, index, instruction);
+            /* instruction = */ new InvokeStaticInstruction( classManager, index, instruction);
 
             // Add remaining logger instructions
             addRemainingLoggerWriteInstructions(classManager, methodManager, constantPool, instruction, objectType);
@@ -362,14 +363,14 @@ public class CodeAttributeManager implements AttributeManager {
             entry = constantPool.getMethodRefEntry(LOGGER_CLASS_NAME, "write",
                     String.format("(%sLjava/lang/String;[Ljava/lang/Object;)V", objectType));
             index = constantPool.getEntryIndex(entry);
-            instruction = new InvokeStaticInstruction( classManager, -3, index, instruction);
+            instruction = new InvokeStaticInstruction( classManager, index, instruction);
         } else {
             // Add the call to Logger.write(Class,methodName)
             entry = constantPool.getMethodRefEntry(LOGGER_CLASS_NAME, "write",
                     String.format("(%sLjava/lang/String;)V", objectType));
             index = constantPool.getEntryIndex(entry);
             // Add invokestatic instruction for Logger.write([Class|Object], methodName);
-            instruction = new InvokeStaticInstruction( classManager, -2, index, instruction);
+            instruction = new InvokeStaticInstruction( classManager, index, instruction);
         }
         syncCombineUpdateInstructions(classManager, methodManager, firstInstruction);
     }
@@ -578,7 +579,7 @@ public class CodeAttributeManager implements AttributeManager {
                         ConstantPoolManager constantPoolManager = classManager.getConstantPoolManager();
                         ConstantMethodRef entry = constantPoolManager.getMethodRefEntry(className, "valueOf", signature);
                         int index = constantPoolManager.getEntryIndex(entry);
-                        return new InvokeStaticInstruction( classManager, 0, index, instruction);
+                        return new InvokeStaticInstruction( classManager, index, instruction);
                     } catch (ConstantPoolEntryException e) {
                         e.printStackTrace(System.out); // TODO: find a better solution
                         throw new ClassFileException(e); // TODO: we need a better solution

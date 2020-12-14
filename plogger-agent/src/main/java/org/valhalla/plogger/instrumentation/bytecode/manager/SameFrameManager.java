@@ -23,6 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+
 import java.io.DataOutput;
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -24,33 +24,36 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionListener;
 
-public abstract class OffsetInstructionListener implements InstructionListener {
-    private final AbstractInstruction startInstruction;
+import java.io.DataOutput;
+import java.io.IOException;
 
-    public OffsetInstructionListener(AbstractInstruction startInstruction) {
-        this.startInstruction = startInstruction;
+public class Dup2x2Instruction extends AbstractInstruction {
+
+    private int pos; // TODO: is this really required?
+
+    @Override
+    public int stack() {
+        return stackOperandChange;
     }
 
     @Override
-    public void event(InstructionEntry endInstruction, int newPos) {
-        int offset = 0;
-        AbstractInstruction instruction = startInstruction;
-
-        for (; instruction != null && instruction != endInstruction;
-             instruction = instruction.getNext()) {
-            offset += instruction.size();
-        }
-
-        if (instruction != endInstruction) {
-            throw new ClassFileException("Unable to find endInstruction " + endInstruction);
-        }
-
-        offset(offset);
+    public void update(int pos) {
+        // Update this instruction position within the byte code array
+        this.pos = pos;
+        super.update(pos);
     }
 
-    protected abstract void offset(int offset);
+    private final int stackOperandChange = 1;
+
+    public Dup2x2Instruction(int pos, InstructionEntry entry) {
+        super(InstructionEntryFactory.DUP2_X2, "DUP2_X2", entry);
+        this.pos = pos;
+    }
+
+    @Override
+    public int size() {
+        return 1;
+    }
+
 }

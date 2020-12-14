@@ -25,6 +25,9 @@ SOFTWARE.
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionListener;
 
 import java.io.DataInputStream;
 import java.io.DataOutput;
@@ -68,8 +71,6 @@ public class LocalVariableTypeTableManager implements AttributeManager {
                 '}';
     }
 
-    // TODO: The startPc and length will need to be updated whenever that instruction
-    //   has moved from it original position.
     private class LocalVariableTypeTableEntryManager implements ClassFileWriter {
         private final int index;
         private int startPc;

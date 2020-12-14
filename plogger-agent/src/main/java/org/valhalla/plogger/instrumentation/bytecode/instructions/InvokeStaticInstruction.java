@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -24,33 +24,35 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionListener;
+import org.valhalla.plogger.instrumentation.bytecode.manager.ClassManager;
 
-public abstract class OffsetInstructionListener implements InstructionListener {
-    private final AbstractInstruction startInstruction;
+import java.io.DataOutput;
+import java.io.IOException;
 
-    public OffsetInstructionListener(AbstractInstruction startInstruction) {
-        this.startInstruction = startInstruction;
+public class InvokeStaticInstruction extends AbstractInstruction {
+    private final int constantPoolIndex;
+    private final int operandStackChange;
+
+    public InvokeStaticInstruction(ClassManager classManager, int constantPoolIndex, InstructionEntry entry) {
+        super(InstructionEntryFactory.INVOKESTATIC, "INVOKESTATIC", entry);
+        this.constantPoolIndex = constantPoolIndex;
+        this.operandStackChange = calculateOperandStack(classManager.getConstantPoolManager(), constantPoolIndex,
+                0);
     }
 
     @Override
-    public void event(InstructionEntry endInstruction, int newPos) {
-        int offset = 0;
-        AbstractInstruction instruction = startInstruction;
-
-        for (; instruction != null && instruction != endInstruction;
-             instruction = instruction.getNext()) {
-            offset += instruction.size();
-        }
-
-        if (instruction != endInstruction) {
-            throw new ClassFileException("Unable to find endInstruction " + endInstruction);
-        }
-
-        offset(offset);
+    public int size() {
+        return 3;
     }
 
-    protected abstract void offset(int offset);
+    @Override
+    public int stack() {
+        return operandStackChange;
+    }
+
+    @Override
+    public void write(DataOutput os) throws IOException {
+        super.write(os);
+        os.writeShort(constantPoolIndex);
+    }
 }

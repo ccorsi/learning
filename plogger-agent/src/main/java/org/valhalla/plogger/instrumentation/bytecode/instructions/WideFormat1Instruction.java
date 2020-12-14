@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -23,44 +23,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class BasicVariableInfoManager implements VerificationTypeManager {
-    private final int tag;
-    private final int size;
+public class WideFormat1Instruction extends AbstractInstruction {
+    private final int localVariableTableIndex;
+    private final int opCode;
+    private int operandStackChange; // TODO: This depends on the passed opCode
 
-    public BasicVariableInfoManager(int tag, int size) {
-        this.tag = tag;
-        this.size = size;
-    }
-
-    @Override
-    public int tag() {
-        return tag;
+    public WideFormat1Instruction(int opCode, int localVariableTableIndex, InstructionEntry entry) {
+        super(InstructionEntryFactory.WIDE, "WIDE", entry);
+        this.opCode = opCode;
+        this.localVariableTableIndex = localVariableTableIndex;
     }
 
     @Override
     public int size() {
-        return size;
+        return 4;
     }
 
     @Override
-    public void sync(AbstractInstruction instruction, int pos) {
-        // do nothing
+    public int stack() {
+        /*
+         This depends on the instruction that is being wide.  The opCode is the
+         instruction that will be applied to wide the type.  These instructions can be
+         one of  iload, fload, aload, lload, dload, istore, fstore, astore, lstore,
+         dstore, or ret.
+
+         NOTE:  This is not going to be implemented since I am not adding a wide
+                instruction to the instrumenting method.
+         */
+        throw new ClassCastException("stack method not implemented");
     }
 
     @Override
     public void write(DataOutput os) throws IOException {
-        os.write(tag);
-    }
-
-    @Override
-    public String toString() {
-        return "BasicVariableInfoManager{" +
-                "tag=" + tag +
-                '}';
+        super.write(os);
+        os.write(opCode);  // this opCode of the instruction being widen
+        os.writeShort(localVariableTableIndex);
     }
 }

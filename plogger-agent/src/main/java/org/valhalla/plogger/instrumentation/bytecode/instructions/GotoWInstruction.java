@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -23,50 +23,53 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+import org.valhalla.plogger.instrumentation.bytecode.manager.OffsetInstructionListener;
 
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class ChopFrameManager implements StackMapFrameManager {
-    private final int frameType;
-    private int offset;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+public class GotoWInstruction extends AbstractInstruction {
+    private int branchPc;
 
-    public ChopFrameManager(int frameType, int offset) {
-        this.frameType = frameType;
-        this.offset = offset;
+    @Override
+    public int stack() {
+        return 0;
+    }
+
+    public GotoWInstruction(int opCode, String name, int branchPc, InstructionEntry entry) {
+        super(opCode, name, entry);
+        this.branchPc = branchPc;
     }
 
     @Override
-    public int offset() {
-        return offset;
+    public int size() {
+        return 5;
     }
 
     @Override
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
-
-    @Override
-    public void sync(AbstractInstruction instruction, int pos) {
-        // do nothing
+    public void sync() {
+        AbstractInstruction instruction = getOffsetInstruction(branchPc);
+        if (branchPc < 0) {
+            addListener(new OffsetInstructionListener(instruction) {
+                @Override
+                protected void offset(int offset) {
+                    branchPc = 0;
+                    branchPc -= offset;
+                }
+            });
+        } else {
+            instruction.addListener(new OffsetInstructionListener(this) {
+                @Override
+                protected void offset(int offset) {
+                    branchPc = offset;
+                }
+            });
+        }
     }
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
-        }
-        os.write(frameType);
-        os.writeShort(offset);
-    }
-
-    @Override
-    public String toString() {
-        return "ChopFrameManager{" +
-                "frameType=" + frameType +
-                ", offset=" + offset +
-                '}';
+        super.write(os);
+        os.writeShort(branchPc);
     }
 }

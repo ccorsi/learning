@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -23,13 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-
-public interface StackMapFrameManager extends ClassFileWriter {
-    int offset();
-
-    void setOffset(int offset);
-
-    void sync(AbstractInstruction instruction, int pos);
+public interface InstructionListener {
+    void event(InstructionEntry instruction, int newPos);
 }

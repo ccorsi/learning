@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -24,33 +24,37 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionListener;
 
-public abstract class OffsetInstructionListener implements InstructionListener {
-    private final AbstractInstruction startInstruction;
+public class Dup2Instruction extends AbstractInstruction {
 
-    public OffsetInstructionListener(AbstractInstruction startInstruction) {
-        this.startInstruction = startInstruction;
+    private int pos; // TODO: is this really required?
+
+    protected Dup2Instruction(int pos, InstructionEntry entry) {
+        super(InstructionEntryFactory.DUP2, "DUP2", entry);
+        this.pos = pos;
     }
 
     @Override
-    public void event(InstructionEntry endInstruction, int newPos) {
-        int offset = 0;
-        AbstractInstruction instruction = startInstruction;
-
-        for (; instruction != null && instruction != endInstruction;
-             instruction = instruction.getNext()) {
-            offset += instruction.size();
-        }
-
-        if (instruction != endInstruction) {
-            throw new ClassFileException("Unable to find endInstruction " + endInstruction);
-        }
-
-        offset(offset);
+    public int size() {
+        return 1;
     }
 
-    protected abstract void offset(int offset);
+    @Override
+    public int stack() {
+        /*
+        TODO: The stack size depends on what type of instances that is being
+        dup.  A category 1 type will add 1 to the stack.  While a category 2
+        will add 2 to the stack.  Category 2 type are double and long types.
+         */
+//        return 0;
+        throw new ClassFileException("stack method was not implemented");
+    }
+
+    @Override
+    public void update(int pos) {
+        // Update this instruction position within the byte code array
+        this.pos = pos;
+        super.update(pos);
+    }
+
 }

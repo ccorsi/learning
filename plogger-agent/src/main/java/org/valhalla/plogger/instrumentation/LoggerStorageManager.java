@@ -24,7 +24,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import java.io.*;
+import java.io.Closeable;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -111,7 +115,6 @@ public class LoggerStorageManager {
                     List<String> entries = store.take();
                     // store entries
                     for (String entry : entries) {
-                        // TODO: Really Store the Entry
                         appender.write(entry);
                     }
                 } catch (InterruptedException e) {
@@ -124,7 +127,6 @@ public class LoggerStorageManager {
             for(List<String> entries : store) {
                 // store entries
                 for (String entry : entries) {
-                    // TODO: Really Store the Entry
                     try {
                         appender.write(entry);
                     } catch (FileNotFoundException e) {
@@ -137,7 +139,6 @@ public class LoggerStorageManager {
             for(List<String> entries : LoggerStorageManager.active) {
                 // store entries
                 for(String entry : entries) {
-                    // TODO: Really Store the Entry.
                     try {
                         appender.write(entry);
                     } catch (FileNotFoundException e) {

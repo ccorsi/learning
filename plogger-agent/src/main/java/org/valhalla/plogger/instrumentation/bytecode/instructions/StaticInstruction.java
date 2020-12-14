@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -23,13 +23,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+public class StaticInstruction extends AbstractInstruction {
+    private final int operandStackChange;
 
-public interface StackMapFrameManager extends ClassFileWriter {
-    int offset();
+    public StaticInstruction(int opCode, int operandStackChange, String name, InstructionEntry entry) {
+        super(opCode, name, entry);
+        this.operandStackChange = operandStackChange;
+    }
 
-    void setOffset(int offset);
+    @Override
+    public int size() {
+        return 1;
+    }
 
-    void sync(AbstractInstruction instruction, int pos);
+    @Override
+    public int stack() {
+        return operandStackChange;
+    }
 }

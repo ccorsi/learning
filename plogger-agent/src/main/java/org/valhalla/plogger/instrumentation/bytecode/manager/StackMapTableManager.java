@@ -24,6 +24,9 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -42,7 +45,6 @@ public class StackMapTableManager implements AttributeManager {
     private boolean debug = Boolean.getBoolean(DEBUG_PROPERTY_NAME);
 
     public StackMapTableManager(int nameIndex, DataInputStream dis) {
-        // TODO: Implement constructor.
         this.nameIndex = nameIndex;
         try {
             int size = dis.readUnsignedShort();

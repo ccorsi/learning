@@ -24,6 +24,7 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
 
 public interface VerificationTypeManager extends ClassFileWriter {
     int TOP = 0;

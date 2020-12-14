@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -24,33 +24,39 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionListener;
 
-public abstract class OffsetInstructionListener implements InstructionListener {
-    private final AbstractInstruction startInstruction;
+// TODO: The calculation of the size value will be depend if we are popping
+//   a category 1 or category 2 reference.  Type 2 are basically long and
+//   double types.  The rest are all category 1.
+public class Pop2Instruction extends AbstractInstruction {
+    private int pos; // TODO: is this really required?
+    private int stackOperandChange;
 
-    public OffsetInstructionListener(AbstractInstruction startInstruction) {
-        this.startInstruction = startInstruction;
+    public Pop2Instruction(int pos, InstructionEntry entry) {
+        super(InstructionEntryFactory.POP2, "POP2", entry);
+        this.stackOperandChange = 2; // Set it to the worse case
+        this.pos = pos;
     }
 
     @Override
-    public void event(InstructionEntry endInstruction, int newPos) {
-        int offset = 0;
-        AbstractInstruction instruction = startInstruction;
-
-        for (; instruction != null && instruction != endInstruction;
-             instruction = instruction.getNext()) {
-            offset += instruction.size();
-        }
-
-        if (instruction != endInstruction) {
-            throw new ClassFileException("Unable to find endInstruction " + endInstruction);
-        }
-
-        offset(offset);
+    public int size() {
+        return 1;
     }
 
-    protected abstract void offset(int offset);
+    @Override
+    public int stack() {
+        /*
+        TODO: The stack size depends on what type of instance that is being
+            popped.  A category 1 type will return 1 while a category 2 type
+            will return 2.
+         */
+        throw new ClassFileException("stack method not implemented");
+    }
+
+    @Override
+    public void update(int pos) {
+        // Update this instruction position within the byte code array
+        this.pos = pos;
+        super.update(pos);
+    }
 }

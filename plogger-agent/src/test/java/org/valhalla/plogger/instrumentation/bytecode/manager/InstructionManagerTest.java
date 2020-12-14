@@ -29,6 +29,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.EndInstruction;
 import org.valhalla.plogger.instrumentation.utils.ClassManagerUtil;
 
 import java.io.IOException;
@@ -82,7 +84,7 @@ public class InstructionManagerTest {
         byte[] code = methodManager.getCodeAttributeManager().getCode();
         InstructionManager instructionManager = new InstructionManager(classManager, code);
         int pos = 0;
-        for(AbstractInstruction entry = instructionManager.getFirstInstruction() ; entry != null ;
+        for(AbstractInstruction entry = instructionManager.getFirstInstruction(); entry != null ;
             entry = entry.getNext()) {
             Assertions.assertTrue(( entry.size() > 0 ) || entry instanceof EndInstruction,
                     "InstructionEntry size is not supposed to be zero");

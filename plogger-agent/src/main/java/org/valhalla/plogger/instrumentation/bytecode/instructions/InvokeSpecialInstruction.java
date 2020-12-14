@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -23,50 +23,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+import org.valhalla.plogger.instrumentation.bytecode.manager.ClassManager;
 
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class ChopFrameManager implements StackMapFrameManager {
-    private final int frameType;
-    private int offset;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+public class InvokeSpecialInstruction extends AbstractInstruction {
+    private final int constantPoolIndex;
+    private final int operandStackChange;
 
-    public ChopFrameManager(int frameType, int offset) {
-        this.frameType = frameType;
-        this.offset = offset;
+    public InvokeSpecialInstruction(ClassManager classManager, int constantPoolIndex, InstructionEntry entry) {
+        super(InstructionEntryFactory.INVOKESPECIAL, "INVOKESPECIAL", entry);
+        this.constantPoolIndex = constantPoolIndex;
+        this.operandStackChange = calculateOperandStack(classManager.getConstantPoolManager(), constantPoolIndex,
+                -1);
     }
 
     @Override
-    public int offset() {
-        return offset;
+    public int size() {
+        return 3;
     }
 
     @Override
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
-
-    @Override
-    public void sync(AbstractInstruction instruction, int pos) {
-        // do nothing
+    public int stack() {
+        return operandStackChange;
     }
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
-        }
-        os.write(frameType);
-        os.writeShort(offset);
-    }
-
-    @Override
-    public String toString() {
-        return "ChopFrameManager{" +
-                "frameType=" + frameType +
-                ", offset=" + offset +
-                '}';
+        super.write(os);
+        os.writeShort(constantPoolIndex);
     }
 }

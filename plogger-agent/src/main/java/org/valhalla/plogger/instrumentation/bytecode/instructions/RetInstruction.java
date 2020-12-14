@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -23,50 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class ChopFrameManager implements StackMapFrameManager {
-    private final int frameType;
-    private int offset;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+public class RetInstruction extends AbstractInstruction {
+    private static final int operandStackChange = 0;
 
-    public ChopFrameManager(int frameType, int offset) {
-        this.frameType = frameType;
-        this.offset = offset;
+    private final int index;
+
+    public RetInstruction(int opCode, int index, InstructionEntry entry) {
+        super(opCode, "RET", entry);
+        this.index = index;
     }
 
     @Override
-    public int offset() {
-        return offset;
+    public int size() {
+        return 2;
     }
 
     @Override
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
-
-    @Override
-    public void sync(AbstractInstruction instruction, int pos) {
-        // do nothing
+    public int stack() {
+        return operandStackChange;
     }
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
-        }
-        os.write(frameType);
-        os.writeShort(offset);
-    }
-
-    @Override
-    public String toString() {
-        return "ChopFrameManager{" +
-                "frameType=" + frameType +
-                ", offset=" + offset +
-                '}';
+        super.write(os);
+        os.write(index);
     }
 }

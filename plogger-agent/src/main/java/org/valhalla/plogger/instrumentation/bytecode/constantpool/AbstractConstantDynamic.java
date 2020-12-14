@@ -30,23 +30,17 @@ import java.io.IOException;
 public abstract class AbstractConstantDynamic implements ConstantPoolEntry {
 
     protected final int bootstrapMethodAttributeIndex;
+
+    public int getNameAndTypeIndex() {
+        return nameAndTypeIndex;
+    }
+
     protected final int nameAndTypeIndex;
 
     protected AbstractConstantDynamic(int bootstrapMethodAttributeIndex, int nameAndTypeIndex) {
         this.bootstrapMethodAttributeIndex = bootstrapMethodAttributeIndex;
         this.nameAndTypeIndex = nameAndTypeIndex;
     }
-
-//    @Override
-//    public void validate() throws ConstantPoolEntryException {
-//        ConstantPoolEntry[] cpool = classFile.getConstantPool();
-//        // TODO: Update the ConstantEntry check to include the class file to be able to
-//        //       correctly validate that the bootstrap method attribute index is referencing
-//        //       a valid entry within the class file boot strap method table.
-//        if ( ! (cpool[nameAndTypeIndex] instanceof ConstantNameAndType)) {
-//            throw new ConstantPoolEntryException("Invalid name index type.");
-//        }
-//    }
 
     @Override
     public int entries() {

@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.bytecode.manager;
+package org.valhalla.plogger.instrumentation.bytecode.instructions;
 /*
 MIT License
 
@@ -23,50 +23,42 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
+import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class ChopFrameManager implements StackMapFrameManager {
-    private final int frameType;
-    private int offset;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+public class WideFormat2Instruction extends AbstractInstruction {
+    private static final int operandStackChange = 0;
+    private final int constantValue;
+    private final int variableTableIndex;
 
-    public ChopFrameManager(int frameType, int offset) {
-        this.frameType = frameType;
-        this.offset = offset;
+    public WideFormat2Instruction(int variableTableIndex, int constantValue, InstructionEntry entry) {
+        super(InstructionEntryFactory.WIDE, "WIDE", entry);
+        this.variableTableIndex = variableTableIndex;
+        this.constantValue = constantValue;
     }
 
     @Override
-    public int offset() {
-        return offset;
+    public int size() {
+        return 5;
     }
 
     @Override
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
-
-    @Override
-    public void sync(AbstractInstruction instruction, int pos) {
-        // do nothing
+    public int stack() {
+        /*
+        TODO: This depends on the category type that is being widen.  This requires that we look at the
+            prior instructions to determine the category and then we'll be able to provide the correct
+            operand stack change for this instruction.
+         */
+        throw new ClassFileException("method not implemented");
     }
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
-        }
-        os.write(frameType);
-        os.writeShort(offset);
-    }
-
-    @Override
-    public String toString() {
-        return "ChopFrameManager{" +
-                "frameType=" + frameType +
-                ", offset=" + offset +
-                '}';
+        super.write(os);
+        os.write(InstructionEntryFactory.IINC);
+        os.writeShort(variableTableIndex);
+        os.writeShort(constantValue);
     }
 }

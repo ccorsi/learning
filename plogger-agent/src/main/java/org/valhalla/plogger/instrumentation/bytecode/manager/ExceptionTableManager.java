@@ -25,6 +25,7 @@ SOFTWARE.
 
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
 
 import java.io.DataInputStream;
 import java.io.DataOutput;

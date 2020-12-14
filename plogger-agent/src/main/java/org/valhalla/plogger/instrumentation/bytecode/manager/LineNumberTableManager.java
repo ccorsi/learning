@@ -66,8 +66,6 @@ public class LineNumberTableManager implements AttributeManager {
                 '}';
     }
 
-    // TODO: This class needs to be notified if the startPc instruction is being
-    //  moved to a different position in the byte code array.
     private class LineNumberTableEntryManager implements ClassFileWriter {
         private int startPc;
         private final int lineNumber;
