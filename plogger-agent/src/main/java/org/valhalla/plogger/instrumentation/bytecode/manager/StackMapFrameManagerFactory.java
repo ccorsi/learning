@@ -38,7 +38,7 @@ public class StackMapFrameManagerFactory {
             } else if(frameType < 64) {
                 return new SameFrameManager(frameType);
             } else if(frameType < 128) {
-                return new SameLocalsOneStackItemFrameManager(frameType, VerificationTypeManagerFactory.create(dis));
+                return new SameLocalsOneStackItemFrameManager(frameType - 64, VerificationTypeManagerFactory.create(dis));
             } else if(frameType < 247) {
                 throw new ClassFileException(String.format("No StackMapFrame defined for reserved frame type: %d", frameType));
             } else if(frameType == 247) {

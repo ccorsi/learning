@@ -26,13 +26,10 @@ SOFTWARE.
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.valhalla.plogger.instrumentation.bytecode.manager.StackMapTableManager;
 import org.valhalla.plogger.instrumentation.utils.PrintStreamThread;
 import org.valhalla.plogger.instrumentation.utils.Utils;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 public class LoggerITCase {
 
@@ -114,6 +111,7 @@ public class LoggerITCase {
         int exitCode = process.waitFor();
         System.out.println("Exit code: " + exitCode);
         Assertions.assertEquals(0, exitCode, "Test exited with an error");
+        Assertions.assertFalse(streams[1].isOutput(), "Test generated error messages");
 //        process = Utils.createJavaProcess("--version", paths);
 //        streams =  new PrintStreamThread[] {
 //                new PrintStreamThread("out: ", process.getInputStream()),

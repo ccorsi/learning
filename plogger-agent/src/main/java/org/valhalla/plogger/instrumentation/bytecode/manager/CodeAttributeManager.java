@@ -150,10 +150,10 @@ public class CodeAttributeManager implements AttributeManager {
      */
     private boolean instrumentJdk4VersionStaticMethod(ClassManager classManager, MethodManager methodManager) {
         try {
-            String objectType = "Ljava/lang/Class;";
+            String className = classManager.getClassName().replace('/', '.');
             // Create the prolog instructions that are required in this case.
             ConstantPoolManager constantPool = classManager.getConstantPoolManager();
-            ConstantPoolEntry entry = constantPool.getStringEntry("java.lang.Class");
+            ConstantPoolEntry entry = constantPool.getStringEntry(className);
             int index = constantPool.getEntryIndex(entry);
             // Add LDC or LDC_W instruction for the ConstantString (class name)
             AbstractInstruction instruction = addLdcInstruction(index, null);
@@ -167,7 +167,8 @@ public class CodeAttributeManager implements AttributeManager {
             /* instruction = */ new InvokeStaticInstruction( classManager, index, instruction);
 
             // Add remaining logger instructions
-            addRemainingLoggerWriteInstructions(classManager, methodManager, constantPool, instruction, objectType);
+            addRemainingLoggerWriteInstructions(classManager, methodManager, constantPool, instruction,
+                    "Ljava/lang/Class;");
             return true;
         } catch (ConstantPoolEntryException e) {
             // TODO: Add debug option
@@ -320,6 +321,8 @@ public class CodeAttributeManager implements AttributeManager {
         // Keep a reference to the first instruction, needed later to combine the prolog with the current
         // instructions of the method.
         AbstractInstruction firstInstruction = instruction;
+        // Move to the last instruction.
+        while (instruction.getNext() != null) instruction = instruction.getNext();
         String methodName = methodManager.getName();
         if ("<init>".equals(methodName)) {
             // constructor method
@@ -447,7 +450,7 @@ public class CodeAttributeManager implements AttributeManager {
                         while (signature.charAt(cnt) == '[') cnt++;
                         String arrayClassName = null;
                         switch(signature.charAt(cnt)) {
-                            case 'Z': case 'B': case 'S': case 'I': case 'J': case 'F': case 'D':
+                            case 'Z': case 'B': case 'C': case 'S': case 'I': case 'J': case 'F': case 'D':
                                 start = cnt + 1;
                                 break;
                             case 'L':

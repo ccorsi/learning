@@ -29,29 +29,26 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager {
-    private int frameType;
+    private int offset;
     private final VerificationTypeManager verificationTypeManager;
     private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
 
-    public SameLocalsOneStackItemFrameManager(int frameType, VerificationTypeManager verificationTypeManager) {
-        if (frameType > 63 && frameType < 128) {
-            // SameLocal1StackItemFrame stack map frame
-            this.frameType = frameType - 64;
-        } else {
-            // SameLocal1StackItemFrameExtended stack map frame
-            this.frameType = frameType;
-        }
+    public SameLocalsOneStackItemFrameManager(int offset, VerificationTypeManager verificationTypeManager) {
+        // The passed offset if the *real* offset and not the frameType
+        // SameLocal1StackItemFrame stack map frame
+        // SameLocal1StackItemFrameExtended stack map frame
+        this.offset = offset;
         this.verificationTypeManager = verificationTypeManager;
     }
 
     @Override
     public int offset() {
-        return frameType;
+        return offset;
     }
 
     @Override
     public void setOffset(int offset) {
-        frameType = offset;
+        this.offset = offset;
     }
 
     @Override
@@ -64,14 +61,14 @@ public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager 
         if (debug) {
             System.out.println(this);
         }
-        if (frameType < 64) {
+        if (offset < 64) {
             // store a SameLocals1StackItemFrame stack map frame
-            os.write(frameType + 64);
+            os.write(offset + 64);
             verificationTypeManager.write(os);
         } else {
             // store a SameLocals1StackItemFrameExtended stack map frame
             os.write(247);
-            os.writeShort(frameType);  // This is now the offset
+            os.writeShort(offset);  // This is now the offset
             verificationTypeManager.write(os);
         }
     }
@@ -79,7 +76,7 @@ public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager 
     @Override
     public String toString() {
         return "SameLocalsOneStackItemFrameManager{" +
-                "frameType=" + frameType +
+                "frameType=" + offset +
                 ", verificationTypeManager=" + verificationTypeManager +
                 '}';
     }

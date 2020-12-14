@@ -32,6 +32,7 @@ import java.io.InputStreamReader;
 public class PrintStreamThread extends Thread {
     private final String prefix;
     private final InputStream is;
+    private boolean output = false;
 
     public PrintStreamThread(String prefix, InputStream is) {
         super("PrintStreamThread:");
@@ -40,11 +41,16 @@ public class PrintStreamThread extends Thread {
         this.is = is;
     }
 
+    public boolean isOutput() {
+        return output;
+    }
+
     @Override
     public void run() {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
             String line = null;
             while ((line = br.readLine()) != null) {
+                output = true;
                 System.out.println(prefix + line);
             }
         } catch (IOException e) {

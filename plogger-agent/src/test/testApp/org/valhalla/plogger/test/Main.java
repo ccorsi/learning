@@ -44,6 +44,8 @@ public class Main {
         recursive(10, 0);
 
         System.out.println("Thread: " + Thread.currentThread().getName());
+
+        org.apache.log4j.LogManager.getLogger(Main.class);
     }
 
     private static void recursive(int max, int current) {

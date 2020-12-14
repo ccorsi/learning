@@ -57,7 +57,10 @@ public abstract class AbstractAgentClassFileTransformer implements ClassFileTran
                     if (className.equals("org/valhalla/plogger/test/Main") ||
                             className.equals("java/lang/String") || className.equals("sun/launcher/LauncherHelper")
                             || className.equals("java/text/SimpleDateFormat")
-                            || className.startsWith("java/util/concurrent/LinkedBlockingQueue"))
+                            || className.startsWith("java/util/concurrent/LinkedBlockingQueue")
+                            || className.equals("org/apache/log4j/LogManager")
+                            || className.equals("sun/reflect/annotation/AnnotationInvocationHandler")
+                            || className.equals("java/lang/reflect/ProxyGenerator"))
                     {
                         String fileName = String.format("%s.class", className.replace('/','.'));
                         try (FileOutputStream fos = new FileOutputStream(fileName)) {
