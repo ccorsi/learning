@@ -127,6 +127,7 @@
                         <include>**/AgentClassFileTransformer.*</include>
                         <include>**/AgentMain.*</include>
                         <include>**/module-info.*</include>
+                        <include>**/AbstractAgentClassFileTransformer.*</include>
                     </includes>
                 </configuration>
                 <executions>
@@ -146,6 +147,7 @@
                             <excludes>
                                 <exclude>**/AgentClassFileTransformer.*</exclude>
                                 <exclude>**/AgentMain.*</exclude>
+                                <exclude>**/AbstractAgentClassFileTransformer.*</exclude>
                             </excludes>
                         </configuration>
                     </execution>
