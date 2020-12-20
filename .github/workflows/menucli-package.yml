@@ -38,4 +38,5 @@ jobs:
       env:
         PYTHONPATH: ${GITHUB_WORKSPACE}
       run: |
+        export PYTHONPATH=${GITHUB_WORKSPACE}
         pytest
