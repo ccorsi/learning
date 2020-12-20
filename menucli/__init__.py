@@ -1,3 +1,6 @@
+
+import os
+
 """
 MIT License
 
@@ -23,7 +26,7 @@ SOFTWARE.
 
 """
 
-__all__ = [ "create_menu", "create_submenu", "add_menu_item_action" ]
+__all__ = ["create_menu", "create_submenu", "add_menu_item_action"]
 __version__ = '2020.11.14'
 __author__ = 'Claudio Corsi'
 
@@ -76,7 +79,17 @@ def add_menu_item_action(menu_item, title, action, next_menu_item):
 """
 
 
+value = os.getenv("MEMUCLI_TEST")
+
+if value is not None:
+    end_line = '\n'
+else:
+    end_line = ''
+
+
 def _select_menu_item(title, items):
+    global end_line
+
     while True:
         print()
         print('Menu:', title)
@@ -86,7 +99,8 @@ def _select_menu_item(title, items):
             print('\t{} - {}'.format(i, item.title()))
         print()
         try:
-            option = int(input('Select one of the above option: '))
+            print('Select one of the above option: ', end=end_line)
+            option = int(input(''))
             if option > 0 and (option <= len(items)):
                 return items[option - 1]
             print('Option: {} is out of range'.format(option))
@@ -200,6 +214,7 @@ class _TopMenuItem(object):
     def show(self):
         self._menu()
 
+
 class _ExitMenuItem(object):
     """
     This class is used to exit from the menu calls.  It is just a convenient
@@ -257,6 +272,7 @@ class _Action(object):
     the child menu items.  It will call the passed action and then
     return the passed menu item.
     """
+
     def __init__(self, action, item):
         """
         This constructor will execute the passed callable action
