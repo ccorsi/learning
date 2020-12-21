@@ -49,33 +49,27 @@ def load_and_execute():
         print("The module {} does not contain method {}".format(module_name, method_name), file=sys.stderr)
 
 
-# This doesn't work with the contract module
-class check_none(object):
-    def __init__(self, parameter_name):
-        self._parameter_name = parameter_name
-
-    def __ceil__(self, v):
-        assert v != None, 'Parameter {} can not be None'.format(self._parameter_name)
-
-
-# This doesn't work with the contract module
-class check_tuple(object):
+class checkList(object):
     def __init__(self, parameter_name):
         self._parameter_name = parameter_name
 
     def __call__(self, v):
-        assert isinstance(v, list), 'Parameter {} has to be a tuple type'.format(self._parameter_name)
+        assert isinstance(v, list), 'Parameter {} has to be a list type'.format(self._parameter_name)
 
 
-def checkNone(v):
-    assert v != None, 'Parameter can not be None'
+class checkNone(object):
+    def __init__(self, parameter_name):
+        self._parameter_name = parameter_name
+
+    def __call__(self, v):
+        assert v != None, 'Parameter {} cannot be set to None'.format(self._parameter_name)
 
 
-def checkTuple(v):
-    assert isinstance(v, list), 'Parameter has to be a type type'
-
-
-@contract({'module': [checkNone], 'method': [checkNone], 'parameters': [checkNone, checkTuple]})
+@contract({
+    'module': [checkNone('module')],
+    'method': [checkNone('method')],
+    'parameters': [checkNone, checkList('parameters')]
+})
 def execute(module, method, parameters=[]):
     """
     This method will generate a command line that will call this module main method.  The main
