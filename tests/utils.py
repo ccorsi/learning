@@ -172,7 +172,6 @@ if __name__ == "__main__":
         o.join()
         e.join()
 
-        print('Has callable {}'.format(hasattr(check_tuple, '__call__')))
         execute('module_name', 'method_name', list(['arg1', 'arg2', 'arg3']))
     else:
         load_and_execute()
