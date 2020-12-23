@@ -69,6 +69,10 @@ public class AgentMain {
                         debugException.debug(e); // e.printStackTrace(System.out);
                     }
 //            throw e;
+                } catch (Throwable t) {
+                    if (debugException.isDebug()) {
+                        debugException.debug("An exception was raised when adding class transformer", t);
+                    }
                 }
             } finally {
                 LoggerManager.exit();
