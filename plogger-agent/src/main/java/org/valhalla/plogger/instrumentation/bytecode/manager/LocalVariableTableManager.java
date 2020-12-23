@@ -56,6 +56,31 @@ public class LocalVariableTableManager implements AttributeManager {
         }
     }
 
+    private LocalVariableTableManager() {
+        nameIndex = 0;
+        entries = null;
+    }
+
+    private static LocalVariableTableManager defaultLocalVariableTableManager = new LocalVariableTableManager() {
+
+        @Override
+        public void sync(AbstractInstruction instruction, int pos) {
+        }
+
+        @Override
+        public String toString() {
+            return "DefaultLocalVariableTableManager";
+        }
+
+        @Override
+        public void write(DataOutput os) throws IOException {
+        }
+    };
+
+    public static LocalVariableTableManager getDefaultLocalVariableTableManager() {
+        return defaultLocalVariableTableManager;
+    }
+
     public void sync(AbstractInstruction instruction, int pos) {
         for(LocalVariableTableEntryManager entry : entries) {
             entry.sync(instruction, pos);

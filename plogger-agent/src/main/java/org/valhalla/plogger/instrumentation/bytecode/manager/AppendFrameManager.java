@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
 
@@ -35,7 +36,7 @@ public class AppendFrameManager implements StackMapFrameManager {
     private final int frameType;
     private int offset;
     private final VerificationTypeManager[] entries;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+    private static final Debug debug = Debug.getDebug("stackmapframe");
 
     public AppendFrameManager(int frameType, DataInputStream dis) {
         this.frameType = frameType;
@@ -76,8 +77,8 @@ public class AppendFrameManager implements StackMapFrameManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
+        if (debug.isDebug()) {
+            debug.debug(toString());
         }
         os.write(frameType);
         os.writeShort(offset);

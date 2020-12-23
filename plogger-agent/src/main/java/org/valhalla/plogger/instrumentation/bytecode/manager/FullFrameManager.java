@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
 
@@ -36,7 +37,8 @@ public class FullFrameManager implements StackMapFrameManager {
     private int offset;
     private final VerificationTypeManager[] locals;
     private final VerificationTypeManager[] stack;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+    private static final Debug debug = Debug.getDebug("stackmapframe");
+    private static final Debug debugException = Debug.getDebug("stackmapframe.exception");
 
     public FullFrameManager(DataInputStream dis) {
         try {
@@ -52,7 +54,10 @@ public class FullFrameManager implements StackMapFrameManager {
                 try {
                     stack[idx] = VerificationTypeManagerFactory.create(dis);
                 } catch (ClassFileException cfe) {
-                    System.out.println("Raised exception when trying to create verification entry: " + idx);
+                    if (debugException.isDebug()) {
+                        debugException.debug("Raised exception when trying to create verification entry: "
+                                + idx, cfe);
+                    }
                     throw cfe;
                 }
             }
@@ -83,8 +88,8 @@ public class FullFrameManager implements StackMapFrameManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
+        if (debug.isDebug()) {
+            debug.debug(toString());
         }
         os.write(frameType);
         os.writeShort(offset);

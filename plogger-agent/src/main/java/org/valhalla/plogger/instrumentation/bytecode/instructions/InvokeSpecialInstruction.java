@@ -39,6 +39,10 @@ public class InvokeSpecialInstruction extends AbstractInstruction {
                 -1);
     }
 
+    public int getConstantPoolIndex() {
+        return constantPoolIndex;
+    }
+
     @Override
     public int size() {
         return 3;

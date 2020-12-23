@@ -24,43 +24,71 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.valhalla.plogger.instrumentation.utils.SampleClass;
+import org.valhalla.plogger.test.common.Executor;
+import org.valhalla.plogger.test.common.Utils;
+//import org.valhalla.plogger.test.types.SampleClass;
+import org.valhalla.plogger.tests.CountExecutor;
+import org.valhalla.plogger.tests.Log4jExecutor;
+import org.valhalla.plogger.tests.RecursiveExecutor;
+import org.valhalla.plogger.tests.SimpleExecutor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args) {
-        int count = 1;
-        if (args.length > 0) {
-            try {
-                count = Integer.parseInt(args[0]);
-            } catch (RuntimeException e) {
+    private static final Map<String, Executor> tests;
 
-            }
+    static {
+        tests = new HashMap<>();
+
+        tests.put("count", new CountExecutor());
+        tests.put("recursive", new RecursiveExecutor());
+        tests.put("log4j", new Log4jExecutor());
+        tests.put("simple", new SimpleExecutor());
+    }
+
+    public static void main(String[] args) throws Throwable {
+
+        try {
+            Utils.executeTest(tests, args);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.exit(1);
         }
-        print();
-        while( count-- > 0 )
-            load(count);
 
-        recursive(10, 0);
-
-        System.out.println("Thread: " + Thread.currentThread().getName());
-
-        org.apache.log4j.LogManager.getLogger(Main.class);
+//        int count = 1;
+//        if (args.length > 0) {
+//            try {
+//                count = Integer.parseInt(args[0]);
+//            } catch (RuntimeException e) {
+//
+//            }
+//        }
+//        print();
+//        while( count-- > 0 )
+//            load(count);
+//
+//        recursive(10, 0);
+//
+//        System.out.println("Thread: " + Thread.currentThread().getName());
+//
+//        org.apache.log4j.LogManager.getLogger(Main.class);
     }
 
-    private static void recursive(int max, int current) {
-        System.out.println(String.format("Calling recursive call %d", current));
-        if (current < max) recursive(max, ++current);
-    }
-
-    private static void print() {
-        System.out.println("Hello, world!");
-    }
-
-    private static void load(int c) {
-        SampleClass sampleClass = new SampleClass(String.format("Name:%d", c));
-        System.out.println(String.format("SampleClass name: %s", sampleClass.getName()));
-        sampleClass.setName(String.format("Updated Name:%d", c));
-        System.out.println(String.format("SampleClass name: %s", sampleClass.getName()));
-    }
+//    private static void recursive(int max, int current) {
+////        System.out.println(String.format("Calling recursive call %d", current));
+//        if (current < max) recursive(max, ++current);
+//    }
+//
+//    private static void print() {
+//        System.out.println("Hello, world!");
+//    }
+//
+//    private static void load(int c) {
+//        SampleClass sampleClass = new SampleClass(String.format("Name:%d", c));
+////        System.out.println(String.format("SampleClass name: %s", sampleClass.getName()));
+//        sampleClass.setName(String.format("Updated Name:%d", c));
+////        System.out.println(String.format("SampleClass name: %s", sampleClass.getName()));
+//    }
 }

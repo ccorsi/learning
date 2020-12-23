@@ -24,10 +24,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public class LoggerManager {
+
+    private static final Debug debug = Debug.getDebug("loggermanager");
 
     private static final ThreadLocal<Boolean> state = new BooleanThreadLocal();
 
@@ -38,28 +39,23 @@ public class LoggerManager {
         }
     }
 
-    public static void init() {
-//        System.out.println("ENTERED LOGGER MANAGER INIT");
+    public static void init(String[] appenderSettings) {
         enter();
         try {
-//            System.out.println("BEFORE CALLING LOGGER STORAGE MANAGER");
             LoggerStorageManager.addShutdownHookThread();
-//            System.out.println("NEXT CALLING LOGGER STORAGE MANAGER");
-            LoggerStorageManager.startLoggerStorageManagerThread();
-//            System.out.println("AFTER CALLING LOGGER STORAGE MANAGER");
-            // Allow static initialization to be loaded and avoid core dumps.
-//            System.out.println("CALLING LOGGER WRITE");
-            Logger.write(LoggerManager.class, "init");
-//            System.out.println("CALLED LOGGER WRITE");
-            exit();
+            LoggerStorageManager.startLoggerStorageManagerThread(appenderSettings);
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            if (debug.isDebug()) {
+                debug.debug("An exception was generated when initializing the LoggerManager", e);
+            }
             throw e;
         } catch (Throwable t) {
-            t.printStackTrace();
+            if (debug.isDebug()) {
+                debug.debug("An exception was generated when initializing the LoggerManager", t);
+            }
             throw new RuntimeException(t);
         } finally {
-//            System.out.println("EXITING LOGGER MANAGER INIT");
+            exit();
         }
     }
 
@@ -75,7 +71,6 @@ public class LoggerManager {
         public List<String> get() {
             List<String> buffer = super.get();
             if (buffer.size() > 99) {
-//                System.out.println("BUFFER FULL");
                 LoggerStorageManager.store(buffer);
                 buffer = LoggerStorageManager.createEntriesBuffer();
                 set(buffer);

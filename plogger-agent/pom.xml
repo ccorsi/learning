@@ -32,21 +32,21 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
-            <scope>test</scope>
+            <scope>compile</scope>
+<!--            <optional>true</optional>-->
+<!--            <classifier>tests</classifier>-->
+<!--            <type>test-jar</type>-->
         </dependency>
     </dependencies>
 
     <properties>
         <agent-main-class>org.valhalla.plogger.instrumentation.AgentMain</agent-main-class>
-        <test.app7.classpath>
-            ${project.basedir}${file.separator}target${file.separator}test-app7
-        </test.app7.classpath>
-        <test.app9.classpath>
-            ${project.basedir}${file.separator}target${file.separator}test-app9
-        </test.app9.classpath>
-        <plogger.agent.jar>
-            ${project.basedir}${file.separator}target${file.separator}${project.build.finalName}.jar
-        </plogger.agent.jar>
+        <test.app7.classpath>${project.basedir}/target/test-app7</test.app7.classpath>
+        <test.app8.classpath>${project.basedir}/target/test-app8</test.app8.classpath>
+        <test.app9.classpath>${project.basedir}/target/test-app9</test.app9.classpath>
+        <test.app11.classpath>${project.basedir}/target/test-app11</test.app11.classpath>
+        <test.app9.modulepath>${project.basedir}/target/test-app9</test.app9.modulepath>
+        <plogger.agent.jar>${project.basedir}/target/${project.build.finalName}.jar</plogger.agent.jar>
         <agent.helper.jar>${project.artifactId}-${project.version}</agent.helper.jar>
     </properties>
 
@@ -55,7 +55,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.8.1</version> <!-- 3.9.0-SNAPSHOT -->
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -81,7 +81,7 @@
                         <id>testCompile-itest-app7</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>testCompile</goal>
+                            <goal>compile</goal>
                         </goals>
                         <configuration>
                             <release>7</release>
@@ -89,17 +89,42 @@
                                 <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>
                                 <compilerSourceRoot>${project.basedir}/src/test/testApp</compilerSourceRoot>
                             </compileSourceRoots>
-                            <outputDirectory>${project.basedir}/target/test-app7</outputDirectory>
+                            <outputDirectory>${project.basedir}/target/test-app</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>testCompile-itest-app8</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <release>8</release>
+                            <compileSourceRoots>
+                                <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>
+                                <compilerSourceRoot>${project.basedir}/src/test/testApp</compilerSourceRoot>
+                            </compileSourceRoots>
+                            <outputDirectory>${project.basedir}/target/test-app8</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
                         <id>testCompile-itest-app9</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>testCompile</goal>
+                            <!--
+                             can't use the testCompile goal since this will cause the build to fail because
+                             the main jar is a multi-version jar file and the module-info.java file is not
+                             located at the root of the source file directory.
+                              -->
+                            <goal>compile</goal>
                         </goals>
                         <configuration>
                             <release>9</release>
+                            <!-- This is required to be able to build the module based test application -->
+                            <compilerArgs>
+                                <compilerArg>--add-reads</compilerArg>
+                                <compilerArg>org.valhalla.plogger=ALL-UNNAMED</compilerArg>
+                            </compilerArgs>
                             <compileSourceRoots>
                                 <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>
                                 <compilerSourceRoot>${project.basedir}/src/test/testApp9</compilerSourceRoot>
@@ -130,10 +155,10 @@
                         </manifestEntries>
                     </archive>
                     <includes>
-                        <include>**/AgentClassFileTransformer.*</include>
-                        <include>**/AgentMain.*</include>
+                        <include>**/AgentClassFileTransformer*</include>
+                        <include>**/AgentMain*</include>
                         <include>**/module-info.*</include>
-                        <include>**/AbstractAgentClassFileTransformer.*</include>
+                        <include>**/AbstractAgentClassFileTransformer*</include>
                     </includes>
                 </configuration>
                 <executions>
@@ -151,9 +176,9 @@
                                 <include>**/module-info.*</include>
                             </includes>
                             <excludes>
-                                <exclude>**/AgentClassFileTransformer.*</exclude>
-                                <exclude>**/AgentMain.*</exclude>
-                                <exclude>**/AbstractAgentClassFileTransformer.*</exclude>
+                                <exclude>**/AgentClassFileTransformer*</exclude>
+                                <exclude>**/AgentMain*</exclude>
+                                <exclude>**/AbstractAgentClassFileTransformer*</exclude>
                             </excludes>
                         </configuration>
                     </execution>
@@ -175,11 +200,28 @@
                             <systemPropertyVariables>
                                 <test.app7.classpath>${test.app7.classpath}</test.app7.classpath>
                                 <test.app9.classpath>${test.app9.classpath}</test.app9.classpath>
+                                <test.app9.modulepath>${test.app9.modulepath}</test.app9.modulepath>
                                 <plogger.agent.jar>${plogger.agent.jar}</plogger.agent.jar>
                             </systemPropertyVariables>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}</directory>
+                            <includes>
+                                <include>PLogger-*</include>
+                                <include>Rollover-*</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
     </build>

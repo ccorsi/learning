@@ -32,6 +32,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -42,24 +43,20 @@ public class LoggerStorageManager {
     private static final LoggerStorageManagerCreator activeCreator;
     private static final LoggerStorageManagerCreator storageCreator;
     private static LoggerStorageManagerCreator creator;
+    private static final Debug debug;
 
     static {
-//        System.out.println("ENTERED LOGGER STORE MANAGER STATIC METHOD");
-        LoggerManager.enter();
+        boolean entered = LoggerManager.enter();
         try {
-//            System.out.println("BEFORE CREATING STORE");
+            debug = Debug.getDebug("loggerstoragemanager");
             store = new LinkedBlockingQueue<List<String>>();
-//            System.out.println("BEFORE CREATING ACTIVE");
             active = new LinkedBlockingQueue<List<String>>();
-//            System.out.println("BEFORE CREATING ACTIVE CREATOR");
             activeCreator = new ActiveCreator();
-//            System.out.println("BEFORE CREATING STORAGE CREATOR");
             storageCreator = new StorageCreator();
-//            System.out.println("BEFORE CREATING CREATOR");
             creator = activeCreator;
         } finally {
-            LoggerManager.exit();
-//            System.out.println("EXITING LOGGER STORE MANAGER STATIC METHOD");
+            if (entered)
+                LoggerManager.exit();
         }
     }
 
@@ -73,25 +70,23 @@ public class LoggerStorageManager {
         creator.add(buffer);
     }
 
-    public synchronized static void startLoggerStorageManagerThread() {
+    public synchronized static void startLoggerStorageManagerThread(String[] appenderSettings) {
         if (storageManagerThread == null) {
-            LoggerManager.enter();
+            boolean entered = LoggerManager.enter();
             try {
-//                System.out.println("Starting LoggerStoreManagerThread");
-                storageManagerThread = new LoggerStorageManagerThread("LoggerStorageManagerThread");
+                storageManagerThread = new LoggerStorageManagerThread("LoggerStorageManagerThread",
+                        appenderSettings);
                 storageManagerThread.setDaemon(true);
                 storageManagerThread.start();
-//                System.out.println("Started LoggerStoreManagerThread");
             } finally {
-                LoggerManager.exit();
+                if (entered)
+                    LoggerManager.exit();
             }
         }
     }
 
     public synchronized static void addShutdownHookThread() {
-//        System.out.println("Adding shutdown hook");
         Runtime.getRuntime().addShutdownHook(new LoggerStorageManagerShutdownHookThread());
-//        System.out.println("Added shutdown hook");
     }
 
     private static class LoggerStorageManagerThread extends Thread {
@@ -99,15 +94,16 @@ public class LoggerStorageManager {
         private final LoggerStorageManagerAppend appender;
         private boolean active;
 
-        public LoggerStorageManagerThread(String name) {
+        public LoggerStorageManagerThread(String name, String[] appenderSettings) {
             super(name);
             active = true;
-            appender = new LoggerStorageManagerAppendImpl();
+            appender = LoggerStorageManager.createAppender(appenderSettings);
         }
 
         @Override
         public void run() {
-//            System.out.println("LoggerStorageManagerThread started");
+            // Insure nothing is logged from this thread
+            LoggerManager.enter();
             // Process active entries when processing log entries
             while(active) {
                 try {
@@ -122,7 +118,7 @@ public class LoggerStorageManager {
 //                    e.printStackTrace();
                 }
             }
-//            System.out.println("LoggerStorageManagerThread purging remaining store entries");
+
             // Process the remaining entries
             for(List<String> entries : store) {
                 // store entries
@@ -134,7 +130,9 @@ public class LoggerStorageManager {
                     }
                 }
             }
-//            System.out.println("LoggerStorageManagerThread purging remaining active entries");
+
+            // TODO: Active entries can still be accessed and we need to
+            //  deal with the possibility of a concurrent modification exception.
             // Process the remaining entries
             for(List<String> entries : LoggerStorageManager.active) {
                 // store entries
@@ -143,6 +141,8 @@ public class LoggerStorageManager {
                         appender.write(entry);
                     } catch (FileNotFoundException e) {
 //                        e.printStackTrace();
+                    } catch (Throwable t) {
+                        t.printStackTrace();
                     }
                 }
             }
@@ -151,34 +151,38 @@ public class LoggerStorageManager {
             } catch (IOException e) {
 //                e.printStackTrace();
             }
-//            System.out.println("LoggerStorageManagerThread ended");
+
+            if (debug.isDebug())
+                debug.debug("Exiting LoggerStorageManagerThread thread");
         }
 
-        public void done() { this.active = false; }
+        public void done() {
+            this.active = false;
+        }
 
+    }
+
+    private static LoggerStorageManagerAppend createAppender(String[] appenderSettings) {
+        LoggerStorageManagerAppend appender;
+        appender = new LoggerStorageManagerFileAppend();
+        appender.initialize(appenderSettings);
+        return appender;
     }
 
     private static class LoggerStorageManagerShutdownHookThread extends Thread {
         @Override
         public void run() {
             LoggerManager.enter();
+            // Update the mechanism that stores the entries
+            creator = storageCreator;
+            // Inform the thread to start to drain all entries.
+            storageManagerThread.done();
+            // interrupt the thread
+            storageManagerThread.interrupt();
             try {
-//            System.out.println("INSIDE SHUTDOWN HOOK");
-                // Update the mechanism that stores the entries
-                creator = storageCreator;
-                // Inform the thread to start to drain all entries.
-                storageManagerThread.done();
-                // interrupt the thread
-                storageManagerThread.interrupt();
-                try {
-//                System.out.println("INSIDE SHUTDOWN HOOK: WAITING FOR STORAGE THREAD TO COMPLETE");
-                    storageManagerThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.out);
-                }
-//            System.out.println("INSIDE SHUTDOWN HOOK: STORAGE THREAD COMPLETED");
-            } finally {
-                LoggerManager.exit();
+                storageManagerThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace(System.out);
             }
         }
     }
@@ -219,6 +223,7 @@ public class LoggerStorageManager {
     }
 
     private interface LoggerStorageManagerAppend extends Closeable {
+        void initialize(String[] settings);
         void write(String message) throws FileNotFoundException;
     }
 
@@ -231,26 +236,41 @@ public class LoggerStorageManager {
      * close and open a new file....
      *
      */
-    private static class LoggerStorageManagerAppendImpl implements LoggerStorageManagerAppend {
+    private static class LoggerStorageManagerFileAppend implements LoggerStorageManagerAppend {
 
-        private final String fileNamePrefix;
+        private String fileNamePrefix;
         private FileOutputStream fos;
         private PrintWriter writer;
         private int count;
         private int messages;
 
-        LoggerStorageManagerAppendImpl() {
-            // TODO: synchronize the different counters.
+        LoggerStorageManagerFileAppend() {
             count = 1;
-            fileNamePrefix = String.format("Plogger-%s",
-                    new SimpleDateFormat("yyyy-MM-dd-HH-mm-ssSSSZ").format(Calendar.getInstance().getTime()));
+            messages = 0;
+        }
+
+        @Override
+        public void initialize(String[] settings) {
+            String prefix = "PLogger";
+
+            for (String setting : settings) {
+                if (setting.startsWith("prefix=")) {
+                    prefix = setting.substring("prefix=".length());
+                }
+            }
+
+            Date time = Calendar.getInstance().getTime();
+
+            fileNamePrefix = String.format("%s-%s", prefix,
+                    new SimpleDateFormat("yyyy-MM-dd-HH-mm-ssSSSZ").format(time));
+
             try {
                 fos = new FileOutputStream(String.format("%s-%d.txt", fileNamePrefix, count));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+
             writer = new PrintWriter(fos);
-            messages = 0;
         }
 
         @Override

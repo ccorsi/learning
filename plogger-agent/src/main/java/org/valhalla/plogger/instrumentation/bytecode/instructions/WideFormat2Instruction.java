@@ -41,7 +41,7 @@ public class WideFormat2Instruction extends AbstractInstruction {
 
     @Override
     public int size() {
-        return 5;
+        return 6;
     }
 
     @Override

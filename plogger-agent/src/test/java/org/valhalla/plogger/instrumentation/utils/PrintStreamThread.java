@@ -36,7 +36,6 @@ public class PrintStreamThread extends Thread {
 
     public PrintStreamThread(String prefix, InputStream is) {
         super("PrintStreamThread:");
-        setName(getName() + getId());
         this.prefix = prefix;
         this.is = is;
     }
@@ -47,6 +46,7 @@ public class PrintStreamThread extends Thread {
 
     @Override
     public void run() {
+        setName(getName() + getId());
         try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
             String line = null;
             while ((line = br.readLine()) != null) {

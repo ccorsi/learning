@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
 import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
@@ -33,16 +34,20 @@ import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 
 public class StackMapTableManager implements AttributeManager {
-    public static final String DEBUG_PROPERTY_NAME = "stack.map.table.debug";
+    private static final Debug debug = Debug.getDebug("stackmaptable");
+    private static final Debug debugException = Debug.getDebug("stackmaptable.exception");
+
     private final int nameIndex;
     private final StackMapFrameManager[] frameManagers;
     private int frameIdx;
     private int framePos;
     private AbstractInstruction priorInstruction;
-    private boolean debug = Boolean.getBoolean(DEBUG_PROPERTY_NAME);
+
 
     public StackMapTableManager(int nameIndex, DataInputStream dis) {
         this.nameIndex = nameIndex;
@@ -53,10 +58,16 @@ public class StackMapTableManager implements AttributeManager {
                 try {
                     frameManagers[idx] = StackMapFrameManagerFactory.create(dis);
                 } catch (ClassFileException cfe) {
-//                    System.out.println("Exception was raised when creating StackMapFrame: " + idx);
-//                    for(int cnt = 0 ; cnt < idx ; cnt++) {
-//                        System.out.println(frameManagers[cnt]);
-//                    }
+                    if (debugException.isDebug()) {
+                        StringWriter sw = new StringWriter();
+                        try (PrintWriter pw = new PrintWriter(sw)) {
+                            pw.println("Exception was raised when creating StackMapFrame: " + idx);
+                            for (int cnt = 0; cnt < idx; cnt++) {
+                                pw.println(frameManagers[cnt]);
+                            }
+                        }
+                        debugException.debug(sw.toString(), cfe);
+                    }
                     throw cfe;
                 }
             }
@@ -69,10 +80,35 @@ public class StackMapTableManager implements AttributeManager {
 //        System.out.println("FIRST STACK MAP FRAME: " + frameManagers[frameIdx]);
     }
 
+    private static StackMapTableManager defaultStackMapTableManager = new StackMapTableManager() {
+
+        @Override
+        public void sync(AbstractInstruction instruction, int pos) {
+        }
+
+        @Override
+        public String toString() {
+            return "DefaultStackMapTableManager";
+        }
+
+        @Override
+        public void write(DataOutput os) throws IOException {
+        }
+    };
+
+    private StackMapTableManager() {
+        nameIndex = 0;
+        frameManagers = null;
+    }
+
+    public static StackMapTableManager getDefaultStackMapTableManager() {
+        return defaultStackMapTableManager;
+    }
+
     public void sync(AbstractInstruction instruction, int pos) {
         if (framePos == pos) {
-            if (debug) {
-                System.out.println("Adding StackMapFrameListener for pos " + pos + " at instruction " + instruction);
+            if (debug.isDebug()) {
+                debug.debug("Adding StackMapFrameListener for pos " + pos + " at instruction " + instruction);
             }
             StackMapFrameListener listener = new StackMapFrameListener(framePos, frameIdx, priorInstruction);
             instruction.addListener(listener);
@@ -81,8 +117,8 @@ public class StackMapTableManager implements AttributeManager {
             frameIdx++;
             if (frameIdx < frameManagers.length) {
                 framePos += 1 + frameManagers[frameIdx].offset();
-                if (debug) {
-                    System.out.println(String.format("frameIdx: %d, framePos: %d - %s", frameIdx, framePos,
+                if (debug.isDebug()) {
+                    debug.debug(String.format("frameIdx: %d, framePos: %d - %s", frameIdx, framePos,
                             frameManagers[frameIdx]));
                 }
             }
@@ -133,18 +169,18 @@ public class StackMapTableManager implements AttributeManager {
                 }
                 offset--;
             }
-            if (debug) {
-                System.out.println("offset: " + offset + " from " + priorFrameInstruction + " to " + instruction);
+            if (debug.isDebug()) {
+                debug.debug("offset: " + offset + " from " + priorFrameInstruction + " to " + instruction);
             }
             // check that the offset is correct, if not update stack map frame
             if (frameManagers[frameIndex].offset() != offset) {
-                if (debug) {
-                    System.out.println("Updating offset " + offset + " for Stack Map Frame "
+                if (debug.isDebug()) {
+                    debug.debug("Updating offset " + offset + " for Stack Map Frame "
                             + frameManagers[frameIndex]);
                 }
                 frameManagers[frameIndex].setOffset(offset);
-                if (debug) {
-                    System.out.println("to Stack Map Frame " + frameManagers[frameIndex]);
+                if (debug.isDebug()) {
+                    debug.debug("to Stack Map Frame " + frameManagers[frameIndex]);
                 }
             }
         }
@@ -160,9 +196,13 @@ public class StackMapTableManager implements AttributeManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println("Storing StackMapTable");
-            System.out.println(this);
+        if (debug.isDebug()) {
+            StringWriter sw = new StringWriter();
+            try  (PrintWriter pw = new PrintWriter(sw) ) {
+                pw.println("Storing StackMapTable");
+                pw.println(this);
+            }
+            debug.debug(sw.toString());
         }
         os.writeShort(nameIndex);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

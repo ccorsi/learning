@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
 
 import java.io.DataOutput;
@@ -38,7 +39,7 @@ import java.io.IOException;
 public class SameFrameManager implements StackMapFrameManager {
     // values 0-63 are SameFrame while value greater than 63 are SameFrameExtended
     private int frameType;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+    private static final Debug debug = Debug.getDebug("stackmapframe");
 
     public SameFrameManager(int frameType) {
         this.frameType = frameType;
@@ -61,8 +62,8 @@ public class SameFrameManager implements StackMapFrameManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
+        if (debug.isDebug()) {
+            debug.debug(String.format("Storing %s", toString()));
         }
         if (frameType < 64) {
             // Store a SameFrame stack map frame

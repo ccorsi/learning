@@ -24,6 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
@@ -34,31 +36,51 @@ import java.util.Set;
 
 public class Logger {
 
+    private static final Debug debug = Debug.getDebug("logger");
+
     private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ssSSSZ");
 
     private static final Object[] NONE = new Object[0];
 
     public static void write(Class<?> clz, String methodName) {
-        _write(clz.getName(), methodName, NONE);
+        try {
+            _write(clz.getName(), methodName, NONE);
+        } catch (Throwable t) {
+            if (debug.isDebug())
+                t.printStackTrace();
+        }
     }
 
     public static void write(Object object, String methodName) {
-        _write(object.getClass().getName() + "@" + System.identityHashCode(object), methodName, NONE);
+        try {
+            _write(object.getClass().getName() + "@" + System.identityHashCode(object), methodName, NONE);
+        } catch (Throwable t) {
+            if (debug.isDebug())
+                t.printStackTrace();
+        }
     }
 
     public static void write(Class<?> clz, String methodName, Object[] values) {
-        _write(clz.getName(), methodName, values);
+        try {
+            _write(clz.getName(), methodName, values);
+        } catch (Throwable t) {
+            if (debug.isDebug())
+                t.printStackTrace();
+        }
     }
 
     public static void write(Object object, String methodName, Object[] values) {
-        _write(object.getClass().getName() + "@" + System.identityHashCode(object), methodName, values);
+        try {
+            _write(object.getClass().getName() + "@" + System.identityHashCode(object), methodName, values);
+        } catch (Throwable t) {
+            if (debug.isDebug())
+                t.printStackTrace();
+        }
     }
 
     private static void _write(String objectId, String methodName, Object[] parameters) {
-//        System.out.println("Entered _write call");
         if (LoggerManager.enter()) {
             try {
-//                System.out.println(String.format("Logging %s %s %s", objectId, methodName, parameters));
                 List<String> entries = LoggerManager.getEntriesBuffer();
                 StringBuilder string = new StringBuilder();
                 // Add Thread Name
@@ -78,18 +100,20 @@ public class Logger {
                 }
                 string.append(")");
                 entries.add(string.toString());
-//                System.out.println(string.toString());
             } catch (Throwable t) {
                 // Insure that no exception is propagated up to the user calling code
-                // TODO: maybe not print this to out.
-                System.out.print("Exception for objectId ");
-                System.out.print(objectId);
-                System.out.print(" method ");
-                System.out.println(methodName);
-                System.out.println("with parameters");
-                for(Object parameter : parameters)
-                    System.out.println(parameter);
-                t.printStackTrace(System.out);
+                if (debug.isDebug()) {
+                    StringWriter sw = new StringWriter();
+                    try (PrintWriter pw = new PrintWriter(sw)) {
+                        pw.print(String.format("Exception for objectId %s method %s", objectId, methodName));
+                        if (parameters.length > 0) {
+                            pw.println("with parameters:");
+                            for (Object parameter : parameters)
+                                pw.println(parameter);
+                        }
+                    }
+                    debug.debug(sw.toString(), t);
+                }
             } finally {
                 LoggerManager.exit();
             }

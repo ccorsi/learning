@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantUtf8;
@@ -33,6 +34,9 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class FieldManager implements ClassFileWriter {
+
+    private static final Debug debug = Debug.getDebug("field");
+    private static final Debug debugException = Debug.getDebug("field.exception");
 
     private final int nameIndex;
     private final int accessFlags;
@@ -50,8 +54,10 @@ public class FieldManager implements ClassFileWriter {
                 try {
                     this.attributes[idx] = AttributeManagerFactory.create(dis, constantPoolManager);
                 } catch (RuntimeException re) {
-                    System.out.println("An exception was raised while processing attribute " + idx +
-                            " out of " + size + " for field at index " + this.nameIndex);
+                    if (debugException.isDebug()) {
+                        debugException.debug("An exception was raised while processing attribute " + idx +
+                                " out of " + size + " for field at index " + this.nameIndex, re);
+                    }
                     throw re;
                 }
             }

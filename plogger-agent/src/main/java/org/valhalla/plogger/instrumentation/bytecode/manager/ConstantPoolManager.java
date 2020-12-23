@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.*;
@@ -32,8 +33,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ConstantPoolManager implements Iterable<ConstantPoolEntry>, ClassFileWriter {
+    private static final Debug debug = Debug.getDebug("constantpool");
+    private static final Debug debugException = Debug.getDebug("constantpool.exception");
+
     private ConstantPoolEntry[] constantPool;
-    private boolean debug;
 
     public ConstantPoolManager(DataInputStream dis) {
         int idx = 1;
@@ -45,8 +48,10 @@ public class ConstantPoolManager implements Iterable<ConstantPoolEntry>, ClassFi
                 idx += constantPool[idx].entries();
             }
         } catch (IOException | ConstantPoolEntryException e) {
-            // TODO: Combine the exception and message
-            System.out.println("Invalid constant pool entry: " + idx);
+            if (debugException.isDebug()) {
+                // TODO: Combine the exception and message
+                debugException.debug("Invalid constant pool entry: " + idx, e);
+            }
             throw new ClassFileException(e);
         }
     }
@@ -175,13 +180,17 @@ public class ConstantPoolManager implements Iterable<ConstantPoolEntry>, ClassFi
         newConstantPool[constantPool.length] = entry;
         constantPool = newConstantPool;
 
-        if (debug) {
-            System.out.println("Updated Constant Pool Entry Table Start");
-            for(int idx = 1 ; idx < constantPool.length ; idx++) {
-                System.out.println("Entry " + idx + " = " + constantPool[idx]);
-            }
-            System.out.println("Updated Constant Pool Entry Table End");
-        }
+//        if (debug.isDebug()) {
+//            StringWriter sw = new StringWriter();
+//            try (PrintWriter pw = new PrintWriter(sw)) {
+//                pw.println("Updated Constant Pool Entry Table Start");
+//                for (int idx = 1; idx < constantPool.length; idx++) {
+//                    pw.println("Entry " + idx + " = " + constantPool[idx]);
+//                }
+//                pw.println("Updated Constant Pool Entry Table End");
+//            }
+//            debug.debug(sw.toString());
+//        }
     }
 
     @Override
@@ -220,11 +229,6 @@ public class ConstantPoolManager implements Iterable<ConstantPoolEntry>, ClassFi
             return (E) constantPool[index];
         }
         throw new NoSuchElementException("No Constant Pool Entry found for index: " + index);
-    }
-
-    @SuppressWarnings("unused")
-    public void debug() {
-        this.debug = true;
     }
 
     @Override

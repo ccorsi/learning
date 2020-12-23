@@ -23,11 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.EndInstruction;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntry;
-import org.valhalla.plogger.instrumentation.bytecode.instructions.InstructionEntryFactory;
+import org.valhalla.plogger.instrumentation.bytecode.constantpool.AbstractConstantRef;
+import org.valhalla.plogger.instrumentation.bytecode.instructions.*;
 
 import java.io.*;
 
@@ -65,6 +64,9 @@ import java.io.*;
  *      - instruction size (number of bytes that this instruction will require)
  */
 public class InstructionManager {
+    private static final Debug debug = Debug.getDebug("instruction");
+    private static final Debug debugException = Debug.getDebug("instruction.exception");
+
     private final ClassManager classManager;
     private AbstractInstruction headInstruction;
     private byte[] code;
@@ -74,18 +76,33 @@ public class InstructionManager {
         this.code = code;
     }
 
-    public boolean instrument(AbstractInstruction instruction, boolean isConstructor) {
+    public boolean instrument(ClassManager classManager, AbstractInstruction instruction, boolean isConstructor) {
         loadInstructions();
         AbstractInstruction firstInstruction = null;
         if (isConstructor) {
             // We need to add the instructions after the first instance of the invokespecial
             // instruction.
+            int thisClassIndex = classManager.getThisClassIndex();
+            int superClassIndex = classManager.getSuperClassIndex();
+
             AbstractInstruction invokeSpecialInstruction = headInstruction;
-            while (invokeSpecialInstruction != null && invokeSpecialInstruction.opCode() != InstructionEntryFactory.INVOKESPECIAL) {
+            while (invokeSpecialInstruction != null ) {
+                if ( invokeSpecialInstruction.opCode() == InstructionEntryFactory.INVOKESPECIAL ) {
+                    InvokeSpecialInstruction specialInstruction = (InvokeSpecialInstruction) invokeSpecialInstruction;
+                    int constantRefIndex = specialInstruction.getConstantPoolIndex();
+                    AbstractConstantRef abstractConstantRef = classManager.getConstantPoolManager().getEntry(constantRefIndex);
+                    int classIndex = abstractConstantRef.getClassIndex();
+//                    System.err.println("Checking " + constantRefIndex + " against " + thisClassIndex + " and " + superClassIndex);
+                    if ( classIndex == thisClassIndex || classIndex == superClassIndex) {
+                        // We found the correct instructor that this class is using.
+                        break;
+                    }
+                }
                 invokeSpecialInstruction = invokeSpecialInstruction.getNext();
             }
             if (invokeSpecialInstruction == null || invokeSpecialInstruction.opCode() != InstructionEntryFactory.INVOKESPECIAL) {
-                throw new ClassFileException("Did not find the invokespecial instruction");
+                throw new ClassFileException(String.format("Did not find the invokespecial instruction for class: %s",
+                        classManager.getClassName()));
             }
             // Get a reference to the next instruction after the invokespecial instruction
             AbstractInstruction nextInstruction = invokeSpecialInstruction.getNext();
@@ -141,11 +158,18 @@ public class InstructionManager {
                     cnt--;
                 }
             } catch (ClassFileException e) {
-                // TODO: Make these conditional
-                int pos = 0;
-                for (AbstractInstruction entry = headInstruction ; entry != null ; entry = entry.getNext()) {
-                    System.out.println(String.format("%-5d: %s", pos, entry));
-                    pos += entry.size();
+                if (debugException.isDebug()) {
+                    StringWriter sw = new StringWriter();
+                    try (PrintWriter pw = new PrintWriter(sw)) {
+                        pw.println("An exception was raised while updating class byte code");
+                        int pos = 0;
+                        for (AbstractInstruction entry = headInstruction; entry != null; entry = entry.getNext()) {
+                            pw.println(String.format("%-5d: %s", pos, entry));
+                            pos += entry.size();
+                        }
+                    }
+                    debugException.debug(sw.toString(), e);
+//                    debugException.debug("An exception was raised while updating class byte code", e);
                 }
                 throw e;
             }

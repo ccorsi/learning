@@ -70,7 +70,14 @@ public class Utils {
         return createJavaProcess(mainClassName, paths, EMPTY_STRING_ARRAY, EMPTY_STRING_ARRAY);
     }
 
-    public static Process createJavaProcess(String mainClassName, String[] paths, String[] jvmOptions, String[] args) throws IOException {
+    public static Process createJavaProcess(String mainClassName, String[] paths, String[] jvmOptions, String[] args)
+            throws IOException {
+        return createJavaProcess(mainClassName, paths, jvmOptions, args, EMPTY_STRING_ARRAY);
+    }
+
+    public static Process createJavaProcess(String mainClassName, String[] paths, String[] jvmOptions, String[] args,
+                                            String[] modulePaths)
+            throws IOException {
         ProcessBuilder builder = new ProcessBuilder();
         String javaCmd = getJavaCommand();
         StringBuilder classPaths = new StringBuilder(System.getProperty("java.class.path"));
@@ -83,8 +90,17 @@ public class Utils {
         for(String jvmOption : jvmOptions) {
             commands.add(jvmOption);
         }
+        if (modulePaths.length > 0) {
+            commands.add("-p");
+            for(String modulePath : modulePaths) {
+                commands.add(modulePath);
+            }
+        }
         commands.add("-cp");
         commands.add(classPath);
+        if (modulePaths.length > 0) {
+            commands.add("-m");
+        }
         commands.add(mainClassName);
         for(String arg : args) {
             commands.add(arg);
@@ -92,5 +108,39 @@ public class Utils {
         System.out.println(String.format("Starting process: %s", commands));
         Process process = builder.command(commands).start();
         return process;
+    }
+
+    public static PrintStreamThread[] executeTest(String mainClassName, String[] classPaths, String[] jvmOptions, String[] args)
+            throws IOException, InterruptedException {
+        return executeTest(mainClassName, classPaths, jvmOptions, args, EMPTY_STRING_ARRAY);
+    }
+
+    public static PrintStreamThread[] executeTest(String mainClassName, String[] classPaths, String[] jvmOptions, String[] args,
+                                   String[] modulePaths) throws IOException, InterruptedException {
+        Process process = createJavaProcess(mainClassName, classPaths, jvmOptions, args, modulePaths);
+        PrintStreamThread[] streams = {
+                new PrintStreamThread("out: ", process.getInputStream()),
+                new PrintStreamThread("err: ", process.getErrorStream()),
+        };
+        for (PrintStreamThread stream : streams) {
+            stream.start();
+        }
+        for (PrintStreamThread stream : streams) {
+            stream.join();
+        }
+        int exitCode = process.waitFor();
+        System.out.println("Exit code: " + exitCode);
+        Assertions.assertEquals(0, exitCode, "Test exited with an error");
+        Assertions.assertFalse(streams[1].isOutput(), "Test generated error messages");
+        return streams;
+//        process = Utils.createJavaProcess("--version", classPaths);
+//        streams =  new PrintStreamThread[] {
+//                new PrintStreamThread("out: ", process.getInputStream()),
+//                new PrintStreamThread("err: ", process.getErrorStream()),
+//        };
+//        for(PrintStreamThread stream : streams) {
+//            stream.start();
+//        }
+//        System.out.println("Exit code: " + process.waitFor());
     }
 }

@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
 
 import java.io.DataOutput;
@@ -31,7 +32,7 @@ import java.io.IOException;
 public class ChopFrameManager implements StackMapFrameManager {
     private final int frameType;
     private int offset;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+    private static final Debug debug = Debug.getDebug("stackmapframe");
 
     public ChopFrameManager(int frameType, int offset) {
         this.frameType = frameType;
@@ -55,8 +56,8 @@ public class ChopFrameManager implements StackMapFrameManager {
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
+        if (debug.isDebug()) {
+            debug.debug(toString());
         }
         os.write(frameType);
         os.writeShort(offset);

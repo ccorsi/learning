@@ -1,4 +1,4 @@
-package org.valhalla.plogger.instrumentation.utils;
+package org.valhalla.plogger.tests;
 /*
 MIT License
 
@@ -23,19 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-public class SimpleClass {
-
-    private String name;
-
-    public SimpleClass(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+public class SimpleExecutor implements org.valhalla.plogger.test.common.Executor {
+    @Override
+    public void execute(String[] args) throws Throwable {
+        System.out.println("Thread: " + Thread.currentThread().getName());
     }
 }

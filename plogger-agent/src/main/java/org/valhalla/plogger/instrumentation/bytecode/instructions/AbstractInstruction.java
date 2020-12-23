@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.*;
 import org.valhalla.plogger.instrumentation.bytecode.manager.ConstantPoolManager;
@@ -35,6 +36,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public abstract class AbstractInstruction implements InstructionEntry {
+    protected static final Debug debug = Debug.getDebug("instruction");
+
     private final int opCode;
     private final String name;
     private AbstractInstruction next;

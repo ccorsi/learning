@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantUtf8;
@@ -33,7 +34,22 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class MethodManager implements ClassFileWriter {
-//    private final ClassManager classManager;
+    private static final Debug debug = Debug.getDebug("method");
+    private static final Debug debugException = Debug.getDebug("method.exception");
+
+    private static int instrumentAccess;
+    public static final int ACC_PUBLIC;
+    public static final int ACC_PRIVATE   = 0x0002;
+    public static final int ACC_PROTECTED = 0x0004;
+    private static final int ACC_NATIVE = 0x0100;
+    private static final int ACC_ABSTRACT = 0x0400;
+
+    static {
+        ACC_PUBLIC       = 0x0001;
+        instrumentAccess = ACC_PUBLIC;
+    }
+
+    //    private final ClassManager classManager;
     private final String name;
     private final String signature;
     private int nameIndex;
@@ -60,6 +76,10 @@ public class MethodManager implements ClassFileWriter {
         }
     }
 
+    public static void setIntrumentation(int instrumentAccess) {
+        MethodManager.instrumentAccess = instrumentAccess;
+    }
+
     // This will return this MethodManager ConstantPoolManager instance
 //    public ConstantPoolManager getConstantPoolManager() {
 //        return classManager.getConstantPoolManager();
@@ -75,9 +95,18 @@ public class MethodManager implements ClassFileWriter {
         return null;
     }
 
+    private CodeAttributeManager codeAttributeManager = null;
+
     // This will return the CodeAttributeManager associated with this method
     public CodeAttributeManager getCodeAttributeManager() {
-        return getAttributeManager(CodeAttributeManager.class);
+        if (codeAttributeManager == null) {
+            codeAttributeManager = getAttributeManager(CodeAttributeManager.class);
+            if (codeAttributeManager == null) {
+                codeAttributeManager = CodeAttributeManager.getDefaultCodeAttributeManager();
+            }
+        }
+
+        return codeAttributeManager;
     }
 
     // This will return the current method access flags.
@@ -93,36 +122,38 @@ public class MethodManager implements ClassFileWriter {
         return signature;
     }
 
-    private static final int ACC_PUBLIC = 0x0001;
-    private static final int ACC_NATIVE = 0x0100;
-    private static final int ACC_ABSTRACT = 0x0400;
-
     public boolean instrument(ClassManager classManager) {
         // Don't instrument static methods.
-        if (! "<clinit>".equals(name)) {
+//        if (! "<clinit>".equals(name)) {
+        // Only instrument methods that are passed parameters
+        if ( ! signature.contains("()") ) {
             try {
                 // TODO: We need to allow the users the ability to determine which methods can be instrumented.
-                ConstantPoolManager constantPoolManager = classManager.getConstantPoolManager();
-                // Only process a method that are public and parameters are being passed.
-                if ((accessFlags & ACC_PUBLIC) != 0 && !signature.contains("()")) {
-                    // Check that the method is not abstract, native, ...
-                    if ((accessFlags & ACC_NATIVE) == 0 && (accessFlags & ACC_ABSTRACT) == 0) {
-                        // We are now ready to instrument the current method.
-                        CodeAttributeManager codeAttributeManager = getCodeAttributeManager();
-                        if (codeAttributeManager != null) {
-                            return codeAttributeManager.instrument(classManager, this);
-                        }
-                    }
-                } else if ((accessFlags & ACC_PUBLIC) == 0) {
-                    // We are now ready to instrument the current method.
-                    CodeAttributeManager codeAttributeManager = getCodeAttributeManager();
-                    if (codeAttributeManager != null) {
-                        return codeAttributeManager.instrument(classManager, this);
-                    }
+//                // Only process a method that are public and parameters are being passed.
+//                if ((accessFlags & ACC_PUBLIC) != 0 /*&& !signature.contains("()")*/) {
+//                    // Check that the method is not abstract, native, ...
+//                    if ((accessFlags & ACC_NATIVE) == 0 && (accessFlags & ACC_ABSTRACT) == 0) {
+//                        // We are now ready to instrument the current method.
+//                        CodeAttributeManager codeAttributeManager = getCodeAttributeManager();
+//                        if (codeAttributeManager != null) {
+//                            return codeAttributeManager.instrument(classManager, this);
+//                        }
+//                    }
+//                } else if ((accessFlags & ACC_PUBLIC) == 0) {
+//                    // We are now ready to instrument the current method.
+//                    CodeAttributeManager codeAttributeManager = getCodeAttributeManager();
+//                    if (codeAttributeManager != null) {
+//                        return codeAttributeManager.instrument(classManager, this);
+//                    }
+//                }
+                // We are now ready to instrument the current method.
+                if ( (accessFlags & instrumentAccess) != 0 ) {
+                    return getCodeAttributeManager().instrument(classManager, this);
                 }
             } catch (ClassFileException e) {
-                // TODO: Make this conditional
-                System.out.println("An exception was raised when instrumenting method: " + getName());
+                if (debugException.isDebug()) {
+                    debugException.debug("An exception was raised when instrumenting method: " + getName(), e);
+                }
                 throw e;
             }
         }
@@ -130,12 +161,10 @@ public class MethodManager implements ClassFileWriter {
         return false;
     }
 
-    private final boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
-
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println("Storing method " + getName());
+        if (debug.isDebug()) {
+            debug.debug("Storing method " + getName());
         }
         os.writeShort(accessFlags);
         os.writeShort(nameIndex);

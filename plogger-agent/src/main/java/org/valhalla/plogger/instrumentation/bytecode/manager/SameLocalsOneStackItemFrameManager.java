@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.instructions.AbstractInstruction;
 
 import java.io.DataOutput;
@@ -31,7 +32,8 @@ import java.io.IOException;
 public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager {
     private int offset;
     private final VerificationTypeManager verificationTypeManager;
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
+    private static final Debug debug = Debug.getDebug("stackmapframe");
+    private static final Debug debugException = Debug.getDebug("stackmapframe.exception");
 
     public SameLocalsOneStackItemFrameManager(int offset, VerificationTypeManager verificationTypeManager) {
         // The passed offset if the *real* offset and not the frameType
@@ -58,8 +60,8 @@ public class SameLocalsOneStackItemFrameManager implements StackMapFrameManager 
 
     @Override
     public void write(DataOutput os) throws IOException {
-        if (debug) {
-            System.out.println(this);
+        if (debug.isDebug()) {
+            debug.debug(String.format("Storing %s", toString()));
         }
         if (offset < 64) {
             // store a SameLocals1StackItemFrame stack map frame

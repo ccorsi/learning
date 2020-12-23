@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileWriter;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantClass;
@@ -37,11 +38,23 @@ import java.util.Arrays;
 
 public class ClassManager implements ClassFileWriter {
 
+    private static final Debug debug = Debug.getDebug("class");
+    private static final Debug debugException = Debug.getDebug("class.exception");
+
     private static final byte[] expectedMagic = {(byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE};
 
     private final ConstantPoolManager constantPoolManager;
     private final MethodManager[] methodManagers;
     private final int accessFlags;
+
+    public int getThisClassIndex() {
+        return thisClassIndex;
+    }
+
+    public int getSuperClassIndex() {
+        return superClassIndex;
+    }
+
     private final int thisClassIndex;
     private final int superClassIndex;
     private final InterfaceManager interfaceManager;
@@ -108,12 +121,16 @@ public class ClassManager implements ClassFileWriter {
                 attributeManagers[idx] = AttributeManagerFactory.create(dis, constantPoolManager);
             }
         } catch (ClassFileException e) {
-            System.out.println(String.format("An exception was raised for class: %s at byte %d",
-                    className, is.getCount()));
+            if (debugException.isDebug()) {
+                debugException.debug(String.format("An exception was raised for class: %s at byte %d",
+                        className, is.getCount()), e);
+            }
             throw e;
         } catch (IOException ioe) {
-            System.out.println(String.format("An exception was raised for class: %s at byte %d",
-                    className, is.getCount()));
+            if (debugException.isDebug()) {
+                debugException.debug(String.format("An exception was raised for class: %s at byte %d",
+                        className, is.getCount()), ioe);
+            }
             throw new ClassFileException(ioe);
         }
     }

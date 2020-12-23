@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.valhalla.plogger.instrumentation.Debug;
 import org.valhalla.plogger.instrumentation.Logger;
 import org.valhalla.plogger.instrumentation.bytecode.classes.ClassFileException;
 import org.valhalla.plogger.instrumentation.bytecode.constantpool.ConstantMethodRef;
@@ -42,6 +43,57 @@ import static org.valhalla.plogger.instrumentation.bytecode.instructions.Instruc
 
 public class CodeAttributeManager implements AttributeManager {
 
+    private static final Debug debug = Debug.getDebug("code");
+    private static final Debug debugException = Debug.getDebug("code.exception");
+    private static final Debug debugName = Debug.getDebug("code.name");
+
+    private static CodeAttributeManager defaultCodeAtttributeManager = new CodeAttributeManager() {
+
+        @Override
+        public int getMaxLocals() {
+            return 0;
+        }
+
+        @Override
+        public int getMaxStack() {
+            return 0;
+        }
+
+        @Override
+        public boolean instrument(ClassManager classManager, MethodManager methodManager) {
+            return true;
+        }
+
+        @Override
+        public StackMapTableManager getStackMapTableManager() {
+            return StackMapTableManager.getDefaultStackMapTableManager();
+        }
+
+        @Override
+        public LocalVariableTableManager getLocalVariableTableManager() {
+            return LocalVariableTableManager.getDefaultLocalVariableTableManager();
+        }
+
+        @Override
+        public LocalVariableTypeTableManager getLocalVariableTypeTableManager() {
+            return LocalVariableTypeTableManager.getDefaultLocalVariableTypeTableManager();
+        }
+
+        @Override
+        public byte[] getCode() {
+            return new byte[0];
+        }
+
+        @Override
+        public String toString() {
+            return "DefaultCodeAttributeManager";
+        }
+
+        @Override
+        public void write(DataOutput os) throws IOException {
+        }
+    };
+
     private final int maxLocals;
     private int maxStack;
     private final AttributeManager[] attributes;
@@ -60,6 +112,16 @@ public class CodeAttributeManager implements AttributeManager {
         this.attributes = attributes;
     }
 
+    private CodeAttributeManager() {
+        maxLocals = 0;
+        attributes = null;
+        exceptionTableManager = null;
+    }
+
+    public static CodeAttributeManager getDefaultCodeAttributeManager() {
+        return defaultCodeAtttributeManager;
+    }
+
     // This will return the current max locals for this method
     public int getMaxLocals() {
         return maxLocals;
@@ -75,11 +137,10 @@ public class CodeAttributeManager implements AttributeManager {
     private static final int JDK_5_VERSION = 49;
     private static final int JDK_6_VERSION = 50;
 
-    private boolean debug = Boolean.getBoolean(StackMapTableManager.DEBUG_PROPERTY_NAME);
-
     public boolean instrument(ClassManager classManager, MethodManager methodManager) {
-        if (debug) {
-            System.out.println("Instrumenting method: " + methodManager.getName());
+        if (debugName.isDebug()) {
+            debugName.debug("Instrumenting method: " + methodManager.getName() + " for class: "
+                    + classManager.getClassName());
         }
         try {
             // ok we are finally ready to instrument the method.
@@ -110,8 +171,9 @@ public class CodeAttributeManager implements AttributeManager {
                 return instrumentInstanceMethod(classManager, methodManager);
             }
         } finally {
-            if (debug) {
-                System.out.println("Instrumented method: " + methodManager.getName());
+            if (debugName.isDebug()) {
+                debugName.debug("Instrumented method: " + methodManager.getName() + " for class: "
+                        + classManager.getClassName());
             }
         }
     }
@@ -130,8 +192,11 @@ public class CodeAttributeManager implements AttributeManager {
                     instruction, objectType);
             return true;
         } catch (ConstantPoolEntryException e) {
-            // TODO: Add debug option
-            e.printStackTrace(System.out);
+            if (debugException.isDebug()) {
+                // TODO: Add debug option
+//                e.printStackTrace(System.out);
+                debugException.debug(e);
+            }
             throw new ClassFileException(e);
         }
     }
@@ -171,8 +236,11 @@ public class CodeAttributeManager implements AttributeManager {
                     "Ljava/lang/Class;");
             return true;
         } catch (ConstantPoolEntryException e) {
-            // TODO: Add debug option
-            e.printStackTrace(System.out);
+            if (debugException.isDebug()) {
+                // TODO: Add debug option
+//                e.printStackTrace(System.out);
+                debugException.debug(e);
+            }
             throw new ClassFileException(e);
         }
     }
@@ -209,8 +277,11 @@ public class CodeAttributeManager implements AttributeManager {
             addRemainingLoggerWriteInstructions(classManager, methodManager, constantPool, instruction, objectType);
             return true;
         } catch (ConstantPoolEntryException e) {
-            // TODO: Add debug option
-            e.printStackTrace(System.out);
+            if (debugException.isDebug()) {
+                // TODO: Add debug option
+//                e.printStackTrace(System.out);
+                debugException.debug(e);
+            }
             throw new ClassFileException(e);
         }
     }
@@ -268,7 +339,7 @@ public class CodeAttributeManager implements AttributeManager {
         }
 
         // Combined the instructions
-        instructionManager.instrument(firstInstruction, "<init>".equals(methodManager.getName()));
+        instructionManager.instrument(classManager, firstInstruction, "<init>".equals(methodManager.getName()));
 
         instruction = instructionManager.getFirstInstruction();
 

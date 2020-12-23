@@ -2,12 +2,13 @@ package org.valhalla.plogger.instrumentation.bytecode.manager;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.valhalla.plogger.instrumentation.LoggerManager;
 import org.valhalla.plogger.instrumentation.utils.ClassLoaderClass;
 import org.valhalla.plogger.instrumentation.utils.ClassManagerUtil;
-import org.valhalla.plogger.instrumentation.utils.SampleClass;
-import org.valhalla.plogger.instrumentation.utils.SimpleClass;
+import org.valhalla.plogger.test.types.SampleClass;
+import org.valhalla.plogger.test.types.SimpleClass;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -114,35 +115,43 @@ public class ClassManagerTest {
     }
 
     @Test
+    @Disabled("Failing because we now don't instrument empty parameter methods")
     void loadLauncherHelperClass() throws IOException {
         String className = "sun/launcher/LauncherHelper";
         classManagerUtil = new ClassManagerUtil(className);
         ClassManager classManager = classManagerUtil.getClassManager();
-        Assertions.assertTrue(classManager.instrument(), "Unable to instrument class LauncherHelper");
+        Assertions.assertTrue( classManager.instrument(), "Unable to instrument class LauncherHelper");
     }
 
     @Test
     void loadIssueClasses() throws IOException {
         String[] classNames = {
-                "jdk/internal/loader/AbstractClassLoaderValue$Memoizer",
+                // Test fail because we now don't instrument parameterless methods.
+//                "jdk/internal/loader/AbstractClassLoaderValue$Memoizer",
                 "jdk/internal/loader/BuiltinClassLoader$5",
                 "jdk/internal/module/SystemModuleFinders$SystemModuleReader",
                 "jdk/internal/module/ModulePatcher$PatchedModuleReader",
                 "jdk/internal/jimage/ImageReaderFactory$1",
                 "jdk/internal/jimage/ImageReader",
                 "jdk/internal/jimage/BasicImageReader",
-                "jdk/internal/jimage/BasicImageReader$1",
-                "jdk/internal/jimage/NativeImageBuffer$1",
+                // as above
+//                "jdk/internal/jimage/BasicImageReader$1",
+//                "jdk/internal/jimage/NativeImageBuffer$1",
                 "jdk/internal/jimage/ImageStringsReader",
                 "jdk/internal/jimage/ImageReaderFactory$1",
         };
 
-        for(String className : classNames) {
-            System.out.println("Loading class " + className);
-            classManagerUtil = new ClassManagerUtil(className);
-            ClassManager classManager = classManagerUtil.getClassManager();
-            Assertions.assertTrue(classManager.instrument(), "Unable to instrument class " + className);
-            classManagerUtil.close();
+        MethodManager.setIntrumentation(MethodManager.ACC_PUBLIC | MethodManager.ACC_PROTECTED | MethodManager.ACC_PRIVATE);
+        try {
+            for (String className : classNames) {
+                System.out.println("Loading class " + className);
+                classManagerUtil = new ClassManagerUtil(className);
+                ClassManager classManager = classManagerUtil.getClassManager();
+                Assertions.assertTrue(classManager.instrument(), "Unable to instrument class " + className);
+                classManagerUtil.close();
+            }
+        } finally {
+            MethodManager.setIntrumentation(MethodManager.ACC_PUBLIC);
         }
     }
 

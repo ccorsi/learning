@@ -24,102 +24,115 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.valhalla.plogger.instrumentation.utils.PrintStreamThread;
 import org.valhalla.plogger.instrumentation.utils.Utils;
 
 import java.io.IOException;
 
 public class LoggerITCase {
 
-    @Test
-    public void itestLoggerWrite() throws IOException, InterruptedException {
-        // This test will just start a java process and determine if it failed or not.
-        System.out.println("Executing an integration test");
-        System.out.println("plogger agent jar: " + System.getProperty("plogger.agent.jar"));
-//        System.out.println("Test Application Class Path for jdk 7: " +
-//                System.getProperty("test.app7.classpath"));
-//        System.out.println("Test Application Class Path for jdk 9: " +
-//                System.getProperty("test.app9.classpath"));
-//        System.out.println("Test Class Path: " + System.getProperty("java.class.path"));
-//        System.out.println("Java Home: " + System.getProperty("java.home"));
-        String mainClassName = "org.valhalla.plogger.test.Main";
-        String[] paths = new String[] {
+    private static String testType;
+    private static String mainClassName;
+    private static String[] classPaths;
+
+    @BeforeAll
+    public static void setStaticFields() {
+        testType = "Executing an integration test for jdk 7";
+        mainClassName = "org.valhalla.plogger.test.Main";
+        classPaths = new String[] {
                 System.getProperty("test.app7.classpath")
         };
+    }
+
+    @BeforeEach
+    public void typeTest() {
+        System.out.println(testType);
+        System.out.println("Using plogger agent jar: " + System.getProperty("plogger.agent.jar"));
+    }
+
+    @Test
+    public void simpleLoggerWrite() throws IOException, InterruptedException {
+        // This test will just start a java process and determine if it failed or not.
+        String mainClassName = "org.valhalla.plogger.test.Main";
         String[] jvmOptions = {
-//                String.format("-D%s=true", StackMapTableManager.DEBUG_PROPERTY_NAME),
                 "-Xverify:all",
                 "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s", System.getProperty("plogger.agent.jar")),
+                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar")),
         };
-        String[] args = Utils.EMPTY_STRING_ARRAY;
-        executeTest(mainClassName, paths, jvmOptions, args);
+        String[] args = new String[] {
+                "simple"
+        };
+        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
     }
 
     @Test
     public void testLoggerWriteFlushForJava7() throws Throwable {
-        System.out.println("Executing an integration test");
-        System.out.println("plogger agent jar: " + System.getProperty("plogger.agent.jar"));
-        String mainClassName = "org.valhalla.plogger.test.Main";
-        String[] paths = new String[] {
-                System.getProperty("test.app7.classpath")
-        };
         String[] jvmOptions = {
                 "-Xverify:all",
                 "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s", System.getProperty("plogger.agent.jar"))
+                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar"))
         };
         String[] args = {
+                "count",
                 "150"
         };
-        executeTest(mainClassName, paths, jvmOptions, args);
+        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
     }
 
     @Test
     public void testLoggerWriteRolloverLogFileForJava7() throws Throwable {
-        System.out.println("Executing an integration test");
-        System.out.println("plogger agent jar: " + System.getProperty("plogger.agent.jar"));
-        String mainClassName = "org.valhalla.plogger.test.Main";
-        String[] paths = new String[] {
-                System.getProperty("test.app7.classpath")
-        };
         String[] jvmOptions = {
                 "-Xverify:all",
                 "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s", System.getProperty("plogger.agent.jar"))
+                String.format("-javaagent:%s=appender=prefix=Rollover;debug=exception",
+                        System.getProperty("plogger.agent.jar"))
         };
         String[] args = {
+                "count",
                 "1100"
         };
-        executeTest(mainClassName, paths, jvmOptions, args);
+        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
     }
 
-    private void executeTest(String mainClassName, String[] paths, String[] jvmOptions, String[] args) throws IOException, InterruptedException {
-        Process process = Utils.createJavaProcess(mainClassName, paths, jvmOptions, args);
-        PrintStreamThread[] streams = {
-                new PrintStreamThread("out: ", process.getInputStream()),
-                new PrintStreamThread("err: ", process.getErrorStream()),
+    @Test
+    public void testLoggerInstrumentationOfJdk4Class() throws Throwable {
+        String[] jvmOptions = {
+                "-Xverify:all",
+//                "-Xshare:off", // insure that class sharing is not enabled.
+                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar"))
         };
-        for (PrintStreamThread stream : streams) {
-            stream.start();
-        }
-        for (PrintStreamThread stream : streams) {
-            stream.join();
-        }
-        int exitCode = process.waitFor();
-        System.out.println("Exit code: " + exitCode);
-        Assertions.assertEquals(0, exitCode, "Test exited with an error");
-        Assertions.assertFalse(streams[1].isOutput(), "Test generated error messages");
-//        process = Utils.createJavaProcess("--version", paths);
-//        streams =  new PrintStreamThread[] {
-//                new PrintStreamThread("out: ", process.getInputStream()),
-//                new PrintStreamThread("err: ", process.getErrorStream()),
-//        };
-//        for(PrintStreamThread stream : streams) {
-//            stream.start();
-//        }
-//        System.out.println("Exit code: " + process.waitFor());
+        String[] args = {
+                "log4j",
+        };
+        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
+    }
+
+    @Test
+    public void testRecursiveCalls() throws Throwable {
+        String[] jvmOptions = {
+                "-Xverify:all",
+//                "-Xshare:off", // insure that class sharing is not enabled.
+                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar"))
+        };
+        String[] args = {
+                "recursive",
+        };
+        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
+    }
+
+    @Test
+    public void testDeepRecursiveCalls() throws Throwable {
+        String[] jvmOptions = {
+                "-Xverify:all",
+//                "-Xshare:off", // insure that class sharing is not enabled.
+                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar"))
+        };
+        String[] args = {
+                "recursive",
+                "50"
+        };
+        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
     }
 }
