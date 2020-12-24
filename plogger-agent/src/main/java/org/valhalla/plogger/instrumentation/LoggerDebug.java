@@ -29,25 +29,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class Debug {
+public class LoggerDebug {
 
     private static final Map<String, String> debugLevelMap;
-    private static final Map<String, Debug> debugMap;
+    private static final Map<String, LoggerDebug> debugMap;
 
     static {
         debugLevelMap = new HashMap<>();
 
         String [][] debugLevels = new String[][] {
-                {"agent", null},
-                {"class", null},
-                {"method", "class"},
-                {"field", "class"},
-                {"constantPool", "class"},
-                {"code", "method"},
-                {"stackmaptable", "code"},
-                {"stackmapframe", "stackmaptable"},
-                {"instruction", "code"},
-                {"attributes", "class"},
+                {"logger", null},
+                {"loggermanager", null},
+                {"loggerstoragemanager", null},
         };
 
         for (String[] debugLevel : debugLevels) {
@@ -63,11 +56,11 @@ public class Debug {
         for (Map.Entry<String, String> entry : debugLevelMap.entrySet()) {
             String name = entry.getKey();
             String parent = entry.getValue();
-            debugMap.put(name, new Debug(name, parent));
+            debugMap.put(name, new LoggerDebug(name, parent));
         }
     }
 
-    public static Debug getDebug(String name) {
+    public static LoggerDebug getDebug(String name) {
         return debugMap.get(name);
     }
 
@@ -78,7 +71,7 @@ public class Debug {
     private boolean debug;
     private final String name, parent;
 
-    private Debug(String name, String parent) {
+    private LoggerDebug(String name, String parent) {
         debug = false;
         this.name = name;
         this.parent = (parent != null) ? parent : "root";
@@ -123,7 +116,7 @@ public class Debug {
             String debugLevel = st.nextToken();
 
             if (debugLevel.equals("all")) {
-                for(Debug debug : debugMap.values()) {
+                for(LoggerDebug debug : debugMap.values()) {
                     if ("root".equals(debug.parent)) {
                         debug.enable();
                     }
@@ -131,7 +124,7 @@ public class Debug {
                 // We are done.
                 return;
             } else if (debugLevel.equals("exception")) {
-                for(Debug debug : debugMap.values()) {
+                for(LoggerDebug debug : debugMap.values()) {
                     if (debug.parent.endsWith("exception")) {
                         debug.enable();
                     }
@@ -139,7 +132,7 @@ public class Debug {
                 continue;
             }
 
-            Debug debug = debugMap.get(debugLevel);
+            LoggerDebug debug = debugMap.get(debugLevel);
             if (debug != null) {
                 debug.enable();
             } else {
@@ -153,7 +146,7 @@ public class Debug {
         debug = true;
 
         // find all levels that have this as a parent
-        for( Map.Entry<String, Debug> entry : debugMap.entrySet() ) {
+        for( Map.Entry<String, LoggerDebug> entry : debugMap.entrySet() ) {
             if (name.equals(entry.getValue().parent)) {
                 // enable level
                 entry.getValue().enable();

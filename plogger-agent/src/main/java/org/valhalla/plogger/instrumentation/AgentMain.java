@@ -98,6 +98,7 @@ public class AgentMain {
                 if (option.equals("debug")) {
                     // Which sections to debug
                     Debug.initialize(parameters);
+                    LoggerDebug.initialize(parameters);
                 } else if (option.equals("access")) {
                     // TODO: move this to the MethodManager.setInstrumentation method
                     //  determine the access level of the methods to instrument

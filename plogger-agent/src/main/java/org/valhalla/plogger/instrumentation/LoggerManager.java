@@ -28,7 +28,7 @@ import java.util.List;
 
 public class LoggerManager {
 
-    private static final Debug debug = Debug.getDebug("loggermanager");
+    private static final LoggerDebug debug = LoggerDebug.getDebug("loggermanager");
 
     private static final ThreadLocal<Boolean> state = new BooleanThreadLocal();
 

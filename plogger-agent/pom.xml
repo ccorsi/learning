@@ -138,30 +138,34 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>${agent-main-class}</mainClass>
-                        </manifest>
-                        <manifestEntries>
-                            <Multi-Release>true</Multi-Release>
-                            <Premain-Class>${agent-main-class}</Premain-Class>
-                            <Agent-Class>${agent-main-class}</Agent-Class>
-                            <Launcher-Agent-Class>${agent-main-class}</Launcher-Agent-Class>
-                            <Can-Redefine-Classes>true</Can-Redefine-Classes>
-                            <Can-Retransform-Classes>true</Can-Retransform-Classes>
-                            <Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>
-                            <Boot-Class-Path>${agent.helper.jar}-loggers.jar</Boot-Class-Path>
-                        </manifestEntries>
-                    </archive>
-                    <includes>
-                        <include>**/AgentClassFileTransformer*</include>
-                        <include>**/AgentMain*</include>
-                        <include>**/module-info.*</include>
-                        <include>**/AbstractAgentClassFileTransformer*</include>
-                    </includes>
-                </configuration>
                 <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>${agent-main-class}</mainClass>
+                                </manifest>
+                                <manifestEntries>
+                                    <Multi-Release>true</Multi-Release>
+                                    <Premain-Class>${agent-main-class}</Premain-Class>
+                                    <Agent-Class>${agent-main-class}</Agent-Class>
+                                    <Launcher-Agent-Class>${agent-main-class}</Launcher-Agent-Class>
+                                    <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                                    <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                                    <Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>
+                                    <Boot-Class-Path>${agent.helper.jar}-loggers.jar</Boot-Class-Path>
+                                </manifestEntries>
+                            </archive>
+                            <excludes>
+                                <exclude>**/Logger*</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>plogger-helper-classes</id>
                         <phase>package</phase>
@@ -172,14 +176,9 @@
                             <classifier>loggers</classifier>
                             <finalName>${agent.helper.jar}</finalName>
                             <includes>
-                                <include>org/valhalla/**</include>
+                                <include>**/Logger*</include>
                                 <include>**/module-info.*</include>
                             </includes>
-                            <excludes>
-                                <exclude>**/AgentClassFileTransformer*</exclude>
-                                <exclude>**/AgentMain*</exclude>
-                                <exclude>**/AbstractAgentClassFileTransformer*</exclude>
-                            </excludes>
                         </configuration>
                     </execution>
                 </executions>

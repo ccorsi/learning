@@ -36,7 +36,7 @@ import java.util.Set;
 
 public class Logger {
 
-    private static final Debug debug = Debug.getDebug("logger");
+    private static final LoggerDebug debug = LoggerDebug.getDebug("logger");
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ssSSSZ");
 

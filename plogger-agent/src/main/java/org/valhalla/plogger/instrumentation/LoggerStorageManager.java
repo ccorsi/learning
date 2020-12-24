@@ -43,12 +43,12 @@ public class LoggerStorageManager {
     private static final LoggerStorageManagerCreator activeCreator;
     private static final LoggerStorageManagerCreator storageCreator;
     private static LoggerStorageManagerCreator creator;
-    private static final Debug debug;
+    private static final LoggerDebug debug;
 
     static {
         boolean entered = LoggerManager.enter();
         try {
-            debug = Debug.getDebug("loggerstoragemanager");
+            debug = LoggerDebug.getDebug("loggerstoragemanager");
             store = new LinkedBlockingQueue<List<String>>();
             active = new LinkedBlockingQueue<List<String>>();
             activeCreator = new ActiveCreator();
