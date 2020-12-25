@@ -274,7 +274,9 @@ public class Logger {
                 string.append(values[0]);
                 for (int idx = 1; idx < size; idx++) {
                     string.append(',');
-                    if (values[idx] instanceof Class<?>) {
+                    if (values[idx] == null) {
+                        string.append(values[idx]); // store null value
+                    } else if (values[idx] instanceof Class<?>) {
                         string.append(((Class<?>)values[idx]).getName());
                     } else {
                         string.append(values[idx].getClass().getName()).append('@').append(System.identityHashCode(values[idx]));
