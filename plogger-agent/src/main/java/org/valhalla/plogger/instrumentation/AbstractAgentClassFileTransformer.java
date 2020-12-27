@@ -58,7 +58,7 @@ public abstract class AbstractAgentClassFileTransformer implements ClassFileTran
 
         public RegularExpressionCondition(String className, boolean expected) {
             this.regex = className;
-            this.expected = expected;
+            this.expected = true;
         }
 
         @Override
@@ -126,7 +126,7 @@ public abstract class AbstractAgentClassFileTransformer implements ClassFileTran
                 // turn the check into a regular expression
                 // replace all * with .* and pass it to a regular expression
                 className = className.replace("*", ".*");
-                list.add(new RegularExpressionCondition(className, false));
+                list.add(new RegularExpressionCondition(className));
             } else {
                 // this is a simple compare check.
                 list.add(new ClassNameCondition(className));
