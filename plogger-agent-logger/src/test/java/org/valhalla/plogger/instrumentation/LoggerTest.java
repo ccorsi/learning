@@ -24,22 +24,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.List;
 
 class LoggerTest {
 
+    @AfterAll
+    public static void deleteFiles() {
+        File[] files = new File(".").listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.getName().startsWith("PLogger");
+            }
+        });
+
+        for(File file : files) {
+            file.delete();
+        }
+
+    }
+
     @BeforeEach
     void before() {
         // Initialize the entries buffer
-        LoggerManager.getEntriesBuffer();
+        LoggerManager.init(new String[0]);
     }
 
     @AfterEach
     void after() {
         // Remove the generated entries buffer
-        LoggerManager.remove();
+        LoggerManager.shutdown();
+        LoggerDebug.reset();
     }
 
     @Test
@@ -235,15 +258,10 @@ class LoggerTest {
 
         @Override
         public void run() {
-            // Initialize the entries list
+            // Get a reference to the entries list
             entries = LoggerManager.getEntriesBuffer();
-            try {
-                for (LoggerWriterParameter parameter : parameters) {
-                    parameter.execute();
-                }
-            } finally {
-                // Clear the created entries buffer
-                LoggerManager.remove();
+            for (LoggerWriterParameter parameter : parameters) {
+                parameter.execute();
             }
         }
 

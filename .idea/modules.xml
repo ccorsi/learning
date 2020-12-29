@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/plogger-agent/plogger-agent.iml" filepath="$PROJECT_DIR$/plogger-agent/plogger-agent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plogger-agent-integration-tests/plogger-agent-integration-tests.iml" filepath="$PROJECT_DIR$/plogger-agent-integration-tests/plogger-agent-integration-tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plogger-agent-logger/plogger-agent-logger.iml" filepath="$PROJECT_DIR$/plogger-agent-logger/plogger-agent-logger.iml" />
       <module fileurl="file://$PROJECT_DIR$/plogger-parent.iml" filepath="$PROJECT_DIR$/plogger-parent.iml" />
     </modules>
   </component>

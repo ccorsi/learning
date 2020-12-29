@@ -7,10 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="plogger-agent" />
+        <module name="plogger-agent-logger" />
+        <module name="plogger-agent-integration-tests" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="plogger-agent" target="1.7" />
+      <module name="plogger-agent-integration-tests" target="1.7" />
+      <module name="plogger-agent-logger" target="7" />
       <module name="plogger-parent" target="1.7" />
     </bytecodeTargetLevel>
   </component>

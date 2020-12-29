@@ -11,10 +11,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>Parameter Logging Agent</name>
+    <packaging>jar</packaging>
 
     <groupId>org.valhalla.plogger.instrumentation</groupId>
     <artifactId>plogger-agent</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>org.valhalla.plogger.instrumentation</groupId>
+            <artifactId>plogger-agent-logger</artifactId>
+            <version>1.0-SNAPSHOT</version>
+<!--            <type>test-jar</type>-->
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -47,7 +54,7 @@
         <test.app11.classpath>${project.basedir}/target/test-app11</test.app11.classpath>
         <test.app9.modulepath>${project.basedir}/target/test-app9</test.app9.modulepath>
         <plogger.agent.jar>${project.basedir}/target/${project.build.finalName}.jar</plogger.agent.jar>
-        <agent.helper.jar>${project.artifactId}-${project.version}</agent.helper.jar>
+        <agent.helper.jar>${project.artifactId}-logger-${project.version}.jar</agent.helper.jar>
     </properties>
 
     <build>
@@ -77,61 +84,61 @@
                             <multiReleaseOutput>true</multiReleaseOutput>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>testCompile-itest-app7</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <release>7</release>
-                            <compileSourceRoots>
-                                <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>
-                                <compilerSourceRoot>${project.basedir}/src/test/testApp</compilerSourceRoot>
-                            </compileSourceRoots>
-                            <outputDirectory>${project.basedir}/target/test-app</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>testCompile-itest-app8</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                        <configuration>
-                            <release>8</release>
-                            <compileSourceRoots>
-                                <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>
-                                <compilerSourceRoot>${project.basedir}/src/test/testApp</compilerSourceRoot>
-                            </compileSourceRoots>
-                            <outputDirectory>${project.basedir}/target/test-app8</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>testCompile-itest-app9</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <!--
-                             can't use the testCompile goal since this will cause the build to fail because
-                             the main jar is a multi-version jar file and the module-info.java file is not
-                             located at the root of the source file directory.
-                              -->
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <release>9</release>
-                            <!-- This is required to be able to build the module based test application -->
-                            <compilerArgs>
-                                <compilerArg>--add-reads</compilerArg>
-                                <compilerArg>org.valhalla.plogger=ALL-UNNAMED</compilerArg>
-                            </compilerArgs>
-                            <compileSourceRoots>
-                                <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>
-                                <compilerSourceRoot>${project.basedir}/src/test/testApp9</compilerSourceRoot>
-                            </compileSourceRoots>
-                            <outputDirectory>${project.basedir}/target/test-app9</outputDirectory>
-                        </configuration>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>testCompile-itest-app7</id>-->
+<!--                        <phase>pre-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>compile</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <release>7</release>-->
+<!--                            <compileSourceRoots>-->
+<!--                                <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>-->
+<!--                                <compilerSourceRoot>${project.basedir}/src/test/testApp</compilerSourceRoot>-->
+<!--                            </compileSourceRoots>-->
+<!--                            <outputDirectory>${project.basedir}/target/test-app</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>testCompile-itest-app8</id>-->
+<!--                        <phase>pre-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>testCompile</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <release>8</release>-->
+<!--                            <compileSourceRoots>-->
+<!--                                <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>-->
+<!--                                <compilerSourceRoot>${project.basedir}/src/test/testApp</compilerSourceRoot>-->
+<!--                            </compileSourceRoots>-->
+<!--                            <outputDirectory>${project.basedir}/target/test-app8</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>testCompile-itest-app9</id>-->
+<!--                        <phase>pre-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            &lt;!&ndash;-->
+<!--                             can't use the testCompile goal since this will cause the build to fail because-->
+<!--                             the main jar is a multi-version jar file and the module-info.java file is not-->
+<!--                             located at the root of the source file directory.-->
+<!--                              &ndash;&gt;-->
+<!--                            <goal>compile</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <release>9</release>-->
+<!--                            &lt;!&ndash; This is required to be able to build the module based test application &ndash;&gt;-->
+<!--                            <compilerArgs>-->
+<!--                                <compilerArg>&#45;&#45;add-reads</compilerArg>-->
+<!--                                <compilerArg>org.valhalla.plogger=ALL-UNNAMED</compilerArg>-->
+<!--                            </compilerArgs>-->
+<!--                            <compileSourceRoots>-->
+<!--                                <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>-->
+<!--                                <compilerSourceRoot>${project.basedir}/src/test/testApp9</compilerSourceRoot>-->
+<!--                            </compileSourceRoots>-->
+<!--                            <outputDirectory>${project.basedir}/target/test-app9</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
                 </executions>
             </plugin>
             <plugin>
@@ -158,7 +165,7 @@
                                     <Can-Redefine-Classes>true</Can-Redefine-Classes>
                                     <Can-Retransform-Classes>true</Can-Retransform-Classes>
                                     <Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>
-                                    <Boot-Class-Path>${agent.helper.jar}-loggers.jar</Boot-Class-Path>
+                                    <Boot-Class-Path>${agent.helper.jar}</Boot-Class-Path>
                                 </manifestEntries>
                             </archive>
                             <excludes>
@@ -166,46 +173,46 @@
                             </excludes>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>plogger-helper-classes</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>loggers</classifier>
-                            <finalName>${agent.helper.jar}</finalName>
-                            <includes>
-                                <include>**/Logger*</include>
-                                <include>**/module-info.*</include>
-                            </includes>
-                        </configuration>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>plogger-helper-classes</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <classifier>loggers</classifier>-->
+<!--                            <finalName>${agent.helper.jar}</finalName>-->
+<!--                            <includes>-->
+<!--                                <include>**/Logger*</include>-->
+<!--                                <include>**/module-info.*</include>-->
+<!--                            </includes>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <executions>
-                    <execution>
-                        <id>failsafe-testing</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <test.app7.classpath>${test.app7.classpath}</test.app7.classpath>
-                                <test.app9.classpath>${test.app9.classpath}</test.app9.classpath>
-                                <test.app9.modulepath>${test.app9.modulepath}</test.app9.modulepath>
-                                <plogger.agent.jar>${plogger.agent.jar}</plogger.agent.jar>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--                <version>3.0.0-M5</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>failsafe-testing</id>-->
+<!--                        <phase>integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>integration-test</goal>-->
+<!--                            <goal>verify</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <systemPropertyVariables>-->
+<!--                                <test.app7.classpath>${test.app7.classpath}</test.app7.classpath>-->
+<!--                                <test.app9.classpath>${test.app9.classpath}</test.app9.classpath>-->
+<!--                                <test.app9.modulepath>${test.app9.modulepath}</test.app9.modulepath>-->
+<!--                                <plogger.agent.jar>${plogger.agent.jar}</plogger.agent.jar>-->
+<!--                            </systemPropertyVariables>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>

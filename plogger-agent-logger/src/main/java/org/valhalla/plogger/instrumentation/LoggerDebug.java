@@ -141,6 +141,13 @@ public class LoggerDebug {
         }
     }
 
+    // Used for testing only
+    public static void reset() {
+        for(LoggerDebug loggerDebug : debugMap.values()) {
+            loggerDebug.debug = false;
+        }
+    }
+
     private void enable() {
         System.out.println("Enable debug for " + name);
         debug = true;

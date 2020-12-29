@@ -100,7 +100,7 @@ public class CodeAttributeManager implements AttributeManager {
     private final ExceptionTableManager exceptionTableManager;
     private byte[] code;
     protected int nameIndex;
-    public static final String LOGGER_CLASS_NAME = Logger.class.getName().replace('.', '/');
+    public static final String LOGGER_CLASS_NAME = Logger.class.getName().replace('.','/');
 
     public CodeAttributeManager(int nameIndex, int maxStack, int maxLocals, byte[] code,
                                 ExceptionTableManager exceptionTableManager, AttributeManager[] attributes) {

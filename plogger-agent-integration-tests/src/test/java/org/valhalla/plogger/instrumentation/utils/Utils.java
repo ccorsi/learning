@@ -1,6 +1,4 @@
-package org.valhalla.plogger.instrumentation.utils;
-
-/*
+package org.valhalla.plogger.instrumentation.utils;/*
 MIT License
 
 Copyright (c) 2020 Claudio Corsi
@@ -133,12 +131,12 @@ public class Utils {
         Assertions.assertEquals(0, exitCode, "Test exited with an error");
         Assertions.assertFalse(streams[1].isOutput(), "Test generated error messages");
         return streams;
-//        process = Utils.createJavaProcess("--version", classPaths);
-//        streams =  new PrintStreamThread[] {
-//                new PrintStreamThread("out: ", process.getInputStream()),
-//                new PrintStreamThread("err: ", process.getErrorStream()),
+//        process = org.valhalla.plogger.instrumentation.itests.utils.Utils.createJavaProcess("--version", classPaths);
+//        streams =  new org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread[] {
+//                new org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread("out: ", process.getInputStream()),
+//                new org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread("err: ", process.getErrorStream()),
 //        };
-//        for(PrintStreamThread stream : streams) {
+//        for(org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread stream : streams) {
 //            stream.start();
 //        }
 //        System.out.println("Exit code: " + process.waitFor());

@@ -37,6 +37,7 @@ import java.util.Set;
 public class Logger {
 
     private static final LoggerDebug debug = LoggerDebug.getDebug("logger");
+    private static final LoggerDebug debugException = LoggerDebug.getDebug("logger.exception");
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ssSSSZ");
 
@@ -46,8 +47,8 @@ public class Logger {
         try {
             _write(clz.getName(), methodName, NONE);
         } catch (Throwable t) {
-            if (debug.isDebug())
-                t.printStackTrace();
+            if (debugException.isDebug())
+                debugException.debug(t);
         }
     }
 
@@ -55,8 +56,8 @@ public class Logger {
         try {
             _write(object.getClass().getName() + "@" + System.identityHashCode(object), methodName, NONE);
         } catch (Throwable t) {
-            if (debug.isDebug())
-                t.printStackTrace();
+            if (debugException.isDebug())
+                debugException.debug(t);
         }
     }
 
@@ -64,8 +65,8 @@ public class Logger {
         try {
             _write(clz.getName(), methodName, values);
         } catch (Throwable t) {
-            if (debug.isDebug())
-                t.printStackTrace();
+            if (debugException.isDebug())
+                debugException.debug(t);
         }
     }
 
@@ -73,15 +74,14 @@ public class Logger {
         try {
             _write(object.getClass().getName() + "@" + System.identityHashCode(object), methodName, values);
         } catch (Throwable t) {
-            if (debug.isDebug())
-                t.printStackTrace();
+            if (debugException.isDebug())
+                debugException.debug(t);
         }
     }
 
     private static void _write(String objectId, String methodName, Object[] parameters) {
         if (LoggerManager.enter()) {
             try {
-                List<String> entries = LoggerManager.getEntriesBuffer();
                 StringBuilder string = new StringBuilder();
                 // Add Thread Name
                 Thread thread = Thread.currentThread();
@@ -99,10 +99,14 @@ public class Logger {
                     }
                 }
                 string.append(")");
-                entries.add(string.toString());
+                if (debug.isDebug()) {
+                    debug.debug(String.format("Add entry: %s to %d", string,
+                            System.identityHashCode(LoggerManager.getEntriesBuffer())));
+                }
+                LoggerManager.getEntriesBuffer().add(string.toString());
             } catch (Throwable t) {
                 // Insure that no exception is propagated up to the user calling code
-                if (debug.isDebug()) {
+                if (debugException.isDebug()) {
                     StringWriter sw = new StringWriter();
                     try (PrintWriter pw = new PrintWriter(sw)) {
                         pw.print(String.format("Exception for objectId %s method %s", objectId, methodName));
@@ -112,7 +116,7 @@ public class Logger {
                                 pw.println(parameter);
                         }
                     }
-                    debug.debug(sw.toString(), t);
+                    debugException.debug(sw.toString(), t);
                 }
             } finally {
                 LoggerManager.exit();
@@ -132,6 +136,10 @@ public class Logger {
             string.append("Class[").append(((Class<?>) parameter).getName()).append("]");
         } else if (parameter instanceof Boolean) {
             string.append("Boolean[").append(parameter.toString()).append("]");
+        } else if (parameter instanceof Character) {
+            string.append("Character[").append(parameter.toString()).append("]");
+        } else if (parameter instanceof Enum) {
+            string.append("Enum[").append(parameter.toString()).append("]");
         } else {
             Class<?> parameterClass = parameter.getClass();
             if (parameterClass.isArray()) {
@@ -165,13 +173,14 @@ public class Logger {
 
     public static final int DEFAULT_MAX_SIZE = 5;
 
-    private static int maxSize = Integer.getInteger("plogger.array.size", DEFAULT_MAX_SIZE);
+    // TODO: This should be set during an initialize method call.
+    private static final int maxSize = Integer.getInteger("plogger.array.size", DEFAULT_MAX_SIZE);
 
     private static void createArrayValues(StringBuilder string, Object arrayParameter) {
         // TODO: need to deal with the case that we are processing a multi-dimensional array
         //  because index through it will not produce the correct parameter logging information.
         if (arrayParameter instanceof boolean[]) {
-            boolean values[] = (boolean[]) arrayParameter;
+            boolean[] values = (boolean[]) arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);
@@ -183,7 +192,7 @@ public class Logger {
                 }
             }
         } else if (arrayParameter instanceof byte[]){
-            byte values[] = (byte[])arrayParameter;
+            byte[] values = (byte[])arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);
@@ -195,7 +204,7 @@ public class Logger {
                 }
             }
         } else if (arrayParameter instanceof char[]) {
-            char values[] = (char[])arrayParameter;
+            char[] values = (char[])arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);
@@ -207,7 +216,7 @@ public class Logger {
                 }
             }
         } else if (arrayParameter instanceof short[]) {
-            short values[] = (short[])arrayParameter;
+            short[] values = (short[])arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);
@@ -219,7 +228,7 @@ public class Logger {
                 }
             }
         } else if (arrayParameter instanceof int[]) {
-            int values[] = (int[])arrayParameter;
+            int[] values = (int[])arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);
@@ -231,7 +240,7 @@ public class Logger {
                 }
             }
         } else if (arrayParameter instanceof long[]) {
-            long values[] = (long[])arrayParameter;
+            long[] values = (long[])arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);
@@ -243,7 +252,7 @@ public class Logger {
                 }
             }
         } else if (arrayParameter instanceof float[]) {
-            float values[] = (float[])arrayParameter;
+            float[] values = (float[])arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);
@@ -255,7 +264,55 @@ public class Logger {
                 }
             }
         } else if (arrayParameter instanceof double[]) {
-            double values[] = (double[])arrayParameter;
+            double[] values = (double[]) arrayParameter;
+            int size = Math.min(maxSize, values.length);
+            if (size > 0) {
+                string.append(values[0]);
+                for (int idx = 1; idx < size; idx++) {
+                    string.append(',').append(values[idx]);
+                }
+                if (size < values.length) {
+                    string.append(",...");
+                }
+            }
+        } else if (arrayParameter instanceof Number[]) {
+            Number[] values = (Number[]) arrayParameter;
+            int size = Math.min(maxSize, values.length);
+            if (size > 0) {
+                string.append(values[0]);
+                for (int idx = 1; idx < size; idx++) {
+                    string.append(',').append(values[idx]);
+                }
+                if (size < values.length) {
+                    string.append(",...");
+                }
+            }
+        } else if (arrayParameter instanceof Boolean[]) {
+            Boolean[] values = (Boolean[]) arrayParameter;
+            int size = Math.min(maxSize, values.length);
+            if (size > 0) {
+                string.append(values[0]);
+                for (int idx = 1; idx < size; idx++) {
+                    string.append(',').append(values[idx]);
+                }
+                if (size < values.length) {
+                    string.append(",...");
+                }
+            }
+        } else if (arrayParameter instanceof Character[]) {
+            Character[] values = (Character[]) arrayParameter;
+            int size = Math.min(maxSize, values.length);
+            if (size > 0) {
+                string.append(values[0]);
+                for (int idx = 1; idx < size; idx++) {
+                    string.append(',').append(values[idx]);
+                }
+                if (size < values.length) {
+                    string.append(",...");
+                }
+            }
+        } else if (arrayParameter instanceof Enum[]) {
+            Enum[] values = (Enum[]) arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);
@@ -268,7 +325,7 @@ public class Logger {
             }
         } else {
             // This is just an array of objects types.
-            Object values[] = (Object[])arrayParameter;
+            Object[] values = (Object[])arrayParameter;
             int size = Math.min(maxSize, values.length);
             if (size > 0) {
                 string.append(values[0]);

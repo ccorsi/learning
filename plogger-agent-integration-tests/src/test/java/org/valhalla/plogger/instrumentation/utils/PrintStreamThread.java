@@ -1,4 +1,4 @@
-/*
+package org.valhalla.plogger.instrumentation.utils;/*
 MIT License
 
 Copyright (c) 2020 Claudio Corsi
@@ -20,9 +20,39 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+ */
 
-module org.valhalla.plogger.instrumentation {
-    requires java.instrument;
-    exports org.valhalla.plogger.instrumentation;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+public class PrintStreamThread extends Thread {
+    private final String prefix;
+    private final InputStream is;
+    private boolean output = false;
+
+    public PrintStreamThread(String prefix, InputStream is) {
+        super("org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread:");
+        this.prefix = prefix;
+        this.is = is;
+    }
+
+    public boolean isOutput() {
+        return output;
+    }
+
+    @Override
+    public void run() {
+        setName(getName() + getId());
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                output = true;
+                System.out.println(prefix + line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
+    }
 }

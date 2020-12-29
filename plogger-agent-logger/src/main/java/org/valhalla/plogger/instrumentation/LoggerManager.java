@@ -30,7 +30,8 @@ public class LoggerManager {
 
     private static final LoggerDebug debug = LoggerDebug.getDebug("loggermanager");
 
-    private static final ThreadLocal<Boolean> state = new BooleanThreadLocal();
+    private static ThreadLocal<Boolean> state;
+    private static LoggerStorageManager.LoggerStorageManagerShutdownHookThread shutdownHook;
 
     private static class BooleanThreadLocal extends ThreadLocal<Boolean> {
         @Override
@@ -41,8 +42,23 @@ public class LoggerManager {
 
     public static void init(String[] appenderSettings) {
         enter();
+        state = new BooleanThreadLocal();
+        buffers = createBufferThreadLocal();
+        maxEntries = 99;
         try {
-            LoggerStorageManager.addShutdownHookThread();
+            for(String setting : appenderSettings) {
+                if (setting.startsWith("maxentries=")) {
+                    try {
+                        maxEntries = Integer.parseInt(setting.substring("maxentries=".length()));
+                        if (debug.isDebug()) {
+                            debug.debug(String.format("Set maxEntries to %d", maxEntries));
+                        }
+                    } catch (NumberFormatException nfe) {
+                        // do nothing
+                    }
+                }
+            }
+            shutdownHook = LoggerStorageManager.addShutdownHookThread();
             LoggerStorageManager.startLoggerStorageManagerThread(appenderSettings);
         } catch (RuntimeException e) {
             if (debug.isDebug()) {
@@ -59,25 +75,48 @@ public class LoggerManager {
         }
     }
 
-    private static ThreadLocal<List<String>> buffers = new ThreadLocal<List<String>>() {
-
-        @Override
-        protected List<String> initialValue() {
-            List<String> buffer = LoggerStorageManager.createEntriesBuffer();
-            return buffer;
-        }
-
-        @Override
-        public List<String> get() {
-            List<String> buffer = super.get();
-            if (buffer.size() > 99) {
-                LoggerStorageManager.store(buffer);
-                buffer = LoggerStorageManager.createEntriesBuffer();
-                set(buffer);
+    public static void shutdown() {
+        if (shutdownHook != null) {
+            // Only process this if it is non-null.
+            Runtime.getRuntime().removeShutdownHook(shutdownHook);
+            shutdownHook.setDaemon(true);
+            shutdownHook.start();
+            try {
+                shutdownHook.join();
+            } catch (InterruptedException e) {
+                // do nothing
             }
-            return buffer;
+            shutdownHook = null;
         }
-    };
+    }
+
+    private static int maxEntries;
+
+    private static ThreadLocal<List<String>> buffers;
+
+    private static ThreadLocal<List<String>> createBufferThreadLocal() {
+        return new ThreadLocal<List<String>>() {
+
+            @Override
+            protected List<String> initialValue() {
+                return LoggerStorageManager.createEntriesBuffer();
+            }
+
+            @Override
+            public List<String> get() {
+                List<String> buffer = super.get();
+                if (buffer == null  || buffer.size() > maxEntries) {
+                    LoggerStorageManager.store(buffer);
+                    buffer = LoggerStorageManager.createEntriesBuffer();
+                    set(buffer);
+                    if (debug.isDebug()) {
+                        debug.debug("Created a new entries buffer");
+                    }
+                }
+                return buffer;
+            }
+        };
+    }
 
     public static List<String> getEntriesBuffer() {
         return buffers.get();
