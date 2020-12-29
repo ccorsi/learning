@@ -42,6 +42,7 @@ public class LoggerManager {
 
     public static void init(String[] appenderSettings) {
         enter();
+        Logger.initialize();
         state = new BooleanThreadLocal();
         buffers = createBufferThreadLocal();
         maxEntries = 99;

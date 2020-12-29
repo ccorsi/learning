@@ -43,6 +43,15 @@ public class Logger {
 
     private static final Object[] NONE = new Object[0];
 
+    public static final int DEFAULT_MAX_SIZE = 5;
+    public static final String PLOGGER_ARRAY_SIZE = "plogger.array.size";
+
+    private static int maxSize;
+
+    public static void initialize() {
+        maxSize = Integer.getInteger(PLOGGER_ARRAY_SIZE, DEFAULT_MAX_SIZE);
+    }
+
     public static void write(Class<?> clz, String methodName) {
         try {
             _write(clz.getName(), methodName, NONE);
@@ -170,11 +179,6 @@ public class Logger {
             }
         }
     }
-
-    public static final int DEFAULT_MAX_SIZE = 5;
-
-    // TODO: This should be set during an initialize method call.
-    private static final int maxSize = Integer.getInteger("plogger.array.size", DEFAULT_MAX_SIZE);
 
     private static void createArrayValues(StringBuilder string, Object arrayParameter) {
         // TODO: need to deal with the case that we are processing a multi-dimensional array

@@ -611,6 +611,54 @@ class LoggerTests {
         createAndRunExecutor(prefix, methodName, new Object[] { value }, expected);
     }
 
+    @Test
+    public void testMaxEntries() throws Throwable {
+        start("testMaxEntries");
+        String prefix = "LoggerManagerTest-MaxEntries";
+        final String methodName = "instanceMaxEntries";
+        final short[] value = new short[] { 10, 11, 12, 13, 14 };
+        String valueType = "short";
+        StringBuilder sb = new StringBuilder(String.valueOf(value[0]));
+        for(int idx = 1 ; idx < value.length ; idx++)
+            sb.append(',').append(value[idx]);
+        String expected = String.format("Array[type=%s,values=[%s]]", valueType, sb.toString());
+        createAndRunExecutor(prefix, methodName, new Object[] { value }, expected);
+    }
+
+    @Test
+    public void testMaxEntriesExceeded() throws Throwable {
+        start("testMaxEntriesExceeded");
+        String prefix = "LoggerManagerTest-MaxEntriesExceeded";
+        final String methodName = "instanceMaxEntriesExceeded";
+        final short[] value = new short[] { 10, 11, 12, 13, 14, 15 };
+        String valueType = "short";
+        StringBuilder sb = new StringBuilder(String.valueOf(value[0]));
+        for(int idx = 1 ; idx < Logger.DEFAULT_MAX_SIZE ; idx++)
+            sb.append(',').append(value[idx]);
+        sb.append(",...");
+        String expected = String.format("Array[type=%s,values=[%s]]", valueType, sb.toString());
+        createAndRunExecutor(prefix, methodName, new Object[] { value }, expected);
+    }
+
+    @Test
+    public void testSettingMaxEntries() throws Throwable {
+        start("testSettingMaxEntries");
+        String prefix = "LoggerManagerTest-SettingMaxEntries";
+        final String methodName = "instanceSettingMaxEntries";
+        final short[] value = new short[] { 10, 11, 12, 13, 14, 15 };
+        String valueType = "short";
+        StringBuilder sb = new StringBuilder(String.valueOf(value[0]));
+        for(int idx = 1 ; idx < value.length ; idx++)
+            sb.append(',').append(value[idx]);
+        String expected = String.format("Array[type=%s,values=[%s]]", valueType, sb.toString());
+        System.setProperty(Logger.PLOGGER_ARRAY_SIZE, String.valueOf(value.length));
+        try {
+            createAndRunExecutor(prefix, methodName, new Object[]{value}, expected);
+        } finally {
+            System.clearProperty(Logger.PLOGGER_ARRAY_SIZE);
+        }
+    }
+
     private void createAndRunExecutor(String prefix, final String methodName, final Object[] value, String expected) throws Throwable {
         Executor executor = new Executor() {
             @Override
@@ -646,7 +694,12 @@ class LoggerTests {
         };
         List<String> lines = executeTest(prefix, executor);
         Assertions.assertEquals(methodNames.size(), lines.size(), "Missing some log entries");
-        Assertions.assertTrue(lines.get(0).contains(methodNames.get(0)));
+        for (int idx = 0 ; idx < lines.size() ; idx++) {
+            String actual = lines.get(idx);
+            String expected = methodNames.get(idx);
+            Assertions.assertTrue(actual.contains(expected),
+                    String.format("Entry: %s does not contain: %s", actual, expected));
+        }
     }
 
     private List<String> executeTest(String prefix, Executor executor) throws Throwable {
