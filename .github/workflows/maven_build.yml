@@ -18,7 +18,7 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B verify --file pom.xml
+      run: mvn -B install --file pom.xml
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
     - name: Publish Unit Test Results

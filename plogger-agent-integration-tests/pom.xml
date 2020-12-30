@@ -9,13 +9,28 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Parameter Logging Agent Logger Integration Tests</name>
+
     <artifactId>plogger-agent-integration-tests</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.valhalla.plogger.instrumentation</groupId>
+            <artifactId>plogger-agent-logger</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.valhalla.plogger.instrumentation</groupId>
             <artifactId>plogger-agent</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.valhalla.plogger.tests</groupId>
+            <artifactId>plogger-agent-integration-module-tests</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -25,19 +40,23 @@
         </dependency>
     </dependencies>
 
+    <properties>
+        <test.app7.classpath>${project.basedir}/target/test-app7</test.app7.classpath>
+        <test.app8.classpath>${project.basedir}/target/test-app8</test.app8.classpath>
+        <test.app9.classpath>${project.basedir}/target/test-app9</test.app9.classpath>
+        <test.app11.classpath>${project.basedir}/target/test-app11</test.app11.classpath>
+        <test.app9.modulepath>${project.basedir}/target/test-app9</test.app9.modulepath>
+        <test.app9.jar>plogger-agent-integration-module-tests-${project.version}.jar</test.app9.jar>
+        <plogger.agent.jar>plogger-agent-${project.version}.jar</plogger.agent.jar>
+        <plogger.agent.logger.jar>plogger-agent-logger-${project.version}.jar</plogger.agent.logger.jar>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version> <!-- 3.9.0-SNAPSHOT -->
-<!--                <configuration>-->
-<!--                    <source>1.7</source>-->
-<!--                    <target>1.7</target>-->
-<!--                    <compilerArgs>-->
-<!--                        <compilerArg>-Xlint:unchecked</compilerArg>-->
-<!--                    </compilerArgs>-->
-<!--                </configuration>-->
+                <version>3.8.1</version>
                 <executions>
                     <execution>
                         <id>testCompile-itest-app7</id>
@@ -51,7 +70,7 @@
                                 <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>
                                 <compilerSourceRoot>${project.basedir}/src/test/testApp</compilerSourceRoot>
                             </compileSourceRoots>
-                            <outputDirectory>${project.basedir}/target/test-app</outputDirectory>
+                            <outputDirectory>${project.basedir}/target/test-app7</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -69,56 +88,37 @@
                             <outputDirectory>${project.basedir}/target/test-app8</outputDirectory>
                         </configuration>
                     </execution>
-<!--                    <execution>-->
-<!--                        <id>testCompile-itest-app9</id>-->
-<!--                        <phase>test-compile</phase>-->
-<!--                        <goals>-->
-<!--                            &lt;!&ndash;-->
-<!--                             can't use the testCompile goal since this will cause the build to fail because-->
-<!--                             the main jar is a multi-version jar file and the module-info.java file is not-->
-<!--                             located at the root of the source file directory.-->
-<!--                              &ndash;&gt;-->
-<!--                            <goal>testCompile</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <release>9</release>-->
-<!--                            &lt;!&ndash; This is required to be able to build the module based test application &ndash;&gt;-->
-<!--                            <compilerArgs>-->
-<!--                                <compilerArg>&#45;&#45;add-reads</compilerArg>-->
-<!--                                <compilerArg>org.valhalla.plogger=ALL-UNNAMED</compilerArg>-->
-<!--                            </compilerArgs>-->
-<!--                            <compileSourceRoots>-->
-<!--                                <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>-->
-<!--                                <compilerSourceRoot>${project.basedir}/src/test/testApp9</compilerSourceRoot>-->
-<!--                            </compileSourceRoots>-->
-<!--                            <outputDirectory>${project.basedir}/target/test-app9</outputDirectory>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-failsafe-plugin</artifactId>-->
-<!--                <version>3.0.0-M5</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>failsafe-testing</id>-->
-<!--                        <phase>integration-test</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>integration-test</goal>-->
-<!--                            <goal>verify</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <systemPropertyVariables>-->
-<!--                                <test.app7.classpath>${test.app7.classpath}</test.app7.classpath>-->
-<!--                                <test.app9.classpath>${test.app9.classpath}</test.app9.classpath>-->
-<!--                                <test.app9.modulepath>${test.app9.modulepath}</test.app9.modulepath>-->
-<!--                                <plogger.agent.jar>${plogger.agent.jar}</plogger.agent.jar>-->
-<!--                            </systemPropertyVariables>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>failsafe-testing</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <test.app7.classpath>${test.app7.classpath}</test.app7.classpath>
+                                <test.app9.classpath>${test.app9.classpath}</test.app9.classpath>
+                                <test.app9.modulepath>${test.app9.modulepath}</test.app9.modulepath>
+                                <test.app9.jar>${test.app9.jar}</test.app9.jar>
+                                <plogger.agent.jar>plogger-agent-${project.version}.jar</plogger.agent.jar>
+                                <plogger.agent.logger.jar>plogger-agent-logger-${project.version}.jar</plogger.agent.logger.jar>
+                                <log4j.jar>log4j-${log4j.version}.jar</log4j.jar>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>

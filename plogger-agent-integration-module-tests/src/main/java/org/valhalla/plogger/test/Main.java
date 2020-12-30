@@ -23,26 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.valhalla.plogger.test.common.LoggerManager;
-
-//import java.lang.reflect.Method;
 
 public class Main {
     public static void main(String[] args) throws Throwable {
         try {
             System.out.println("Simple Java 9 module application");
-
-//        Class<?> loggerClass =  Class.forName("org.apache.log4j.LogManager");
-//        Method method = loggerClass.getMethod("getLogger", Class.class);
-//        method.invoke(null, Main.class);
-//        // TODO: An issue with how maven compiler not able to distinguish between
-//        //  module based jar files and non-module based jar files.
-////        org.apache.log4j.LogManager.getLogger(Main.class);
-            Logger logger = LoggerManager.getLogger(Main.class);
+            Logger logger = LogManager.getLogger(Main.class);
             System.out.println("Returned Logger instance: " + logger);
         } catch (Throwable t) {
-            t.printStackTrace();
+            t.printStackTrace(System.out);
             System.exit(1);
         }
     }

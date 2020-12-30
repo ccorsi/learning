@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -90,9 +91,11 @@ public class Utils {
         }
         if (modulePaths.length > 0) {
             commands.add("-p");
+            StringBuilder sb = new StringBuilder();
             for(String modulePath : modulePaths) {
-                commands.add(modulePath);
+                sb.append(modulePath).append(File.pathSeparator);
             }
+            commands.add(sb.toString());
         }
         commands.add("-cp");
         commands.add(classPath);
@@ -140,5 +143,25 @@ public class Utils {
 //            stream.start();
 //        }
 //        System.out.println("Exit code: " + process.waitFor());
+    }
+
+    public static void deleteLogFiles(final String logFilePrefix) {
+        File root = new File(System.getProperty("user.dir", "."));
+
+        // Find all files that has the passed prefix
+        File[] logFiles = root.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                return name.startsWith(logFilePrefix);
+            }
+        });
+
+        if (logFiles != null) {
+            // Delete all found files
+            for (File logFile : logFiles) {
+                logFile.delete();
+            }
+        }
+
     }
 }

@@ -23,10 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledForJreRange;
 import org.junit.jupiter.api.condition.JRE;
+import org.valhalla.plogger.instrumentation.utils.AgentJars;
 import org.valhalla.plogger.instrumentation.utils.Utils;
 
 import java.io.IOException;
@@ -34,11 +36,18 @@ import java.io.IOException;
 public class LoggerForJdk9ITCase {
 
     private static final String testType = "Executing an integration test for jdk 9";
+    private String testJarFileName;
 
     @BeforeEach
     public void typeTest() {
         System.out.println(testType);
-        System.out.println("Using plogger agent jar: " + System.getProperty("plogger.agent.jar"));
+        System.out.println("Using plogger agent jar: " + AgentJars.getAgentJar());
+        testJarFileName = AgentJars.getJarName("test.app9.jar");
+    }
+
+    @AfterEach
+    public void deleteLogFiles() {
+        Utils.deleteLogFiles("PLogger");
     }
 
     @Test
@@ -46,22 +55,22 @@ public class LoggerForJdk9ITCase {
             max= JRE.JAVA_8)
     public void testLoggerWrite() throws IOException, InterruptedException {
         String mainClassName = "org.valhalla.plogger/org.valhalla.plogger.test.Main";
-        String[] classPaths = new String[] {
-                System.getProperty("test.app9.classpath")
-        };
         String[] jvmOptions = {
+                String.format("-Xbootclasspath/a:%s", AgentJars.getAgentLoggerJar()),
                 "-Xverify:all",
                 "-Xshare:off", // insure that class sharing is not enabled.
                 String.format("-javaagent:%s=debug=exception;bytecode=java/io/RandomAccessFile,java/util/concurrent/TimeUnit",
-                        System.getProperty("plogger.agent.jar")),
+                        AgentJars.getAgentJar()),
         };
         String[] args = {
                 "1"
         };
         String[] modulePaths = {
-                System.getProperty("test.app9.modulepath")
+                testJarFileName,
+                AgentJars.getJarName("log4j.jar"),
         };
-        Utils.executeTest(mainClassName, classPaths, jvmOptions, args, modulePaths);
+
+        Utils.executeTest(mainClassName, Utils.EMPTY_STRING_ARRAY, jvmOptions, args, modulePaths);
     }
 
 }

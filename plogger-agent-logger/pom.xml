@@ -14,9 +14,13 @@
 
     <packaging>jar</packaging>
 
-    <groupId>org.valhalla.plogger.instrumentation</groupId>
     <artifactId>plogger-agent-logger</artifactId>
-    <version>1.0-SNAPSHOT</version>
+
+    <description>
+        This module contains the classes that will be injected within the instrumenting
+        classes.  These classes will be logging the class/instance and their parameter
+        values to a log file.
+    </description>
 
     <properties>
         <maven.compiler.source>7</maven.compiler.source>

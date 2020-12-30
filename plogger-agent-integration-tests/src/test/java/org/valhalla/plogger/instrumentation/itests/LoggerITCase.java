@@ -24,9 +24,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.valhalla.plogger.instrumentation.utils.AgentJars;
 import org.valhalla.plogger.instrumentation.utils.Utils;
 
 import java.io.IOException;
@@ -36,6 +38,9 @@ public class LoggerITCase {
     private static String testType;
     private static String mainClassName;
     private static String[] classPaths;
+    private static String agentFileName;
+    private static String agentLoggerFileName;
+    private String logFilePrefix = "PLogger";
 
     @BeforeAll
     public static void setStaticFields() {
@@ -44,12 +49,20 @@ public class LoggerITCase {
         classPaths = new String[] {
                 System.getProperty("test.app7.classpath")
         };
+        agentFileName = AgentJars.getAgentJar();
+        agentLoggerFileName = AgentJars.getAgentLoggerJar();
     }
 
     @BeforeEach
     public void typeTest() {
         System.out.println(testType);
-        System.out.println("Using plogger agent jar: " + System.getProperty("plogger.agent.jar"));
+        System.out.println("Using plogger agent jar: " + agentFileName);
+        System.out.println("Using plogger agent logger jar: " + agentLoggerFileName);
+    }
+
+    @AfterEach
+    public void deleteLogFiles() {
+        Utils.deleteLogFiles(logFilePrefix);
     }
 
     @Test
@@ -57,9 +70,10 @@ public class LoggerITCase {
         // This test will just start a java process and determine if it failed or not.
         String mainClassName = "org.valhalla.plogger.test.Main";
         String[] jvmOptions = {
+                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
                 "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar")),
+                String.format("-javaagent:%s=debug=exception", agentFileName),
         };
         String[] args = new String[] {
                 "simple"
@@ -70,9 +84,10 @@ public class LoggerITCase {
     @Test
     public void testLoggerWriteFlushForJava7() throws Throwable {
         String[] jvmOptions = {
+                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
                 "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar"))
+                String.format("-javaagent:%s=debug=exception", agentFileName)
         };
         String[] args = {
                 "count",
@@ -83,11 +98,13 @@ public class LoggerITCase {
 
     @Test
     public void testLoggerWriteRolloverLogFileForJava7() throws Throwable {
+        logFilePrefix = "Rollover";
         String[] jvmOptions = {
+                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
                 "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=appender=prefix=Rollover;debug=exception",
-                        System.getProperty("plogger.agent.jar"))
+                String.format("-javaagent:%s=appender=prefix=%s;debug=exception",
+                        agentFileName, logFilePrefix)
         };
         String[] args = {
                 "count",
@@ -99,9 +116,10 @@ public class LoggerITCase {
     @Test
     public void testLoggerInstrumentationOfJdk4Class() throws Throwable {
         String[] jvmOptions = {
+                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
 //                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar"))
+                String.format("-javaagent:%s=debug=exception", agentFileName)
         };
         String[] args = {
                 "log4j",
@@ -112,9 +130,10 @@ public class LoggerITCase {
     @Test
     public void testRecursiveCalls() throws Throwable {
         String[] jvmOptions = {
+                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
 //                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar"))
+                String.format("-javaagent:%s=debug=exception", agentFileName)
         };
         String[] args = {
                 "recursive",
@@ -125,9 +144,10 @@ public class LoggerITCase {
     @Test
     public void testDeepRecursiveCalls() throws Throwable {
         String[] jvmOptions = {
+                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
 //                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", System.getProperty("plogger.agent.jar"))
+                String.format("-javaagent:%s=debug=exception", agentFileName)
         };
         String[] args = {
                 "recursive",
