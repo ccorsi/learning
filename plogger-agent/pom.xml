@@ -13,6 +13,7 @@
     <name>Parameter Logging Agent</name>
     <packaging>jar</packaging>
 
+    <groupId>org.valhalla.plogger.instrumentation</groupId>
     <artifactId>plogger-agent</artifactId>
 
     <dependencies>
