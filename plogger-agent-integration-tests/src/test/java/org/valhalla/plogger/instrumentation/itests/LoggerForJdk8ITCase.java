@@ -40,6 +40,7 @@ public class LoggerForJdk8ITCase {
     private static String agentFileName;
     private static String agentLoggerFileName;
     private String logFilePrefix = "PLogger";
+    private String agentParameters;
 
     @BeforeAll
     public static void setStaticFields() {
@@ -54,6 +55,7 @@ public class LoggerForJdk8ITCase {
 
     @BeforeEach
     public void typeTest() {
+        agentParameters = "debug=exception";
         System.out.println(testType);
         System.out.println("Using plogger agent jar: " + agentFileName);
         System.out.println("Using plogger agent logger jar: " + agentLoggerFileName);
@@ -65,17 +67,22 @@ public class LoggerForJdk8ITCase {
     }
 
     @Test
-    public void simpleLoggerWrite() throws IOException, InterruptedException {
+    public void simpleLoggerWrite() throws Throwable {
+
+        String[] args = new String[] {
+                "simple"
+        };
+
+        execute(args);
+    }
+
+    private void execute(String[] args) throws Throwable {
         // This test will just start a java process and determine if it failed or not.
-        String mainClassName = "org.valhalla.plogger.test.Main";
         String[] jvmOptions = {
                 String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
                 "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", agentFileName),
-        };
-        String[] args = new String[] {
-                "simple"
+                String.format("-javaagent:%s=%s", agentFileName, agentParameters),
         };
         Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
     }
