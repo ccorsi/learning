@@ -138,7 +138,7 @@ public class LoggerITCase {
         String[] jvmOptions = {
                 String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
-                String.format("-Xshare:%s", (useClassSharing ? "on" : "off")),
+                String.format("-Xshare:%s", (useClassSharing ? "auto" : "off")),
                 String.format("-javaagent:%s=%s", agentFileName, agentParameters),
         };
         Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
