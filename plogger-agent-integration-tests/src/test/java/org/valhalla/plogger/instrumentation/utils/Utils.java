@@ -79,10 +79,12 @@ public class Utils {
             throws IOException {
         ProcessBuilder builder = new ProcessBuilder();
         String javaCmd = getJavaCommand();
-        StringBuilder classPaths = new StringBuilder(System.getProperty("java.class.path"));
+        StringBuilder classPaths = new StringBuilder();
         for(String path : paths) {
             classPaths.append(File.pathSeparator).append(path);
         }
+        // Add the test class path after creating the required class path.
+        classPaths.append(File.pathSeparator).append(System.getProperty("java.class.path"));
         String classPath =  classPaths.toString();
         List<String> commands = new LinkedList<String>();
         commands.add(javaCmd);

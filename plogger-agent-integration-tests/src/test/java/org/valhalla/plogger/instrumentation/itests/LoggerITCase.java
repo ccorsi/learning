@@ -31,8 +31,6 @@ import org.junit.jupiter.api.Test;
 import org.valhalla.plogger.instrumentation.utils.AgentJars;
 import org.valhalla.plogger.instrumentation.utils.Utils;
 
-import java.io.IOException;
-
 public class LoggerITCase {
 
     private static String testType;
@@ -41,13 +39,15 @@ public class LoggerITCase {
     private static String agentFileName;
     private static String agentLoggerFileName;
     private String logFilePrefix = "PLogger";
+    private String agentParameters = "debug=exception";
+
 
     @BeforeAll
     public static void setStaticFields() {
         testType = "Executing an integration test for jdk 7";
         mainClassName = "org.valhalla.plogger.test.Main";
         classPaths = new String[] {
-                System.getProperty("test.app7.classpath")
+                System.getProperty("test.app7.classpath"),
         };
         agentFileName = AgentJars.getAgentJar();
         agentLoggerFileName = AgentJars.getAgentLoggerJar();
@@ -66,92 +66,80 @@ public class LoggerITCase {
     }
 
     @Test
-    public void simpleLoggerWrite() throws IOException, InterruptedException {
-        // This test will just start a java process and determine if it failed or not.
-        String mainClassName = "org.valhalla.plogger.test.Main";
-        String[] jvmOptions = {
-                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
-                "-Xverify:all",
-                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", agentFileName),
-        };
+    public void simpleLoggerWrite() throws Throwable {
         String[] args = new String[] {
                 "simple"
         };
-        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
+
+        execute(args, false);
     }
 
     @Test
     public void testLoggerWriteFlushForJava7() throws Throwable {
-        String[] jvmOptions = {
-                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
-                "-Xverify:all",
-                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", agentFileName)
-        };
         String[] args = {
                 "count",
                 "150"
         };
-        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
+
+        execute(args, false);
     }
 
     @Test
     public void testLoggerWriteRolloverLogFileForJava7() throws Throwable {
         logFilePrefix = "Rollover";
-        String[] jvmOptions = {
-                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
-                "-Xverify:all",
-                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=appender=prefix=%s;debug=exception",
-                        agentFileName, logFilePrefix)
-        };
         String[] args = {
                 "count",
                 "1100"
         };
-        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
+
+        agentParameters = String.format("%s;appender=prefix=%s", agentParameters, logFilePrefix);
+        execute(args, false);
     }
 
     @Test
     public void testLoggerInstrumentationOfJdk4Class() throws Throwable {
-        String[] jvmOptions = {
-                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
-                "-Xverify:all",
-//                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", agentFileName)
-        };
         String[] args = {
                 "log4j",
         };
-        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
+
+        execute(args, false);
     }
 
     @Test
     public void testRecursiveCalls() throws Throwable {
-        String[] jvmOptions = {
-                String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
-                "-Xverify:all",
-//                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", agentFileName)
-        };
         String[] args = {
                 "recursive",
         };
-        Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
+
+        execute(args, true);
     }
 
     @Test
     public void testDeepRecursiveCalls() throws Throwable {
+        String[] args = {
+                "recursive",
+                "debug=false",
+                "depth=50",
+        };
+
+        execute(args, true);
+    }
+
+    @Test
+    public void testMultiThreadedLogging() throws Throwable {
+        String[] args = {
+                "threaded",
+        };
+
+        execute(args, true);
+    }
+
+    public void execute(String[] args, boolean useClassSharing) throws Throwable {
         String[] jvmOptions = {
                 String.format("-Xbootclasspath/a:%s", agentLoggerFileName),
                 "-Xverify:all",
-//                "-Xshare:off", // insure that class sharing is not enabled.
-                String.format("-javaagent:%s=debug=exception", agentFileName)
-        };
-        String[] args = {
-                "recursive",
-                "50"
+                String.format("-Xshare:%s", (useClassSharing ? "on" : "off")),
+                String.format("-javaagent:%s=%s", agentFileName, agentParameters),
         };
         Utils.executeTest(mainClassName, classPaths, jvmOptions, args);
     }

@@ -27,10 +27,7 @@ SOFTWARE.
 import org.valhalla.plogger.test.common.Executor;
 import org.valhalla.plogger.test.common.Utils;
 //import org.valhalla.plogger.test.types.SampleClass;
-import org.valhalla.plogger.tests.CountExecutor;
-import org.valhalla.plogger.tests.Log4jExecutor;
-import org.valhalla.plogger.tests.RecursiveExecutor;
-import org.valhalla.plogger.tests.SimpleExecutor;
+import org.valhalla.plogger.tests.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +43,7 @@ public class Main {
         tests.put("recursive", new RecursiveExecutor());
         tests.put("log4j", new Log4jExecutor());
         tests.put("simple", new SimpleExecutor());
+        tests.put("threaded", new MultiThreadedExecutor());
     }
 
     public static void main(String[] args) throws Throwable {

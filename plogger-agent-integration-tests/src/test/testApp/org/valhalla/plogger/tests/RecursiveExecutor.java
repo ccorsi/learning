@@ -28,20 +28,33 @@ public class RecursiveExecutor implements org.valhalla.plogger.test.common.Execu
     public void execute(String[] args) throws Throwable {
 
         int depth = 10;
+        boolean debug = false;
 
-        if (args.length > 0) {
-            try {
-                depth = Integer.parseInt(args[0]);
-            } catch (NumberFormatException e) {
-                // do nothing.
+        for (String arg : args) {
+            if (arg.startsWith("depth=")) {
+                try {
+                    arg = arg.substring("depth=".length());
+                    depth = Integer.parseInt(arg);
+                } catch (NumberFormatException e) {
+                    // do nothing.
+                }
+            } else if (arg.startsWith("debug=")) {
+                try {
+                    arg = arg.substring("debug=".length());
+                    debug = Boolean.parseBoolean(arg);
+                } catch (Throwable t) {
+                    // do nothing
+                }
             }
         }
+        if (args.length > 0) {
+        }
 
-        recursive(depth, 0);
+        recursive(depth, 0, debug);
     }
 
-    private static void recursive(int max, int current) {
-//        System.out.println(String.format("Calling recursive call %d", current));
-        if (current < max) recursive(max, ++current);
+    private static void recursive(int max, int current, boolean debug) {
+        if (debug) System.out.println(String.format("Calling recursive call %d", current));
+        if (current < max) recursive(max, ++current, debug);
     }
 }
