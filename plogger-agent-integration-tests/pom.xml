@@ -40,17 +40,6 @@
         </dependency>
     </dependencies>
 
-    <properties>
-        <test.app7.classpath>${project.basedir}/target/test-app7</test.app7.classpath>
-        <test.app8.classpath>${project.basedir}/target/test-app8</test.app8.classpath>
-        <test.app9.classpath>${project.basedir}/target/test-app9</test.app9.classpath>
-        <test.app11.classpath>${project.basedir}/target/test-app11</test.app11.classpath>
-        <test.app9.modulepath>${project.basedir}/target/test-app9</test.app9.modulepath>
-        <test.app9.jar>plogger-agent-integration-module-tests-${project.version}.jar</test.app9.jar>
-        <plogger.agent.jar>plogger-agent-${project.version}.jar</plogger.agent.jar>
-        <plogger.agent.logger.jar>plogger-agent-logger-${project.version}.jar</plogger.agent.logger.jar>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -83,7 +72,7 @@
                             <release>8</release>
                             <compileSourceRoots>
                                 <compilerSourceRoot>${project.basedir}/src/test/testCommon</compilerSourceRoot>
-                                <compilerSourceRoot>${project.basedir}/src/test/testApp</compilerSourceRoot>
+                                <compilerSourceRoot>${project.basedir}/src/test/testApp8</compilerSourceRoot>
                             </compileSourceRoots>
                             <outputDirectory>${project.basedir}/target/test-app8</outputDirectory>
                         </configuration>
@@ -107,10 +96,10 @@
                         </goals>
                         <configuration>
                             <systemPropertyVariables>
-                                <test.app7.classpath>${test.app7.classpath}</test.app7.classpath>
-                                <test.app9.classpath>${test.app9.classpath}</test.app9.classpath>
-                                <test.app9.modulepath>${test.app9.modulepath}</test.app9.modulepath>
-                                <test.app9.jar>${test.app9.jar}</test.app9.jar>
+                                <test.app7.classpath>${project.basedir}/target/test-app7</test.app7.classpath>
+                                <test.app8.classpath>${project.basedir}/target/test-app8</test.app8.classpath>
+                                <test.app11.classpath>${project.basedir}/target/test-app11</test.app11.classpath>
+                                <test.app9.jar>plogger-agent-integration-module-tests-${project.version}.jar</test.app9.jar>
                                 <plogger.agent.jar>plogger-agent-${project.version}.jar</plogger.agent.jar>
                                 <plogger.agent.logger.jar>plogger-agent-logger-${project.version}.jar</plogger.agent.logger.jar>
                                 <log4j.jar>log4j-${log4j.version}.jar</log4j.jar>
