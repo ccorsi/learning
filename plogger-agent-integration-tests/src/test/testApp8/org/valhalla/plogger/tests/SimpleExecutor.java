@@ -1,4 +1,4 @@
-package org.valhalla.plogger.test;
+package org.valhalla.plogger.tests;
 /*
 MIT License
 
@@ -24,35 +24,11 @@ SOFTWARE.
 */
 
 import org.valhalla.plogger.test.common.Executor;
-import org.valhalla.plogger.test.common.Utils;
-import org.valhalla.plogger.tests.*;
 
-import java.util.HashMap;
-import java.util.Map;
+public class SimpleExecutor implements Executor {
 
-public class Main {
-
-    private static final Map<String, Executor> tests;
-
-    static {
-        tests = new HashMap<>();
-
-        tests.put("simple", new SimpleExecutor());
+    @Override
+    public void execute(String[] args) throws Throwable {
+        System.out.println("Thread: " + Thread.currentThread().getName());
     }
-
-    public static void main(String[] args) throws Throwable {
-
-        // TODO: Add mechanism to determine which type of test to be run
-        //  and extract its parameters that will be passed to those tests.
-        System.out.println("These are jdk 8 specific integration tests");
-
-        try {
-            Utils.executeTest(tests, args);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            System.exit(1);
-        }
-
-    }
-
 }

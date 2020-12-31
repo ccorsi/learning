@@ -23,7 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-public class SimpleExecutor implements org.valhalla.plogger.test.common.Executor {
+import org.valhalla.plogger.test.common.Executor;
+
+public class SimpleExecutor implements Executor {
     @Override
     public void execute(String[] args) throws Throwable {
         System.out.println("Thread: " + Thread.currentThread().getName());

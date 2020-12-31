@@ -25,8 +25,9 @@ SOFTWARE.
 
 import org.valhalla.plogger.test.Main;
 import org.apache.log4j.LogManager;
+import org.valhalla.plogger.test.common.Executor;
 
-public class Log4jExecutor implements org.valhalla.plogger.test.common.Executor {
+public class Log4jExecutor implements Executor {
     @Override
     public void execute(String[] args) throws Throwable {
         LogManager.getLogger(Main.class);

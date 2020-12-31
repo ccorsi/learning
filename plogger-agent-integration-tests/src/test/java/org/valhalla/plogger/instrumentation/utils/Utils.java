@@ -74,37 +74,44 @@ public class Utils {
         return createJavaProcess(mainClassName, paths, jvmOptions, args, EMPTY_STRING_ARRAY);
     }
 
-    public static Process createJavaProcess(String mainClassName, String[] paths, String[] jvmOptions, String[] args,
-                                            String[] modulePaths)
+    public static Process createJavaProcess(String mainClassName, String[] classPaths, String[] jvmOptions,
+                                            String[] args, String[] modulePaths)
             throws IOException {
         ProcessBuilder builder = new ProcessBuilder();
         String javaCmd = getJavaCommand();
-        StringBuilder classPaths = new StringBuilder();
-        for(String path : paths) {
-            classPaths.append(File.pathSeparator).append(path);
-        }
-        // Add the test class path after creating the required class path.
-        classPaths.append(File.pathSeparator).append(System.getProperty("java.class.path"));
-        String classPath =  classPaths.toString();
         List<String> commands = new LinkedList<String>();
         commands.add(javaCmd);
         for(String jvmOption : jvmOptions) {
             commands.add(jvmOption);
         }
+
+        if (classPaths.length > 0) {
+            // Add a class path only if it is defined.
+            StringBuilder sb = new StringBuilder();
+            for(String path : classPaths) {
+                sb.append(File.pathSeparator).append(path);
+            }
+            String classPath =  sb.toString();
+            commands.add("-cp");
+            commands.add(classPath);
+        }
+
+        // NOTE: This has to be process before adding the main class name.  All other configurations need to be
+        // added prior to this check.
         if (modulePaths.length > 0) {
+            // Add a module path only if it is defined.
             commands.add("-p");
             StringBuilder sb = new StringBuilder();
             for(String modulePath : modulePaths) {
                 sb.append(modulePath).append(File.pathSeparator);
             }
             commands.add(sb.toString());
-        }
-        commands.add("-cp");
-        commands.add(classPath);
-        if (modulePaths.length > 0) {
+
             commands.add("-m");
         }
+
         commands.add(mainClassName);
+
         for(String arg : args) {
             commands.add(arg);
         }
@@ -136,15 +143,6 @@ public class Utils {
         Assertions.assertEquals(0, exitCode, "Test exited with an error");
         Assertions.assertFalse(streams[1].isOutput(), "Test generated error messages");
         return streams;
-//        process = org.valhalla.plogger.instrumentation.itests.utils.Utils.createJavaProcess("--version", classPaths);
-//        streams =  new org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread[] {
-//                new org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread("out: ", process.getInputStream()),
-//                new org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread("err: ", process.getErrorStream()),
-//        };
-//        for(org.valhalla.plogger.instrumentation.itests.utils.PrintStreamThread stream : streams) {
-//            stream.start();
-//        }
-//        System.out.println("Exit code: " + process.waitFor());
     }
 
     public static void deleteLogFiles(final String logFilePrefix) {

@@ -26,7 +26,6 @@ SOFTWARE.
 
 import org.valhalla.plogger.test.common.Executor;
 import org.valhalla.plogger.test.common.Utils;
-//import org.valhalla.plogger.test.types.SampleClass;
 import org.valhalla.plogger.tests.*;
 
 import java.util.HashMap;
@@ -55,38 +54,6 @@ public class Main {
             System.exit(1);
         }
 
-//        int count = 1;
-//        if (args.length > 0) {
-//            try {
-//                count = Integer.parseInt(args[0]);
-//            } catch (RuntimeException e) {
-//
-//            }
-//        }
-//        print();
-//        while( count-- > 0 )
-//            load(count);
-//
-//        recursive(10, 0);
-//
-//        System.out.println("Thread: " + Thread.currentThread().getName());
-//
-//        org.apache.log4j.LogManager.getLogger(Main.class);
     }
 
-//    private static void recursive(int max, int current) {
-////        System.out.println(String.format("Calling recursive call %d", current));
-//        if (current < max) recursive(max, ++current);
-//    }
-//
-//    private static void print() {
-//        System.out.println("Hello, world!");
-//    }
-//
-//    private static void load(int c) {
-//        SampleClass sampleClass = new SampleClass(String.format("Name:%d", c));
-////        System.out.println(String.format("SampleClass name: %s", sampleClass.getName()));
-//        sampleClass.setName(String.format("Updated Name:%d", c));
-////        System.out.println(String.format("SampleClass name: %s", sampleClass.getName()));
-//    }
 }

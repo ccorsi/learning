@@ -35,9 +35,11 @@ public class LoggerITCase {
 
     private static String testType;
     private static String mainClassName;
-    private static String[] classPaths;
     private static String agentFileName;
     private static String agentLoggerFileName;
+    private static String defaultTestAppClassPath;
+
+    private String[] classPaths;
     private String logFilePrefix = "PLogger";
     private String agentParameters = "debug=exception";
 
@@ -46,15 +48,17 @@ public class LoggerITCase {
     public static void setStaticFields() {
         testType = "Executing an integration test for jdk 7";
         mainClassName = "org.valhalla.plogger.test.Main";
-        classPaths = new String[] {
-                System.getProperty("test.app7.classpath"),
-        };
         agentFileName = AgentJars.getAgentJar();
         agentLoggerFileName = AgentJars.getAgentLoggerJar();
+        defaultTestAppClassPath = System.getProperty("test.app7.classpath");
     }
 
     @BeforeEach
     public void typeTest() {
+        classPaths = new String[] {
+                defaultTestAppClassPath,
+        };
+
         System.out.println(testType);
         System.out.println("Using plogger agent jar: " + agentFileName);
         System.out.println("Using plogger agent logger jar: " + agentLoggerFileName);
@@ -100,6 +104,11 @@ public class LoggerITCase {
     public void testLoggerInstrumentationOfJdk4Class() throws Throwable {
         String[] args = {
                 "log4j",
+        };
+
+        classPaths = new String[] {
+                System.getProperty("test.app7.classpath"),
+                AgentJars.getJarName("log4j.jar"),
         };
 
         execute(args, false);
