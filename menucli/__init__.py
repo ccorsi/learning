@@ -1,5 +1,6 @@
 
 import os
+import sys
 
 """
 MIT License
@@ -105,7 +106,7 @@ def _select_menu_item(title, items):
                 return items[option - 1]
             print('Option: {} is out of range'.format(option))
         except Exception as exception:
-            print('Invalid option: {}'.format(exception))
+            print('Invalid option: {}'.format(exception), file=sys.stderr)
 
 
 class _Menu(object):
