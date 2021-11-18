@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 ## Welcome to Claudio Corsi GitHub Pages for my learning Repository
 
 Well, hello there, and welcome to my web site.  This is something that I am putting together for several reasons.  One of these is to promote me by showcasing some of
