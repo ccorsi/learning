@@ -39,6 +39,7 @@ round-avatar: true
 # Select the social network links that you want to show in the footer.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
+  replit: ccorsi
   email: "clcorsi@yahoo.com"
   rss: false  # remove this line if you don't want to show an RSS link at the bottom
     # facebook: deanattali
@@ -63,7 +64,6 @@ social-network-links:
 #  mastodon: instance.url/@username
 #  ORCID: your ORCID ID
 #  google-scholar: your google scholar
-   replit: ccorsi
 
 # If you want your website to generate an RSS feed, provide a description
 # The URL for the feed will be https://<your_website>/feed.xml
