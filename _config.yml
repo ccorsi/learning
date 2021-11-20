@@ -6,10 +6,10 @@
 # --- Required options --- #
 
 # Name of website
-title: My Website
+title: Welcome to Claudio Corsi
 
 # Your name to show in the footer
-author: Some Person
+author: Claudio Corsi
 
 # --- List of links in the navigation bar --- #
 
@@ -18,7 +18,7 @@ navbar-links:
   Resources:
     - Beautiful Jekyll: "https://beautifuljekyll.com"
     - Learn markdown: "https://www.markdowntutorial.com/"
-  Author's home: "https://deanattali.com"
+  Author's home: "https://ccorsi.github.io/learning/"
 
 # --- Logo --- #
 
@@ -39,18 +39,18 @@ round-avatar: true
 # Select the social network links that you want to show in the footer.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
-  email: "someone@example.com"
-  rss: true  # remove this line if you don't want to show an RSS link at the bottom
-  facebook: deanattali
-  github: daattali
-  twitter: daattali
-  patreon: DeanAttali
-  youtube: c/daattali
+  email: "clcorsi@yahoo.com"
+  rss: false  # remove this line if you don't want to show an RSS link at the bottom
+    # facebook: deanattali
+  github: ccorsi
+    # twitter: daattali
+    # patreon: DeanAttali
+    # youtube: c/daattali
 #  medium: yourname
 #  reddit: yourname
-#  linkedin: daattali
+  linkedin: claudio-corsi-9112193
 #  xing: yourname
-#  stackoverflow: "3943160/daattali"
+  stackoverflow: "4332437/claudio-corsi"
 #  snapchat: deanat78
 #  instagram: deanat78
 #  spotify: yourname
@@ -72,8 +72,8 @@ rss-description: This website is a virtual proof that I'm awesome
 
 # Select which social network share links to show in posts
 share-links-active:
-  twitter: true
-  facebook: true
+  twitter: false
+  facebook: false
   linkedin: true
   vk: false
 
