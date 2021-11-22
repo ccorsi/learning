@@ -18,28 +18,28 @@ Since, this is a work in progress and you might want to know more about me since
 of tasks that I will create:
 
 - [ ] [C/C++](c-cpp)
-- [ ] Python
-- [ ] Java
-- [ ] Groovy
-- [ ] Perl
-- [ ] Ruby
-- [ ] .NET, specifically C#, Experience
-- [ ] Shell Scripting
-- [ ] Machine Learning Knowledge
-- [ ] Concurrent and Parallel Programming
-- [ ] IDE Tools
-- [ ] Source Code Management System Tools (git and company)
-- [ ] Database Management Systems
-- [ ] Operating Systems
-- [ ] JavaScript
-- [ ] Application Servers
-- [ ] Continuous Development/Continuous Integration Tools
-- [ ] Docker
-- [ ] Office Tools
-- [ ] Erlang
-- [ ] Clojure
-- [ ] Julia
-- [ ] Testing
+- [ ] [Python](python)
+- [ ] [Java](java)
+- [ ] [Groovy](groovy)
+- [ ] [Perl](perl)
+- [ ] [Ruby](ruby)
+- [ ] [.NET, specifically C#, Experience](dotnet)
+- [ ] [Shell Scripting](scripting)
+- [ ] [Machine Learning Knowledge](ml)
+- [ ] [Concurrent and Parallel Programming]()
+- [ ] [IDE Tools](idetools)
+- [ ] [Source Code Management System Tools (git and company)](scms)
+- [ ] [Database Management Systems](dbms)
+- [ ] [Operating Systems](operatingsystems)
+- [ ] [JavaScript](javascript)
+- [ ] [Application Servers](appservers)
+- [ ] [Continuous Development/Continuous Integration Tools](cdci)
+- [ ] [Docker](containers)
+- [ ] [Office Tools](officetools)
+- [ ] [Erlang](erlang)
+- [ ] [Clojure](clojure)
+- [ ] [Julia](julia)
+- [ ] [Testing](testing)
 
 The above list will contain information about the particular experience and knowledge around those knowledges. This
 will include what level of experience and in which work related job that I was using that knowledge.  The list also
