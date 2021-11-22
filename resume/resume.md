@@ -24,10 +24,11 @@ and documenting.
 
 ***Experience***
 <hr>
+
 | Member of the Technical Staff | 2012-2020 |
 | :--- | ---: |
 | Riverbed Technology/Aternity LLC | Cambridge, MA |
-
+  
 - Part of the team that implements and maintains the Java and .NET{CORE} instrumentation agents
 - Initiated, architected and the main implementer of the Java agent new bytecode instrumentation. Replacing the original java bytecode instrumentation logic as part of the next phase of our java agent bytecode manipulation
 - Replaced internal process to reduce ClassCircularityError issues
@@ -42,10 +43,11 @@ and documenting.
 - Converted the Classic Jenkins build process to Jenkins pipeline feature
 - Used Java, C++, C\#, Python, Groovy, git, Jenkins, Docker, Ant, Ivy, Maven, Archiva, Nexus and others to develop and support our instrumentation agents for Java and .NET{CORE}
 - Worked with or extended our integration with Spring, JDBC, JMS, EJB, Axis, Netty, Vertx, WebSphere Application Server, Oracle WebLogic Application Server, Tomcat, Jetty, MongoDB and others
-
+  
 | Principal Software Engineer  | 2008 - 2009 |
 | :--- | ---: |
 | Progress Software Technology | Bedford, MA |
+  
 - Primary developer for the ObjectStore\texttrademark Java Middle Tier Library (JMTL), a highly scalable middle-tier caching $\&$ transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
     - _Updated JMTL integration with most prominent EJB servers_ such as Weblogic and JBoss using technologies such as JTA and XAResource
     - _Designed and implemented new features_ in JMTL such as real-time counter updates and run-time management tool
@@ -58,6 +60,7 @@ and documenting.
 
 ***Education***
 <hr>
+  
 | ***Concordia University*** | Montreal, Quebec, Canada |
 | :--- | ---: |
 | _Bachelor of Science, Specialization in Applied Mathematics, Minor in Computer Science_ | _May 1992_ |
