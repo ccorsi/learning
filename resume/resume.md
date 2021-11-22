@@ -14,16 +14,16 @@ and documenting.
 ***Technical Skills***
 <hr>
 
-***Languages***: Java, C/C++, C\#, Python, Groovy, Perl, Ruby, JavaScript
+***Languages***: Java, C/C++, C\#, Python, Groovy, Perl, Ruby, JavaScript</br>
+***Frameworks***: Mockito, PowerMock, JUnit, BCEL, ASM, Camel, RMI, JNDI, JDBC, JAXP, XML, XSLT, DOM, SAX, JNI, EJB, Servlet, JSP, JTA, JMS, JMX</br>
+***Developer Tools***: Git, Docker, Visual Studio, Eclipse, Netbeans, IntelliJ, Emacs, XCode, Mercurial, Subversion, Ant, make, maven</br>
+***Application Servers***: Weblogic Server, WebSphere Application Server, Tomcat, JBoss AS, ActiveMQ</br>
+***Operating Systems***: Windows, Linux, Mac OS X, FreeBSD</br>
+***DBMS***: Oracle DBMS, MySQL, MSSQL, PostgreSQL, MongoDB</br>
+***Office Tools***: Microsoft Office, Google Office Suite</br>
 
-***Frameworks***: Mockito, PowerMock, JUnit, BCEL, ASM, Camel, RMI, JNDI, JDBC, JAXP, XML, XSLT, DOM, SAX, JNI, EJB, Servlet, JSP, JTA, JMS, JMX 
-
-***Developer Tools***: Git, Docker, Visual Studio, Eclipse, Netbeans, IntelliJ, Emacs, XCode, Mercurial, Subversion, Ant, make, maven
-
-***Application Servers***: Weblogic Server, WebSphere Application Server, Tomcat, JBoss AS, ActiveMQ
-
-***Operating Systems***: Windows, Linux, Mac OS X, FreeBSD
-
-***DBMS***: Oracle DBMS, MySQL, MSSQL, PostgreSQL, MongoDB
-
-***Office Tools***: Microsoft Office, Google Office Suite
+***Experience***
+<hr>
+| Member of the Technical Staff | 2012-2020 |
+|-------------------------------|-----------|
+| Riverbed Technology/Aternity LLC | Cambridge, MA |
