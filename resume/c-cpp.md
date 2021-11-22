@@ -1,6 +1,6 @@
 ---
 layout: resume
-title C/C++ Programming Language
+title: C/C++ Programming Language
 subtile: What I Learned
 ---
 
@@ -8,7 +8,7 @@ subtile: What I Learned
 
 This page will contain a more detailed version of the knowledge and experience that I have gained using the
 C/C++ programming language.  It will expand on the information that is contained within my official resume
-that you can download [here] (/assests/pdf/ClaudioCorsiCV.pdf){: target="_blank"}.  I will discuss when and
+that you can download [here](/assests/pdf/ClaudioCorsiCV.pdf){target="_blank"}.  I will discuss when and
 what I have learned using the C and C++ language.
 
 # C 
