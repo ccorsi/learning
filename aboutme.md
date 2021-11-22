@@ -24,8 +24,8 @@ create a quality resume page that will not be a reference to a pdf file.  Let us
 
 # Work Experience
 
-As I have mentioned above, I will now talk about my work experience and how this will be showcased here.  Let me then start by stating that
-I have been a software engineer for sometime now.  I have
+As I have mentioned above, I will now talk about my work experience and how this will be showcased [here](resume).  Let me then start by stating
+that I have been a software engineer for than 25 years.
 
 # Blogging
 
