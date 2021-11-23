@@ -1,7 +1,7 @@
 ---
 layout: resume
 title: Claudio Corsi
-subtitle: (h) 781.270.5593 | (c) 617.515.5490 | <a href="mailto:clcorsi@yahoo.com">clcorsi@yahoo.com</a>| <a href="https://www.linkedin.com/in/claudio-corsi-9112193/">LinkedIn</a> | <a href="https://github.com/ccorsi">GitHub</a>
+subtitle: 
 ---
 
 ***Profile***
