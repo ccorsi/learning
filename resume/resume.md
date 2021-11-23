@@ -1,7 +1,7 @@
 ---
 layout: resume
 title: Claudio Corsi
-subtitle: (h) 781.270.5593 | (c) 617.515.5490 | [clcorsi@yahoo.com](mailto:clcorsi@yahoo.com)| [LinkedIn](https://www.linkedin.com/in/claudio-corsi-9112193/) | [GitHub](https://github.com/ccorsi)
+subtitle: (h) 781.270.5593 | (c) 617.515.5490 | <a href="mailto:clcorsi@yahoo.com">clcorsi@yahoo.com</a>| <a href="https://www.linkedin.com/in/claudio-corsi-9112193/">LinkedIn</a> | <a href="https://github.com/ccorsi">GitHub</a>
 ---
 
 ***Profile***
@@ -93,18 +93,18 @@ and documenting.
 | Progress Software Technology | Bedford, MA |
   
 - Primary developer for the ObjectStore&#174; Java Middle Tier Library (JMTL), a highly scalable middle-tier caching &amp; transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
-        - _Integrated JMTL with most prominent EJB servers_ such as WebSphere, Weblogic, JBoss and Sun Application Server, using technologies such as JTS, JTA and XAResource
-        - _Designed and implemented new features_ in JMTL such as object pooling mechanism, extent implementation, integration with two phase object locking mechanism, and its associated byte-code enhancement tool
-        - _Created design documents in order to schedule and mentor_ other group members on implementation of feature enhancements such as two phase object locking byte-code enhancer tool and JMTL proxy code generator
-        - _Enhanced existing features_ within JMTL such as the internal profiling feature, Console Swing tool, Virtual Transaction Manager, Virtual Transaction Manager Management tool
-        - _Resolved major bugs_ within the JMTL transaction Manager such as inconsistent committing/abort between ObjectStore transactions and application server XA transactions
-        - _Enhanced product build_ for JMTL by replacing makefiles with Ant build scripts
-        - _Updated examples that ship with the product_, such as EJB server examples, JMTL Servlet/JSP example for use with Tomcat and JMTL-specific Ant tasks
-        - _Assisted consultants with issues concerning the usage and best practices_ using ObjectStore JMTL for customers such as Starwoods, Sakonnet, and Lockheed Martin
+    - _Integrated JMTL with most prominent EJB servers_ such as WebSphere, Weblogic, JBoss and Sun Application Server, using technologies such as JTS, JTA and XAResource
+    - _Designed and implemented new features_ in JMTL such as object pooling mechanism, extent implementation, integration with two phase object locking mechanism, and its associated byte-code enhancement tool
+    - _Created design documents in order to schedule and mentor_ other group members on implementation of feature enhancements such as two phase object locking byte-code enhancer tool and JMTL proxy code generator
+    - _Enhanced existing features_ within JMTL such as the internal profiling feature, Console Swing tool, Virtual Transaction Manager, Virtual Transaction Manager Management tool
+    - _Resolved major bugs_ within the JMTL transaction Manager such as inconsistent committing/abort between ObjectStore transactions and application server XA transactions
+    - _Enhanced product build_ for JMTL by replacing makefiles with Ant build scripts
+    - _Updated examples that ship with the product_, such as EJB server examples, JMTL Servlet/JSP example for use with Tomcat and JMTL-specific Ant tasks
+    - _Assisted consultants with issues concerning the usage and best practices_ using ObjectStore JMTL for customers such as Starwoods, Sakonnet, and Lockheed Martin
 - Contributing member of development team for ObjectStore, the leading Object-Oriented Database Management System
-        - _Contributed to development_ of a change-log mechanism for a Data Source Synchronization product (DSS) used to automatically synchronize data between ObjectStore and Oracle or MySQL
-        - _Architected and designed testing process and framework_ using JUnit, then became go-to person to facilitate adoption of this framework within the ObjectStore Java group
-        - _Contributed enhancements and performance improvements_ to the ObjectStore Java Interface (OSJI)
+    - _Contributed to development_ of a change-log mechanism for a Data Source Synchronization product (DSS) used to automatically synchronize data between ObjectStore and Oracle or MySQL
+    - _Architected and designed testing process and framework_ using JUnit, then became go-to person to facilitate adoption of this framework within the ObjectStore Java group
+    - _Contributed enhancements and performance improvements_ to the ObjectStore Java Interface (OSJI)
   
 | Developer Support Engineer | 1998 - 2000 |
 | :--- | ---: |
