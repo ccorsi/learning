@@ -839,6 +839,7 @@ table tr td {
   text-align: left;
   margin: 0;
   padding: 0.375rem 0.8125rem;
+  background-color: #f8f8f8;
 }
 table tr th :first-child,
 table tr td :first-child {
