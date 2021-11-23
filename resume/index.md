@@ -1,7 +1,7 @@
 ---
 layout: resume
 title: Claudio Corsi
-subtitle: Resume
+subtitle: Work Experience
 full-width: true
 ---
 
@@ -10,7 +10,7 @@ full-width: true
 The following pages will contain information about my work experience as a Software Engineer.  I have over 25 years
 experience within the Computer Science field.  This length of time has seen me develop products for backend and
 frontend.  This included the use of different programming languages like, C/C++, Java for different operating systems
-like Windows and Linux.  While this is only a small sample of this information.  You can look 
+like Windows and Linux.  While this is only a small sample of this information.
 
 # More to Come...
 

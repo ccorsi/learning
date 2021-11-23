@@ -68,7 +68,7 @@ and documenting.
 - Lead the bug queue process with engineering
 - Part of the 24/7 support rotation for 24/7 production support for customers
   
-| Principal Software Engineer | | May 2008 - July 2009 |
+| Principal Software Engineer | 2008 - 2009 |
 | :--- | ---: |
 | Progress Software Technology | Bedford, MA |
   
