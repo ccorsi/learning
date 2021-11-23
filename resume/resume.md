@@ -48,7 +48,7 @@ and documenting.
 | :--- | ---: |
 | Progress Software Technology | Bedford, MA |
   
-- Primary developer for the ObjectStore&#174; Java Middle Tier Library (JMTL), a highly scalable middle-tier caching & transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
+- Primary developer for the ObjectStore&#174; Java Middle Tier Library (JMTL), a highly scalable middle-tier caching &amp; transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
     - _Updated JMTL integration with most prominent EJB servers_ such as Weblogic and JBoss using technologies such as JTA and XAResource
     - _Designed and implemented new features_ in JMTL such as real-time counter updates and run-time management tool
     - _Resolved major bugs_ within the JMTL update of JTA XAResource integration such as inconsistent committing/abort between ObjectStore transactions and application server XAResource transaction callbacks
@@ -72,7 +72,7 @@ and documenting.
 | :--- | ---: |
 | Progress Software Technology | Bedford, MA |
   
-- Primary developer for the ObjectStore&#174; Java Middle Tier Library (JMTL), a highly scalable middle-tier caching $\&$ transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
+- Primary developer for the ObjectStore&#174; Java Middle Tier Library (JMTL), a highly scalable middle-tier caching &amp; transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
     - _Updated JMTL integration with most prominent EJB servers_ such as Weblogic and JBoss using technologies such as JTA and XAResource
     - _Designed and implemented new features_ in JMTL such as real-time counter updates and run-time management tool
     - _Resolved major bugs_ within the JMTL update of JTA XAResource integration such as inconsistent committing/abort between ObjectStore transactions and application server XAResource transaction callbacks
@@ -85,14 +85,14 @@ and documenting.
 | :--- | ---: |
 | Emptoris | Burlington, MA |
   
-- Lead developer responsible for maintaining and enhancing Intelligence Attributes (IA) and IF Java-based frameworks used by other teams within the organization as a basis for several of Emptoris’ commercial products
+- Lead developer responsible for maintaining and enhancing Intelligence Attributes (IA) and IF Java-based frameworks used by other teams within the organization as a basis for several of Emptoris' commercial products
   
 
 | Senior Software Engineer | 2000 - 2006 |
 | :--- | ---: |
 | Progress Software Technology | Bedford, MA |
   
-- Primary developer for the ObjectStore\texttrademark Java Middle Tier Library (JMTL), a highly scalable middle-tier caching $\&$ transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
+- Primary developer for the ObjectStore&#174; Java Middle Tier Library (JMTL), a highly scalable middle-tier caching &amp; transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
         - _Integrated JMTL with most prominent EJB servers_ such as WebSphere, Weblogic, JBoss and Sun Application Server, using technologies such as JTS, JTA and XAResource
         - _Designed and implemented new features_ in JMTL such as object pooling mechanism, extent implementation, integration with two phase object locking mechanism, and its associated byte-code enhancement tool
         - _Created design documents in order to schedule and mentor_ other group members on implementation of feature enhancements such as two phase object locking byte-code enhancer tool and JMTL proxy code generator
@@ -110,7 +110,7 @@ and documenting.
 | :--- | ---: |
 | Progress Software Technology | Bedford, MA |
   
-- _Responsible for technical support as well as finding and fixing bugs_ in ObjectStore $\&$ JMTL
+- _Responsible for technical support as well as finding and fixing bugs_ in ObjectStore &amp; JMTL
 - _Trained and certified consulting group and support members_ on building and using purify with the ObjectStore product
 - _Mentored others_ on using non-ObjectStore tools such as Visual C++, ClearCase, snapshot system, debuggers, etc
 - _Worked on integration of our Java product_ with Sybase Jaguar EJB Server
