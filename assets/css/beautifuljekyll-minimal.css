@@ -12,6 +12,6 @@ footer.footer-min {
   text-align: center;
 }
 
-td, th {
+table, td, th {
   border: none!important;
 }
