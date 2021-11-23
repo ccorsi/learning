@@ -140,7 +140,7 @@ and documenting.
     - Back end interpreter of raw DMS data to be displayed at GUI client and stored in database
     - IPC communication layer between GUI client and DMS data interpreter
     - Client/server interface to generate embedded SQL queries using parameters specified via RPC
-- Enhanced GUI client end of a real-time application by adding new features and making it internationally viable, using Neuron Data’s Open Interface in C on UNIX
+- Enhanced GUI client end of a real-time application by adding new features and making it internationally viable, using Neuron Data's Open Interface in C on UNIX
 - Developed general library functions used throughout a real-time client/server application in C using object-oriented concepts
 - Lead developer of back end program for intranet project, using C, embedded SQL and Ingres
     
