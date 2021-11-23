@@ -6,7 +6,7 @@
 # --- Required options --- #
 
 # Name of website
-title: Claudio Corsi Home
+title: Claudio Corsi
 
 # Your name to show in the footer
 author: Claudio Corsi
@@ -15,7 +15,7 @@ author: Claudio Corsi
 
 navbar-links:
   About Me: "aboutme"
-  Resume: "/resume"
+  Work Experience: "/resume"
   Resources:
     - Beautiful Jekyll: "https://beautifuljekyll.com"
     - Learn markdown: "https://www.markdowntutorial.com/"
