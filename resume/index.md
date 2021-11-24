@@ -20,16 +20,44 @@ related and self-taught interests.  While these can be extensive, I've tried to 
 one to look at specific experience that one finds useful.  Let me then describe the different sections and what they are going to
 be about.
 
-The following table contains all of the different technologies that I've used within a working environment.
+The following table contains all of the different technologies that I've used within a working environment and were they've been
+used.
+
+| *Technologies* | *Companies* |
+| :---: | :---: |
+| [C/C++](c-cpp) | Aternity, Riverbed, FUSE Source, Progress Software, Ciber, Bell Sygma, Ranmar |
+| [Java](java) | Aternity, Riverbed, Progress Software, Emptoris, FUSE Source |
+| [Python](python) | Aternity, Riverbed |
+| [Perl](perl) | Progress Software |
+| Ruby | FUSE Source |
+| .NET | Aternity, Riverbed |
+| Groovy | Aternity |
+| Docker | Aternity |
+| Shell Scripting | Aternity, Riverbed, FUSE Source, Progress Software, Emptoris, CIBER, Bell Sygma, Ranmar |
+| Concurrent and Parallel Programming | Aternity, Riverbed, FUSE Source, Progress Software, Bell Sygma |
+| IDE Tools | Aternity, Riverbed, FUSE Source, Progres Software, Emptoris, CIBER, Bell Sygma, Veritech, Ranmar |
+| SCM Tools | Aternity, Riverbed, FUSE Source, Progres Software, Emptoris, CIBER, Bell Sygma, Veritech, Ranmar |
+| Application Servers | Aternity, Riverbed, FUSE Source, Progres Software |
+| CD/CI Tools | Aternity, Riverbed |
+| Office Tools | Aternity, Riverbed, FUSE Source, Progres Software, Emptoris, CIBER, Bell Sygma, Veritech, Ranmar |
+| Testing | Aternity, Riverbed, FUSE Source, Progres Software, Emptoris, CIBER, Bell Sygma, Veritech, Ranmar |
+| Agile Development Process | Aternity, Riverbed, Progress Software |
+
+The following table contains the different technologies that I have taught myself but have not had a chance to use
+within a working environment.
 
 | *Technologies* |
-| --- |
-| C/C++ |
-| Java |
-| Python |
-| Perl |
-| Ruby |
+| :---: | 
+| JavaScript |
+| Erlang |
+| Go |
+| Scala |
+| Julia |
 
+Note that some of my knowledge of the above technologies are fairly minor while some like I have done some extensive work like 
+Go and JavaScript.
+
+To be continued....
 
 I have over 25 years experience within the Computer Science field.  This length of time has seen me develop products for backend and
 frontend.  This included the use of different programming languages like, C/C++, Java for different operating systems
