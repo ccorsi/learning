@@ -24,7 +24,7 @@ The following table contains all of the different technologies that I've used wi
 used.
 
 | *Technologies* | *Companies* |
-| :---: | :---: |
+| :--- | :--- |
 | [C/C++](c-cpp) | Aternity, Riverbed, FUSE Source, Progress Software, Ciber, Bell Sygma, Ranmar |
 | [Java](java) | Aternity, Riverbed, Progress Software, Emptoris, FUSE Source |
 | [Python](python) | Aternity, Riverbed |
