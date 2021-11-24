@@ -824,10 +824,10 @@ table tr {
 /* table tr:nth-child(2n) { */
 /*   background-color: #f8f8f8; */
 /* } */
-table tr:nth-child(even) {
+table tr:nth-child(odd) {
   background-color: #f8f8f8;
 }
-table tr:nth-child(odd) {
+table tr:nth-child(even) {
   background-color: #c0c0c0;
 }
 table tr th {
