@@ -2,15 +2,39 @@
 layout: resume
 title: Claudio Corsi
 subtitle: Work Experience
-full-width: true
 ---
 
 # Introduction
 
-The following pages will contain information about my work experience as a Software Engineer.  I have over 25 years
-experience within the Computer Science field.  This length of time has seen me develop products for backend and
+The following pages will contain information about my work experience as a Software Engineer.  As part of this information, I
+will also include technologies that I have learned outside of the work environment.  This is anything from programming languages,
+operating systems, tools and other technologies.  Finally, I will include different readings that I have done during the years
+that might be useful for those that are interested in what kind of technologies I have read about.  While this information can
+be fairly long,  I have sectioned out this information within fairly compact pages.  If one is only interested in my resume then
+you have two choices to choose from.  You can either look at my [web page](resume) or you can download a pdf version of it
+[here](https://raw.githubusercontent.com/ccorsi/learning/docs/assets/pdf/ClaudioCorsiCV.pdf).  Let me know explain how the rest 
+of these pages are going to be organized.
+
+These set of pages that expand on my work experience and self taught interests will be divided into pages that are work experience
+related and self-taught interests.  While these can be extensive, I've tried to section them out such that it will be easier for
+one to look at specific experience that one finds useful.  Let me then describe the different sections and what they are going to
+be about.
+
+The following table contains all of the different technologies that I've used within a working environment.
+
+| *Technologies* |
+| --- |
+| C/C++ |
+| Java |
+| Python |
+| Perl |
+| Ruby |
+
+
+I have over 25 years experience within the Computer Science field.  This length of time has seen me develop products for backend and
 frontend.  This included the use of different programming languages like, C/C++, Java for different operating systems
 like Windows and Linux.  While this is only a small sample of this information.
+
 
 # More to Come...
 
