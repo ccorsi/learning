@@ -821,8 +821,14 @@ table tr {
   margin: 0;
   padding: 0;
 }
-table tr:nth-child(2n) {
+/* table tr:nth-child(2n) { */
+/*   background-color: #f8f8f8; */
+/* } */
+table tr:nth-child(even) {
   background-color: #f8f8f8;
+}
+table tr:nth-child(odd) {
+  background-color: #c0c0c0;
 }
 table tr th {
   font-weight: bold;
