@@ -165,3 +165,10 @@ and documenting.
 | ***Concordia University*** | Montreal, Quebec, Canada |
 | :--- | ---: |
 | _Bachelor of Science, Specialization in Applied Mathematics, Minor in Computer Science_ | _May 1992_ |
+
+
+{% comment %}
+Local Variables:
+backup-inhibited: t
+End:
+{% endcomment %}
