@@ -26,3 +26,9 @@ This section will describe the different libraries that I have used to develop t
 C/C++.
 
 
+
+{% comment %}
+Local Variables:
+backup-inhibited: t
+End:
+{% endcomment %}
