@@ -12,4 +12,11 @@ Gemfile.lock
 
 beautiful-jekyll-theme-*.gem
 
+# do not include any emacs backup files.
 *~
+
+# Adding Emacs Local Variable Settings.
+
+# Local Variables:
+# backup-inhibited: t
+# End:
