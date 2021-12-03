@@ -10,6 +10,22 @@ This page contains information about my knowledge of different IDE that I have u
 
 
 {% comment %}
+
+Here are all of the IDE that I have used in the past:
+
+	- Eclipse
+	- NetBeans
+	- IntelliJ
+	- Visual Studio
+	- Visual Studio Code
+	- PyCharm
+	- Emacs/XEmacs
+
+Mention that I have also use vim as an editor and quick file changes.
+
+{% endcomment %}
+
+{% comment %}
 Local Variables:
 backup-inhibited: t
 End:
