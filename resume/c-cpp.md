@@ -7,6 +7,27 @@ subtile: What I Learned
 {% comment %}
 # TODO: Describe the different c/c++ tools that I have used and learned through work and exploration
 of the c/c++ programming language.
+
+# Introduction
+
+This page will contain a more detailed version of the knowledge and experience that I have gained using the
+C/C++ programming language.  It will expand on the information that is contained within my official resume
+available [here](https://raw.githubusercontent.com/ccorsi/learning/docs/assets/pdf/ClaudioCorsiCV.pdf).  I
+will discuss when, where and what I have learned using the C and C++ language.  This section will also 
+include knowledge that I have gained that was outside of a work environment pertaining to the C/C++ 
+programming language.
+
+# Work Experience
+
+I have exclusively used the C programming language in my first two jobs at Ranmar and Bell Sygma.  While I have also
+used C at other jobs but those have been in conjunction with C++ which will be discussed later on in this section.  
+While that use of C at Ranmar was within the context of a mature product and the use of C at Bell Sygma was used 
+in the context of a brand new product.  
+
+# Non-Work Experience
+
+
+
 {% endcomment %}
 
 # Introduction
