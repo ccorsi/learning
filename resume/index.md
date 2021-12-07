@@ -2,6 +2,10 @@
 layout: resume
 title: Claudio Corsi
 subtitle: Work Experience
+js:
+   - "/assets/js/quote.js"
+before-content:
+   - "/_includes/quotes.html"
 ---
 
 # Introduction
