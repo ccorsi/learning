@@ -5,7 +5,7 @@ subtitle: Work Experience
 js:
    - "/assets/js/quote.js"
 before-content:
-   - "/_includes/quotes.html"
+   - "quotes.html"
 ---
 
 # Introduction
