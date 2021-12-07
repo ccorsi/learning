@@ -9,16 +9,18 @@
 	// This method will display a random quote retrieved from the
 	// given url for the passed element id.
 	function getQuote(url, elm) {
+	  console.log("Element: " + elm);
 	  let request = new XMLHttpRequest();
 	  request.open('GET', url);
 	  request.responseType = 'json';
 	  request.send();
 	  request.onload = function() {
+	     console.log("Inside onload callback");
 	     // This method will randomly select a quote and then display it
 	     const quotes = request.response;
 	     const quote = quotes[getRandomInt(quotes.length)];
 	     var div = document.createElement('div');
-	     div.setAttribute('align','left');
+	     div.setAttribute('style','align: left;');
 	     div.append(document.createElement('br'));
 	     quote.quote.forEach(e => {
 	        div.append(e);
@@ -26,16 +28,19 @@
 	     });
 	     elm.append(div);
 	     var div = document.createElement('div');
-	     div.setAttribute('align','right');
+	     div.setAttribute('style','align: right;');
 	     div.append(document.createElement('br'));
 	     div.append('"');
 	     div.append(quote.author);
 	     div.append('"');
 	     div.append(document.createElement('br'));
 	     elm.append(div);
+	     console.log("Completed processing onload callback");
 	   };
 	};
 
+	console.log("Before calling getQuote");
 	getQuote("/learning/assets/data/quotes.json", document.getElementById("quote"));
+	console.log("After calling getQuote");
     </script>
 </div>
