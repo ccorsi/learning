@@ -1,4 +1,4 @@
-<div id="quote" style="display: inline-block; font-style: italic; align: center;">
+<div id="quote" style="display: inline-block; font-style: italic; text-align: center;">
     <script lang="javascript">
 
 	// This method will return a random number from 0 to max - 1.
@@ -20,7 +20,7 @@
 	     const quotes = request.response;
 	     const quote = quotes[getRandomInt(quotes.length)];
 	     var div = document.createElement('div');
-	     div.setAttribute('style','align: left;');
+	     div.setAttribute('style','text-align: left;');
 	     div.append(document.createElement('br'));
 	     quote.quote.forEach(e => {
 	        div.append(e);
@@ -28,7 +28,7 @@
 	     });
 	     elm.append(div);
 	     var div = document.createElement('div');
-	     div.setAttribute('style','align: right;');
+	     div.setAttribute('style','text-align: right;');
 	     div.append(document.createElement('br'));
 	     div.append('"');
 	     div.append(quote.author);
