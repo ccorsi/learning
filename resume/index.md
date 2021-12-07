@@ -4,8 +4,8 @@ title: Claudio Corsi
 subtitle: Work Experience
 #js:
 #   - "/assets/js/quotes.js"
-before-content:
-   - "quotes.html"
+#before-content:
+#   - "quotes.html"
 ---
 
 # Introduction
