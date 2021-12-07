@@ -1,7 +1,5 @@
 ---
 layout: base
-before-content:
-   - "quotes.html"
 ---
 
 {% include header.html type="page" %}
@@ -9,13 +7,14 @@ before-content:
 <div class="container-lg" role="main">
   <div class="row">
     <div class="col">
-      {% if page.before-content %}
-        <div class="before-content">
+      <div class="before-content">
+        {% include "quotes.html" %}
+        {% if page.before-content %}
           {% for file in page.before-content %}
             {% include {{ file }} %}
           {% endfor %}
-        </div>
-      {% endif %}
+        {% endif %}
+      </div>
 
       {{ content }}
 
