@@ -34,8 +34,9 @@ in the context of a brand new product.
 
 This page will contain a more detailed version of the knowledge and experience that I have gained using the
 C/C++ programming language.  It will expand on the information that is contained within my official resume
-available [here](https://raw.githubusercontent.com/ccorsi/learning/docs/assets/pdf/ClaudioCorsiCV.pdf).  I
-will discuss when, where and what I have learned using the C and C++ language.
+available
+<a href="https://raw.githubusercontent.com/ccorsi/learning/docs/assets/pdf/ClaudioCorsiCV.pdf" target="_blank">here</a>.
+I will discuss when, where and what I have learned using the C and C++ programming languages.
 
 # C
 
