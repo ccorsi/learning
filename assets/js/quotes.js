@@ -206,6 +206,41 @@ function getQuote(url, elm) {
 };
 */
 
+// This method will return a random number from 0 to max - 1.
+function getRandomInt(max) {
+   return Math.floor(Math.random() * max);
+};
+
+// This method will display a random quote retrieved from the
+// given url for the passed element id.
+function getQuote(url, elm) {
+  let request = new XMLHttpRequest();
+  request.open('GET', url);
+  request.responseType = 'json';
+  request.send();
+  request.onload = function() {
+     // This method will randomly select a quote and then display it
+     const quotes = request.response;
+     const quote = quotes[getRandomInt(quotes.length)];
+     var div = document.createElement('div');
+     div.setAttribute('style','text-align: left;');
+     div.append(document.createElement('br'));
+     quote.quote.forEach(e => {
+        div.append(e);
+        div.append(document.createElement('br'));
+     });
+     elm.append(div);
+     var div = document.createElement('div');
+     div.setAttribute('style','text-align: right;');
+     div.append(document.createElement('br'));
+     div.append('"');
+     div.append(quote.author);
+     div.append('"');
+     div.append(document.createElement('br'));
+     elm.append(div);
+   };
+};
+
 /*
 Local Variables:
 backup-inhibited: t
