@@ -1,5 +1,6 @@
 <!-- div id="quote" style="display: inline-block; font-style: italic; text-align: center;" -->
-<div id="quote" class="container-md" style="display: inline-block; font-style: italic;">
+<!-- div id="quote" class="container-md" style="display: inline-block; font-style: italic;" -->
+<div id="quote" style="display: inline-block; font-style: italic;">
     <script lang="javascript">
 
 	// This method will return a random number from 0 to max - 1.
@@ -10,52 +11,52 @@
 	// This method will display a random quote retrieved from the
 	// given url for the passed element id.
 	function getQuote(url, elm) {
-	  console.log("Element: " + elm);
+	  // console.log("Element: " + elm);
 	  let request = new XMLHttpRequest();
 	  request.open('GET', url);
 	  request.responseType = 'json';
 	  request.send();
 	  request.onload = function() {
-	     console.log("Inside onload callback - 1");
+	     // console.log("Inside onload callback - 1");
 	     // This method will randomly select a quote and then display it
 	     const quotes = request.response;
-	     console.log("Inside onload callback - 2 " + quotes);
+	     // console.log("Inside onload callback - 2 " + quotes);
 	     const quote = quotes[getRandomInt(quotes.length)];
-	     console.log("Inside onload callback - 3 " + quote);
+	     // console.log("Inside onload callback - 3 " + quote);
 	     var div = document.createElement('div');
-	     console.log("Inside onload callback - 4 " + div);
+	     // console.log("Inside onload callback - 4 " + div);
 	     div.setAttribute('style','text-align: left;');
-	     console.log("Inside onload callback - 5");
+	     // console.log("Inside onload callback - 5");
 	     div.append(document.createElement('br'));
-	     console.log("Inside onload callback - 6");
+	     // console.log("Inside onload callback - 6");
 	     quote.quote.forEach(e => {
 	        div.append(e);
 	        div.append(document.createElement('br'));
 	     });
-	     console.log("Inside onload callback - 7");
+	     // console.log("Inside onload callback - 7");
 	     elm.append(div);
-	     console.log("Inside onload callback - 8");
+	     // console.log("Inside onload callback - 8");
 	     var div = document.createElement('div');
-	     console.log("Inside onload callback - 9");
+	     // console.log("Inside onload callback - 9");
 	     div.setAttribute('style','text-align: right;');
-	     console.log("Inside onload callback - 10");
+	     // console.log("Inside onload callback - 10");
 	     div.append(document.createElement('br'));
-	     console.log("Inside onload callback - 11");
+	     // console.log("Inside onload callback - 11");
 	     div.append('"');
-	     console.log("Inside onload callback - 12");
+	     // console.log("Inside onload callback - 12");
 	     div.append(quote.author);
-	     console.log("Inside onload callback - 13");
+	     // console.log("Inside onload callback - 13");
 	     div.append('"');
-	     console.log("Inside onload callback - 14");
+	     // console.log("Inside onload callback - 14");
 	     div.append(document.createElement('br'));
-	     console.log("Inside onload callback - 15");
+	     // console.log("Inside onload callback - 15");
 	     elm.append(div);
-	     console.log("Completed processing onload callback");
+	     // console.log("Completed processing onload callback");
 	   };
 	};
 
-	console.log("Before calling getQuote");
+	// console.log("Before calling getQuote");
 	getQuote("/learning/assets/data/quotes.json", document.getElementById("quote"));
-	console.log("After calling getQuote");
+	// console.log("After calling getQuote");
     </script>
 </div>
