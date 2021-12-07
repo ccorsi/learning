@@ -169,6 +169,7 @@ function callback(quote) {
 */
 
 
+/*
 // This method will return a random number from 0 to max - 1.
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -203,6 +204,7 @@ function getQuote(url, elm) {
     elm.append(div);
   };
 };
+*/
 
 /*
 Local Variables:
