@@ -26,7 +26,8 @@ in the context of a brand new product.
 
 # Non-Work Experience
 
-
+I should talk about my experience using the standard concurrency classes and methods.  This should be part of
+a simple project that would showcase these calls.
 
 {% endcomment %}
 
