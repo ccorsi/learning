@@ -2,6 +2,7 @@
 layout: resume
 title: Claudio Corsi
 subtitle: Work Experience
+# For some reason the before-content field did not work
 foo-before-content:
    - "quotes.html"
 ---
@@ -59,7 +60,7 @@ within a working environment.
 | [Scala](scala) |
 | [Julia](julia) |
 
-Note that some of my knowledge of the above technologies are fairly minor while some like I have done some extensive work like 
+Note that some of my knowledge of the above technologies are fairly minor while some of them I have done some extensive work like
 Go and JavaScript.
 
 To be continued....
@@ -97,6 +98,7 @@ of tasks that I will create:
 - [ ] [Clojure](clojure)
 - [ ] [Julia](julia)
 - [ ] [Testing](testing)
+- [ ] [Projects] (projects)
 
 The above list will contain information about the particular experience and knowledge around those knowledges. This
 will include what level of experience and in which work related job that I was using that knowledge.  The list also
