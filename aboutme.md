@@ -37,11 +37,16 @@ I have been able to produce in the past.
 # Conclusion
 
 I'd like to conclude that you will find areas of this web site that will contain _TODO_ entries that will be populated in the near future.  As
-with any effort needed to create a web site.  The main task will be rewriting and reworking of the contents.  This is something that will become
-a continuous set of changes that will be part of this process.  It is hoped that sooner rather than later these changes will become less frequent
-and that those changes will only be accounted by the newly added pages.  That being said, I do hope that will enjoy what you see and that you get
-something from this endeavor.
+with any effort needed to create a web site, the main task will be rewriting and reworking of the contents.  This is something that will become
+part of this process.  It is hoped that sooner rather than later these changes will become less frequent and that those changes will only be
+accounted by the newly added pages.  That being said, I do hope that you will enjoy what you see and that you get something from this endeavor.
 
 Thanks for coming along,
 
 Claudio
+
+{% comment %}
+Local Variables:
+backup-inhibited: t
+End:
+{% endcomment %}
