@@ -98,7 +98,7 @@ of tasks that I will create:
 - [ ] [Clojure](clojure)
 - [ ] [Julia](julia)
 - [ ] [Testing](testing)
-- [ ] [Projects] (projects)
+- [ ] [Projects](projects)
 
 The above list will contain information about the particular experience and knowledge around those knowledges. This
 will include what level of experience and in which work related job that I was using that knowledge.  The list also
