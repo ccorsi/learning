@@ -100,11 +100,11 @@ of tasks that I will create:
 - [ ] [Testing](testing)
 - [ ] [Projects](projects)
 
-The above list will contain information about the particular experience and knowledge around those knowledges. This
-will include what level of experience and in which work related job that I was using that knowledge.  The list also
-includes knowledge that was not necessarily applied within a work environment but is something that I have found of
-interest that I also hope to be able to use in the future.  For example, I have become interested in Machine 
-Learning recently and I am looking for oppurtunities to apply this knowledge within a working environment.
+The above list will contain information about the particular experience and knowledge around those topics. This
+will include what level of experience and in which work related job I used that knowledge.  The list also includes
+knowledge that was not necessarily applied within a work environment but is something that I have found of
+interest and hope to be able to use in the future.  For example, I have become interested in Machine Learning
+recently and I am looking for oppurtunities to apply this knowledge within a working environment.
 
 {% comment %}
 Local Variables:
