@@ -8,7 +8,25 @@ subtitle: The Things I Do For Fun
 
 This page contains information about the different Open Source Projects that I have on my 
 <a href="https://github.com/ccorsi?tab=repositories" target="_blank">GitHub</a>. and
-<a href="https://replit.com/@ccorsi" target="_blank">ReplIt</a> accounts.
+<a href="https://replit.com/@ccorsi" target="_blank">ReplIt</a> accounts.  I will be
+listing and describing each of these different projects.  As part of this information, I
+will describe the different projects that I have provided some fixes for those projects.
+Let me begin by listing the different projects that I have developed.
+
+| Project | Description | Language |
+| --------- | -------- | -------- |
+| [menucli](https://github.com/ccorsi/menucli) | Command Line Menu | Python  |
+| [contract](https://github.com/ccorsi/contract) | Contract decorator used with methods and classes | Python |
+| [annotation-cli](https://github.com/ccorsi/annotation-cli) | Command line interface using annotations | Java |
+| [broker-service-runner](https://github.com/ccorsi/broker-service-runner) | Tool used to create different testing topologies for ActiveMQ | Java |
+| [activemq-producers](https://github.com/ccorsi/activemq-producers) | Tool used to create ActiveMQ producer tests | Java |
+| [activemq-consumers](https://github.com/ccorsi/activemq-consumers) | Tool used to create ActiveMQ consumer tests | Java |
+| [process-ipc-tools](https://github.com/ccorsi/process-ipc-tools) | Tool used to start a java application within its own process | Java |
+| [net-proc-comm-tool](https://github.com/ccorsi/net-proc-comm-tool) | Simple framework that allows for inter process communication | Java |
+| [plogger](https://github.com/ccorsi/learning/tree/plogger) | Instrument tool that logs method parameters | Java |
+| [python-machine-learning](https://github.com/ccorsi/learning/tree/python-machine-learning) | Implementation of [Python Machine Learning](https://www.amazon.com/Python-Machine-Learning-scikit-learn-TensorFlow/dp/1787125939) book | Python |
+
+
 
 {% comment %}
 
