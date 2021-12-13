@@ -24,7 +24,7 @@ Let me begin by listing the different projects that I have developed.
 | [process-ipc-tools](https://github.com/ccorsi/process-ipc-tools) | Tool used to start a java application within its own process | Java |
 | [net-proc-comm-tool](https://github.com/ccorsi/net-proc-comm-tool) | Simple framework that allows for inter process communication | Java |
 | [plogger](https://github.com/ccorsi/learning/tree/plogger) | Instrument tool that logs method parameters | Java |
-| [python-machine-learning](https://github.com/ccorsi/learning/tree/python-machine-learning) | Implementation of [Python Machine Learning](https://www.amazon.com/Python-Machine-Learning-scikit-learn-TensorFlow/dp/1787125939) book | Python |
+| [python-machine-learning](https://github.com/ccorsi/learning/tree/python-machine-learning) | Implementation of [Python Machine Learning](https://www.packtpub.com/product/python-machine-learning-third-edition/9781789955750) book | Python |
 
 
 
