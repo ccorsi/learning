@@ -72,8 +72,8 @@ like Windows and Linux.  While this is only a small sample of this information.
 
 # More to Come...
 
-Since, this is a work in progress and you might want to know more about me since there is more say.  Here is a list
-of tasks that I will create:
+Since, this is a work in progress and you might want to know more about me since there is more say.  Here is an initial list
+of tasks that need to get done:
 
 - [ ] [C/C++](c-cpp)
 - [ ] [Python](python)

@@ -1,19 +1,33 @@
 [
-  { 
+  {
      "quote":
-     [ 
+     [
 	"One often meets his destiny on the road he takes to avoid it."
      ],
     "author": "Master Oogway"
   },
-  { 
+  {
      "quote":
-     [ 
+     [
 	"The eternal mystery of the world is its comprehensibility."
      ],
     "author": "Albert Einstein"
   },
-  { 
+  {
+     "quote":
+     [
+	"The most exciting phrase to hear in science, the one that heralds new discoveries, is not `Eurika!` but `That's funny...`"
+     ],
+    "author": "Isaac Asimov"
+  },
+  {
+     "quote":
+     [
+	"Tell them, of course, how things really are."
+     ],
+    "author": "Niels Bohr"
+  },
+  {
     "quote":
     [
 	"To live without evil belongs only to the gods."
