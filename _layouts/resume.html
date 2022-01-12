@@ -4,7 +4,7 @@ layout: base
 
 {% include header.html type="page" %}
 
-<div class="container-lg" role="main">
+<div class="{% if page.page-width %} {%case page.page-width %} {% when "md", "sm", "xl", "xxl" %} conatiner-{{- page.page-width -}} {% else %} container-lg {% else %} container-lg {% endif %}" role="main">
   <div class="row">
     <div class="col">
       <div class="before-content">

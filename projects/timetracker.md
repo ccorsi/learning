@@ -1,8 +1,8 @@
 ---
-layout: page
+layout: resume
 title: Time Tracker
 subtitle: Browser Plugin
-full-width: true
+page-width: md
 ---
 
 This plugin was developed to be able to track the amount of time that someone spends on a given web site.  This information
