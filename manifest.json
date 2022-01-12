@@ -1,0 +1,34 @@
+{
+    "manifest_version": 2,
+    "name": "Web Site Time Tracker",
+    "version": "1.0",
+    "author": "Claudio Corsi",
+
+    "description": "Tool used to track the amount of time spent on active web sites.",
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "clcorsi@yahoo.com"
+        }
+    },
+
+    "icons": {
+        "48": "icons/timelapse-48.png",
+        "96": "icons/timelapse-96.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "js": ["timetracker.js"]
+        }
+    ],
+
+    "background": {
+        "scripts": ["background-timetracker.js"]
+    },
+
+    "permissions": [
+        "notifications"
+    ]
+}
