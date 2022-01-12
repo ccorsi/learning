@@ -1,3 +1,22 @@
+// ==================================================================================================
+//
+// Copyright 2022- Claudio Corsi
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files
+// (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge,
+// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+// THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+//
+// ==================================================================================================
+
 // ====================================================================================================
 // 
 // This is a simple plugin that will track the amount of time that someone is on a given web site.  It
@@ -37,7 +56,7 @@ class Tracker {
         this.total = 0;
         // This is useful in the case that we've opened a new web site within the same window.
         // The focus event is not generated since you are already "focused" within that window. 
-        this.start = new Date().getTime();
+        this.start = new Date();
         console.debug('Tracker: Called the constructor');
     }
 
@@ -48,8 +67,11 @@ class Tracker {
 
     end_event(event) {
         try {
-            let end = new Date().getTime();
-            let current = end - this.start.getTime();
+            let end = new Date();
+            console.debug('Tracker: Called blur event with time: ' + end);
+            // console.debug('Tracker: this.start: ' + this.start);
+            let current = end.getTime() - this.start.getTime();
+            // console.debug('Tracker: this.total: ' + this.total);
             this.total += current;
             console.debug('Tracker: Called blur event with time: ' + end + " with currently elapsed time: " + current + " and total time: " + this.total + " for host: " + window.location.host);
             // Send a message that will be processed by the background process that will then raise a notification.
@@ -64,7 +86,9 @@ class Tracker {
     }
 }
 
+console.debug('Tracker: creating the Tracker object');
 const tracker = new Tracker();
+console.debug('Tracker: created the Tracker object');
 
 // ================================================================================
 // start_event(event)
@@ -77,7 +101,8 @@ const tracker = new Tracker();
 // ================================================================================
 function start_event(event) {
     // This action will override the initial start value only in the case mentioned above
-    tracker.start_event(event);
+    // tracker.start_event(event);
+    log_function_call('start_event', tracker, tracker.start_event, event);
 }
 
 // ================================================================================
@@ -93,7 +118,8 @@ function start_event(event) {
 //
 // ================================================================================
 function end_event(event) {
-    tracker.end_event(event);
+    // tracker.end_event(event);
+    log_function_call('end_event', tracker, tracker.end_event, event);
 }
 
 // ================================================================================
@@ -106,14 +132,19 @@ function end_event(event) {
 // ================================================================================
 function beforeunload_event(event) {
     // console.log('Called beforeunloaded event: ' + event);
-    tracker.close_event(event);
+    // tracker.close_event(event);
+    log_function_call('close_event', tracker, tracker.close_event, event);
 }
 
 try {
     // Add tracker events for the onfocus, onblur and onclose events.
+    console.debug('Tracker: Added the event listerners');
     window.addEventListener("focus", start_event);
+    console.debug('Tracker: Added the focus event listener');
     window.addEventListener("blur", end_event);
+    console.debug('Tracker: Added the blur event listener');
     window.addEventListener("beforeunload", beforeunload_event);
+    console.debug('Tracker: Added the beforeunload event listener');
 } catch(error) {
     console.error('An exception was raised when adding event listerns with exception: ' + error);
 }
