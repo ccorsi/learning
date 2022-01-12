@@ -16,6 +16,8 @@ author: Claudio Corsi
 navbar-links:
   About Me: "aboutme"
   Work Experience: "/resume"
+  Projects:
+    - Time Tracking Plugin: "/projects/timetracker"
   Resources:
     - Beautiful Jekyll: "https://beautifuljekyll.com"
     - Learn markdown: "https://www.markdowntutorial.com/"
@@ -40,7 +42,7 @@ round-avatar: true
 # Select the social network links that you want to show in the footer.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
-  # replit: ccorsi
+  # replit: ccorsi -- no icon associated with replit
   email: "clcorsi@yahoo.com"
   rss: false  # remove this line if you don't want to show an RSS link at the bottom
     # facebook: deanattali
