@@ -12,6 +12,9 @@ Gemfile.lock
 
 beautiful-jekyll-theme-*.gem
 
+# do not ignore jekyll cache directory
+.jekyll-cache
+
 # do not include any emacs backup files.
 *~
 

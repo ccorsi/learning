@@ -18,9 +18,9 @@ navbar-links:
   Work Experience: "/resume"
   Projects:
     - Time Tracking Plugin: "/projects/timetracker"
-  Resources:
-    - Beautiful Jekyll: "https://beautifuljekyll.com"
-    - Learn markdown: "https://www.markdowntutorial.com/"
+#  Resources:
+#    - Beautiful Jekyll: "https://beautifuljekyll.com"
+#    - Learn markdown: "https://www.markdowntutorial.com/"
   Author's home: "https://ccorsi.github.io/learning/"
 
 # --- Logo --- #

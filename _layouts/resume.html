@@ -6,7 +6,7 @@ layout: base
 
 <div class="{% if page.page-width %} {%case page.page-width %} {% when "md", "sm", "xl", "xxl" %} conatiner-{{- page.page-width -}} {% else %} container-lg {% endcase %} {% else %} container-lg {% endif %}" role="main">
   <div class="row">
-    <div class="col">
+    <div class="{% if page.page-width %} {%case page.page-width %} {% when "md", "sm", "xl", "xxl" %} col-{{- page.page-width -}} {% else %} col-lg {% endcase %} {% else %} col-lg {% endif %}">
       <div class="before-content">
         {% include quotes.html %}
         {% if page.before-content %}
