@@ -11,11 +11,14 @@
 	// given url for the passed element id.
 	function getQuote(url, elm) {
 
+	  console.debug('GetQuote: Inside getQuote call');
 	  let request = new XMLHttpRequest();
 	  request.open('GET', url);
 	  request.responseType = 'json';
 	  request.send();
-	  request.onload = function() {
+	  request.onload = () => {
+
+	     console.debug('GetQuote: the request has completed successfully.');
 
 	     // This method will randomly select a quote and then display it
 	     const quotes = request.response;
@@ -43,10 +46,28 @@
 
 	     elm.append(div);
 
+	     console.debug('GetQuote: applied the quote to the web page.');
+
 	   };
+	   request.onerror = () => {
+	     console.error('GetQuote: An error was received when perform the quotes request.');
+	   };
+	   request.onabort = () => {
+	     console.error('GetQuote: The request was aborted');
+	   };
+	   request.ontimeout = () => {
+	     console.error('GetQuote: The request timed out');
+	   };
+	   request.onloadstart = () => {
+	     console.debug('GetQuote: the request called was started.');
+	   };
+	   request.onloadend = () => {
+	     console.debug('GetQuote: the request called has completed.');
+	   };
+	   console.debug('GetQuote: Exiting getQuote call');
 	};
 
-	getQuote("/learning/assets/data/quotes.json", document.getElementById("quote"));
+	getQuote("{{ "/assets/data/quotes.json" | relative_url }}", document.getElementById("quote"));
 
     </script>
 </div>

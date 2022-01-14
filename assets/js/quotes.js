@@ -29,11 +29,13 @@ function getRandomInt(max) {
 // This method will display a random quote retrieved from the
 // given url for the passed element id.
 function getQuote(url, elm) {
+  console.debug('Inside getQuote call with parameters url: ' + url + ' and element: ' + elm);
   let request = new XMLHttpRequest();
   request.open('GET', url);
   request.responseType = 'json';
   request.send();
   request.onload = function() {
+     console.debug('Inside the getQuote onload callback');
      // This method will randomly select a quote and then display it
      const quotes = request.response;
      const quote = quotes[getRandomInt(quotes.length)];
@@ -53,7 +55,15 @@ function getQuote(url, elm) {
      div.append('"');
      div.append(document.createElement('br'));
      elm.append(div);
+     console.debug('Completed getQuote onload callback');
    };
+  request.onerror = function() {
+    console.error('An error was generated when processing getQuote request.');
+  };
+  request.onprogress = function(event) {
+    console.debug('getQuote request received ' + event.loaded + ' of data for the current total: ' + event.total);
+  };
+  console.debug('Exiting the getQuote call');
 };
 
 /*
