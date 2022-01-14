@@ -19,9 +19,21 @@ server, Tomcat, Jetty and IIS.
 
 ## Apache HTTP Server
 
+While Apache HTTP Server is one of the most popular web server in the world.  My experience with this product has been
+limited to host test results access from our products unit and system tests.  This need came about because the unit and
+system tests where not kept beyond the next test run.  This required that I take of the test results that also included
+logs from one or more product runs and place them within the network where the Apache HTTP Server was hosting.
+
 ## Tomcat
 
+The Tomcat web server is one of the products that I have used the most within a work environment.  This product was used
+to test our integrations of our product with respect to products that used the Servlets and/or Jsp features of Tomcat.
+
 ## Jetty
+
+The Jetty web server was also used extensively within the same context as the Tomcat web server.  I used this product to
+insure that what worked with Tomcat was also working with Jetty.  The value of this product was that I was able to gain
+more confidence with our integration of our product with the Servlet and Jsp specifications.
 
 ## IIS
 
@@ -35,19 +47,40 @@ servers next.
 
 # Application Servers
 
+The following sections will discuss my experience using the different application servers that I had to use within a
+working environment.
+
 ## Oracle WebLogic Application Server
+
+Oracle's WebLogic Application Server was one of the first application servers that I had to learn and use within a
+working environment.  I needed to know how to use the application server different services.  These include the use of
+Servlets and Enterprise JavaBeans.
 
 ## IBM WebSphere Application Server
 
+IBM WebSphere Application Server is another product that I needed to understand how to use Servlets and Enterprise JavaBeans.
+
 ## JBoss Application Server
+
+JBoss Application Server is another application server that I needed to understand how to use Servlets and Enterprise JavaBeans.
 
 ## GlassFish Application Server
 
+The GlassFish application server was something that I have used within a working environment.  It is not a product that
+I used as often as the WebLogic Application Server and the WebSphere Application Server.  This was based on the fact
+that this application server was not something that our customers would use to develop and deploy their products on.  It
+basically became another tools to test our product against.  The main advantage of this product is that it is the
+reference implementation of the Java Enterprise Specifications.  This was then used to insure that our products was
+still functioning correctly with the newer releases of the specifications.  It would give us a chance to enhance our
+product with the new features that will be implemented in the WebLogic Applcation Server and WebSphere Application
+Server.
+
 # Conclusion
 
-While I've gain knowledge about many different web and application servers, this knowledge was mainly acquired within a
+While I've gain knowledge with many different web and application servers, this knowledge was mainly acquired within a
 working environment.  Though this knowledge is not extensive because of the kind of work that I was doing.  It
-nonetheless required that I needed to learn how to integrate my product within these different servers.
+nonetheless required that I learned how to integrate my product within these different servers.  This effort required
+that I understand the internal aspects of the different products.
 
 
 {% comment %}
