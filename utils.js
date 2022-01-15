@@ -26,6 +26,11 @@
 //
 // ==================================================================================================
 
+// The following constant definitions are the port names used for the connection based messaging interaction
+// between the content, background and control window.
+
+const backgroundTrackerPortName = 'background-tracker-port';
+
 // ================================================================================
 // send_notification(title, message)
 //      title: title passed to the notification create method call
@@ -67,4 +72,53 @@ function log_function_call(name, obj, func, event) {
     } finally {
         console.debug('Tracker: called the ' + name + ' function.');
     }
+}
+
+function format_time(time) {
+    console.debug('Formating time: ' + time);
+    const millis = time % 1000;
+    // console.debug('Milliseconds: ' + millis);
+    time /= 1000; time = Math.floor(time);
+    // console.debug('Updated time: ' + time);
+    let formatted = '' + millis + 'ms';
+
+    if (time != 0) {
+        const seconds = time % 60;
+        // console.debug('Seconds: ' + seconds);
+        time /= 60; time = Math.floor(time);
+        // console.debug('Updated time: ' + time);
+
+        if (seconds > 0) formatted = '' + seconds + 's ' + formatted;
+    }
+
+    if (time != 0) {
+        const minutes = time % 60;
+        // console.debug('Minutes: ' + minutes);
+        time /= 60; time = Math.floor(time);
+        // console.debug('Updated time: ' + time);
+
+        if (minutes > 0) formatted = '' + minutes + 'm ' + formatted;
+    }
+
+    if (time != 0) {
+        const hours = time % 24;
+        // console.debug('Hours: ' + hours);
+        time /= 24; time = Math.floor(time);
+        // console.debug('Updated time: ' + time);
+
+        if (hours > 0) formatted = '' + hours + 'h ' + formatted;
+    }
+
+    if (time != 0) {
+        const days = time;
+        // console.debug('Days: ' + days);
+
+        formatted = '' + days + 'd ' + formatted;
+    }
+
+    formatted = '"' + formatted + '"';
+
+    console.debug('Returning formatted time: ' + formatted);
+
+    return formatted;
 }

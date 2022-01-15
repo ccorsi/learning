@@ -1,6 +1,6 @@
 // ==================================================================================================
 //
-// Copyright 2022- Claudio Corsi
+// Copyright 2022 Claudio Corsi
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files
 // (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge,
@@ -73,7 +73,8 @@ class Tracker {
             let current = end.getTime() - this.start.getTime();
             // console.debug('Tracker: this.total: ' + this.total);
             this.total += current;
-            console.debug('Tracker: Called blur event with time: ' + end + " with currently elapsed time: " + current + " and total time: " + this.total + " for host: " + window.location.host);
+            console.debug('Tracker: Called blur event with time: ' + end + " with currently elapsed time: " + format_time(current)
+                + " and total time: " + this.total + " for host: " + window.location.host);
             // Send a message that will be processed by the background process that will then raise a notification.
             browser.runtime.sendMessage({"host": window.location.host, "date": this.start, "activity": current});
         } catch(error) {

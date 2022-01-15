@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Web Site Time Tracker",
-    "version": "1.0",
+    "version": "0.4.7",
     "author": "Claudio Corsi",
 
     "description": "Tool used to track the amount of time spent on active web sites.",
@@ -20,12 +20,12 @@
     "content_scripts": [
         {
             "matches": ["*://*/*"],
-            "js": ["timetracker.js"]
+            "js": ["utils.js", "timetracker.js"]
         }
     ],
 
     "background": {
-        "scripts": ["background-timetracker.js"]
+        "scripts": ["utils.js", "background-timetracker.js"]
     },
 
     "permissions": [

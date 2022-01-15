@@ -24,6 +24,50 @@
 //
 // ==============================================================================================================
 
+// Create a new window that will contain the web page time tracker control window
+
+// This is the window id of the web page time tracker control window.  This will be used to send the window messages
+// that are being received from the timetracker content script.  This script will store the contents that are being
+// generated to a local datastore and the control window will be responsible to show the current set of information
+// that the user will want to see displayed.  It can also be used to perform other tasks that the user chooses to 
+// perform.
+
+// We will create a connection based messaging
+
+var backgroundPort = 0;
+
+browser.runtime.onConnect.addListener(function(port) {
+    console.debug('The connection: ' + port + ' was created.');
+    backgroundPort = port;
+    // Listen to the given port for messages that will be stored
+    backgroundPort.addListener(notify);
+});
+
+function oncreate(windowInfo) {
+    console.debug('The Web Page Tinme Tracker Control Window was successfully created: ' + windowInfo.id);
+    console.debug('Window Info: ' + windowInfo);
+}
+
+function onerror(error) {
+    console.error('The Web Page Time Tracker Control Windows generated an error: ' + error);
+}
+
+try {
+    var controlWindow = browser.extension.getURL("timetracker.html");
+
+    var creating = browser.windows.create({
+        url: controlWindow,
+        type: "detached_panel"
+        // Should I consider associating a width and height values for the opening of the new window?
+    });
+
+    creating.then(oncreate, onerror);    
+} catch(error) {
+    console.error('An error was generated when creating the web page time tracker console page: ' + error);
+}
+
+/****************************************************************************************************************************************************/
+
 // Open an indexed database
 
 const timetrackerDBName = 'TimeTrackerDatabase';
@@ -38,8 +82,8 @@ if (window.indexedDB) {
         // log that there was an error opening the datastore and set the openedDataStore to false
         console.error('Unable to open the indexedDB TimeTraceDatabase with error code: ' + request.errorCode);
         openedDataStore = false;
-        send_notification()
         browser.notifications.create("Web Page Tracker DataStore", "The TrackerDataStore was not successfully opened");
+        send_notification("Web Page Tracker DataStore", 'The TrackerDataStore was not successfully opened: ' + event.target.error);
     }
 
     request.onsuccess = function(event) {
@@ -68,6 +112,9 @@ browser.runtime.onMessage.addListener(notify)
 // ==============================================================================================================
 function notify(message) {
 
+    // forward the message to the control panel to update the list
+    backgroundPort.postMessage(message);
+
     const content = "Host: " + message.host + " was viewed for " + message.activity + " on " + message.date;
 
     // Generate a notification about which web page generated some activity information.
@@ -78,20 +125,25 @@ function notify(message) {
        " with accumulated time elapsed: " + message.activity);
 
     if (openedDataStore) {
-        // Only store the times locally if the browser supports the indexedDB datastore mechanism.
-        var txn = timetrackerDB.transaction([timetrackerDBName], 'readwrite', {"durability": "strict"});
+        try {
+            // Only store the times locally if the browser supports the indexedDB datastore mechanism.
+            var txn = timetrackerDB.transaction([timetrackerDBName], 'readwrite', {"durability": "strict"});
 
-        txn.oncomplete = function(event) {
-            // The transaction completed successfully
-            send_notification("Web Page Tracker DataStore", "Successfully completed a indexedDB transaction");
+            txn.oncomplete = function(event) {
+                // The transaction completed successfully
+                send_notification("Web Page Tracker DataStore", "Successfully completed a indexedDB transaction");
+            }
+
+            txn.onerror = function(event) {
+                // An error was encountered when processing this transaction
+                send_notification("Web Page Tracker DataStore", "indexedDB transaction generated an error with code: " + event.errorCode);
+            }
+
+            var objectStore = txn.objectStore(timetrackerDBName);
+        } catch(error) {
+            console.error('Tracker BackGround: Received an exception while processing datastore calls: ' + error);
         }
-
-        txn.onerror = function(event) {
-            // An error was encountered when processing this transaction
-            send_notification("Web Page Tracker DataStore", "indexedDB transaction generated an error with code: " + event.errorCode);
-        }
-
-        var objectStore = txn.objectStore(timetrackerDBName);
-
     }
 }
+ 
+/****************************************************************************************************************************************************/
