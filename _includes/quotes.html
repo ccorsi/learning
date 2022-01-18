@@ -30,7 +30,7 @@
 
 	     quote.quote.forEach(e => {
 	        div.append(e);
-	        div.append(document.createElement('br'));
+	        div.append(' '); // Add a space at the end to avoid concatinating words together.
 	     });
 
 	     elm.append(div);
