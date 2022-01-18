@@ -7,9 +7,9 @@ subtitle: What I know
 # Introduction
 
 This page contains information about my knowledge of the different application servers that I have used within and
-outside of a working environment.  The different type of application servers that I have used ranged from web servers to
+outside of a working environment.  The different type of application servers used range from web servers to
 full fledge application servers.  I will then discuss each type in turn and offer information on when and in what
-capacity that these servers have been used.  I will then discuss my experience of using web servers in the next section.
+capacity these servers have been used.
 
 # Web Servers
 
@@ -58,7 +58,8 @@ Servlets and Enterprise JavaBeans.
 
 ## IBM WebSphere Application Server
 
-IBM WebSphere Application Server is another product that I needed to understand how to use Servlets and Enterprise JavaBeans.
+The IBM WebSphere Application Server is another product that I needed to understand how to use its Servlets and Enterprise
+JavaBeans features.  This also include how to the Jsp implementation works.
 
 ## JBoss Application Server
 

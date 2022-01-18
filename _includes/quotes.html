@@ -23,6 +23,7 @@
 	     // This method will randomly select a quote and then display it
 	     const quotes = request.response;
 	     const quote = quotes[getRandomInt(quotes.length)];
+	     const formatted = quote["formatted"];
 	     var div = document.createElement('div');
 
 	     div.setAttribute('style','text-align: left;');
@@ -30,7 +31,14 @@
 
 	     quote.quote.forEach(e => {
 	        div.append(e);
-	        div.append(' '); // Add a space at the end to avoid concatinating words together.
+		if (formatted) {
+		    // This is the case that the quote is really a poem that needs to be written
+		    // one a different line.
+	            div.append(document.createElement('br'));
+		} else {
+		    // Add a space at the end to avoid concatinating words together.
+	            div.append(' ');
+		}
 	     });
 
 	     elm.append(div);
