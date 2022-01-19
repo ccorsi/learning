@@ -119,9 +119,9 @@ footer-hover-col: "#0085A1"
 # Alternatively, the navbar, footer, and page background can be set to an image
 # instead of colour
 
-#navbar-img: "/assets/img/bgimage.png"
+#navbar-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 #footer-img: "/assets/img/bgimage.png"
-#page-img: "/assets/img/bgimage.png"
+#page-img: "/assets/img/gratisography-empty-train-station-free-stock-photo.jpg"
 
 # Suggest a colour for mobile browsers to use as the browser's theme. This is only supported by a few mobile browsers.
 #mobile-theme-col: "#0085A1"
@@ -212,6 +212,10 @@ date_format: "%B %-d, %Y"
 
 # Facebook App ID
 #fb_app_id: ""
+
+# The following can be used to debug your layouts and whatnot by setting different liquid specific properties
+liquid:
+  error_mode: strict
 
 # --- You don't need to touch anything below here (but you can if you want) --- #
 
