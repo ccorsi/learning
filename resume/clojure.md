@@ -2,11 +2,17 @@
 layout: resume
 title: Clojure
 subtitle: What I know
+ext-js:
+  - href: "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"
+cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 ---
 
 # Introduction
 
 This page contains information about my knowledge of the [Clojure programming language](https://clojure.org).
+
+Here is some LaTex $$\pi \approx 3.14159$$ embedded within this markdown file.
+
 
 {% comment %}
 

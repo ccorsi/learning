@@ -2,6 +2,7 @@
 layout: resume
 title: C/C++ Programming Language
 subtile: What I Learned
+cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 ---
 
 {% comment %}

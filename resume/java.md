@@ -2,6 +2,7 @@
 layout: resume
 title: Java Programming Languange
 subtitle: What I know
+cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 ---
 
 # Introduction

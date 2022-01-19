@@ -2,6 +2,7 @@
 layout: resume
 title: JavaScript Programming Languange
 subtitle: What I know
+cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 ---
 
 # Introduction

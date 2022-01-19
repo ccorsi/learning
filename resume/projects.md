@@ -2,6 +2,7 @@
 layout: resume
 title: Open Source Projects
 subtitle: The Things I Do For Fun
+cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 ---
 
 # Introduction
