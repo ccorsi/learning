@@ -76,7 +76,15 @@ let timetrackerDB;
 
 if (window.indexedDB) {
     // Note that these are all async calls that are performed on the given datastore.
-    var request = window.indexedDB.open(timetrackerDBName, 1);
+    var request = window.indexedDB.open(timetrackerDBName, 2);
+
+    request.onupgradeneeded = function() {
+        // Get a reference to the opened database
+        const db = request.result;
+        console.debug('Creating the ObjectStore: ' + timetrackerDBName);
+        const store = db.createObjectStore(timetrackerDBName, {keypath : 'date'});
+        console.debug("The ObjectStore: " + timetrackerDBName + " has been created");
+    }
 
     request.onerror = function(event) {
         // log that there was an error opening the datastore and set the openedDataStore to false
@@ -127,22 +135,35 @@ function notify(message) {
     if (openedDataStore) {
         try {
             // Only store the times locally if the browser supports the indexedDB datastore mechanism.
-            var txn = timetrackerDB.transaction([timetrackerDBName], 'readwrite', {"durability": "strict"});
+            const txn = timetrackerDB.transaction([timetrackerDBName], 'readwrite', {"durability": "strict"});
 
             txn.oncomplete = function(event) {
                 // The transaction completed successfully
-                send_notification("Web Page Tracker DataStore", "Successfully completed a indexedDB transaction");
+                send_notification("Web Page Tracker DataStore", "Successfully completed a indexedDB transaction for message: { " + message.host +
+                    ", " + message.activity + ", " + message.date + " }");
             }
 
             txn.onerror = function(event) {
                 // An error was encountered when processing this transaction
-                send_notification("Web Page Tracker DataStore", "indexedDB transaction generated an error with code: " + event.errorCode);
+                send_notification("Web Page Tracker DataStore", "indexedDB transaction generated an error with code: " + event.errorCode + " for messsage: { " +
+                    message.host + ", " + message.activity + ", " + message.date + " }");
             }
 
-            var objectStore = txn.objectStore(timetrackerDBName);
+            const store = txn.objectStore(timetrackerDBName);
+
+            // Store the passed entry into the datastore
+            store.put({host: message.host, activity: message.activity, date: message.date});
+
+            txn.oncomplete =  function() {
+                console.debug('Successfully stored the entry: { ' + message.host + ", " + message.activity + ", " + message.date + " }");
+            }
+
         } catch(error) {
             console.error('Tracker BackGround: Received an exception while processing datastore calls: ' + error);
         }
+    } else {
+        send_notification("Web Page Tracker DataStore", "ObjectStore was not initialized for messsage: { " +
+            message.host + ", " + message.activity + ", " + message.date + " }");
     }
 }
  
