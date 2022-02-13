@@ -23,5 +23,6 @@ with Go.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

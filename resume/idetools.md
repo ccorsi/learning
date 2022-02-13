@@ -29,5 +29,6 @@ Mention that I have also use vim as an editor and quick file changes.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

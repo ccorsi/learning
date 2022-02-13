@@ -7,28 +7,34 @@ cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 
 # Introduction
 
-This page contains information about my knowledge of the different application servers that I have used within and
-outside of a working environment.  The different type of application servers used range from web servers to
-full fledge application servers.  I will then discuss each type in turn and offer information on when and in what
-capacity these servers have been used.
+Here I will be discussing my knowledge of the different application servers that I have used in and oute of a
+working environment.  The different type of application servers used range from web servers to full fledge
+application servers.  I will then discuss each type in turn and offer information on when and in what capacity
+those servers have been used.
 
 # Web Servers
 
 The use of web servers has grown throughout the years, the main features of these servers is to manage web activities.
 While there are and have been many products to choose from here. I have had the oppurtunity to work with Apache HTTP
-server, Tomcat, Jetty and IIS.
+server, Tomcat, Jetty and IIS.  I will then disucss my knowledge and experience with these servers.
 
 ## Apache HTTP Server
 
 While Apache HTTP Server is one of the most popular web server in the world.  My experience with this product has been
-limited to host test results access from our products unit and system tests.  This need came about because the unit and
-system tests where not kept beyond the next test run.  This required that I take of the test results that also included
-logs from one or more product runs and place them within the network where the Apache HTTP Server was hosting.
+limited to hosting test results access from our products unit and system tests.  This need came about because our unit
+and system tests where not being kept beyond the next test run.  This required that I take all of the relavent test data
+from one or more product runs and place them within a directory structure that the Apache HTTP Server was hosting.
 
-## Tomcat
+## Apache Tomcat
 
-The Tomcat web server is one of the products that I have used the most within a work environment.  This product was used
-to test our integrations of our product with respect to products that used the Servlets and/or Jsp features of Tomcat.
+The Apache Tomcat web server is one of the products that I have used the most within a work environment.  This product was
+used to test our integrations of our product with respect to Java specifications that the Apache Tomcat server implements.
+This required that I understood how to develop, deploy and run the different services that Apache Tomcat web server
+implements.  This has provided a good foundation of the different Java standards that are being used within the Apache
+Tomcat server.  This includes the implementation and usage of Servlets and JSP.   While this is a small part of what the
+Apache Tomcat server implements, I've had to also understand some of the internal implementations to be able to resolve
+issues with our products integrations with Apache Tomcat server.  Those issues were specific to Apache Tomcat server and
+were no relavent to other servers that implement the same specifications like Jetty.
 
 ## Jetty
 
@@ -77,6 +83,12 @@ still functioning correctly with the newer releases of the specifications.  It w
 product with the new features that will be implemented in the WebLogic Applcation Server and WebSphere Application
 Server.
 
+# Other Types of Servers
+
+While the above web and application servers are most of the servers that I have worked with.  They are not the only types
+of servers that I have worked with.  There are other servers that I have worked with, these include ActiveMQ and ServiveMIX
+for instance.
+
 # Conclusion
 
 While I've gain knowledge with many different web and application servers, this knowledge was mainly acquired within a
@@ -120,5 +132,6 @@ this is something that has been setup by the IT department.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

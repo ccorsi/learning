@@ -22,5 +22,6 @@ also make sense to create a small project that shows what I can do with the lang
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

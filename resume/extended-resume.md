@@ -1,7 +1,7 @@
 ---
 layout: resume
-title: Claudio Corsi
-subtitle: 
+title:
+subtitle:
 css: "/assets/css/resume.css"
 ---
 
@@ -30,20 +30,35 @@ and documenting.
 | :--- | ---: |
 | Riverbed Technology/Aternity LLC | Cambridge, MA |
   
-- Part of the team that implements and maintains the Java and .NET{CORE} instrumentation agents
+- Part of the team that implements and maintains the Java and .NET{CORE} instrumentation agents used for Application Performance Monitoring (APM)
+  - _Java Agent_: Responsible for several part of the different agent features that are used throughout the code.  This included changes within the native layer which is written in C++
+  - _.NET Agent_: Responsilbe for some part of the different agent features that are used throughout the code.  This also included changes within the native layer which is written in C++
 - Initiated, architected and the main implementer of the Java agent new bytecode instrumentation. Replacing the original java bytecode instrumentation logic as part of the next phase of our java agent bytecode manipulation
+  - Replaced all original Java injection code with newly defined Java classes that implemented original injected code features.
+	- This include the porting the original tests to conform to the new mechanism.  The transformed tests were compared to the original test results to insure consistency between the two implementation.
+	- Newly created tests were added that tested the features that where not part of the original code to insure that the injected code was performing as expected.
+  - Replaced original byte code instrumentation code base, (written in C++), that injects the new byte code mechanism which uses the new injected class code
 - Replaced internal process to reduce ClassCircularityError issues
+  - The original code would generate ClassCircularityError issues in certain cases, applied several changes that reduced the prospect of producing this exception
 - Removed internal limitation for adding special instrumentations
+  - Updated the C++ and Java layer to remove the limitation of 64 special instrumentation within our Java agent
 - Worked on implementing several instrumentation features for our Java and .NET{CORE} instrumentation agents
+  - For example, the ability to instrument MangoDB on .NET
 - Enhanced method parameter reporting to be able to pinpoint which field within objects should be recorded
+  - 
 - Implemented and improved concurrency access to several internal structures used by our instrumentation agents
 - Collaborated with the integration of Docker within our product and build process
 - Created, documented and presented major implementations of our instrumentation agent product
+   - Documented and presented the new java agent injection process to the team
+   - Documented and presented the new method paramter reporting features that were added
 - Mentored junior members of the group
 - Interfaced with customers and solution engineers to resolve and improve the use of the product
+    - Worked on several Proof of Concept issues with our solution engineers
+    - Worked with our technacial support engineers to resolve issues with our products that our clients faces
+    - These issues included fixing bugs, clarifying how the code works, suggesting work arounds and in some cases explaining how and why certains issues were caused by third party software
+- Worked with or extended our integration with Spring, JDBC, JMS, EJB, Axis, Netty, Vertx, WebSphere Application Server, Oracle WebLogic Application Server, Tomcat, Jetty, MongoDB and others
 - Converted the Classic Jenkins build process to Jenkins pipeline feature
 - Used Java, C++, C#, Python, Groovy, git, Jenkins, Docker, Ant, Ivy, Maven, Archiva, Nexus and others to develop and support our instrumentation agents for Java and .NET{CORE}
-- Worked with or extended our integration with Spring, JDBC, JMS, EJB, Axis, Netty, Vertx, WebSphere Application Server, Oracle WebLogic Application Server, Tomcat, Jetty, MongoDB and others
   
 | Principal Software Engineer  | 2008 - 2009 |
 | :--- | ---: |
@@ -51,6 +66,7 @@ and documenting.
   
 - Primary developer for the ObjectStore&#174; Java Middle Tier Library (JMTL), a highly scalable middle-tier caching &amp; transaction management system.  Responsibilities included design, implementation, scheduling, mentoring, testing, and documentation
     - _Updated JMTL integration with most prominent EJB servers_ such as Weblogic and JBoss using technologies such as JTA and XAResource
+	- Provided a standard based implementation of one and two phase commit processes for the JTA XAResource implementation
     - _Designed and implemented new features_ in JMTL such as real-time counter updates and run-time management tool
     - _Resolved major bugs_ within the JMTL update of JTA XAResource integration such as inconsistent committing/abort between ObjectStore transactions and application server XAResource transaction callbacks
     - _Assisted  technical support concerning critical issues_ using ObjectStore&#174; JMTL for customers such as NIST

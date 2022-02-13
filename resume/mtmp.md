@@ -24,5 +24,6 @@ can be used.  How I was using this for testing and communication between product
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

@@ -29,5 +29,6 @@ failed to build and run the defined container.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

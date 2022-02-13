@@ -30,5 +30,6 @@ Mention the use of different testing frameworks using different programming lang
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

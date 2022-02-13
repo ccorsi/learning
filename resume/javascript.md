@@ -19,5 +19,6 @@ this within my books project that was performing some simple tasks.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

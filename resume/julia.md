@@ -19,5 +19,6 @@ becoming a language that employers would be interested in.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

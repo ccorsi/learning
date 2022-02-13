@@ -24,5 +24,6 @@ that can then be used as an example of my understanding of the use of the ruby p
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

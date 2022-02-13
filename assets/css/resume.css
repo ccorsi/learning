@@ -1,0 +1,27 @@
+/* The following style will only be used within a table tr element. */
+table {
+  width: 100%;
+}
+
+table tr {
+  border: none!important;
+}
+
+table tr:nth-child(odd) {
+  background-color: #f8f8f8;
+}
+
+table tr:nth-child(even) {
+  background-color: #c0c0c0;
+}
+
+table tr th {
+/*   border: none!important; */
+  background-color: #c0c0c0;
+}
+
+table tr td {
+/*   border: none!important; */
+/*   background-color: #f0f0f0; */
+}
+

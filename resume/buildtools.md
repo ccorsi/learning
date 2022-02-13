@@ -7,7 +7,19 @@ cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 
 # Introduction
 
-This page contains information about my knowledge of different tools used to build and package products.
+Here I will discuss the different development building tools that I have used in and out of a working environment.
+These tools have been mainly used to build products using C/C++ and Java.  There are also some tools that I have used to
+build products using Python that have not been used within a working environent.  In what follows, I will be discussing
+how each of these tools were used in and out of a working environment.
+
+# Make and CMake
+
+The use of make and its other flavors like nmake and cmake is something that I have used throughout my career.  These
+tools have become an essential part of the building and testing of products that I have been involved with.  The earlier
+years of my career required that I understand how to create and update Makefiles.  This was required because at that
+time, we didn't have interactive development tools that could generate the require Makefile targets for you.  The need
+to be able to understand and extend the definitions of Makefiles allowed me to be able to gain knowledge of how to build
+products using these tools.  This has helped me better understand the options that different compilers use to build products
 
 {% comment %}
 
@@ -34,5 +46,6 @@ the required libraries during my build process.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

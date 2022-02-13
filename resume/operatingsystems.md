@@ -32,5 +32,6 @@ The following operating systems are the ones that I learned outside of work.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

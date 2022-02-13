@@ -37,5 +37,6 @@ Do I have any Databases that I would be interested in learning?
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

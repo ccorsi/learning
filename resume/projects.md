@@ -3,6 +3,7 @@ layout: resume
 title: Open Source Projects
 subtitle: The Things I Do For Fun
 cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
+css: "/assets/css/resume.css"
 ---
 
 # Introduction
@@ -16,16 +17,16 @@ Let me begin by listing the different projects that I have developed.
 
 | Project | Description | Language |
 | --------- | -------- | -------- |
-| [menucli](https://github.com/ccorsi/menucli) | Command Line Menu | Python  |
-| [contract](https://github.com/ccorsi/contract) | Contract decorator used with methods and classes | Python |
-| [annotation-cli](https://github.com/ccorsi/annotation-cli) | Command line interface using annotations | Java |
-| [broker-service-runner](https://github.com/ccorsi/broker-service-runner) | Tool used to create different testing topologies for ActiveMQ | Java |
-| [activemq-producers](https://github.com/ccorsi/activemq-producers) | Tool used to create ActiveMQ producer tests | Java |
-| [activemq-consumers](https://github.com/ccorsi/activemq-consumers) | Tool used to create ActiveMQ consumer tests | Java |
-| [process-ipc-tools](https://github.com/ccorsi/process-ipc-tools) | Tool used to start a java application within its own process | Java |
-| [net-proc-comm-tool](https://github.com/ccorsi/net-proc-comm-tool) | Simple framework that allows for inter process communication | Java |
-| [plogger](https://github.com/ccorsi/learning/tree/plogger) | Instrument tool that logs method parameters | Java |
-| [python-machine-learning](https://github.com/ccorsi/learning/tree/python-machine-learning) | Implementation of [Python Machine Learning](https://www.packtpub.com/product/python-machine-learning-third-edition/9781789955750) book | Python |
+| [menucli](https://github.com/ccorsi/menucli){:target="_blank"} | Command Line Menu | Python  |
+| [contract](https://github.com/ccorsi/contract){:target="_blank"} | Contract decorator used with methods and classes | Python |
+| [annotation-cli](https://github.com/ccorsi/annotation-cli){:target="_blank"} | Command line interface using annotations | Java |
+| [broker-service-runner](https://github.com/ccorsi/broker-service-runner){:target="_blank"} | Tool used to create different testing topologies for ActiveMQ | Java |
+| [activemq-producers](https://github.com/ccorsi/activemq-producers){:target="_blank"} | Tool used to create ActiveMQ producer tests | Java |
+| [activemq-consumers](https://github.com/ccorsi/activemq-consumers){:target="_blank"} | Tool used to create ActiveMQ consumer tests | Java |
+| [process-ipc-tools](https://github.com/ccorsi/process-ipc-tools){:target="_blank"} | Tool used to start a java application within its own process | Java |
+| [net-proc-comm-tool](https://github.com/ccorsi/net-proc-comm-tool){:target="_blank"} | Simple framework that allows for inter process communication | Java |
+| [plogger](https://github.com/ccorsi/learning/tree/plogger){:target="_blank"} | Instrument tool that logs method parameters | Java |
+| [python-machine-learning](https://github.com/ccorsi/learning/tree/python-machine-learning){:target="_blank"} | Implementation of [Python Machine Learning](https://www.packtpub.com/product/python-machine-learning-third-edition/9781789955750) book | Python |
 
 
 

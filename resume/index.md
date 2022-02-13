@@ -6,6 +6,7 @@ subtitle: Work Experience
 foo-before-content:
    - "quotes.html"
 cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
+css: "/assets/css/resume.css"
 ---
 
 # Introduction
@@ -17,8 +18,9 @@ during the years that might be useful for those that are interested in what kind
 While this information can be fairly long, I have sectioned out this information within fairly compact pages.  If one is
 only interested in my resume then you have two choices to choose from, you can either look at my [web page](resume) or
 you can download a pdf version of it
-[here](https://raw.githubusercontent.com/ccorsi/learning/docs/assets/pdf/ClaudioCorsiCV.pdf){:target="_blank"}.  Let me
-know explain how the rest of these pages are organized.
+[here](https://raw.githubusercontent.com/ccorsi/learning/docs/assets/pdf/ClaudioCorsiCV.pdf){:target="_blank"}.  If you
+would like to see a more detailed description of my work experience, you can take a look at the following
+[page](extended-resume).  Let me know explain how the rest of these pages are organized.
 
 These set of pages will be divided into pages that are work experience related and self-taught interests.  While these
 can be extensive, I've tried to section them out such that it will be easier for one to look at specific experience that
@@ -110,5 +112,6 @@ recently and I am looking for opportunities to apply this knowledge within a wor
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

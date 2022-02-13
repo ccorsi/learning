@@ -21,5 +21,6 @@ applying those changes without having to shutdown the system.
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}

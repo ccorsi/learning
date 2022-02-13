@@ -19,5 +19,6 @@ different books that I have read and what I would like to continue to learn abou
 {% comment %}
 Local Variables:
 backup-inhibited: t
+turn-on-auto-fill
 End:
 {% endcomment %}
