@@ -177,10 +177,25 @@
     "formatted": true
   },
   {
+     "quote":
+     [
+	"The truth of the matter is that you always know the right thing to do. The hard part is doing it."
+     ],
+    "author": "General Norman Schwarzkopf"
+  },
+  {
     "quote":
     [
 	"To live without evil belongs only to the gods."
     ],
     "author": "Sophocles,Fragments,1,683"
+  },
+  {
+    "quote":
+    [
+	"Nothing is as fatiguing as the continued",
+	"hanging on of an uncompleted task."
+    ],
+    "author": "William James"
   }
 ]

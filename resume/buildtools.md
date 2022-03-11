@@ -7,19 +7,22 @@ cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 
 # Introduction
 
-Here I will discuss the different development building tools that I have used in and out of a working environment.
-These tools have been mainly used to build products using C/C++ and Java.  There are also some tools that I have used to
-build products using Python that have not been used within a working environent.  In what follows, I will be discussing
-how each of these tools were used in and out of a working environment.
+Here I will discuss the different development building tools that I have used in and out of a working environment.  These tools have been mainly used to build
+products using C/C++ and Java.  There are also some tools that I have used to build products using Python that have not been used within a working environent.
+In what follows, I will be discussing how each of these tools were used in and out of a working environment.
 
 # Make and CMake
 
-The use of make and its other flavors like nmake and cmake is something that I have used throughout my career.  These
-tools have become an essential part of the building and testing of products that I have been involved with.  The earlier
-years of my career required that I understand how to create and update Makefiles.  This was required because at that
-time, we didn't have interactive development tools that could generate the require Makefile targets for you.  The need
-to be able to understand and extend the definitions of Makefiles allowed me to be able to gain knowledge of how to build
-products using these tools.  This has helped me better understand the options that different compilers use to build products
+The use of make and its other flavors like nmake and cmake is something that I have used throughout my career.  These tools have become an essential part of the
+building and testing of products that I have been involved with.  The earlier years of my career required that I understand how to create and update Makefiles.
+This was required because at that time, we didn't have interactive development tools that could generate the require Makefile targets for you.  The need to be
+able to understand and extend the definitions of Makefiles allowed me to be able to gain knowledge of how to build products using these tools.  This has helped
+me better understand the options that different compilers use to build products.
+
+While the need to be able to understand how to define Makefiles during the earlier years of my careet.  This need became less of a need throughout my later
+years developing products using C/C++.  The IDE reduce the need to be able to understand how to define and use a Makefile.  This allow me to spend more time
+working on developing the product and less time updating the build process.  Granted this has allowed me to focus more on what needs to be done and less on
+supporting the build process.  Nonetheless, the advent of Visual Studio and other IDE has provided some releaf in this respect.
 
 {% comment %}
 
@@ -44,8 +47,11 @@ the required libraries during my build process.
 {% endcomment %}
 
 {% comment %}
+turn-on-auto-fill
+
 Local Variables:
 backup-inhibited: t
-turn-on-auto-fill
+fill-column: 160
 End:
+
 {% endcomment %}

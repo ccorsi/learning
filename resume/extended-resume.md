@@ -81,7 +81,7 @@ and documenting.
 - Responsible for the technical support, finding and fixing bugs for the ActiveMQ/Message Broker, ServiceMIX/ESB, Camel/Message Router and CXF/Service Framework products
 - Created different patches for ActiveMQ, Camel, karaf and osp4j pax-logging projects that have been applied
 - Helped customers on how to best use the product by giving advice and creating working examples that they can use as a starting point
-- Developed a simple ruby script that has helped improve our front-end services. This has allowed these systems to become stable when prior to this change these systems required constant attention
+- Developed a ruby script that has helped improve our front-end services. This has allowed these systems to become stable when prior to this change these systems required constant attention
 - Lead the bug queue process with engineering
 - Part of the 24/7 support rotation for 24/7 production support for customers
   

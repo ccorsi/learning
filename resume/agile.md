@@ -25,7 +25,7 @@ development.
 I have then read about the different concepts from using TDD, pair programming, FDD, Scrum, Lean Software Development,
 and many other ideas.  I have then taken this knowledge and applied it within a working environment as much as
 possilble.  For instance, I have applied the concept of pair programming as a mentoring and learning process throughout
-me career.  This has also lead me to use the same concept when implementing a new design by discussing this with
+me career.  This has also lead me to use the same concept when implementing a new design by discussing it with
 fellow colleagues.  While I have advocated the concept of TDD by creating software that can be tested in a standalone
 matter.  I've been on teams that have used some of the concepts of Scrum like performing standup meetings and
 retrospectives.  There are also other techniques that I have integrated within my development process that was not
@@ -33,7 +33,7 @@ dependent on anyone.  I have been using the Refactoring process extensively to h
 working on.  The use of this process provided the required steps to generate confidence in me and management that my
 changes are solid.  This was done by creating tests for all of the different features that are being refractored with
 the current code.  Then I would go ahead and refractor the code and insure that the code passes all of the tests that
-were created for the original code.  This is how I have used this technique to be able to improve a product code base.
+were created for the original code.  This is how I have used this technique to improve a product code base.
 
 While the number of techniques associated with agile development is pretty extensive and include different types of
 techniques that are similar yet different.  The ability to be able to use all of these techniques is not realistic but
@@ -93,8 +93,10 @@ The following are a list of agile techniques that I have read about:
 {% endcomment %}
 
 {% comment %}
+
+turn-on-auto-fill
+
 Local Variables:
 backup-inhibited: t
-turn-on-auto-fill
 End:
 {% endcomment %}
