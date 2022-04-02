@@ -49,7 +49,9 @@ function depth-limited-search(initialState, goalTest, depthLimit)
  * @return false If we didn't find the goal
  */
 template<typename E>
-bool dls_r(node<E>& root,E& goal, std::list<E>& path, int depth, std::set<E>& visited = std::set<E>(), std::list<std::pair<node<E>,int>> frontier = std::list<std::pair<node<E>,int>>()) {
+bool dls_r(node<E>& root,E& goal, std::list<E>& path, int depth, std::set<E>& visited = std::set<E>(),
+           std::list<std::pair<node<E>,int> > frontier = std::list<std::pair<node<E>,int> >()) {
+
     // TODO: The following implementation is incomplete and needs to be updated or removed from the source code.
     // check if we've reach the limit of the search
     if (depth < 1) {
@@ -68,7 +70,7 @@ bool dls_r(node<E>& root,E& goal, std::list<E>& path, int depth, std::set<E>& vi
     depth--;
 
     // add the current node edges to the frontier
-    std::list<edge<E>>& edges = current.edges();
+    std::list<edge<E> >& edges = current.edges();
 
     for (auto itr = edges.begin() ; itr != edges.end() ; itr++) {
         // get a reference to the node of this edge
@@ -106,7 +108,7 @@ bool dls_r(node<E>& root,E& goal, std::list<E>& path, int depth, std::set<E>& vi
 template<typename E>
 bool dls(node<E>& root, E& goal, std::list<E>& path, int depth) {
     std::set<E> visited;
-    std::list<std::pair<node<E>,int>> frontier;
+    std::list<std::pair<node<E>,int> > frontier;
     std::map<E,E> parents;
     frontier.push_front(make_pair(root, 1));
     visited.insert(root());

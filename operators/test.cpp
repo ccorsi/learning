@@ -34,7 +34,7 @@ ostream& operator<<(ostream& os, const wrapper<E>& value) {
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
-    set<wrapper<int>> values;
+    set<wrapper<int> > values;
     for(int cnt = 1 ; cnt < 11 ; cnt++)
         values.insert(wrapper<int>(cnt));
     cout << "Values contains " << values.size() << " entries." << endl;

@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
         cout << "It worked." << endl;
     }
 
-    set<node<city>> visited;
+    set<node<city> > visited;
 
     visited.insert(n);
 

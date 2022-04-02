@@ -157,7 +157,7 @@ std::ostream& operator<<(std::ostream& os, const wrapper<E,K>& w) {
  * @tparam _Container defaults to std::vector<_Type>
  * @tparam _Pr defaults to std::less<typename _Container::value_type>
  */
-template<class _Type, class _Container = std::vector<_Type>, class _Pr = std::less<typename _Container::value_type>>
+template<class _Type, class _Container = std::vector<_Type>, class _Pr = std::less<typename _Container::value_type> >
 class priority_queue_ex : public std::priority_queue<_Type, _Container, _Pr> {
 public:
     priority_queue_ex() = default;
@@ -188,7 +188,7 @@ public:
  * @tparam _Container 
  * @tparam std::less<typename _Container::value_type> 
  */
-// template<class _Type, class _Container = std::vector<_Type>, class _Pr = std::less<typename _Container::value_type>>
+// template<class _Type, class _Container = std::vector<_Type>, class _Pr = std::less<typename _Container::value_type> >
 // class priority_queue {
 // public:
 //     using value_type      = typename _Container::value_type;

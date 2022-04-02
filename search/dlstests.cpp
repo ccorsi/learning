@@ -18,7 +18,7 @@ node<string> create_string_node(string& e) {
 }
 
 TEST(DepthLimitedSearchTestSuite, SimpleDepthLimitedSearchTest) {
-    list<array<string,2>> elements = {
+    list<array<string,2> > elements = {
         { string("a"), string("b") },
         { string("a"), string("c") },
         { string("b"), string("c") },
@@ -28,7 +28,7 @@ TEST(DepthLimitedSearchTestSuite, SimpleDepthLimitedSearchTest) {
         { "e", "g" },
     };
 
-    map<string,node<string>> valueMap;
+    map<string,node<string> > valueMap;
 
     create_graph_map(elements, valueMap, create_string_node);
 
@@ -66,7 +66,7 @@ TEST(DepthLimitedSearchTestSuite, SimpleDepthLimitedSearchTest) {
 
 
 TEST(DepthLimitedSearchTestSuite, LimitReachedDepthLimitedSearchTest) {
-    list<array<string,2>> elements = {
+    list<array<string,2> > elements = {
         { string("a"), string("b") },
         { string("a"), string("c") },
         { string("b"), string("c") },
@@ -76,7 +76,7 @@ TEST(DepthLimitedSearchTestSuite, LimitReachedDepthLimitedSearchTest) {
         { "e", "g" },
     };
 
-    map<string,node<string>> valueMap;
+    map<string,node<string> > valueMap;
 
     create_graph_map(elements, valueMap, create_string_node);
 

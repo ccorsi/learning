@@ -51,7 +51,7 @@ function breath-first-search(initialState, goalTest)
  * @return false 
  */
 template<typename E>
-bool bfs(node<E>& current, E& goal, std::list<E>& path, std::list<node<E>>& frontier = std::list<node<E>>(), std::set<E>& visited = std::set<E>()) {
+bool bfs(node<E>& current, E& goal, std::list<E>& path, std::list<node<E> >& frontier = std::list<node<E> >(), std::set<E>& visited = std::set<E>()) {
     // check if the current not is the goal
     if (goal == current()) {
         // we are done, add the current node element to the path and return
@@ -64,7 +64,7 @@ bool bfs(node<E>& current, E& goal, std::list<E>& path, std::list<node<E>>& fron
     visited.insert(current());
 
     // get a reference to the edges
-    const std::list<edge<E>>& edges = current.edges();
+    const std::list<edge<E> >& edges = current.edges();
 
     // add the current node edges to the fronrier
     for( auto itr = edges.begin() ; itr != edges.end() ; itr++) {
@@ -91,7 +91,7 @@ bool bfs_i(node<E>& root, E& goal, std::list<E>& path) {
     std::set<E>& visited;
     // This contains the nodes that are going to be visited/processed next
     // NOTE: this is going to be used like a queue
-    std::list<node<E>&> frontier;
+    std::list<node<E>& > frontier;
     // Add the root element to the frontier container
     frontier.push_back(root);
     // The following will produce a reference between the current and edge nodes

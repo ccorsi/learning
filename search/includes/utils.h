@@ -23,7 +23,7 @@
  * @param create_node This is used to create the node assiciated with the passed elements.
  */
 template<typename E, typename V>
-void create_graph_map(std::list<std::array<E,2>>& elements, std::map<E,node<V>>& valueMap, node<V> (*create_node)(E&)) {
+void create_graph_map(std::list<std::array<E,2> >& elements, std::map<E,node<V> >& valueMap, node<V> (*create_node)(E&)) {
     // iterate through all of the edges that were defined and provide the different connections
     // NOTE: Our list in this case will only contain two nodes per entry and each will be pointing to each other.
     for(auto itr = elements.begin() ; itr != elements.end() ; itr++) {

@@ -25,7 +25,7 @@ class edge;
 template <typename E>
 class node {
     E m_element;
-    std::list<edge<E>> m_edges;
+    std::list<edge<E> > m_edges;
 
 public:
     // required default constructor
@@ -41,14 +41,14 @@ public:
     // We need to add edges associated with a given node
     void add_edge(edge<E>& e) { m_edges.push_back(e); }
     // Get a reference to this nodes edges
-    const std::list<edge<E>>& edges() { return m_edges; }
+    const std::list<edge<E> >& edges() { return m_edges; }
     // comparison operator
     bool operator()(const node<E>& other) const { return this->m_element < other.m_element; }
     // this is the friend operator used to compare two elements
     // friend bool operator<(const node<E>& lhs, const node<E>& rhs);
     // this class method will work as well as the above.
     bool operator<(const node<E>& rhs) const { return this->operator()(rhs); }
-    std::ostream& operator<<(std::ostream& os) { cout << this->m_element;  return os; }
+    std::ostream& operator<<(std::ostream& os) { os << this->m_element;  return os; }
 };
 
 template<typename E>

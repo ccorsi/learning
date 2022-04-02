@@ -15,7 +15,7 @@ node<string> create_string_node(string& e) {
 }
 
 TEST(IterativeDepthSearchTestSuite, SimpleIterativeDepthSearchTest) {
-    list<array<string,2>> elements = {
+    list<array<string,2> > elements = {
         { string("a"), string("b") },
         { string("a"), string("c") },
         { string("b"), string("c") },
@@ -25,7 +25,7 @@ TEST(IterativeDepthSearchTestSuite, SimpleIterativeDepthSearchTest) {
         { "e", "g" },
     };
 
-    map<string,node<string>> valueMap;
+    map<string,node<string> > valueMap;
 
     create_graph_map(elements, valueMap, create_string_node);
 
@@ -43,7 +43,7 @@ TEST(IterativeDepthSearchTestSuite, SimpleIterativeDepthSearchTest) {
 }
 
 TEST(IterativeDepthSearchTestSuite, IterativeDepthSearchNoPathFoundTest) {
-    list<array<string,2>> elements = {
+    list<array<string,2> > elements = {
         { string("a"), string("b") },
         { string("a"), string("c") },
         { string("b"), string("c") },
@@ -53,7 +53,7 @@ TEST(IterativeDepthSearchTestSuite, IterativeDepthSearchNoPathFoundTest) {
         { "e", "g" },
     };
 
-    map<string,node<string>> valueMap;
+    map<string,node<string> > valueMap;
 
     create_graph_map(elements, valueMap, create_string_node);
 

@@ -22,7 +22,7 @@ public:
     ~test_context() { cout << "Completed test: " << m_name << endl; }
 };
 
-bool run_test(string& testname, string& source, string& destination, map<string,node<city>>& cities, list<city>& expected) {
+bool run_test(string& testname, string& source, string& destination, map<string,node<city> >& cities, list<city>& expected) {
     // used to display test information
     test_context c(testname);
 
@@ -95,7 +95,7 @@ bool run_test(string& testname, string& source, string& destination, map<string,
     return false;
 }
 
-bool run_test_i(string& testname, string& source, string& destination, map<string,node<city>>& cities, list<city>& expected) {
+bool run_test_i(string& testname, string& source, string& destination, map<string,node<city> >& cities, list<city>& expected) {
     // used to display test information
     test_context c(testname);
 
@@ -135,7 +135,7 @@ bool run_test_i(string& testname, string& source, string& destination, map<strin
     return false;
 }
 
-void create_test_data(list<list<string>>& paths, map<string,node<city>>& cities) {
+void create_test_data(list<list<string> >& paths, map<string,node<city>>& cities) {
     // iterate through all of the edges that were defined and provide the different connections
     // NOTE: Our list in this case will only contain two nodes per entry and each will be pointing to each other.
     for(auto itr = paths.begin() ; itr != paths.end() ; itr++) {
@@ -163,7 +163,7 @@ void create_test_data(list<list<string>>& paths, map<string,node<city>>& cities)
 }
 
 template<typename E, typename V>
-void create_test_data(list<list<E>>& elements, map<string,node<V>>& valueMap, node<V> (*create_node)(E&)) {
+void create_test_data(list<list<E> >& elements, map<string,node<V> >& valueMap, node<V> (*create_node)(E&)) {
     // iterate through all of the edges that were defined and provide the different connections
     // NOTE: Our list in this case will only contain two nodes per entry and each will be pointing to each other.
     for(auto itr = elements.begin() ; itr != elements.end() ; itr++) {
@@ -199,12 +199,12 @@ struct stringNode {
 };
 
 void create_string_graph() {
-    list<list<string>> names = {
+    list<list<string> > names = {
         {"a", "b"},
         {"a", "c"},
         {"b", "c"},
     };
-    map<string,node<string>> namesMap;
+    map<string,node<string> > namesMap;
 
     create_test_data(names, namesMap, create_string_node);
 
@@ -230,7 +230,7 @@ void test_one() {
     Montreal,Buffalo
 */
 
-    list<list<string>> paths = {
+    list<list<string> > paths = {
         {"Boston",     "New York"},
         {"Boston",     "Buffalo"},
         {"Buffalo",    "Montreal"},
@@ -238,7 +238,7 @@ void test_one() {
         {"Washington", "Philadelphia"},
     };
 
-    map<string,node<city>> cities;
+    map<string,node<city> > cities;
 
     create_test_data(paths, cities);
 

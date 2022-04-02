@@ -52,7 +52,7 @@ function depth-first-search(initialState, goalTest)
  * @return false unable to find the goal
  */
 template<typename E>
-bool dfs_r(node<E>& current, node<E>& goal, std::list<E>& path, std::set<E> visited = std::set<E>(), std::list<node<E>> frontier = std::list<node<E>>()) {
+bool dfs_r(node<E>& current, node<E>& goal, std::list<E>& path, std::set<E> visited = std::set<E>(), std::list<node<E> > frontier = std::list<node<E> >()) {
     // Check if the current node is the goal we are searching for
     if (goal == current) {
         DEBUGMSHG("found path");
@@ -62,7 +62,7 @@ bool dfs_r(node<E>& current, node<E>& goal, std::list<E>& path, std::set<E> visi
     }
 
     // add the current node edges to the frontier
-    std::list<edge<E>>& edges = current.edges();
+    std::list<edge<E> >& edges = current.edges();
 
     for (auto itr = edges.begin() ; itr != edges.end() ; itr++) {
         // get a reference to the node of this edge
@@ -98,7 +98,7 @@ bool dfs_r(node<E>& current, node<E>& goal, std::list<E>& path, std::set<E> visi
 template<typename E>
 bool dfs_i(node<E>& root, node<E>& goal, std::list<E>& path) {
     std::set<E> visited;
-    std::list<node<E>> frontier;
+    std::list<node<E> > frontier;
     std::map<E,E> parents;
     frontier.push_front(root);
 

@@ -33,7 +33,7 @@ typedef struct city_data city_data;
  * @param distances This will be populated with the information that was passed by the data
  * @param cities This will be populated with the information that was passed by the data
  */
-void create_graph(vector<city_data>& data, map<string,map<string,int>>& distances, list<array<string,2>>& cities) {
+void create_graph(vector<city_data>& data, map<string,map<string,int> >& distances, list<array<string,2> >& cities) {
     // populate the map so that we can use this information to determine the different distances between the two cities.
     for(auto itr = data.begin() ; itr != data.end() ; itr++) {
         auto data = *itr;
@@ -53,14 +53,14 @@ node<city> create_city_node(string& name) {
 
 class cmp {
 private:
-    map<string,map<string,int>>& m_distances;
+    map<string,map<string,int> >& m_distances;
 public:
-    cmp(map<string,map<string,int>>& distances) : m_distances(distances) {}
+    cmp(map<string,map<string,int> >& distances) : m_distances(distances) {}
 };
 
 TEST(UniformCostSearchTestSuite, SimpleUniformCostSearchTest) {
-    map<string,map<string,int>> distances;
-    list<array<string,2>> cities;
+    map<string,map<string,int> > distances;
+    list<array<string,2> > cities;
     vector<city_data> data = {
         { "Duluth", "Sault Ste. Marie", 110 },
         { "Sault Ste. Marie", "Toronto", 90 },
@@ -73,7 +73,7 @@ TEST(UniformCostSearchTestSuite, SimpleUniformCostSearchTest) {
 
     node<city> root;
     list<city> path;
-    map<string,node<city>> valueMap;
+    map<string,node<city> > valueMap;
 
     create_graph_map(cities, valueMap, create_city_node);
 
@@ -108,7 +108,7 @@ typedef struct key_data key_data;
 TEST(PriorityQueueExtendedTestSuite, PriorityQueueExtendedTest) {
     vector<string> data = { "foo", "bar", "joe", "tony" };
     vector<int> keys = { 11, 6, 88, 13 };
-    vector<node<string>> nodes;
+    vector<node<string> > nodes;
     priority_queue_ex<wrapper<string,int>> pq;
 
     auto keyItr = keys.begin();
