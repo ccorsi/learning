@@ -1,0 +1,21 @@
+build
+
+# Windows specific generated cmake build files ignored
+*.vcxproj
+*.vcxproj.filters
+*.sln
+
+# cmake generated specific files ignored
+CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+cmake_install.cmake
+CMakeFiles
+*/Testing
+CTestTestfile.cmake
+DartConfiguration.tcl
+*_include.cmake
+
+# googletest dependency packages
+_deps
+

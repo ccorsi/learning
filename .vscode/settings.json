@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "functional": "cpp",
+        "ostream": "cpp",
+        "list": "cpp",
+        "utility": "cpp",
+        "map": "cpp",
+        "queue": "cpp",
+        "algorithm": "cpp",
+        "vector": "cpp"
+    }
+}

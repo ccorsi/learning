@@ -1,0 +1,5 @@
+Boston,Montreal
+Boston,New York,Buffalo
+New York,Boston
+Buffalo,New York,Boston,Montreal
+Montreal,Buffalo

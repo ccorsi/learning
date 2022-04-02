@@ -1,0 +1,6 @@
+/*
+    As per the CMake documentation, it seems that it is better to create a configuration file that can then be preprocessed
+    by CMake which would then be used by the build process.
+*/
+// #cmakedefine _OS_TYPE_ENABLE_
+#cmakedefine _OS_TYPE_ "@CMAKE_SYSTEM_NAME@"
