@@ -6,12 +6,14 @@ on:
   pull_request:
     branches: [ cpp ]
 
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
-
 jobs:
   build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    # runs-on: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: [ ubuntu-latest ]
+
     steps:
       #-uses: actions/cache@v1   <===== YOU DO NOT NEED THIS!
 
@@ -66,6 +68,7 @@ jobs:
           buildPreset: 'ninja-multi-vcpkg'
     
     #env:
-    #  VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }} # [OPTIONAL] Define the vcpkg's triplet 
+    #  VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
+    # [OPTIONAL] Define the vcpkg's triplet 
     # you want to enforce, otherwise the default one for the hosting system will be 
     # automatically choosen (x64 is the default on all platforms,  e.g. x64-osx).
