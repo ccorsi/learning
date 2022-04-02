@@ -5,8 +5,6 @@
 #include <list>
 #include <set>
 
-#include <direct.h>
-
 #include "graph.h"
 #include "dfs.h"
 #include "city.h"
