@@ -20,6 +20,5 @@ this being used within a work environment.
 {% comment %}
 Local Variables:
 backup-inhibited: t
-turn-on-auto-fill
 End:
 {% endcomment %}
