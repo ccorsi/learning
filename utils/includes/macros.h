@@ -24,8 +24,10 @@
 
 #if __cpp_constexpr >= 200704L
     #define CONSTEXPR11 constexpr
+    #define CONSTEXPR constexpr
 #else
     #define CONSTEXPR11
+    #define CONSTEXPR
 #endif
 
 #if __cpp_constexpr >= 201304L

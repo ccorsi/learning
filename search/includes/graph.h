@@ -30,6 +30,8 @@ class node {
 public:
     // required default constructor
     node() {}
+    // simple ctor that is passed an element of type E
+    // node(E element) : m_element(element) {}
     // simple constructor used to associate node with an element
     node(E& element) : m_element(element) {}
     // required default copy constructor
@@ -39,7 +41,7 @@ public:
     // This is used for comparision of the nodes
     bool operator==(const node& other) { return m_element == other.m_element; }
     // We need to add edges associated with a given node
-    void add_edge(edge<E>& e) { m_edges.push_back(e); }
+    void add_edge(const edge<E>& e) { m_edges.push_back(e); }
     // Get a reference to this nodes edges
     const std::list<edge<E> >& edges() { return m_edges; }
     // comparison operator
@@ -47,7 +49,8 @@ public:
     // this is the friend operator used to compare two elements
     // friend bool operator<(const node<E>& lhs, const node<E>& rhs);
     // this class method will work as well as the above.
-    bool operator<(const node<E>& rhs) const { return this->operator()(rhs); }
+    bool operator<(const node<E>& rhs) const { return this->m_element < rhs.m_element; }
+    bool operator>(const node<E>& rhs) const { return this->m_element > rhs.m_element; }
     std::ostream& operator<<(std::ostream& os) { os << this->m_element;  return os; }
 };
 

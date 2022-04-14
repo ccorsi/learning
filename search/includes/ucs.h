@@ -39,10 +39,10 @@ function uniform-cost-search(initialState, goalTest)
 #include <list>
 #include <map>
 #include <set>
-#include <queue>
 
 #include "macros.h"
 #include "graph.h"
+#include "pr_queue.h"
 
 /**
  * @brief The class is used to wrap a node and its key that is used by the priority queue
@@ -93,6 +93,9 @@ public:
     
     // This is used by the priority queue to sort the entries within the container
     CONSTEXPR14 bool operator<(const wrapper<E,K>& other) const { return this->m_key < other.m_key; }
+
+    // This is used by the priority queue to sort the entries within the container
+    CONSTEXPR14 bool operator>(const wrapper<E,K>& other) const { return this->m_key > other.m_key; }
     
     // The next four operators are used to update the key value whenever this wrapper is found within the priority queue container
     wrapper<E,K> operator+(const wrapper<E,K>& other) { m_key += other.m_key; return *this; }
@@ -148,37 +151,6 @@ std::ostream& operator<<(std::ostream& os, const wrapper<E,K>& w) {
     // os << ", key: " << w.key();
     return os;
 }
-
-/**
- * @brief This class extends the standard priority queue implementation to allow for entry updates that is
- *      required for the uniform cost search algorithm
- * 
- * @tparam _Type 
- * @tparam _Container defaults to std::vector<_Type>
- * @tparam _Pr defaults to std::less<typename _Container::value_type>
- */
-template<class _Type, class _Container = std::vector<_Type>, class _Pr = std::less<typename _Container::value_type> >
-class priority_queue_ex : public std::priority_queue<_Type, _Container, _Pr> {
-public:
-    priority_queue_ex() = default;
-
-    template<class InputIt>
-    constexpr InputIt find(const _Type& object) { return std::find(c.begin(), c.end(), object); }
-
-    void update(const _Type& object) {
-        auto it = find(object);
-        // if the entry was found we need to erase it
-        if (it != c.end()) {
-            c.erase(it);
-        }
-        // add the entry to the underlining priority_queue
-        push(object);
-    }
-
-    template<class InputIt>
-    constexpr InputIt end() { return c.end(); }
-
-};
 
 /**
  * @brief This is supposed to replace the standard priority queue implementation but it seems to much

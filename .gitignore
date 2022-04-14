@@ -15,6 +15,14 @@ CMakeFiles
 CTestTestfile.cmake
 DartConfiguration.tcl
 *_include.cmake
+*_tests.cmake
+Testing
+*.dir
+
+# windows specific ignore associated with CMake
+x64
+Debug
+Release
 
 # googletest dependency packages
 _deps

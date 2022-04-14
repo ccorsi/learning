@@ -1,6 +1,3 @@
-// TODO: Move all of this work within a util project that will then be linked with all of
-//       the different projects that will use it.
-
 /**
  * @file debug.h
  * @author Claudio Corsi (clcorsi@yahoo.com)
@@ -27,10 +24,15 @@
  * 
  */
 struct debug_manager {
-    static void log(char* filename, int lineno, char* msg);
-    static void debug(char* filename, int lineno, char* msg);
-    static void warn(char* filename, int lineno, char* msg);
-    static void error(char* filename, int lineno, char* msg);
+    static void log(char* filename, int lineno, std::string& msg);
+    static void debug(char* filename, int lineno, std::string& msg);
+    static void warn(char* filename, int lineno, std::string& msg);
+    static void error(char* filename, int lineno, std::string& msg);
+
+    static void log(char* filename, int lineno, const char* msg);
+    static void debug(char* filename, int lineno, const char* msg);
+    static void warn(char* filename, int lineno, const char* msg);
+    static void error(char* filename, int lineno, const char* msg);
 };
 
 // used for log level messages

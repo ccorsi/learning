@@ -6,17 +6,8 @@ project(tools VERSION 0.1.0)
 set(CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED true)
 
-# To be able to use google test framework we need to fetch the source code that will be used to build
-# and run this projects tests using google test framework.
-include(FetchContent)
-FetchContent_Declare(
-    googletest 
-    URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
-)
-
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
+# add the general utilities include directory
+include_directories(../utils/includes)
 
 # do I need to this include to be able to use GoogleTest?
 include(ctest)
@@ -24,12 +15,15 @@ include(GoogleTest)
 
 enable_testing()
 
-add_executable(testme test.cpp)
+# setup a property that contains the names of the different test executables
+set(EXECS oprtests test)
 
-add_test(testme test)
-
-# link in the googletest library for each googletest tests
-target_link_libraries(testme gtest_main)
-
-# request that we discover all googletest tests for the given test executables
-gtest_discover_tests(testme)
+foreach(exec ${EXECS})
+    message(STATUS "Setting up executable: ${exec}")
+    # create the different test executables
+    add_executable(${exec} ${exec}.cpp)
+    # link in the googletest library for each googletest test
+    target_link_libraries(${exec} PUBLIC gtest_main utils)
+    # request that we discover all googletest tests for the given test executable
+    gtest_discover_tests(${exec})
+endforeach()
