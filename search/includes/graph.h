@@ -13,6 +13,7 @@
  */
 
 #include <list>
+#include <vector>
 
 template<typename E>
 class edge;
@@ -89,4 +90,48 @@ public:
     edge<E>& operator()() { return *this; }
 };
 
+namespace valhalla {
+    namespace search {
+        namespace uniformed {
+            // forward declaration
+            class inode;
+
+            /**
+             * @brief This is a generic node that only contains a key that maps to an actual
+             *  object that is accessible by the users of this instance.
+             *
+             */
+            class inode {
+            private:
+                int m_key;
+                std::vector<inode> m_edges;
+            public:
+                inode(int key) : m_key(key) {}
+                /**
+                 * @brief This method is used to add a edge to the given node
+                 *
+                 * @param key integer index of the edge added to this node
+                 */
+                void add_edge(int key) { m_edges.push_back(inode(key)); }
+                /**
+                 * @brief This method will return all of the edges associated with this
+                 *  node.
+                 *
+                 * @return const vector<inode>& reference to this node edges
+                 */
+                const std::vector<inode>& edges() const { return m_edges; }
+                /**
+                 * @brief Operator used to determine if two nodes are equivalent using only
+                 *  the value of the key as a comparision
+                 *
+                 * @param o a reference to the another inode to compare with
+                 * @return true if this and the other inode are the same
+                 * @return false if this and the other inode are not the same
+                 */
+                bool operator==(const inode& o) const { return m_key == o.m_key; }
+                bool operator<(const inode& o) const { return m_key < o.m_key; }
+            };
+        }
+    }
+}
 #endif

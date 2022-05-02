@@ -8,6 +8,25 @@
         "queue": "cpp",
         "algorithm": "cpp",
         "vector": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "iosfwd": "cpp",
+        "chrono": "cpp",
+        "forward_list": "cpp",
+        "variant": "cpp",
+        "xmemory": "cpp",
+        "xtree": "cpp",
+        "deque": "cpp",
+        "exception": "cpp",
+        "format": "cpp",
+        "fstream": "cpp",
+        "locale": "cpp",
+        "streambuf": "cpp",
+        "xhash": "cpp",
+        "xlocale": "cpp",
+        "xlocmes": "cpp",
+        "xlocmon": "cpp",
+        "xlocnum": "cpp",
+        "xloctime": "cpp",
+        "xutility": "cpp"
     }
 }
