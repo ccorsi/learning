@@ -47,9 +47,10 @@ jobs:
       shell: bash
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C $BUILD_TYPE --test-dir utils
-      run: ctest -C $BUILD_TYPE --test-dir search
-      run: ctest -C $BUILD_TYPE --test-dir networks
-      run: ctest -C $BUILD_TYPE --test-dir operators
-      run: ctest -C $BUILD_TYPE --test-dir arrays
-      run: ctest -C $BUILD_TYPE --test-dir lists
+      run: |
+        ctest -C $BUILD_TYPE --test-dir utils
+        ctest -C $BUILD_TYPE --test-dir search
+        ctest -C $BUILD_TYPE --test-dir networks
+        ctest -C $BUILD_TYPE --test-dir operators
+        ctest -C $BUILD_TYPE --test-dir arrays
+        ctest -C $BUILD_TYPE --test-dir lists
