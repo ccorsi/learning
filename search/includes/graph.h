@@ -113,6 +113,7 @@ namespace valhalla {
                  * @param key integer index of the edge added to this node
                  */
                 void add_edge(int key) { m_edges.push_back(inode(key)); }
+
                 /**
                  * @brief This method will return all of the edges associated with this
                  *  node.
@@ -120,6 +121,7 @@ namespace valhalla {
                  * @return const vector<inode>& reference to this node edges
                  */
                 const std::vector<inode>& edges() const { return m_edges; }
+
                 /**
                  * @brief Operator used to determine if two nodes are equivalent using only
                  *  the value of the key as a comparision
@@ -129,6 +131,16 @@ namespace valhalla {
                  * @return false if this and the other inode are not the same
                  */
                 bool operator==(const inode& o) const { return m_key == o.m_key; }
+
+                /**
+                 * @brief Operator used to sort two nodes and will use the key to
+                 *  sort any inode instances.
+                 *
+                 * @param o a reference to the other inode to compare with
+                 * @return true if the current inode is less than the other inode
+                 * @return false if the current inode is greater than or equal to
+                 *      the passed inode
+                 */
                 bool operator<(const inode& o) const { return m_key < o.m_key; }
             };
         }
