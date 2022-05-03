@@ -38,34 +38,34 @@ int set_debug_level() {
 
 int debugLevel = set_debug_level();
 
-void debug_manager::log(char* fname, int lineno, string& msg) {
+void debug_manager::log(const char* fname, int lineno, string& msg) {
     cout << "LOG: " << fname << " at line: " << lineno << " :: " << msg << endl;
 }
 
-void debug_manager::debug(char* fname, int lineno, string& msg) {
+void debug_manager::debug(const char* fname, int lineno, string& msg) {
     cout << "DEBUG: " << fname << " at line: " << lineno << " :: " << msg << endl;
 }
 
-void debug_manager::warn(char* fname, int lineno, string& msg) {
+void debug_manager::warn(const char* fname, int lineno, string& msg) {
     cout << "WARN: " << fname << " at line: " << lineno << " :: " << msg << endl;
 }
 
-void debug_manager::error(char* fname, int lineno, string& msg) {
+void debug_manager::error(const char* fname, int lineno, string& msg) {
     cout << "ERROR: " << fname << " at line: " << lineno << " :: " << msg << endl;
 }
 
-void debug_manager::log(char* fname, int lineno, const char* msg) {
+void debug_manager::log(const char* fname, int lineno, const char* msg) {
     cout << "LOG: " << fname << " at line: " << lineno << " :: " << msg << endl;
 }
 
-void debug_manager::debug(char* fname, int lineno, const char* msg) {
+void debug_manager::debug(const char* fname, int lineno, const char* msg) {
     cout << "DEBUG: " << fname << " at line: " << lineno << " :: " << msg << endl;
 }
 
-void debug_manager::warn(char* fname, int lineno, const char* msg) {
+void debug_manager::warn(const char* fname, int lineno, const char* msg) {
     cout << "WARN: " << fname << " at line: " << lineno << " :: " << msg << endl;
 }
 
-void debug_manager::error(char* fname, int lineno, const char* msg) {
+void debug_manager::error(const char* fname, int lineno, const char* msg) {
     cout << "ERROR: " << fname << " at line: " << lineno << " :: " << msg << endl;
 }

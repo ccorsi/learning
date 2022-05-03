@@ -24,15 +24,15 @@
  * 
  */
 struct debug_manager {
-    static void log(char* filename, int lineno, std::string& msg);
-    static void debug(char* filename, int lineno, std::string& msg);
-    static void warn(char* filename, int lineno, std::string& msg);
-    static void error(char* filename, int lineno, std::string& msg);
+    static void log(const char* filename, int lineno, std::string& msg);
+    static void debug(const char* filename, int lineno, std::string& msg);
+    static void warn(const char* filename, int lineno, std::string& msg);
+    static void error(const char* filename, int lineno, std::string& msg);
 
-    static void log(char* filename, int lineno, const char* msg);
-    static void debug(char* filename, int lineno, const char* msg);
-    static void warn(char* filename, int lineno, const char* msg);
-    static void error(char* filename, int lineno, const char* msg);
+    static void log(const char* filename, int lineno, const char* msg);
+    static void debug(const char* filename, int lineno, const char* msg);
+    static void warn(const char* filename, int lineno, const char* msg);
+    static void error(const char* filename, int lineno, const char* msg);
 };
 
 // used for log level messages
