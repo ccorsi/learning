@@ -56,7 +56,7 @@ FetchContent_MakeAvailable(googletest)
 
 # add the different sub-projects to this build
 add_subdirectory(utils)
-add_subdirectory(search)
+# add_subdirectory(search)
 add_subdirectory(networks)
 add_subdirectory(operators)
 add_subdirectory(arrays)

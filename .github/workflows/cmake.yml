@@ -2,9 +2,9 @@ name: Learning C++ using CMake
 
 on:
   push:
-    branches: [ cpp ]
+    branches: [ foo ]
   pull_request:
-    branches: [ cpp ]
+    branches: [ foo ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)

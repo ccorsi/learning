@@ -2,9 +2,9 @@ name: CMake Build Matrix
 
 on:
   push:
-    branches: [ cpp ]
+    branches: [ foo ]
   pull_request:
-    branches: [ cpp ]
+    branches: [ foo ]
 
 env:
   CMAKE_VERSION: 3.23.0

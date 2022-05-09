@@ -73,6 +73,29 @@ int main(int argc, char** argv) {
 
     visited.insert(n);
 
+    valhalla::search::uniformed::inode l_inode(10);
+
+    valhalla::search::informed::inode<int> i_inode(11);
+
+    class distance {
+        int m_key;
+        int m_distance;
+    public:
+        distance(int key, int distance) : m_key(key), m_distance(distance) {}
+
+        bool operator<(const distance& other) { return m_key < other.m_key; }
+        bool operator==(const distance& other) { return m_key == other.m_key; }
+        CONSTEXPR14 int operator()() const { return m_key; }
+        CONSTEXPR14 bool operator()(const distance& other) const { return false; }
+    };
+
+    valhalla::search::informed::inode<int, distance> d_inode(distance(10,120));
+    valhalla::search::informed::inode<int, distance> e_inode(distance(10,125));
+
+    std::cout << "Equality: " << (d_inode == e_inode) << std::endl;
+
+    std::cout << "Key: " << d_inode() << std::endl;
+
     // return 0;
 
     ::testing::InitGoogleTest(&argc, argv);

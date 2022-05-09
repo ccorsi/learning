@@ -15,6 +15,8 @@
 #include <list>
 #include <vector>
 
+#include "macros.h"
+
 template<typename E>
 class edge;
 
@@ -92,13 +94,114 @@ public:
 
 namespace valhalla {
     namespace search {
+        namespace informed {
+            namespace bfs {
+                /**
+                 * @brief This is the node that the bfs class will be used to store and manipulate.
+                 *  It will use the Manager class to retrieve a container with this node edges.  It
+                 *  is expected that it will implement a no-args operator() that will return an instance
+                 *  of a vector class.
+                 *
+                 * @tparam E The type that will be referenced by this node
+                 * @tparam Manager The class used to retrieve this node edges
+                 */
+                template<class E, class Manager>
+                class node {
+                    // the key of this node
+                    E m_key;
+                    // will contain the edges associated with this node key
+                    std::vector<node> m_edges;
+                    // used to retreive edges associated with this node key
+                    Manager m_manager;
+
+                public:
+                    // ctor
+                    node(E key) : m_key(key) {}
+                    node(const node& other) : m_key(other.m_key) { m_edges.insert(m_edges.end(), other.m_edges.begin(), other.m_edges.end()); }
+
+                    // operators
+                    CONSTEXPR14 bool operator==(const node& other) const { return m_key == other.m_key; }
+
+                    // user defined methods
+                    const std::vector<node>& get_edges() const {
+                        if (! m_edges.empty() ) {
+                            return m_edges;
+                        } else {
+                            // retreive all of the edges associated within this key
+                            vector<E> values = m_manager(m_key);
+                            // create nodes associated with these edges
+                            for(auto itr = values.begin() ; itr != values.end() ; itr++) {
+                                m_edges.push_back(node(*itr));
+                            }
+                            return m_edges;
+                        }
+                    }
+                };
+                class bfs {
+                public:
+                    bfs() = default;
+                };
+            };
+
+            /**
+             * @brief this class will be used within a informed type search where
+             *  the containing type will be associated to a key value.  The container
+             *  by default will just be the key.  The comparison method will be used
+             *  to sort the nodes by key value.
+             *
+             * @tparam K the type of the key that will be used
+             * @tparam C the type of instance that will contain the key
+             * @tparam Compare a functional class that will be used to compare instances
+             */
+            template<class K = int, class C = int, class Compare = std::less<C>>
+            class inode {
+                C m_data;
+                Compare m_cmp;
+            public:
+                inode(C data) : m_data(data) {}
+
+                /**
+                 * @brief This operator will be used to call the equality operator
+                 *  of the containing class
+                 *
+                 * @param other the other instance that we are comparing too.
+                 * @return true if the two instances are the same else
+                 * @return false if the two instances are not the same
+                 */
+                bool operator==(const inode<K,C,Compare>& other) {
+                    return m_data == other.m_data;
+                }
+
+                /**
+                 * @brief This operator will return the key associated with the
+                 *      instance that is stored within this node.
+                 *
+                 * @return CONSTEXPR14&  reference to this node key value.
+                 */
+                CONSTEXPR14 K operator()() const { return m_data(); }
+
+                CONSTEXPR14 bool operator()(const inode<K,C,Compare>& other) const {
+                    return false;
+                }
+            };
+        }
         namespace uniformed {
             // forward declaration
             class inode;
 
             /**
              * @brief This is a generic node that only contains a key that maps to an actual
-             *  object that is accessible by the users of this instance.
+             *  object that is accessible by the users of this instance.  The idea behind
+             *  using a key instead of the data itself is to make it easier to include edges
+             *  to this node.  The initial implementation had the added issue of not being
+             *  able to create the circular references that a graph can implement.  This
+             *  added complexity was not something that should be implemented using a graph.
+             *  It became apparent that using key values instead of whole instances is a
+             *  better implementation.  This allows for uses to be able to create a seperate
+             *  container that maps the keys to the actual instances.  This can be used to
+             *  better serve implementations that require updates to current nodes since one
+             *  has been selected.  An example is the uniform cost search that requires all
+             *  to be explored nodes to be updated whenever a node was selected.
              *
              */
             class inode {
@@ -106,7 +209,11 @@ namespace valhalla {
                 int m_key;
                 std::vector<inode> m_edges;
             public:
+                // #################### ctor ################################
                 inode(int key) : m_key(key) {}
+
+                // ################# user defined methods ###################
+
                 /**
                  * @brief This method is used to add a edge to the given node
                  *
@@ -121,6 +228,8 @@ namespace valhalla {
                  * @return const vector<inode>& reference to this node edges
                  */
                 const std::vector<inode>& edges() const { return m_edges; }
+
+                // ######################### operators #################################
 
                 /**
                  * @brief Operator used to determine if two nodes are equivalent using only
@@ -142,6 +251,27 @@ namespace valhalla {
                  *      the passed inode
                  */
                 bool operator<(const inode& o) const { return m_key < o.m_key; }
+
+                /**
+                 * @brief This operator will return this inode key value.
+                 *
+                 * @return int the key value of this inode
+                 */
+                int operator()() { return m_key; }
+
+                /**
+                 * @brief This method is equivalent to the implemented operator<
+                 *  operator of this class
+                 *
+                 * @param other another instance of inode that we are comparing
+                 * @return true if this instance of inode is less than the passed
+                 *          instance of inode
+                 * @return false if this instance of inode is greater than or equal
+                 *          to the passed inode instance
+                 */
+                bool operator()(const inode& other) const {
+                    return m_key < other.m_key;
+                }
             };
         }
     }
