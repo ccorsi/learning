@@ -62,4 +62,4 @@
     #define CONSTEXPR23
 #endif
 
-#endif __MACROS_H__
+#endif // __MACROS_H__

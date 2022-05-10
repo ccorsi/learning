@@ -12,15 +12,15 @@ namespace valhalla {
         template<typename E>
         class doubly_linked_list {
         public:
-            template<typename E>
+            template<typename D = E>
             class doubly_node {
             private:
-                E m_data;
+                D m_data;
                 doubly_node *m_prior, *m_next;
             public:
                 // ctor & dtor
                 doubly_node() = default;
-                doubly_node(E& data, doubly_node<E>* prior = nullptr, doubly_node<E>* next = nullptr) : m_data(data), m_prior(prior), m_next(next) {
+                doubly_node(D& data, doubly_node<E>* prior = nullptr, doubly_node<D>* next = nullptr) : m_data(data), m_prior(prior), m_next(next) {
                     if (m_prior != nullptr) {
                         m_prior->m_next = this;
                     }
@@ -34,7 +34,7 @@ namespace valhalla {
                 bool operator==(const doubly_node<E>& o) const { return m_data == o.m_data; }
                 bool operator<(const doubly_node<E>& o) const { return m_data < o.m_data; }
                 std::ostream& operator<<(std::ostream&os) { os << m_data;  return os; }
-                E operator()() const { return m_data; }
+                D operator()() const { return m_data; }
 
                 // user defined methods
                 doubly_node* next() const { return m_next; }
@@ -261,7 +261,7 @@ namespace valhalla {
             std::ostream& operator<<(std::ostream& os) {
                 os << "[";
                 if (m_head != nullptr) {
-                    singly_node* current = m_head;
+                    singly_node<E>* current = m_head;
                     os << *current;
                     current = current->next();
                     while(current != nullptr) {
