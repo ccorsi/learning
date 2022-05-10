@@ -1,12 +1,12 @@
 # Introduction
 
-The following sub-project contains implementations of different algorithms that I learned when auditing a university course
+The following subproject contains implementations of different algorithms that I learned when auditing a university course
 at Columbia University.  It is with sadness to note that this course was discontinued since I really enjoyed the professor
 teaching this class.  In my humble opinion, she created a very good course that offered an overview of the field of AI.  I
 only wished that Columbia University would reconsider reviving this class and the other classes that were part of the
 MicroMasters Program.
 
-That said, this particular project contains the different search implmentations that were taught during one of those classes.
+That said, this particular project contains the different search implementations that were taught during one of those classes.
 Specifically, it will contain implementations for the different uninformed and informed algorithms.  These implementations
 will be implemented using C++ templates so that they can be used with any type of elements.  It is hoped that these
 implementations might be of use by others.
@@ -20,16 +20,16 @@ decision about which one to use.
 
 Here is a detailed list of the different algorithms that have been or will be implemented here.
 
-| Algorthm | Description |
-| -------- | --------- |
-| Breath First Search | TBD |
-| Depth First Search | TBD |
-| Depth Limited Search | TBD |
+| Algorithm                  | Description |
+|----------------------------| --------- |
+| Breath First Search        | TBD |
+| Depth First Search         | TBD |
+| Depth Limited Search       | TBD |
 | Iterative Deepening Search | TBD |
-| Uniform Cost Search | TBD |
-| Greedy Best First Search | TBD |
-| A* Search | TBD |
-| IDA* Search | TBD |
+| Uniform Cost Search        | TBD |
+| Greedy Best First Search   | TBD |
+| A* Search                  | TBD |
+| IDA* Search                | TBD |
 
 While the following list shows which of the above algorithms have been implemented
 
@@ -43,7 +43,7 @@ While the following list shows which of the above algorithms have been implement
 - [] IDA* Search
 
 The above algorithms are part of a class of algorithms called **Goal-based Agents** that are used as
-problem solving agents or planning agents.
+problem-solving agents or planning agents.
 
 ## Goal-based Agents
 
@@ -71,7 +71,7 @@ the formulation of the problem as follows:
 - **<span style="color:blue">Path cost:</span>** function that assigns a numeric cost to a path
     with respect to performance measure
 
-The above definitions will relagate any of the different search algorithms will define the search region
+The above definitions will relegate any of the different search algorithms will define the search region
 as:
 
 - The search space is divided into three regions:
@@ -83,8 +83,8 @@ as:
 ## Some General Information
 
 Before we talk about the implementations of the different algorithms.  We will discuss some general assumptions
-about this algorithms.  Specifically, what each of the different references in the algorithm implementation is
-describing.  Each of these algorithm will contain at least one of the following information.
+about these algorithms.  Specifically, what each of the different references in the algorithm implementation is
+describing.  Each of these algorithms will contain at least one of the following information.
 
 ## Breath First Search
 

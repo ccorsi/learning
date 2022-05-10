@@ -50,9 +50,9 @@ namespace valhalla {
             }
 
         public:
-            template<class T, class Container = std::vector<T>, class Compare = std::less<typename Container::value_type>>
-            class iterator : public std::iterator<std::input_iterator_tag, T> {
-                Container& m_data;
+            template<class IT = T, class IContainer = std::vector<IT>, class ICompare = std::less<typename IContainer::value_type>>
+            class iterator : public std::iterator<std::input_iterator_tag, IT> {
+                IContainer& m_data;
                 size_t m_current;
                 // T& m_value;
 
@@ -71,7 +71,7 @@ namespace valhalla {
             public:
                 iterator() = default;
 
-                explicit iterator(Container& data) : m_data(data) {
+                explicit iterator(IContainer& data) : m_data(data) {
                     // we need to determine what is the minimum value entry.
                     m_current = 0;
                     size_t l_left = left();
@@ -82,7 +82,7 @@ namespace valhalla {
                     // m_value = m_data[m_current];
                 }
 
-                explicit iterator(Container& data, size_t current) : m_data(data), m_current {
+                explicit iterator(IContainer& data, size_t current) : m_data(data), m_current {
                     m_value = (m_current < m_data.size()) ? m_data[m_value] : m_data[0];
                 }
 

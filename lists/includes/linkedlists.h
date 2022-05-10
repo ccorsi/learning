@@ -415,7 +415,7 @@ namespace valhalla {
 
                 // ================== user methods ====================
 
-                void insert(D&value) {
+                void insert(D& value) {
                     if (value < m_data) {
                         if (m_left == nullptr) {
                             m_left = new bst_node<D>(value);
