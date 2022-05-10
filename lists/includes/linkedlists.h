@@ -100,13 +100,13 @@ namespace valhalla {
 
             // const doubly_node<E>* const head() const { return m_head; }
 
-            template<typename E>
+            template<typename V = E>
             class iterator {
             private:
-                doubly_node<E>* m_current, *m_end;
+                doubly_node<V>* m_current, *m_end;
             public:
                 iterator() = default;
-                explicit iterator(doubly_node<E>* current, doubly_node<E>* end) {
+                explicit iterator(doubly_node<V>* current, doubly_node<V>* end) {
                     m_end = end;
                     if (current == nullptr) {
                         m_current = m_end;
@@ -115,7 +115,7 @@ namespace valhalla {
                     }
                 }
 
-                E operator*() const {
+                V operator*() const {
                     // assert( m_current != nullptr );
                     if (m_current == nullptr) throw "can't dereference value-initialized doubly linked list iterator";
 
@@ -123,7 +123,7 @@ namespace valhalla {
                 }
 
                 // prefixed interator operator
-                iterator<E>& operator++() {
+                iterator<V>& operator++() {
                     if (m_current == nullptr) {
                         throw "can't increment value-initialized doubly linked list iterator";
                     }
@@ -136,8 +136,8 @@ namespace valhalla {
                 }
 
                 // postfixed interator operator
-                iterator<E> operator++(int v) {
-                    iterator<E> retval = *this;
+                iterator<V> operator++(int v) {
+                    iterator<V> retval = *this;
                     if (m_current == nullptr) {
                         throw "can't increment value-initialized doubly linked list iterator";
                     }
@@ -190,16 +190,16 @@ namespace valhalla {
              *
              * @tparam E the type of element that this node will be storing/referencing
              */
-            template<typename E>
+            template<typename D>
             class singly_node {
             private:
-                E m_data;
+                D m_data;
                 singly_node* m_next;
             public:
-                singly_node(E& data) : m_data(data), m_next(nullptr) {}
-                singly_node(E& data, singly_node<E>* prior) : m_data(data) { if (prior != nullptr) prior->m_next = this; }
-                bool operator==(const singly_node<E>& o) const { return m_data == o.m_data; }
-                bool operator<(const singly_node<E>& o) const { return m_data < o.m_data; }
+                singly_node(D& data) : m_data(data), m_next(nullptr) {}
+                singly_node(D& data, singly_node<D>* prior) : m_data(data) { if (prior != nullptr) prior->m_next = this; }
+                bool operator==(const singly_node<D>& o) const { return m_data == o.m_data; }
+                bool operator<(const singly_node<D>& o) const { return m_data < o.m_data; }
                 /**
                  * @brief Destroy the singly node object that will recursively delete the next
                  *  node in the list.
@@ -386,14 +386,14 @@ namespace valhalla {
              * @tparam E the type of element that will be stored within the binary search
              *          tree node
              */
-            template<typename E>
+            template<typename D>
             class bst_node {
             private:
-                E m_data;
-                bst_node<E> *m_left, *m_right;
+                D m_data;
+                bst_node<D> *m_left, *m_right;
             public:
                 // ctor & dtor
-                explicit bst_node(E& data, bst_node<E>* left = nullptr, bst_node<E>* right = nullptr) : m_data(data), m_left(left), m_right(right) {}
+                explicit bst_node(D& data, bst_node<D>* left = nullptr, bst_node<D>* right = nullptr) : m_data(data), m_left(left), m_right(right) {}
                 ~bst_node() {
                     if (m_left != nullptr) {
                         // recursively delete the children nodes
@@ -409,29 +409,29 @@ namespace valhalla {
 
                 // ================= operators ========================
 
-                E& operator()() const { return m_data; }
-                bool operator==(const E& data) const { return m_data == data; }
-                bool operator==(const bst_node<E>& o) const { return m_data == o.m_data; }
+                D& operator()() const { return m_data; }
+                bool operator==(const D& data) const { return m_data == data; }
+                bool operator==(const bst_node<D>& o) const { return m_data == o.m_data; }
 
                 // ================== user methods ====================
 
-                void insert(E&value) {
+                void insert(D&value) {
                     if (value < m_data) {
                         if (m_left == nullptr) {
-                            m_left = new bst_node<E>(value);
+                            m_left = new bst_node<D>(value);
                         } else {
                             m_left->insert(value);
                         }
                     } else {
                         if (m_right == nullptr) {
-                            m_right = new bst_node<E>(value);
+                            m_right = new bst_node<D>(value);
                         } else {
                             m_right->insert(value);
                         }
                     }
                 }
 
-                bool contains(E& value) {
+                bool contains(D& value) {
                     if (value == m_data) {
                         return true;
                     } else if (value < m_data) {
@@ -449,7 +449,7 @@ namespace valhalla {
                     }
                 }
 
-                bst_node<E>* find(E& value) {
+                bst_node<D>* find(D& value) {
                     if (value == m_data) {
                         return this;
                     }
@@ -467,7 +467,7 @@ namespace valhalla {
                     }
                 }
 
-                bst_node<E>* find_parent(E& value) {
+                bst_node<D>* find_parent(D& value) {
                     if (value == m_data) {
                         return nullptr;
                     }
@@ -491,7 +491,7 @@ namespace valhalla {
                     }
                 }
 
-                bool remove(bst_node<E>* nodeToRemove) {
+                bool remove(bst_node<D>* nodeToRemove) {
                     if (m_left != nodeToRemove && m_right != nodeToRemove) {
                         // we will only make changes if the nodeToRemove is ones of the child nodes
                         throw "can't update child references unless passed node is one of its child nodes";
@@ -563,7 +563,7 @@ namespace valhalla {
                     m_left = m_right = nullptr;
                 }
 
-                E find_min() {
+                D find_min() {
                     if (m_left == nullptr) {
                         return m_data;
                     }
@@ -571,7 +571,7 @@ namespace valhalla {
                     return m_left->find_min();
                 }
 
-                E find_max() {
+                D find_max() {
                     if (m_right == nullptr) {
                         return m_data;
                     }
