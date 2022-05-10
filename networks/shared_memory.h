@@ -14,7 +14,9 @@ namespace valhalla {
         #ifdef _WIN32
         const std::string m_name;
         #elif defined(__APPLE__) || defined(__MACH__) 
+        const std::string m_name;
         #elif defined(__linux__)
+        const std::string m_name;
         #endif
     public:
         shared_memory();
