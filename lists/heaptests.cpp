@@ -24,7 +24,7 @@ namespace valhalla {
 
             ASSERT_TRUE(h.remove(6)) << "It didn't remove an existing entry";
 
-            auto itr = h.begin();
+            // auto itr = h.begin();
 
         }
     }

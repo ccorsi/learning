@@ -270,6 +270,8 @@ namespace valhalla {
                     }
                 }
                 os << " ]";
+
+                return os;
             }
 
             /**

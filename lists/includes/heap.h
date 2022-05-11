@@ -1,4 +1,4 @@
-#ifndef _HEAP_H__
+#ifndef __HEAP_H__
 #define __HEAP_H__
 
 #include <algorithm>
@@ -50,11 +50,13 @@ namespace valhalla {
             }
 
         public:
+        /*
             template<class IT = T, class IContainer = std::vector<IT>, class ICompare = std::less<typename IContainer::value_type>>
             class iterator : public std::iterator<std::input_iterator_tag, IT> {
                 IContainer& m_data;
                 size_t m_current;
-                // T& m_value;
+                IT& m_value;
+                ICompare m_cmp;
 
                 inline size_t parent() { return (m_current - 1) / 2; }
                 inline size_t left() { return 2 * m_current + 1; }
@@ -79,10 +81,10 @@ namespace valhalla {
                         m_current = l_left;
                         l_left = left();
                     }
-                    // m_value = m_data[m_current];
+                    m_value = m_data[m_current];
                 }
 
-                explicit iterator(IContainer& data, size_t current) : m_data(data), m_current {
+                explicit iterator(IContainer& data, size_t current) : m_data(data), m_current(current) {
                     m_value = (m_current < m_data.size()) ? m_data[m_value] : m_data[0];
                 }
 
@@ -93,12 +95,12 @@ namespace valhalla {
                 bool operator!=(iterator other) const { return !(*this == other); }
                 // TBD: should I just check if the current entry is within range?
                 //      Probably not since it will be done within the container
-                reference operator*() const { return m_data[m_current]; }
+                IT& operator*() const { return m_data[m_current]; }
             };
 
             iterator<T> begin() { return iterator<T>(m_data); }
             iterator<T> end() { return iterator<T>(m_data, m_data.size()); }
-
+        */
             heap() = default;
 
             void add(T& value) {
@@ -231,4 +233,4 @@ namespace valhalla {
     }
 }
 
-#endif
+#endif // __HEAP_H__
