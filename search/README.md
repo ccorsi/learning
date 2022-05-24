@@ -20,6 +20,7 @@ decision about which one to use.
 
 Here is a detailed list of the different algorithms that have been or will be implemented here.
 
+
 | Algorithm                  | Description |
 |----------------------------| --------- |
 | Breath First Search        | TBD |
