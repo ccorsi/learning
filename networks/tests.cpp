@@ -29,7 +29,6 @@ std::string get_os_name() {
     return name;
 }
 
-/*
 #if defined(__APPLE__) || defined(__MACH__)
     #define OS_NAME "MacOS"
 #elif defined(__linux__)
@@ -39,12 +38,12 @@ std::string get_os_name() {
 #else
     #error "Unale to determine the Operating System Type"
 #endif
-*/
 
 int main(int argc, char **argv) {
     std::cout << "Running tests\n";
     for(int idx = 0 ;  idx < argc ; idx++)
         std::cout << "Parameter: " << idx << " is " << argv[idx] << std::endl;
-    std::cout << "Operating System: " << get_os_name() /*OS_NAME*/ << std::endl;
-    return 1;
+    std::cout << "Operating System: " << get_os_name() << std::endl;
+    std::cout << "Operating System: " << OS_NAME << std::endl;
+    return 0;
 }
