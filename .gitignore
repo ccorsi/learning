@@ -1,0 +1,2 @@
+# Directory Names that need to be excluded from checking in
+__pycache__
