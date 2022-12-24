@@ -27,6 +27,7 @@
         "xlocmon": "cpp",
         "xlocnum": "cpp",
         "xloctime": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "iostream": "cpp"
     }
 }

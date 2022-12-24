@@ -26,17 +26,27 @@ using namespace std;
 //     #error "Unale to determine the Operating System Type"
 // #endif
 
-int set_debug_level() {
-    char* level = getenv("DEBUGLEVEL");
+/**
+ * @brief Get the debug level
+ * 
+ * @return int 
+ */
+int get_debug_level() {
+    const char *name = "DEBUGLEVEL";
+    char level[81];
+    size_t len;
 
-    if (level == nullptr) {
+    // Use the C+11 version of getenv instead since this is a safer version of
+    // the getenv call.
+    if (getenv_s(&len, level, 80, name) != 0) {
+        // This will return 0 if no conversion was possible
+        return atoi(level);
+    } else {
         return 0;
     }
-
-    return atoi(level);
 }
 
-int debugLevel = set_debug_level();
+int debugLevel = get_debug_level();
 
 void debug_manager::log(const char* fname, int lineno, string& msg) {
     cout << "LOG: " << fname << " at line: " << lineno << " :: " << msg << endl;

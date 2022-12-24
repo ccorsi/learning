@@ -1,12 +1,13 @@
 /**
  * @file macros.h
  * @author Claudio Corsi (clcorsi@yahoo.com)
- * @brief 
+ * @brief Add macros that can be useful for developing C++ applications using different
+ *  versions of C++ and using different Operating Systems.
  * @version 0.1
  * @date 2022-03-24
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 #ifndef __MACROS_H__
@@ -17,9 +18,9 @@
  *   to help properly define method signatures and whatnot of the different implementations.
  *   This is to be able to use the correct syntax for each of the different versions of the
  *   compiler.
- * 
+ *
  *   This file will be updated whenever any of the features are being used.
- * 
+ *
  */
 
 #if __cpp_constexpr >= 200704L

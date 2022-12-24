@@ -15,8 +15,11 @@ include(FetchContent)
 # To be able to use google test framework we need to fetch the source code that will be used to build
 # and run this projects tests using google test framework.
 FetchContent_Declare(
-    googletest 
-    URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+    googletest
+    # URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+    # Another option on downloading and using the googletest dependency
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG release-1.12.1
 )
 
 # For Windows: Prevent overriding the parent project's compiler/linker settings
@@ -26,19 +29,12 @@ FetchContent_MakeAvailable(googletest)
 # NOTE: For now don't build the wxWidgets library since it is not being used and is only taking cycle times for no reason.
 #       Upon adding some GUI code this will be opened up once again.
 #
-# # To be able to use the wxWidgets GUI library we need to fetch the source code that will be used to
-# # build and run this projects gui implementations.
-# if(WIN32)
-#     FetchContent_Declare(
-#         wxWidgets
-#         URL https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.5/wxWidgets-3.1.5.zip
-#     )
-# else()
-#     FetchContent_Declare(
-#         wxWidgets
-#         URL https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.5/wxWidgets-3.1.5.tar.bz2
-#     )
-# endif()
+# FetchContent_Declare(
+#     wxWidgets
+#     GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
+#     GIT_TAG v3.2.1
+# )
+
 # FetchContent_MakeAvailable(wxWidgets)
 
 # NOTE:
@@ -56,7 +52,7 @@ FetchContent_MakeAvailable(googletest)
 
 # add the different sub-projects to this build
 add_subdirectory(utils)
-# add_subdirectory(search)
+add_subdirectory(search)
 add_subdirectory(networks)
 add_subdirectory(operators)
 add_subdirectory(arrays)

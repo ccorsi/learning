@@ -12,13 +12,17 @@
  * 
  */
 
+// ################ include standard libraries ####################################
+
 #include <list>
 #include <vector>
 
+// ################ include project libraries #####################################
+
 #include "macros.h"
 
-template<typename E>
-class edge;
+// required forward definition so that this can be included as part of the node class
+template<typename E> class edge;
 
 /**
  * @brief This class is associated to the node of a Graph.  This is used to create a Graph data structure
@@ -94,18 +98,153 @@ public:
 
 namespace valhalla {
     namespace search {
+        // Here is another attempt at creating the different search algorithms that can be used with a large enough
+        // data set that doesn't fit within a processes memory space.
+
+        /**
+         * @brief This is an implementation of the depth first search (DFS) that uses templates.  The objective of this
+         *      implementation is to be able to provide flexibility to the developer as well as be able to minimize the
+         *      amount of memory that is used by the implementation such that one can manage to search through a large
+         *      data set.
+         *
+         *      This implementation will expect some effort from the developer that provides the ability for this
+         *      implementation to properlt apply this search on.  The developer is then responsible for the for
+         *      providing these different types.  They are the Element, Node, Manager, Path and Edges.   The
+         *      Path and Edges types have default definitions while the others are required by the developer.
+         *      Let us now explain what each of these types are and how they are used.
+         *
+         *      The Element type is essentially the type that will be stored within the Node type and is the
+         *      information that will be stored within the Path type.
+         *
+         *      The Node is essentially the type that wraps its associated Element.  This will be used by the
+         *      Manager and Checker types.  To be able to get a reference to the wrapping Element, the Node
+         *      type will need to implement the () operator that will return a reference to the Element type.
+         *
+         *          typename Node {
+         *              Element& operator()() const;
+         *          }
+         *
+         *      The Manager type will be used to return an instance of Edges that contains all of the nodes
+         *      associated with a given Node.  The Manager type will do this using a (Node&) operator that
+         *      will return an instance of the Edges type.
+         *
+         *          typename Manager {
+         *              Edges operator()(Node&) const;
+         *          }
+         *
+         *      The Checker type will be used to determine if a given Node has already be processed.  This will
+         *      be done using the (Node&) operator.   It will also be responsible of managing the current set
+         *      of processed Nodes.  This will be done using the processed(Node&) method that is expected to
+         *      be implemented by the Checker type.
+         *
+         *          typename Checker {
+         *              bool operator()(Node&node) const;
+         *              void processed(Node&);
+         *          }
+         *
+         *      The Path type will contain the path that was needed to get from the passed root to the given
+         *      goal.  This is a list of Element instances that one can then iterate over to see what the
+         *      required pass is needed to reach the goal.  This uses the default std::vector<Element> type.
+         *
+         *      The Edges type will contain all of the Nodes that are associated with the a given Node.  This
+         *      container will not reference the Node but will only contain the Nodes that are associated with
+         *      the requested Node.  This type uses std::vector<Node> by default.
+         *
+         * @tparam Element  The type of element that is stored within each node
+         * @tparam Node The type of node that will contain a instance of the element
+         * @tparam Goal This is used to determine to check if we've reached our goal
+         * @tparam Manager A class that will be used to extract the edges associated with a given node
+         * @tparam Path The class type that the resulting path will be returned
+         * @tparam Edges A class that will be returned when using the Manager class
+         * @tparam Checker A class that is used to determine if a given node has already been processed
+         */
+        template<typename Element, typename Node, typename Goal, typename Manager, typename Checker,
+                 typename Path = std::vector<Element>, typename Edges = std::vector<Node> >
+        class bfs {
+        private:
+            bool _search(Node& node, Goal& goal, Path& path, Manager& manager, Checker& checker) {
+
+                if (goal(node)) {
+                    // we've found the goal and we are now going to add this node element to the path that will be returned
+                    path.insert(path.begin(), node());
+                    return true;
+                } else {
+                    // add the current value to the list of processed values
+                    checker(node);
+
+                    // we need to retreive the edges assocuiated with this class.
+                    Edges edges = manager(node);
+
+                    for(auto current = edges.begin() ; current != edges.end() ; current++) {
+                        if (checker(*current)) {
+                            // we've already processed this Element
+                            continue;
+                        }
+
+                        if (_search(*current, goal, path, manager, checker)) {
+                            // we've found the goal that we were looking for.
+                            path.insert(path.begin(), node());
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+
+        public:
+            bfs() = default; // we don't have anything that needs to be stored within our instance
+
+            /**
+             * @brief This is the search method that is called to find the shortest path associated
+             *      to the graph that starts at the passed root.  It will use the goal to determine
+             *      if we've found the end point of the search.  It will then return the path
+             *      associated with the given root and goal.
+             *
+             * @param root The root of the graph that will be searched
+             * @param goal The goal node that we are looking for within the passed graph
+             * @param manager The manager instance used to retrieve a nodes edges
+             * @param checker The checker instance used to determine if a node was already processed
+             * @param path The shortest path required to reach the goal
+             *
+             * @return True, if a path was found for the given goal, else false
+             */
+            bool search(Node& root, Goal goal, Manager& manager, Checker& checker, Path& path) {
+                return _search(root, goal, path, manager, checker);
+            }
+
+        };
+
         namespace informed {
             namespace bfs {
+                /*
+                    NOTE: While the design of the new version of the node class for the bfs implementation is better than
+                          the original version.  It still has an issue that will become apparent when we are processing a
+                          very large graph.  THe associated edges will be avaliable throughout the life of the graph.  This
+                          can lead to an exhaustion of heap memory if we have not found the goal while there are still nodes
+                          to process.  The solution can be to return a non-reference container of edges.  This would reduce
+                          the amount of heap memory that will be used and should provide some relief when the graph is fairly
+                          large.  This could still exhaust the heap memory if the is a really large graph that needs to be
+                          transversed.
+
+                    NOTE: Even though the following implementation was supposed to be a better version of the original one.
+                          I still don't think that this implementation is correct in the sense that it is not useful enough
+                          within an environment in which the data space is too large to be placed within a process memory
+                          space.  I'd like to be able to create something that would be able to process a much greater set
+                          of data before it exhaust the system memory.
+                */
+
                 /**
-                 * @brief This is the node that the bfs class will be used to store and manipulate.
+                 * @brief This is the node that the bfs class will be using to store and manipulate.
                  *  It will use the Manager class to retrieve a container with this node edges.  It
                  *  is expected that it will implement a no-args operator() that will return an instance
                  *  of a vector class.
                  *
                  * @tparam E The type that will be referenced by this node
-                 * @tparam Manager The class used to retrieve this node edges
+                 * @tparam Manager The class used to retrieve this node associated edges
+                 * @tparam Container The container class that will be returned by the Manager class
                  */
-                template<class E, class Manager>
+                template<class E, class Manager, class Container = std::vector<E> >
                 class node {
                     // the key of this node
                     E m_key;
@@ -113,7 +252,6 @@ namespace valhalla {
                     std::vector<node> m_edges;
                     // used to retreive edges associated with this node key
                     Manager m_manager;
-
                 public:
                     // ctor
                     node(E key) : m_key(key) {}
@@ -125,14 +263,16 @@ namespace valhalla {
                     // user defined methods
                     const std::vector<node>& get_edges() const {
                         if (! m_edges.empty() ) {
+                            // we've already generated the edges associated with this node thus return a reference to it.
                             return m_edges;
                         } else {
                             // retreive all of the edges associated within this key
-                            vector<E> values = m_manager(m_key);
+                            Container values = m_manager(m_key);
                             // create nodes associated with these edges
                             for(auto itr = values.begin() ; itr != values.end() ; itr++) {
                                 m_edges.push_back(node(*itr));
                             }
+                            // return a reference to the generated edges
                             return m_edges;
                         }
                     }
