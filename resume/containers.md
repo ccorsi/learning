@@ -9,6 +9,14 @@ cover-img: "/assets/img/gratisography-224H-free-stock-photo.jpg"
 
 This page contains information about my knowledge of Containers, specifically [Docker](https://www.docker.com/).
 
+## Docker
+
+# Conclusion
+
+While I have only really worked with Docker within a working environment.  It is my objective to be able to
+expand my knowledge of containers like kubernetes, nix, openstack and others.  This is something that has
+become an important requirement to be able to work more within a cloud environment.
+
 
 {% comment %}
 Talk about how I have used Docker to build and test our APM product.  How I have used it to update the minimal
