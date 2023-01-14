@@ -1,0 +1,2 @@
+# No need to include the build directory within our git repository.
+build

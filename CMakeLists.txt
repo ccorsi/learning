@@ -1,0 +1,32 @@
+# We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
+cmake_minimum_required(VERSION 3.10.0)
+project(tools VERSION 0.1.0)
+
+# setup the minimum C++ requirements
+set(CXX_STANDARD 17)
+set(CXX_STANDARD_REQUIRED true)
+
+# NOTE: this did not work when trying to create and link shared libraries.
+# Set the default library build to shared instead of static
+# option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+
+include(FetchContent)
+
+# To be able to use google test framework we need to fetch the source code that will be used to build
+# and run this projects tests using google test framework.
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG release-1.12.1
+)
+
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(googletest)
+
+# add the different sub-projects to this build
+add_subdirectory(utils)
+add_subdirectory(arrays)
+add_subdirectory(matrices)
+add_subdirectory(strings)
