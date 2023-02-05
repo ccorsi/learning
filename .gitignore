@@ -1,2 +1,6 @@
 # No need to include the build directory within our git repository.
 build
+
+# No need to include the Testing directory within our git repository.
+Testing
+
