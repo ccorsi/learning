@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(strings VERSION 0.1.0)
+project(strings VERSION 0.1.1)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -15,7 +15,7 @@ include(GoogleTest)
 
 enable_testing()
 
-set(NAMES derive_string rotated_palindrome)
+set(NAMES derive_string rotated_palindrome longest_palindromic_substring repeated_subsequence excel_sheet_column_name check_anagram)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)
