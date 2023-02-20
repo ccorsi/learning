@@ -22,6 +22,8 @@ namespace valhalla {
              *      this class.
              *
              * @tparam E The type of elements that are contained within each set
+             * @deprecated This class is not required and was replaced with the use of
+             *      the ASSERT_THAT macro and the testing::AnyOfArray class instead.
              */
             template<typename E>
             class ContainsOneOf {

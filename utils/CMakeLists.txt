@@ -1,6 +1,6 @@
 # We need at least version 3.10.0 to be able to use the GoogleTest package
 cmake_minimum_required(VERSION 3.10.0)
-project(techiedelight VERSION 0.1.0)
+project(techiedelight VERSION 0.1.1)
 
 set(CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED true)
@@ -13,13 +13,19 @@ include(GoogleTest)
 
 enable_testing()
 
+# use a variable to be able to skip between the creation of a static or shared library
+set(SRCS debug.cpp paths.cpp)
+
 # generate a shared utilities library that can be used by the different projects
-# add_library(utils SHARED debug.cpp)
 # TODO: for the moment I am unable to determine how to link the shared library.
 # Until then I will create a static library instead.
-add_library(utils debug.cpp)
+# add_library(utils SHARED ${SRCS})
+# alas you can't create a static and dynamic library wth the same name even thou
+# their suffix are different but this is only the case on windows
+# generate a static library
+add_library(utils STATIC ${SRCS})
 
-set(TESTS debugtests)
+set(TESTS debugtests loadertests)
 
 foreach(name ${TESTS})
     message(STATUS "Setting up test: ${name}")
@@ -27,6 +33,8 @@ foreach(name ${TESTS})
     add_executable(${name} ${name}.cpp)
     # link in the googletest library for each googletest test
     target_link_libraries(${name} PUBLIC gtest_main gmock_main utils)
+    # set compiler C++
+    target_compile_features(${name} PUBLIC cxx_std_17)
     # request that we discover all googletest tests for the given test executable
     gtest_discover_tests(${name} WORKING_DIRECTORY ${WORKING_DIRECTORY})
 endforeach()

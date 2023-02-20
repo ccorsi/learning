@@ -6,9 +6,8 @@ project(tools VERSION 0.1.7)
 set(CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED true)
 
-# NOTE: this did not work when trying to create and link shared libraries.
-# Set the default library build to shared instead of static
-# option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+# Set the default library build to static instead of shared
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
 include(FetchContent)
 

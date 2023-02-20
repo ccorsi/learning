@@ -7,15 +7,15 @@ set(CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED true)
 
 # add the general utilities include directory
-include_directories(includes)
-# include_directories(../utils/includes includes)
+include_directories(../utils/includes includes)
 
 # Include GoogleTest for testing the different implementations
 include(GoogleTest)
 
 enable_testing()
 
-set(NAMES derive_string rotated_palindrome longest_palindromic_substring repeated_subsequence excel_sheet_column_name check_anagram)
+set(NAMES derive_string rotated_palindrome longest_palindromic_substring repeated_subsequence excel_sheet_column_name check_anagram
+    interleaving_string interleaving_string_two)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)
@@ -25,6 +25,8 @@ foreach(name IN LISTS NAMES)
     add_executable(${name}tests ${name}tests.cpp ${name}.cpp )
     # link in the googletest library for each googletest test
     target_link_libraries(${name}tests PUBLIC gtest_main gmock_main utils)
+    # set compiler C++
+    target_compile_features(${name}tests PUBLIC cxx_std_17)
     # request that we discover all googletest tests for the given test executable
     gtest_discover_tests(${name}tests)
     # mention that we've completed the building of the executable

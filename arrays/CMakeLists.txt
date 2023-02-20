@@ -27,6 +27,8 @@ foreach(name IN LISTS NAMES)
     add_executable(${name}tests ${name}tests.cpp ${name}.cpp )
     # link in the googletest library for each googletest test
     target_link_libraries(${name}tests PUBLIC gtest_main gmock_main utils)
+    # set compiler C++
+    target_compile_features(${name}tests PUBLIC cxx_std_17)
     # request that we discover all googletest tests for the given test executable
     gtest_discover_tests(${name}tests)
     # mention that we've completed the building of the executable
