@@ -97,7 +97,7 @@ namespace valhalla {
 
                 /**
                  * @brief Load instances of type T from the passed istream.  It is
-                 *      expected that the passed isteam is ready to read instances
+                 *      expected that the passed istream is ready to read instances
                  *      of type T.  If it isn't ready to read instances of type T,
                  *      the operator will return an empty container.
                  *
@@ -106,6 +106,27 @@ namespace valhalla {
                  * @return std::vector<T> container containing instance of load type T
                  */
                 std::vector<T> operator()(std::istream & is) {
+                    // check if opened file successfully
+                    if (is.good()) {
+                        return process(is);
+                    } else {
+                        DEBUGMSHG("Unable to use passed istream");
+                        std::vector<T> container;
+                        return container;
+                    } // else
+                }
+
+                /**
+                 * @brief Load instances of type T from the passed istream.  It is
+                 *      expected that the passed ifstream is ready to read instances
+                 *      of type T.  If it isn't ready to read instances of type T,
+                 *      the operator will return an empty container.
+                 *
+                 * @param is The ifstream used to load instance from
+                 *
+                 * @return std::vector<T> container containing instance of load type T
+                 */
+                std::vector<T> operator()(std::ifstream & is) {
                     // check if opened file successfully
                     if (is.good()) {
                         return process(is);
