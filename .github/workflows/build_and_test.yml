@@ -1,0 +1,40 @@
+#
+# This workflow was inspired by the example one from
+# https://github.com/bast/gtest-demo/blob/master/.github/workflows/test.yml.
+#
+name: Data Structure and Algorithms Build and Tests
+
+on:
+  push:
+  pull_request:
+
+env:
+  BUILD_DIR: build
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest windows-latest ]
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure CMake
+      run: |
+        cmake -S. -B$${{ env.BUILD_DIR }} -DCMAKE_BUILD_TYPE=Debug
+
+    - name: Build
+      run: |
+        cmake --build $${{ env.BUILD_DIR }} --config Debug
+
+    - name: Test
+      env:
+        GTEST_OUTPUT: xml:xunit_report.xml
+      working-directory: $${{ env.BUILD_DIR }}
+      run: |
+        ctest -C Debug -T test --output-on-failure
