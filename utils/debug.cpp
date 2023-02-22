@@ -30,14 +30,15 @@ const int ERROR = 4;
  */
 int get_debug_level() {
     static const char *name = "DEBUGLEVEL";
-    char level[81];
     size_t len;
 
     // Use the C+11 version of getenv instead since this is a safer version of
     // the getenv call.
     #ifdef WIN32
+    char level[81];
     if (getenv_s(&len, level, 80, name) != 0) {
     #else
+    char *level;
     if ((level = getenv(name)) != nullptr) {
     #endif
         // This will return 0 if no conversion was possible
