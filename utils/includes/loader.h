@@ -65,7 +65,7 @@ namespace valhalla {
                     if (is.good()) {
                         return process(is);
                     } else {
-                        std::string msg = "Unable to open file " + filename;
+                        std::string msg = std::string("Unable to open file ") + filename;
                         DEBUGMSHG(msg);
                         std::vector<T> container;
                         return container;
@@ -88,7 +88,7 @@ namespace valhalla {
                     if (is.good()) {
                         return process(is);
                     } else {
-                        std::string msg = "Unable to open file " + filename;
+                        std::string msg = std::string("Unable to open file ") + filename;
                         DEBUGMSHG(msg);
                         std::vector<T> container;
                         return container;
