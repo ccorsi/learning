@@ -111,7 +111,9 @@ TEST(LoaderTestSuite, IStreamLoaderTests) {
 
     valhalla::utils::loaders::Loader<Data> loader;
 
-    std::vector<Data> datas = loader(std::ifstream(filename));
+    std::ifstream is(filename);
+
+    std::vector<Data> datas = loader(is);
 
     ASSERT_EQ(datas, expected);
 
