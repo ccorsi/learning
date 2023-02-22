@@ -43,7 +43,7 @@ TEST(ZeroSumSubArrayTestSuite, ZeroSumSubArrayFound) {
 
     ASSERT_EQ(2, results.size()) << "Two zero sum sub-array exists";
 
-    ASSERT_EQ(expected, results) << "The zero sum sub-array are [ -3, -1, 0, 4 ] and [ 0 ]";
+    ASSERT_EQ(expected, results); // << "The zero sum sub-array are [ -3, -1, 0, 4 ] and [ 0 ]";
 }
 
 TEST(ZeroSumSubArrayTestSuite, ZeroSumSubArrayFoundUsingZeros) {
@@ -56,7 +56,7 @@ TEST(ZeroSumSubArrayTestSuite, ZeroSumSubArrayFoundUsingZeros) {
 
     ASSERT_EQ(2, results.size()) << "Two zero sum sub-array exists";
 
-    ASSERT_EQ(expected, results) << "The zero sum sub-array are [ 0, 0 ] and [ 0 ]";
+    ASSERT_EQ(expected, results); // << "The zero sum sub-array are [ 0, 0 ] and [ 0 ]";
 }
 
 TEST(ZeroSumSubArrayTestSuite, ZeroSumSubArraySixFound) {
@@ -69,7 +69,7 @@ TEST(ZeroSumSubArrayTestSuite, ZeroSumSubArraySixFound) {
 
     ASSERT_EQ(expected.size(), results.size()) << expected.size() << " zero sum sub-array expected";
 
-    ASSERT_EQ(expected, results) << "The zero sum sub-array expected are " << expected;
+    ASSERT_EQ(expected, results); // << "The zero sum sub-array expected are " << expected;
 }
 
 TEST(ZeroSumSubArrayTestSuite, ZeroSumSubArrayWithZeroArrays) {
@@ -82,7 +82,7 @@ TEST(ZeroSumSubArrayTestSuite, ZeroSumSubArrayWithZeroArrays) {
 
     ASSERT_EQ(expected.size(), results.size()) << expected.size() << " zero sum sub-array expected";
 
-    ASSERT_EQ(expected, results) << "The zero sum sub-array expected are " << expected;
+    ASSERT_EQ(expected, results); // << "The zero sum sub-array expected are " << expected;
 }
 
 int main(int argc, char** argv) {
