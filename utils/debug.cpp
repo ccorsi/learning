@@ -35,7 +35,11 @@ int get_debug_level() {
 
     // Use the C+11 version of getenv instead since this is a safer version of
     // the getenv call.
+    #ifdef WIN32
     if (getenv_s(&len, level, 80, name) != 0) {
+    #else
+    if ((level = getenv(name)) != nullptr) {
+    #endif
         // This will return 0 if no conversion was possible
         return atoi(level);
     } else {
