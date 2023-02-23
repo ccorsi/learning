@@ -10,6 +10,7 @@ on:
 
 env:
   BUILD_DIR: build
+  TEST_RESULTS_DIR: build/testResults
 
 jobs:
   build:
@@ -34,8 +35,9 @@ jobs:
 
     - name: Test
       env:
-        GTEST_OUTPUT: xml:xunit_report.xml
+        GTEST_OUTPUT: xml:${{ env.TEST_RESULTS_DIR }}
       run: |
+        mkdir $${{ env.TEST_RESULTS_DIR }}
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
     - name: Publish Test Results
@@ -43,17 +45,12 @@ jobs:
       if: always()
       with:
         files: |
-          ${{ env.BUILD_DIR }}/**/xunit_report.xml
+          ${{ env.TEST_RESULTS_DIR }}/**/*.xml
 
     - name: Publish Test Results II
       uses: dorny/test-reporter@v1
       if: always()
       with:
         name: CTest Tests
-        path: ${{ env.BUILD_DIR }}/**/xunit_report.xml
+        path: ${{ env.TEST_RESULTS_DIR }}/**/*.xml
         reporter: java-junit
-
-    - name: Pipe Test Reports
-      if: always()
-      run:
-        find ${{ env.BUILD_DIR }} -name xunit_report.xml | xargs cat -n
