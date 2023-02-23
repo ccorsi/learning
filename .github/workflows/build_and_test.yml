@@ -37,7 +37,7 @@ jobs:
       env:
         GTEST_OUTPUT: xml:${{ env.TEST_RESULTS_DIR }}
       run: |
-        mkdir $${{ env.TEST_RESULTS_DIR }}
+        mkdir ${{ env.TEST_RESULTS_DIR }}
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
     - name: Publish Test Results
