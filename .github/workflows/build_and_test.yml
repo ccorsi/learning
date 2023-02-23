@@ -51,3 +51,10 @@ jobs:
       working-directory: ${{ env.BUILD_DIR }}
       run: |
         ctest -C Debug -T test --output-on-failure
+
+    - name: Run build Tests
+      env:
+        GTEST_OUTPUT: xml:xunit_report.xml
+      run: |
+        cd ${{ env.BUILD_DIR }}
+        ctest -V
