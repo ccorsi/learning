@@ -10,7 +10,7 @@ on:
 
 env:
   BUILD_DIR: build
-  TEST_RESULTS_DIR: $GITHUB_WORKSPACE/build/testResults
+  TEST_RESULTS_DIR: ${{ env.GITHUB_WORKSPACE }}/build/testResults
 
 jobs:
   build:
