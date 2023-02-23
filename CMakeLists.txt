@@ -1,6 +1,15 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(tools VERSION 0.2.4)
+project(tools VERSION 0.2.4
+    DESCRIPTION "Data Structure and Algorithm Solutions"
+    HOMEPAGE_URL "https://github.com/ccorsi/learning/tree/cpp_data_structs_and_algos"
+    LANGUAGES CXX)
+
+# This is required to be able to have cmake generate the required test build files
+enable_testing()
+
+# This is required to be able to have cmake generate the required package files
+include(CPack)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
