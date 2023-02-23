@@ -48,4 +48,4 @@ jobs:
       if: always()
       with:
         files: |
-          - ${{ env.BUILD_DIR }}/**/xunit_report.xml
+          - ${{ env.BUILD_DIR }}/*/xunit_report.xml
