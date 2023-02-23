@@ -39,7 +39,8 @@ jobs:
       run: |
         # mkdir ${{ env.TEST_RESULTS_DIR }}
         mkdir build/testResults
-        export GTEST_OUTPUT=xml:`pwd`/build/testResults
+        export GTEST_OUTPUT=xml:$PWD/build/testResults
+        printenv GTEST_OUTPUT
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
     - name: Publish Test Results
