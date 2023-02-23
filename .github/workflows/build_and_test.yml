@@ -43,4 +43,4 @@ jobs:
       if: always()
       with:
         files: |
-          - **/xunit_report.xml
+          - $GITHUB_WORKSPACE/${{ env.BUILD_DIR }}/**/xunit_report.xml
