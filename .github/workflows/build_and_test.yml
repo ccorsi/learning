@@ -44,3 +44,10 @@ jobs:
       with:
         files: |
           ${{ env.BUILD_DIR }}/**/xunit_report.xml
+
+    - name: Publish Test Results II
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: CTest Tests
+        path: ${{ env.BUILD_DIR }}/**/xunit_report.xml
