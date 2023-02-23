@@ -36,10 +36,6 @@ jobs:
       env:
         GTEST_OUTPUT: xml:testResults/
       run: |
-        mkdir build/arrays/testResults
-        mkdir build/matrices/testResults
-        mkdir build/strings/testResults
-        mkdir build/utils/testResults
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
     - name: Publish Test Results
