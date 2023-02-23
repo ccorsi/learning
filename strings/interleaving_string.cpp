@@ -47,7 +47,11 @@ std::unordered_set<std::string> valhalla::strings::interleaving_string::Solution
 
             for (std::string::size_type step_size = 0 ; step_size < x_len ; ) {
                 char* chrs = new char[str_size]; // dynamically create an updatable string
+                #ifdef WIN32
                 strcpy_s(chrs, str_size, s); // copy constant string to chrs
+                #else
+                strcpy(chrs, s); // copy constant string to chrs
+                #endif
 
                 step_size++; // increment the step size
 
