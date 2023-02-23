@@ -53,7 +53,9 @@ TEST_P(MaximumSumCircularSubarrayFixture, MaximumSumCircularSubarrayTests) {
 
     Solution solution;
 
-    int actual = solution.findMaxSubarray(data.get_input());
+    std::vector<int> input = data.get_input();
+
+    int actual = solution.findMaxSubarray(input);
 
     ASSERT_EQ(actual, data.get_expected());
 }

@@ -62,7 +62,9 @@ TEST_P(MaximumSumSubarrayTwoFixture, MaximumSumSubarrayTwoTests) {
 
     Solution solution;
 
-    std::vector<int> actual = solution.findMaxSumSubarray(data.get_input());
+    std::vector<int> input = data.get_input();
+
+    std::vector<int> actual = solution.findMaxSumSubarray(input);
 
     std::vector<std::vector<int>> const expected = data.get_expected();
 

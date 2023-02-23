@@ -65,7 +65,9 @@ TEST_P(MaximumContinuousSequenceFixture, MaximumContinuousSequenceTests) {
 
     Solution solution;
 
-    int actual = solution.findIndexOfZero(data.get_input());
+    std::vector<int> input = data.get_input();
+
+    int actual = solution.findIndexOfZero(input);
 
     ASSERT_EQ(data.get_expected(), actual);
 }

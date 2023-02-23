@@ -62,7 +62,10 @@ TEST_P(SortedMergeArraysTwoFixture, SortedMergeArraysTwoTests) {
 
     Solution solution;
 
-    std::vector<int> actual = solution.merge(data.get_x_input(), data.get_y_input());
+    std::vector<int> x = data.get_x_input();
+    std::vector<int> y = data.get_y_input();
+
+    std::vector<int> actual = solution.merge(x, y);
 
     ASSERT_EQ(actual, data.get_expected());
 }
