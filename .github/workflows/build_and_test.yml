@@ -51,3 +51,9 @@ jobs:
       with:
         name: CTest Tests
         path: ${{ env.BUILD_DIR }}/**/xunit_report.xml
+        reporter: java-junit
+
+    - name: Pipe Test Reports
+      if: always()
+      run:
+        find ${{ env.BUILD_DIR }} -name xunit_report.xml | xargs cat -n
