@@ -28,9 +28,9 @@ Output: 7
 */
 
 int valhalla::arrays::smallest_missing_number::Solution::findSmallestMissingNumber(std::vector<int> const & nums) {
-    int value = 0;
+    std::vector<int>::size_type value = 0;
 
-    while (static_cast<size_t>(value) < nums.size() && nums[value] == value) value++;
+    while (value < nums.size() && nums[value] == value) value++;
 
     return value;
 }
