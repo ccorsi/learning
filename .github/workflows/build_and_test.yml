@@ -41,13 +41,13 @@ jobs:
     - name: Simple Test Build Directory
       env:
         GTEST_OUTPUT: xml:xunit_report.xml
-        working-directory: ${{ env.BUILD_DIR }}
+      working-directory: ${{ env.BUILD_DIR }}
       run: |
         ctest -V
 
     - name: More Involved Test Build Directory
       env:
         GTEST_OUTPUT: xml:xunit_report.xml
-        working-directory: ${{ env.BUILD_DIR }}
+      working-directory: ${{ env.BUILD_DIR }}
       run: |
         ctest -C Debug -T test --output-on-failure
