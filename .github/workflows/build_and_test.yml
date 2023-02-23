@@ -32,8 +32,22 @@ jobs:
       run: |
         cmake --build ${{ env.BUILD_DIR }} --config Debug
 
-    - name: Test
+    - name: Test Root Directory
       env:
         GTEST_OUTPUT: xml:xunit_report.xml
       run: |
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
+
+    - name: Simple Test Build Directory
+      env:
+        GTEST_OUTPUT: xml:xunit_report.xml
+        working-directory: ${{ env.BUILD_DIR }}
+      run: |
+        ctest -V
+
+    - name: More Involved Test Build Directory
+      env:
+        GTEST_OUTPUT: xml:xunit_report.xml
+        working-directory: ${{ env.BUILD_DIR }}
+      run: |
+        ctest -C Debug -T test --output-on-failure
