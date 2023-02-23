@@ -12,6 +12,8 @@
 
 #include "spiral_matrix_three.h"
 
+#include <cmath>
+
 /*
 
 Given an integer array containing `N × N` elements, construct an `N × N` matrix from it in spiral order.
@@ -31,7 +33,7 @@ Output:
 */
 std::vector<std::vector<int>> valhalla::matrices::spiral_matrix_three::Solution::createSpiralMatrix(std::vector<int> const & nums) {
     const std::vector<int>::size_type size = nums.size();
-    const std::vector<int>::size_type N = static_cast<std::vector<int>::size_type>(sqrt(size));
+    const std::vector<int>::size_type N = static_cast<std::vector<int>::size_type>(std::sqrt(size));
     const std::vector<int>::size_type max  = N * N;
 
     std::vector<int> values(N);
