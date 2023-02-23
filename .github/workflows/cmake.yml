@@ -12,7 +12,9 @@
 name: CMake Configuration, Build and Test
 on:
   push:
-  pull_request:
+    tags:
+      - v**
+  # pull_request:
   # Comment out the cron job since it makes no sense to perform such a task
   # workflow_dispatch:
   # schedule:

@@ -32,29 +32,15 @@ jobs:
       run: |
         cmake --build ${{ env.BUILD_DIR }} --config Debug
 
-    - name: Test Root Directory
+    - name: Test
       env:
         GTEST_OUTPUT: xml:xunit_report.xml
       run: |
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
-    - name: Simple Test Build Directory
-      env:
-        GTEST_OUTPUT: xml:xunit_report.xml
-      working-directory: ${{ env.BUILD_DIR }}
-      run: |
-        ctest -V
-
-    - name: More Involved Test Build Directory
-      env:
-        GTEST_OUTPUT: xml:xunit_report.xml
-      working-directory: ${{ env.BUILD_DIR }}
-      run: |
-        ctest -C Debug -T test --output-on-failure
-
-    - name: Run build Tests
-      env:
-        GTEST_OUTPUT: xml:xunit_report.xml
-      run: |
-        cd ${{ env.BUILD_DIR }}
-        ctest -V
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: |
+          - xunit_report.xml
