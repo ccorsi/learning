@@ -33,12 +33,13 @@ jobs:
         cmake --build ${{ env.BUILD_DIR }} --config Debug
 
     - name: Test
+      env:
+        GTEST_OUTPUT: xml:testResults/
       run: |
         mkdir build/arrays/testResults
         mkdir build/matrices/testResults
         mkdir build/strings/testResults
         mkdir build/utils/testResults
-        export GTEST_OUTPUT=xml:testResults/
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
     - name: Publish Test Results
@@ -48,10 +49,11 @@ jobs:
         files: |
           build/**/testResults/*.xml
 
-    - name: Publish Test Results II
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: CTest Tests
-        path: build/**/testResults/*.xml
-        reporter: java-junit
+    # This report exceeds the github report limit so it is being commented out
+    # - name: Publish Test Results II
+    #   uses: dorny/test-reporter@v1
+    #   if: always()
+    #   with:
+    #     name: CTest Tests
+    #     path: build/**/testResults/*.xml
+    #     reporter: java-junit
