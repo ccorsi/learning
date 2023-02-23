@@ -35,6 +35,5 @@ jobs:
     - name: Test
       env:
         GTEST_OUTPUT: xml:xunit_report.xml
-      working-directory: ${{ env.BUILD_DIR }}
       run: |
-        ctest -C Debug -T test --output-on-failure
+        ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
