@@ -53,7 +53,9 @@ TEST_P(MaximumDifferencePairFixture, MaximumDifferencePairTests) {
 
     Solution solution;
 
-    int actual = solution.findMaxDiff(data.get_input());
+    std::vector<int> input = data.get_input();
+
+    int actual = solution.findMaxDiff(input);
 
     ASSERT_EQ(data.get_expected(), actual);
 }
