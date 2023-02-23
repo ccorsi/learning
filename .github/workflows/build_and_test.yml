@@ -10,7 +10,7 @@ on:
 
 env:
   BUILD_DIR: build
-  # TEST_RESULTS_DIR: ${{ env.GITHUB_WORKSPACE }}/build/testResults
+  TEST_RESULTS_DIR: $PWD/build/testResults
 
 jobs:
   build:
@@ -38,9 +38,10 @@ jobs:
       #   GTEST_OUTPUT: xml:${{ env.TEST_RESULTS_DIR }}
       run: |
         # mkdir ${{ env.TEST_RESULTS_DIR }}
-        mkdir build/testResults
+        mkdir $PWD/build/testResults
         export GTEST_OUTPUT=xml:$PWD/build/testResults
         printenv GTEST_OUTPUT
+        echo TEST_RESULTS_DIR=$TEST_RESULTS_DIR
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
     - name: Publish Test Results
@@ -48,7 +49,7 @@ jobs:
       if: always()
       with:
         files: |
-          build/testResults/**/*.xml
+          $PWD/build/testResults/**/*.xml
           # ${{ env.TEST_RESULTS_DIR }}/**/*.xml
 
     - name: Publish Test Results II
@@ -57,5 +58,5 @@ jobs:
       with:
         name: CTest Tests
         # path: ${{ env.TEST_RESULTS_DIR }}/**/*.xml
-        path: build/testResults/**/*.xml
+        path: $PWD/build/testResults/**/*.xml
         reporter: java-junit
