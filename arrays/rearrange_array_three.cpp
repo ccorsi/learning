@@ -40,7 +40,7 @@ void valhalla::arrays::rearrange_array_three::Solution::rearrange(std::vector<in
     // std::cout << " ]" << std::endl;
 
     std::set<int> processed;
-    const size_t size = A.size();
+    const std::vector<int>::size_type size = A.size();
     // int cnt = 0;
     // const int end = 10;
 

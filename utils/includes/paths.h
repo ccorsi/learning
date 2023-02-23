@@ -19,7 +19,7 @@ namespace valhalla {
     namespace utils {
         namespace paths {
             bool path_exists(std::string const &);
-            std::string find_path(std::string const &, const size_t depth = 5);
+            std::string find_path(std::string const &, const std::size_t depth = 5);
         }
     }
 }

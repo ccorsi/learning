@@ -49,10 +49,10 @@ set<vector<int>> valhalla::arrays::zero_sum_arrays::Solution::find_zero_subarray
 
     map<int, vector<int>> ranges;
 
-    size_t last = 0;
+    std::vector<int>::size_type last = 0;
     vector<int> zeros;
 
-    for (size_t idx = 0 ; idx < values.size() ; idx++) {
+    for (std::vector<int>::size_type idx = 0 ; idx < values.size() ; idx++) {
         // insert the current index for the this sum
         ranges[sum].push_back(idx);
 
@@ -85,12 +85,12 @@ set<vector<int>> valhalla::arrays::zero_sum_arrays::Solution::find_zero_subarray
             cout << "Found zero sum subarrays " << subarray << endl;
 
             // extract each array values
-            for (size_t cnt = 0 ; cnt < subarray.size() ; cnt++) {
+            for (std::vector<int>::size_type cnt = 0 ; cnt < subarray.size() ; cnt++) {
                 // We've found a subarray that sums to zero
                 vector<int> entries;
 
                 cout << "Subarray with entries: [";
-                for (size_t pos = subarray[cnt] ; pos < idx ; pos++) {
+                for (std::vector<int>::size_type pos = subarray[cnt] ; pos < idx ; pos++) {
                     cout << " " << values[pos];
                     entries.push_back(values[pos]);
                 }

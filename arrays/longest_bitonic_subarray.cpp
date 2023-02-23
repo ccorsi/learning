@@ -43,10 +43,10 @@ std::vector<int> valhalla::arrays::longest_bitonic_subarray::Solution::findBiton
     // std::cout << " ]" << std::endl;
 
     const int START = 0, RISING = 1, DROPPING = 2;
-    size_t start = 0, idx = 0;
+    std::vector<int>::size_type start = 0, idx = 0;
     int state = START;
     int current = nums[start];
-    size_t max_start, max_end;
+    std::vector<int>::size_type max_start, max_end;
     max_start = max_end = start;
 
     while (++idx < nums.size()) {
@@ -111,7 +111,7 @@ std::vector<int> valhalla::arrays::longest_bitonic_subarray::Solution::findBiton
                     } // if
                 } else {
                     // std::cout << "Bitonic: [";
-                    // for (size_t i = start ; i < idx ; i++)
+                    // for (std::vector<int>::size_type i = start ; i < idx ; i++)
                     //     std::cout << " " << nums[i];
                     // std::cout << " ]" << std::endl;
                     // we are done here so let us compare the size of the current longest with this one

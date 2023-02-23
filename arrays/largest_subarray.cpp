@@ -42,16 +42,16 @@ std::vector<int> valhalla::arrays::largest_subarray::Solution::find(std::vector<
 
     // setup a targets tracker fields.
     std::vector<int> targets;
-    size_t prior = 0;
+    std::vector<int>::size_type prior = 0;
 
     // setup a map that will be used to track sums to compare with for target
     std::map<int, std::vector<size_t>> results;
 
     // setup values used to determine the longest subarray
-    size_t longest = 0;
-    size_t start = 0;
+    std::vector<int>::size_type longest = 0;
+    std::vector<int>::size_type start = 0;
 
-    for(size_t idx = 0 ; idx < values.size() ; idx++) {
+    for(std::vector<int>::size_type idx = 0 ; idx < values.size() ; idx++) {
         // insert the current index for the this sum
         results[sum].push_back(idx);
 
@@ -65,7 +65,7 @@ std::vector<int> valhalla::arrays::largest_subarray::Solution::find(std::vector<
         std::vector<size_t> subarray = results[sum];
 
         if ( ! subarray.empty() ) {
-            size_t length = idx + 1 - subarray[0];
+            std::vector<int>::size_type length = idx + 1 - subarray[0];
             if (length > longest) {
                 longest = length;
                 start = subarray[0];
@@ -75,7 +75,7 @@ std::vector<int> valhalla::arrays::largest_subarray::Solution::find(std::vector<
 
     if (longest > 0) {
         // we've found the longest subarray for target in the passed array
-        for(size_t cnt = 0 ; cnt < longest ; cnt++) {
+        for(std::vector<int>::size_type cnt = 0 ; cnt < longest ; cnt++) {
             found.push_back(values[start + cnt]);
         }
     } // if
@@ -93,10 +93,10 @@ std::vector<int> valhalla::arrays::largest_subarray::Solution::find(std::vector<
     std::map<int, std::vector<int>> ranges;
 
     int sum = 0;
-    size_t longest =  0;
+    std::vector<int>::size_type longest =  0;
     int key = 0;
 
-    for(size_t idx = 0 ; idx < values.size() ; idx++) {
+    for(std::vector<int>::size_type idx = 0 ; idx < values.size() ; idx++) {
         // determine the increment
         int value = ( values[idx] == 0 ) ? -1 : 1;
 
@@ -121,8 +121,8 @@ std::vector<int> valhalla::arrays::largest_subarray::Solution::find(std::vector<
 
     if (longest > 0) {
         std::vector<int> range = ranges[key];
-        size_t end = range.back();
-        for(size_t idx = range[0] ; idx <= end ; idx++) {
+        std::vector<int>::size_type end = range.back();
+        for(std::vector<int>::size_type idx = range[0] ; idx <= end ; idx++) {
             largestSubarray.push_back(values[idx]);
         }
     }

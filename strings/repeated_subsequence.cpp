@@ -40,9 +40,9 @@ Explanation: String "ABCA" doesn’t have any repeated subsequence
 */
 
 bool valhalla::strings::repeated_subsequence::Solution::hasRepeatedSubsequence(std::string s) {
-    std::map<char,std::vector<size_t>> letters;
+    std::map<char,std::vector<std::string::size_type>> letters;
 
-    for (size_t idx = 0 ; idx < s.length() ; idx++) {
+    for (std::string::size_type idx = 0 ; idx < s.length() ; idx++) {
         char key = s[idx];
         letters[key].push_back(idx);
         if (letters[key].size() > 2) {
@@ -54,17 +54,17 @@ bool valhalla::strings::repeated_subsequence::Solution::hasRepeatedSubsequence(s
     if (letters.size() < s.length() - 1) {
         // we might contain a sequence that will work
         // so look for all sequences of more than one index
-        std::vector<std::vector<size_t>> entries;
+        std::vector<std::vector<std::string::size_type>> entries;
 
-        for (std::map<char,std::vector<size_t>>::value_type value : letters) {
+        for (std::map<char,std::vector<std::string::size_type>>::value_type value : letters) {
             if (value.second.size() > 1)
                 entries.push_back(value.second);
         } // for
 
         // std::cout << "Before entries: [";
-        // for (std::vector<size_t> entry : entries) {
+        // for (std::vector<std::string::size_type> entry : entries) {
         //     std::cout << " [";
-        //     for (size_t v : entry)
+        //     for (std::string::size_type v : entry)
         //         std::cout << " " << v;
         //     std::cout << " ]";  
         // } // for
@@ -73,15 +73,15 @@ bool valhalla::strings::repeated_subsequence::Solution::hasRepeatedSubsequence(s
         // std::cout << "After entries: [";
         // for (std::vector<size_t> entry : entries) {
         //     std::cout << " [";
-        //     for (size_t v : entry)
+        //     for (std::string::size_type v : entry)
         //         std::cout << " " << v;
         //     std::cout << " ]";  
         // } // for
         // std::cout << " ]" << std::endl;
 
         // determine if we have a sequence but we only need to find two entries
-        for (size_t outter = 0 ; outter < entries.size() ; outter++) {
-            for (size_t inner = outter + 1 ; inner < entries.size() ; inner++) {
+        for (std::string::size_type outter = 0 ; outter < entries.size() ; outter++) {
+            for (std::string::size_type inner = outter + 1 ; inner < entries.size() ; inner++) {
                 if (entries[outter][1] < entries[inner][1]) {
                     // we are done
                     return true;

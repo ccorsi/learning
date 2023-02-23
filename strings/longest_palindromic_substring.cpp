@@ -43,22 +43,22 @@ std::string valhalla::strings::longest_palindromic_substring::Solution::longestP
 
     if (s.empty()) return result;
 
-    std::list<size_t> next;
-    std::set<size_t> checked; 
+    std::list<std::string::size_type> next;
+    std::set<std::string::size_type> checked;
 
-    const size_t size = s.length();
-    const size_t end = size - 1;
+    const std::string::size_type size = s.length();
+    const std::string::size_type end = size - 1;
 
     next.push_back(size / 2);
 
-    size_t total = size + size;
-    size_t cnt = 0;
+    std::string::size_type total = size + size;
+    std::string::size_type cnt = 0;
 
     while (! next.empty()) {
         // get the next pivot entry
-        size_t pivot = next.front();
+        std::string::size_type pivot = next.front();
         // determine if the next pivot entry can produce a larger palindrome that the current largest
-        size_t width = std::min(pivot, end - pivot);
+        std::string::size_type width = std::min(pivot, end - pivot);
         // std::cout << "width: " << width << ", pivot: " << pivot << ", result: " << result << std::endl;
         if (width + width + 1 < result.length()) {
             // unable to produce a longer palindrome
@@ -70,7 +70,7 @@ std::string valhalla::strings::longest_palindromic_substring::Solution::longestP
         checked.insert(pivot);
 
         // check for even length palindrome
-        size_t left = pivot, right = pivot + 1;
+        std::string::size_type left = pivot, right = pivot + 1;
         // std::cout << "Start even left: " << left << ", right: " << right << ", pivot: " << pivot << std::endl;
         while (left >= 0 && right < size && s[left] == s[right]) {
             // std::cout << "Even left: " << left << ", right: " << right << std::endl;
@@ -115,7 +115,7 @@ std::string valhalla::strings::longest_palindromic_substring::Solution::longestP
         if (++cnt > total) {
             std::cout << "Breaking out of while loop" << std::endl;
             std::cout << "next [";
-            for (size_t v : next)
+            for (std::string::size_type v : next)
                 std::cout << " " << v;
             std::cout << " ]" << std::endl; 
             break;

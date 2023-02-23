@@ -32,8 +32,8 @@ Output: [2, 4, 3, 1, 5] or any other valid combination.
 void valhalla::arrays::rearrange_array_four::Solution::rearrange(std::vector<int> & nums) {
     if (nums.empty()) return;
 
-    size_t left = 0, right = nums.size() - 1;
-    const size_t size = nums.size();
+    std::vector<int>::size_type left = 0, right = nums.size() - 1;
+    const std::vector<int>::size_type size = nums.size();
 
     // find the first positive entry
     while (left < size && nums[left] < 0) left++;

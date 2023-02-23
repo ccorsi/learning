@@ -51,8 +51,8 @@ int valhalla::arrays::peak_element::Solution::findPeakElement(std::vector<int> c
 
     if (nums[nums.size() - 2] <= nums.back()) return nums.back();
 
-    size_t last = nums.size() - 1;
-    for (size_t pos = 1 ; pos < last ; pos++) {
+    std::vector<int>::size_type last = nums.size() - 1;
+    for (std::vector<int>::size_type pos = 1 ; pos < last ; pos++) {
         if (nums[pos-1] <= nums[pos] && nums[pos] >= nums[pos+1]) {
             return nums[pos];
         } // if

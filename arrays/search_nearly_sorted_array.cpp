@@ -48,11 +48,11 @@ int valhalla::arrays::search_nearly_sorted_array::Solution::findIndex(std::vecto
     // check the special case of size 1
     if (nums.size() == 1 && nums[0] == target) return 0;
 
-    size_t start = 0, end = nums.size() - 1;
-    const size_t size = nums.size();
+    std::vector<int>::size_type start = 0, end = nums.size() - 1;
+    const std::vector<int>::size_type size = nums.size();
 
     while (start < end && end < size) {
-        size_t mid = (start + end) / 2;
+        std::vector<int>::size_type mid = (start + end) / 2;
 
         if (nums[mid] == target) {
             return mid;

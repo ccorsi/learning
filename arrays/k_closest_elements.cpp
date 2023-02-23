@@ -49,8 +49,8 @@ std::vector<int> valhalla::arrays::k_closest_elements::Solution::kClosestElement
 
     if (nums.empty()) return result;
     
-    size_t start = 0, end = nums.size() - 1;
-    const size_t size = nums.size();
+    std::vector<int>::size_type start = 0, end = nums.size() - 1;
+    const std::vector<int>::size_type size = nums.size();
 
     while (start < end && end < size) {
         int mid = (start + end) / 2;
@@ -74,7 +74,7 @@ std::vector<int> valhalla::arrays::k_closest_elements::Solution::kClosestElement
     // std::cout << "nums[" << start << "]: " << nums[start] << " target: " << target << " k: " << k << std::endl;
 
     // the start index will always be less than or equal to target
-    size_t left = start, right = start + 1;
+    std::vector<int>::size_type left = start, right = start + 1;
 
     while (k > 0 && left < size && right < size) {
         // std::cout << "nums[left]: " << nums[left] << " nums[right]: " << nums[right] << " target: " << target << std::endl;

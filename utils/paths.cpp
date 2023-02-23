@@ -38,10 +38,10 @@ bool valhalla::utils::paths::path_exists(std::string const & path) {
  * @return std::string the path of the passed file or the passed file
  *  if not found
  */
-std::string valhalla::utils::paths::find_path(std::string const & name, const size_t depth) {
+std::string valhalla::utils::paths::find_path(std::string const & name, const std::size_t depth) {
     std::string path = name;
 
-    for (size_t tests = 0 ; tests < depth ; tests++) {
+    for (std::size_t tests = 0 ; tests < depth ; tests++) {
         std::ifstream fs(path);
         if (fs.is_open()) return path;
         path = "../" + path;

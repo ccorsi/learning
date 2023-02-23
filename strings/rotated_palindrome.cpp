@@ -38,17 +38,17 @@ bool valhalla::strings::rotated_palindrome::Solution::exists(std::string& str) {
     }
 
     std::cout << "Checking for rotated palindrome for string: " << str << std::endl;
-    size_t left, right, size = str.length();
-    // const size_t test = size / 2 + ( size % 2 );
-    const size_t oneless = size - 1;
-    const size_t shift = ( ( size % 2 ) == 0 ) ? 0 : oneless;
+    std::string::size_type left, right, size = str.length();
+    // const std::string::size_type test = size / 2 + ( size % 2 );
+    const std::string::size_type oneless = size - 1;
+    const std::string::size_type shift = ( ( size % 2 ) == 0 ) ? 0 : oneless;
     
-    for(size_t idx = 0 ; idx < size ; idx++) {
+    for(std::string::size_type idx = 0 ; idx < size ; idx++) {
         std::cout << "Starting at index: " << idx << std::endl;
         left = ( idx + shift ) % size;
         right = ( idx + 1 ) % size;
 
-        size_t cnt = 0;
+        std::string::size_type cnt = 0;
 
         std::cout << "Start: [left.right]: [" << left << "," << right << "] [str[left],str[right]]: [" << str[left] << "," << str[right] << "]" << std::endl;
         while (cnt < size && str[left] == str[right]) {

@@ -67,19 +67,19 @@ void valhalla::matrices::shift_matrix::Solution::shift_matrix(std::vector<std::v
 	}
 
 	int next = values[0][0];
-	size_t cols = values[0].size(), rows = values.size();
-	size_t row = 0, col = 0;
-	size_t rend, dend, lend, uend;
+	std::vector<int>::size_type cols = values[0].size(), rows = values.size();
+	std::vector<int>::size_type row = 0, col = 0;
+	std::vector<int>::size_type rend, dend, lend, uend;
 	rend = cols - 1;
 	dend = rows - 1;
 	lend = 0;
 	uend = 1;
 
-	size_t xend, yend;
+	std::vector<int>::size_type xend, yend;
 	xend = rows / 2;
 	yend = cols / 2 - (cols % 2 == 0) ? 1 : 0;
 
-	size_t cnt = 1, size = rows * cols;
+	std::vector<int>::size_type cnt = 1, size = rows * cols;
 
 	std::cout << "Initial matrix" << std::endl;
 	std::cout << values << std::endl;

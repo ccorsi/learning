@@ -37,13 +37,13 @@ void valhalla::arrays::dutch_national_flag::Solution::sort(vector<int>& nums) {
 
     cout << "Sorting: ["; for(int value : nums) cout << " " << value; cout << " ]" << endl;
 
-    const size_t last = nums.size() - 1;
-    size_t end = 0 - 1; // this will become the largest integer for size_t
-    size_t lidx = 0, ridx = last;
-    size_t size = nums.size();
+    const std::vector<int>::size_type last = nums.size() - 1;
+    std::vector<int>::size_type end = 0 - 1; // this will become the largest integer for size_t
+    std::vector<int>::size_type lidx = 0, ridx = last;
+    std::vector<int>::size_type size = nums.size();
 
     for(int pivot = 2 ; pivot > 0 ; pivot--) {
-        size_t left = lidx, right = ridx;
+        std::vector<int>::size_type left = lidx, right = ridx;
 
         while (true) {
             while (left < size && nums[left] < pivot) left++;
@@ -74,12 +74,12 @@ void valhalla::arrays::dutch_national_flag::Solution::sort(vector<int>& nums) {
         }
     }
 /*
-    size_t idx = 0;
-    const size_t last = nums.size() - 1;
+    std::vector<int>::size_typesize_t idx = 0;
+    const std::vector<int>::size_type last = nums.size() - 1;
 
     // iterator over pival values 1 and 2 only
     for(int pivot = 1 ; pivot < 3 ; pivot++) {
-        size_t left = idx, right = last;
+        std::vector<int>::size_type left = idx, right = last;
         cout << endl << "Pivot: " << pivot << ", initial: ["; for(int value : nums) cout << " " << value; cout << " ], left: " <<  left << ", right: " << right << endl << endl;
 
         while (true) {

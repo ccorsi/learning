@@ -31,7 +31,7 @@ int valhalla::arrays::majority_element::Solution::findMajorityElement(std::vecto
     std::map<int,int> counts;
     counts[max]++;
 
-    for(size_t idx = 1 ; idx < nums.size() ; idx++) {
+    for(std::vector<int>::size_type idx = 1 ; idx < nums.size() ; idx++) {
         int value = nums[idx];
         counts[value]++;
         if (counts[value] > cnt) {

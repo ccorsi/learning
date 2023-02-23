@@ -44,7 +44,7 @@ void valhalla::arrays::sort_binary_array_inline::Solution::sort_array(std::vecto
 
     cout << "Before: " << values << endl;
 
-    size_t front = 0, back = values.size() - 1;
+    std::vector<int>::size_type front = 0, back = values.size() - 1;
 
     while (front < back) {
         cout << "Start [front,back] = [" << front << "," << back << "]" << endl;

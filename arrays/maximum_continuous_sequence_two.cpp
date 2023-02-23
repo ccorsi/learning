@@ -68,13 +68,13 @@ pair<int,int> valhalla::arrays::maximum_continuous_sequence_two::Solution::findL
         return p;
     } // if
 
-    size_t kcnt = 1;
-    size_t idx = 0;
-    const size_t zeros_size = k + 2;
-    size_t size;
+    std::vector<int>::size_type kcnt = 1;
+    std::vector<int>::size_type idx = 0;
+    const std::vector<int>::size_type zeros_size = k + 2;
+    std::vector<int>::size_type size;
 
     // setup an array that will contain the different zeros within the passed nums
-    vector<size_t> zeros(zeros_size);
+    vector<std::vector<int>::size_type> zeros(zeros_size);
 
     // insure that this is correct
     assert(zeros_size == zeros.size());
@@ -101,7 +101,7 @@ pair<int,int> valhalla::arrays::maximum_continuous_sequence_two::Solution::findL
         // we firstly calculate the longest sequence given the current zeros
         int max_len = 0;
 
-        for( size_t cnt = 1 ; cnt < zeros_size ; cnt++) {
+        for( std::vector<int>::size_type cnt = 1 ; cnt < zeros_size ; cnt++) {
             max_len += (zeros[cnt] - zeros[cnt - 1]);
         } // for
 
@@ -113,16 +113,16 @@ pair<int,int> valhalla::arrays::maximum_continuous_sequence_two::Solution::findL
         p.second = zeros.back() - 1;
 
         cout << ">>>>>> nums: [";
-        for (size_t num : nums)
+        for (std::vector<int>::size_type num : nums)
             cout << " " << num;
         cout << " ] <<<<<<" << endl;
         cout << ">>>>>> zeros: [";
-        for (size_t zero : zeros)
+        for (std::vector<int>::size_type zero : zeros)
             cout << " " << zero;
         cout << " ] <<<<<<" << endl;
         cout << "max_len: " << max_len << ", p: " << p << ", k: " << k << endl;
 
-        const size_t last_idx = zeros_size - 1;
+        const std::vector<int>::size_type last_idx = zeros_size - 1;
 
         // we now find the subsequence zero and calculate its length and compare
         // it to the current maximum sequence length
@@ -133,7 +133,7 @@ pair<int,int> valhalla::arrays::maximum_continuous_sequence_two::Solution::findL
             std::move(first, zeros.end(), zeros.begin());
 
             cout << ">>>>>> shifted zeros: [";
-            for (size_t zero : zeros)
+            for (std::vector<int>::size_type zero : zeros)
                 cout << " " << zero;
             cout << " ] <<<<<<" << endl;
 
@@ -145,14 +145,14 @@ pair<int,int> valhalla::arrays::maximum_continuous_sequence_two::Solution::findL
             idx++;
 
             cout << ">>>>>> updates zeros: [";
-            for (size_t zero : zeros)
+            for (std::vector<int>::size_type zero : zeros)
                 cout << " " << zero;
             cout << " ] <<<<<<" << endl;
 
             // calculate the current length and compare to max_length
             int len = 0;
 
-            for( size_t cnt = 1 ; cnt < zeros_size ; cnt++) {
+            for( std::vector<int>::size_type cnt = 1 ; cnt < zeros_size ; cnt++) {
                 len += (zeros[cnt] - zeros[cnt - 1]);
             } // for
 
@@ -173,12 +173,12 @@ pair<int,int> valhalla::arrays::maximum_continuous_sequence_two::Solution::findL
     } // else
 
     cout << ">>>>>> nums: [";
-    for (size_t num : nums)
+    for (std::vector<int>::size_type num : nums)
         cout << " " << num;
     cout << " ] <<<<<<" << endl;
 
     cout << ">>>>>> zeros: [";
-    for (size_t zero : zeros)
+    for (std::vector<int>::size_type zero : zeros)
         cout << " " << zero;
     cout << " ], k=" << k << " <<<<<<" << endl;
 

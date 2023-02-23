@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(strings VERSION 0.1.3)
+project(strings VERSION 0.1.4)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)

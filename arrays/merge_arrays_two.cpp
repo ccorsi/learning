@@ -86,7 +86,7 @@ void valhalla::arrays::merge_arrays_two::Solution::merge(vector<int>& X, vector<
     } // if
 
     // setup different tracking indexes used to merge the two arrays
-    size_t x_idx = 0, y_idx = 0, idx = 0;
+    std::vector<int>::size_type x_idx = 0, y_idx = 0, idx = 0;
 
     // find first vacant entry.
     while (X[x_idx] != 0) {
@@ -100,7 +100,7 @@ void valhalla::arrays::merge_arrays_two::Solution::merge(vector<int>& X, vector<
         // move it to the correct spot.
         if (x_idx == 0) {
             // This is an end value
-            for(size_t idx = x_idx + 1; idx < X.size() && X[idx] < value ; idx++) {
+            for(std::vector<int>::size_type idx = x_idx + 1; idx < X.size() && X[idx] < value ; idx++) {
                 // swap the entries
                 int temp = X[idx - 1];
                 X[idx - 1] = X[idx];
@@ -108,7 +108,7 @@ void valhalla::arrays::merge_arrays_two::Solution::merge(vector<int>& X, vector<
             } // for
         } else if (x_idx == X.size() - 1) {
             // This is an end value
-            for (size_t idx = x_idx; idx > 0 && X[idx - 1] > value ; idx--) {
+            for (std::vector<int>::size_type idx = x_idx; idx > 0 && X[idx - 1] > value ; idx--) {
                 // swap the entries
                 int temp = X[idx - 1];
                 X[idx - 1] = X[idx];
@@ -120,7 +120,7 @@ void valhalla::arrays::merge_arrays_two::Solution::merge(vector<int>& X, vector<
                 // The entry was already inserted into the correct index
             } else if (X[x_idx - 1] > X[x_idx]) {
                 // The entry needs to be moved to the back
-                for(size_t idx = x_idx ; idx > 0 && X[idx - 1] > X[idx] ; idx--) {
+                for(std::vector<int>::size_type idx = x_idx ; idx > 0 && X[idx - 1] > X[idx] ; idx--) {
                     // swap the entries
                     int temp = X[idx - 1];
                     X[idx - 1] = X[idx];
@@ -128,7 +128,7 @@ void valhalla::arrays::merge_arrays_two::Solution::merge(vector<int>& X, vector<
                 } // for
             } else {
                 // The entry needs to be moved to the front
-                for(size_t idx = x_idx + 1 ; idx < X.size() && X[idx - 1] > X[idx] ; idx++ ) {
+                for(std::vector<int>::size_type idx = x_idx + 1 ; idx < X.size() && X[idx - 1] > X[idx] ; idx++ ) {
                     // swap the entries
                     int temp = X[idx - 1];
                     X[idx - 1] = X[idx];

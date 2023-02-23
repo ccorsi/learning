@@ -32,18 +32,18 @@ Explanation: The maximum sum subarray is [2, -1, 2, 1, 6] or [6, 4] or [2, -1, 2
 
 int valhalla::arrays::maximum_sum_subarray::Solution::findMaxSubarraySum(std::vector<int> const &nums) {
     int max_sum = 0;
-    const size_t size = nums.size();
+    const std::vector<int>::size_type size = nums.size();
 
     if (size < 2) return (size == 1) ? nums[0] : max_sum;
 
     max_sum = nums[0]; // set an initial max sum
 
-    for (size_t idx = 0 ; idx < size ; idx++) {
+    for (std::vector<int>::size_type idx = 0 ; idx < size ; idx++) {
         int current_max = nums[idx];
         if (current_max > max_sum) {
             max_sum = current_max;
         } // if
-        for (size_t i = idx + 1 ; i < size ; i++) {
+        for (std::vector<int>::size_type i = idx + 1 ; i < size ; i++) {
             current_max += nums[i];
             if (current_max > max_sum) {
                 max_sum = current_max;

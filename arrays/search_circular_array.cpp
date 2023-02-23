@@ -31,7 +31,7 @@ Explanation: Target not found
 */
 
 int valhalla::arrays::search_circular_array::Solution::findIndex(std::vector<int> const & nums, int target) {
-    size_t pos = 0;
+    std::vector<int>::size_type pos = 0;
 
     while (pos < nums.size() && nums[pos] != target) pos++;
 

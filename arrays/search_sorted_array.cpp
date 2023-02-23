@@ -40,11 +40,11 @@ int valhalla::arrays::search_sorted_array::Solution::findIndex(std::vector<int> 
     // we could cheat and just use one of the binary searches that are part of the C++ standard but we won't
     // here and use a binary search implementation.
 
-    size_t start = 0, end = nums.size() - 1;
-    const size_t size = nums.size(); // we require this to be able to deal with setting end to -1
+    std::vector<int>::size_type start = 0, end = nums.size() - 1;
+    const std::vector<int>::size_type size = nums.size(); // we require this to be able to deal with setting end to -1
 
     while (start <= end && end < size) {
-        size_t mid = (end + start) / 2;
+        std::vector<int>::size_type mid = (end + start) / 2;
         if (nums[mid] == target) {
             return mid;
         }

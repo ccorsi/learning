@@ -37,12 +37,12 @@ std::vector<int> valhalla::matrices::spiral_matrix::Solution::spiralTraversal(st
 
     if (mat.empty()) return spiral;
 
-    size_t top = 0, right = mat[0].size() - 1, bottom = mat.size() - 1, left = 0;
-    const size_t size = mat.size() * mat[0].size();
+    std::vector<int>::size_type top = 0, right = mat[0].size() - 1, bottom = mat.size() - 1, left = 0;
+    const std::vector<int>::size_type size = mat.size() * mat[0].size();
 
     while (spiral.size() < size) {
         // copy entries from top to right into spiral
-        for (size_t idx = left ; idx <= right ; idx++) {
+        for (std::vector<int>::size_type idx = left ; idx <= right ; idx++) {
             // std::cout << "top: " << top << ", idx: " << idx << ", size: " << ( spiral.size() + 1 ) << ", entry: " <<  mat[top][idx] << std::endl;
             spiral.push_back(mat[top][idx]);
         } // for
@@ -50,7 +50,7 @@ std::vector<int> valhalla::matrices::spiral_matrix::Solution::spiralTraversal(st
         top++;
 
         // copy entries from right top to right bottom
-        for (size_t idx = top; idx <= bottom; idx++)
+        for (std::vector<int>::size_type idx = top; idx <= bottom; idx++)
         {
             // std::cout << "right: " << right << ", idx: " << idx << ", size: " << ( spiral.size() + 1 ) << ", entry: " <<  mat[idx][right] << std::endl;
             spiral.push_back(mat[idx][right]);
@@ -59,7 +59,7 @@ std::vector<int> valhalla::matrices::spiral_matrix::Solution::spiralTraversal(st
         right--;
 
         // copy entries from bottom right to bottom left
-        for (size_t idx = right; idx < mat.size() && left <= idx; idx--)
+        for (std::vector<int>::size_type idx = right; idx < mat.size() && left <= idx; idx--)
         {
             // std::cout << "bottom: " << bottom << ", idx: " << idx << ", size: " << ( spiral.size() + 1 ) << ", entry: " <<  mat[bottom][idx] << std::endl;
             spiral.push_back(mat[bottom][idx]);
@@ -68,7 +68,7 @@ std::vector<int> valhalla::matrices::spiral_matrix::Solution::spiralTraversal(st
         bottom--;
 
         // copy entries from bottom left to top left
-        for (size_t idx = bottom; idx >= top; idx--)
+        for (std::vector<int>::size_type idx = bottom; idx >= top; idx--)
         {
             // std::cout << "left: " << left << ", idx: " << idx << ", size: " << ( spiral.size() + 1 ) << ", entry: " <<  mat[left][idx] << std::endl;
             spiral.push_back(mat[idx][left]);

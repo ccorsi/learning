@@ -38,7 +38,7 @@ std::unordered_set<int> valhalla::arrays::equilibrium_index::Solution::find_inde
     long left = 0, right = 0;
 
     // sum up the right side of the calculation
-    for (size_t idx = 1 ; idx < nums.size() ; idx++)
+    for (std::vector<int>::size_type idx = 1 ; idx < nums.size() ; idx++)
         right += nums[idx];
 
     // check if it is zero
@@ -47,7 +47,7 @@ std::unordered_set<int> valhalla::arrays::equilibrium_index::Solution::find_inde
         indices.insert(0);
     }
 
-    for (size_t idx = 1 ; idx < nums.size() ; idx++) {
+    for (std::vector<int>::size_type idx = 1 ; idx < nums.size() ; idx++) {
         // increment the prior value to the left...
         left += nums[idx - 1];
         // and decrement the current index value to the right

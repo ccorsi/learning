@@ -21,7 +21,7 @@ Output: [6, 8, 2, 3, 4, 1, 0, 0, 0]
 
 */
 void valhalla::arrays::move_zeroes_to_end::Solution::rearrange(std::vector<int>& nums) {
-    size_t src = 0, dest = 0;
+    std::vector<int>::size_type src = 0, dest = 0;
 
     while (src < nums.size()) {
         if (nums[src] == 0) {

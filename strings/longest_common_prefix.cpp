@@ -35,8 +35,8 @@ std::string valhalla::strings::longest_common_prefix::Solution::findLCP(std::vec
 
     for ( ; itr != words.end() ; itr++) {
         std::string word = *itr;
-        size_t last = std::min(word.length(), common.length());
-        size_t pos = 0;
+        std::string::size_type last = std::min(word.length(), common.length());
+        std::string::size_type pos = 0;
 
         while (pos < last && word[pos] == common[pos]) pos++;
 

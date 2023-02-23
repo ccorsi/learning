@@ -39,7 +39,7 @@ int valhalla::arrays::maximum_difference_pair::Solution::findMaxDiff(std::vector
 
     min = max = nums[0];
 
-    for (size_t idx = 1 ; idx < nums.size() ; idx++) {
+    for (std::vector<int>::size_type idx = 1 ; idx < nums.size() ; idx++) {
         int value = nums[idx];
 
         if (value > max) {

@@ -30,7 +30,7 @@ Output: (-1, -1)
 std::pair<int,int> valhalla::arrays::first_and_last_occurrence::Solution::findPair(std::vector<int> const & nums, int target) {
     std::pair<int,int> p(-1,-1);
 
-    size_t pos = 0;
+    std::vector<int>::size_type pos = 0;
 
     while (pos < nums.size() && nums[pos] != target && nums[pos] < target) pos++;
 

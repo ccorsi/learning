@@ -29,7 +29,7 @@ Output: [6, 9, 2, 5, 1, 4] or [1, 5, 2, 6, 4, 9], or any other valid combination
 */
 
 void valhalla::arrays::rearrange_array::Solution::rearrange(std::vector<int> & nums) {
-    for (size_t idx = 1 ; idx < nums.size() ; idx += 2) {
+    for (std::vector<int>::size_type idx = 1 ; idx < nums.size() ; idx += 2) {
         if (nums[idx - 1] > nums[idx]) {
             int temp = nums[idx - 1];
             nums[idx - 1] = nums[idx];

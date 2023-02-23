@@ -33,7 +33,7 @@ int valhalla::arrays::maximum_continuous_sequence::Solution::findIndexOfZero(std
     // check for empty array
     if (nums.empty()) return -1;
 
-    size_t zero_idx = 0;
+    std::vector<int>::size_type zero_idx = 0;
 
     // find first zero entry
     while (zero_idx < nums.size() && nums[zero_idx] == 1) zero_idx++;
@@ -50,7 +50,7 @@ int valhalla::arrays::maximum_continuous_sequence::Solution::findIndexOfZero(std
         left = right;
 
         // save the prior zero_idx
-        size_t last = zero_idx;
+        std::vector<int>::size_type last = zero_idx;
 
         // increment the zero_idx.
         zero_idx++;

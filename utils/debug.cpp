@@ -30,11 +30,11 @@ const int ERROR = 4;
  */
 int get_debug_level() {
     static const char *name = "DEBUGLEVEL";
-    size_t len;
 
     // Use the C+11 version of getenv instead since this is a safer version of
     // the getenv call.
     #ifdef WIN32
+    std::size_t len;
     char level[81];
     if (getenv_s(&len, level, 80, name) != 0) {
     #else

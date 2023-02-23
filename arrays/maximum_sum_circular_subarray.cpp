@@ -28,18 +28,18 @@ Explanation: Subarray with the largest sum is [5, 6, -2, 3, -4, 2, 8] with sum 1
 
 int valhalla::arrays::maximum_sum_circular_subarray::Solution::findMaxSubarray(std::vector<int> & nums) {
     int max_sum = 0;
-    const size_t size = nums.size();
+    const std::vector<int>::size_type size = nums.size();
 
     if (size < 2) return (size == 1) ? nums[0] : max_sum;
 
     max_sum = nums[0]; // set an initial max sum
 
-    for (size_t idx = 0 ; idx < size ; idx++) {
+    for (std::vector<int>::size_type idx = 0 ; idx < size ; idx++) {
         int current_max = nums[idx];
         if (current_max > max_sum) {
             max_sum = current_max;
         } // if
-        for (size_t i = (idx + 1) % size ; i != idx ; i = (i + 1) % size) {
+        for (std::vector<int>::size_type i = (idx + 1) % size ; i != idx ; i = (i + 1) % size) {
             current_max += nums[i];
             if (current_max > max_sum) {
                 max_sum = current_max;

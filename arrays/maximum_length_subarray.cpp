@@ -39,16 +39,16 @@ std::vector<int> valhalla::arrays::maximum_length_subarray::Solution::find_maxim
 
     // setup a targets tracker fields.
     std::vector<int> targets;
-    size_t prior = 0;
+    std::vector<int>::size_type prior = 0;
 
     // setup a map that will be used to track sums to compare with for target
     std::map<int, std::vector<size_t>> results;
 
     // setup values used to determine the longest subarray
-    size_t longest = 0;
-    size_t start = 0;
+    std::vector<int>::size_type longest = 0;
+    std::vector<int>::size_type start = 0;
 
-    for(size_t idx = 0 ; idx < values.size() ; idx++) {
+    for(std::vector<int>::size_type idx = 0 ; idx < values.size() ; idx++) {
         // insert the current index for the this sum
         results[sum + target].push_back(idx);
 
@@ -82,7 +82,7 @@ std::vector<int> valhalla::arrays::maximum_length_subarray::Solution::find_maxim
             std::vector<size_t> subarray = results[sum];
 
             if ( ! subarray.empty() ) {
-                size_t length = idx + 1 - subarray[0];
+                std::vector<int>::size_type length = idx + 1 - subarray[0];
                 if (length > longest) {
                     longest = length;
                     start = subarray[0];
@@ -93,7 +93,7 @@ std::vector<int> valhalla::arrays::maximum_length_subarray::Solution::find_maxim
 
     if (longest > 0) {
         // we've found the longest subarray for target in the passed array
-        for(size_t cnt = 0 ; cnt < longest ; cnt++) {
+        for(std::vector<int>::size_type cnt = 0 ; cnt < longest ; cnt++) {
             found.push_back(values[start + cnt]);
         }
     } // if

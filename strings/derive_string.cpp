@@ -39,8 +39,8 @@ bool valhalla::strings::derive_string::Solution::exists(std::string& left, std::
     // std::map<char,std::vector<size_t>> chars;
 
     // Okay so now we have two strings that are the same length and that they are not the same
-    size_t lidx, ridx, prior = 0;
-    const size_t size = left.size();
+    std::string::size_type lidx, ridx, prior = 0;
+    const std::string::size_type size = left.size();
 
     while (prior < size) {
         lidx = 0;
@@ -53,7 +53,7 @@ bool valhalla::strings::derive_string::Solution::exists(std::string& left, std::
         bool same = true;
 
         // check for similarity
-        for(size_t cnt = 0 ; cnt < size ; cnt++) {
+        for(std::string::size_type cnt = 0 ; cnt < size ; cnt++) {
             if (left[lidx] != right[ridx]) {
                 same = false;
             }

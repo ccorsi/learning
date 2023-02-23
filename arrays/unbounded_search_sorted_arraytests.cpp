@@ -52,7 +52,7 @@ std::istream& operator>>(std::istream& in, UnboundedSearchSortedArrayData &data)
     std::getline(in, line);
     // std::cout << "Function definition: " << line << std::endl;
     // Parse the equation and generate a lambda that is used by the data instance
-    size_t pos = line.find_first_of("*^");
+    std::vector<int>::size_type pos = line.find_first_of("*^");
     if (pos != std::string::npos) {
         switch (line[pos])
         {
@@ -88,7 +88,7 @@ std::istream& operator>>(std::istream& in, UnboundedSearchSortedArrayData &data)
             // NOTE: This will not always be monotonically increasing function unless n is even
             case '^':
                 {
-                    size_t n = line.find_first_not_of("0123456789",pos+1);
+                    std::vector<int>::size_type n = line.find_first_not_of("0123456789",pos+1);
                     int power = std::atoi(line.substr(pos+1, n-pos-1).c_str());
                     // std::cout << "Power: " << power << std::endl;
                     pos = line.find_first_of("-+", pos);

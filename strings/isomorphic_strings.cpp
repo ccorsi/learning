@@ -35,7 +35,7 @@ bool valhalla::strings::isomorphic_strings::Solution::isIsomorphic(std::string X
 
     std::map<char,char> transpose;
 
-    for (size_t pos = 0 ; pos < X.size() ; pos++) {
+    for (std::string::size_type pos = 0 ; pos < X.size() ; pos++) {
         if (transpose.find(X[pos]) != transpose.end() && transpose[X[pos]] != Y[pos]) return false;
 
         transpose[X[pos]] = Y[pos];

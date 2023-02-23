@@ -32,20 +32,20 @@ Output: [2, -1, 2, 1, 6] or [6, 4] or [2, -1, 2, 1, 6, -10, 6, 4]
 std::vector<int> valhalla::arrays::maximum_sum_subarray_two::Solution::findMaxSumSubarray(std::vector<int> const & nums) {
     std::vector<int> sum;
 
-    const size_t size = nums.size();
+    const std::vector<int>::size_type size = nums.size();
 
     if (size < 2) return (size == 1) ? nums : sum;
 
     int max_sum = nums[0]; // set an initial max sum
-    size_t max_start = 0, max_end = 0;
+    std::vector<int>::size_type max_start = 0, max_end = 0;
 
-    for (size_t idx = 0 ; idx < size ; idx++) {
+    for (std::vector<int>::size_type idx = 0 ; idx < size ; idx++) {
         int current_max = nums[idx];
         if (current_max > max_sum) {
             max_sum = current_max;
             max_start = max_end = idx;
         } // if
-        for (size_t i = idx + 1 ; i < size ; i++) {
+        for (std::vector<int>::size_type i = idx + 1 ; i < size ; i++) {
             current_max += nums[i];
             if (current_max > max_sum) {
                 max_sum = current_max;

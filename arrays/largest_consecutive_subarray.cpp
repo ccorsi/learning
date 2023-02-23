@@ -37,9 +37,9 @@ std::vector<int> valhalla::arrays::largest_consecutive_subarray::Solution::findL
         return largest;
     } // if
 
-    const size_t size = nums.size();
+    const std::vector<int>::size_type size = nums.size();
     int min, max;
-    size_t idx = 0, start = 0;
+    std::vector<int>::size_type idx = 0, start = 0;
     std::set<int> values;
 
     min = max = nums[idx];
@@ -74,7 +74,7 @@ std::vector<int> valhalla::arrays::largest_consecutive_subarray::Solution::findL
             start++;
             // determine the min and max values once again
             min = max = nums[start];
-            for(size_t next = start + 1 ;  next < idx ; next++) {
+            for(std::vector<int>::size_type next = start + 1 ;  next < idx ; next++) {
                 if (min > nums[next]) {
                     min = nums[next];
                 } else if (max < nums[next]) {
@@ -92,7 +92,7 @@ std::vector<int> valhalla::arrays::largest_consecutive_subarray::Solution::findL
             // determine if the current number of entries generate a sequence
             if (max - min == idx - start) {
                 // std::cout << "Found Consecutive Sequence: [";
-                // for (size_t i = start ; i <= idx ; i++)
+                // for (std::vector<int>::size_type i = start ; i <= idx ; i++)
                 //     std::cout << " " << nums[i];
                 // std::cout << " ]" << std::endl;
                 // we have found a consecutive sequence

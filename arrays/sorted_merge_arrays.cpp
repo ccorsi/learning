@@ -24,8 +24,8 @@ Output: [1, 2, 3, 4, 5, 6, 7]
 std::vector<int> valhalla::arrays::sorted_merge_arrays::Solution::merge(std::vector<int> const & X, std::vector<int> const & Y) {
     std::vector<int> combined;
 
-    size_t x_idx = 0, y_idx = 0;
-    const size_t x_size = X.size(), y_size = Y.size();
+    std::vector<int>::size_type x_idx = 0, y_idx = 0;
+    const std::vector<int>::size_type x_size = X.size(), y_size = Y.size();
 
     while (x_idx < x_size && y_idx < y_size) {
         if (X[x_idx] < Y[y_idx]) {

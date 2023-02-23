@@ -39,11 +39,11 @@ std::vector<std::vector<int>> valhalla::matrices::spiral_matrix_two::Solution::s
     std::vector<std::vector<int>> spiral(N, values);
 
     int value = N * N;
-    size_t top = 0, left = 0, right = N - 1, bottom = N - 1;
+    std::vector<int>::size_type top = 0, left = 0, right = N - 1, bottom = N - 1;
 
     while (value > 0) {
         // add to the top side of the matrix
-        for (size_t idx = left; idx <= right; idx++)
+        for (std::vector<int>::size_type idx = left; idx <= right; idx++)
         {
             spiral[top][idx] = value--;
         } // for
@@ -51,7 +51,7 @@ std::vector<std::vector<int>> valhalla::matrices::spiral_matrix_two::Solution::s
         top++;
 
         // add to the right side of the matrix
-        for (size_t idx = top; idx <= bottom; idx++)
+        for (std::vector<int>::size_type idx = top; idx <= bottom; idx++)
         {
             spiral[idx][right] = value--;
         }
@@ -59,7 +59,7 @@ std::vector<std::vector<int>> valhalla::matrices::spiral_matrix_two::Solution::s
         if (value < 1) break;
 
         // add to the bottom side of the matrix
-        for (size_t idx = right; idx < N && idx >= left; idx--)
+        for (std::vector<int>::size_type idx = right; idx < N && idx >= left; idx--)
         {
             spiral[bottom][idx] = value--;
         }
@@ -67,7 +67,7 @@ std::vector<std::vector<int>> valhalla::matrices::spiral_matrix_two::Solution::s
         if (value < 1) break;
 
         // add to the left side of the matrix
-        for (size_t idx = bottom; idx < N && idx >= top; idx--)
+        for (std::vector<int>::size_type idx = bottom; idx < N && idx >= top; idx--)
         {
             spiral[idx][left] = value--;
         }

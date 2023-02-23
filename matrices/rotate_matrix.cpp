@@ -90,7 +90,7 @@ std::ostream& operator<<(std::ostream& out, const std::vector<std::vector<int>> 
 
 void valhalla::matrices::rotate_matrix::Solution::rotate(std::vector<std::vector<int>> &mat) {
     cout << "Processing matrix: " << mat << endl;
-    size_t steps = mat.size();
+    std::vector<std::vector<int>>::size_type steps = mat.size();
 
     cout << "steps: " << steps << endl;
     if (steps < 2) return; // nothing to do
@@ -100,7 +100,7 @@ void valhalla::matrices::rotate_matrix::Solution::rotate(std::vector<std::vector
 
     // we need to perform a smart set of steps here
 
-    size_t rtop, ctop, rbot, cbot;
+    std::vector<std::vector<int>>::size_type rtop, ctop, rbot, cbot;
 
     rtop = ctop = 0;
     rbot = cbot = steps;
@@ -109,8 +109,8 @@ void valhalla::matrices::rotate_matrix::Solution::rotate(std::vector<std::vector
     while (rtop < rbot) {
 
         cout << "[rtop,ctop]: [" << rtop << "," << ctop << "], [rbot,cbot]: [" << rbot << "," << cbot << "], steps: " << steps << endl;
-        for(size_t step = 0 ; step < steps ; step++) {
-            size_t currow = rtop, curcol = ctop + step;
+        for(std::vector<std::vector<int>>::size_type step = 0 ; step < steps ; step++) {
+            std::vector<std::vector<int>>::size_type currow = rtop, curcol = ctop + step;
             int temp; // holds the currently replacing value to be passed to next
 
             // move the entries around the outer square

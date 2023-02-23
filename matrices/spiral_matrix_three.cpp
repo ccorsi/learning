@@ -30,39 +30,39 @@ Output:
 
 */
 std::vector<std::vector<int>> valhalla::matrices::spiral_matrix_three::Solution::createSpiralMatrix(std::vector<int> const & nums) {
-    const size_t size = nums.size();
-    const size_t N = static_cast<size_t>(sqrt(size));
-    const size_t max  = N * N;
+    const std::vector<int>::size_type size = nums.size();
+    const std::vector<int>::size_type N = static_cast<std::vector<int>::size_type>(sqrt(size));
+    const std::vector<int>::size_type max  = N * N;
 
     std::vector<int> values(N);
     std::vector<std::vector<int>> spiral(N, values);
 
-    size_t top = 0, left = 0, right = N - 1, bottom = N - 1, cnt = 0;
+    std::vector<int>::size_type top = 0, left = 0, right = N - 1, bottom = N - 1, cnt = 0;
 
     while (cnt < max) {
         // process the top entries
-        for (size_t idx = left; idx <= right; idx++) {
+        for (std::vector<int>::size_type idx = left; idx <= right; idx++) {
             spiral[top][idx] = nums[cnt++];
         } // for
         if (cnt >= max) break;
         top++;
 
         // process the right entries
-        for (size_t idx = top; idx <= bottom; idx++) {
+        for (std::vector<int>::size_type idx = top; idx <= bottom; idx++) {
             spiral[idx][right] = nums[cnt++];
         } // for
         if (cnt >= max) break;
         right--;
 
         // process the bottom entries
-        for (size_t idx = right; idx < N && idx >= left; idx--) {
+        for (std::vector<int>::size_type idx = right; idx < N && idx >= left; idx--) {
             spiral[bottom][idx] = nums[cnt++];
         } // for
         if (cnt >= max) break;
         bottom--;
 
         // process the left entries
-        for (size_t idx = bottom; idx >= top; idx--) {
+        for (std::vector<int>::size_type idx = bottom; idx >= top; idx--) {
             spiral[idx][left] = nums[cnt++];
         } // for
         left++;

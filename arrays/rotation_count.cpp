@@ -27,7 +27,7 @@ Output: 0
 int valhalla::arrays::rotation_count::Solution::findRotationCount(std::vector<int> const & nums) {
     if (nums.size() < 2|| nums.front() < nums.back()) return 0;
 
-    for (size_t pos = 1 ; pos < nums.size() ; pos++) {
+    for (std::vector<int>::size_type pos = 1 ; pos < nums.size() ; pos++) {
         if (nums[pos] < nums[pos - 1]) return pos;
     } // for
 

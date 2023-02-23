@@ -44,7 +44,7 @@ Y[] = [8, 9, 10]
 void valhalla::arrays::merge_arrays::Solution::merge(std::vector<int>& X, std::vector<int>& Y) {
     // std::cout << "X: " << X << std::endl;
     // std::cout << "Y: " << Y << std::endl;
-    size_t xidx = 0, yidx = 0;
+    std::vector<int>::size_type xidx = 0, yidx = 0;
 
     while (xidx < X.size() && yidx < Y.size()) {
         // std::cout << "X[xidx]: " << X[xidx] << ", xidx: " << xidx << ", Y[yidx]: " << Y[yidx] << ", yidx: " << yidx << std::endl;
@@ -58,9 +58,9 @@ void valhalla::arrays::merge_arrays::Solution::merge(std::vector<int>& X, std::v
             // std::cout << "Updated X: " << X << std::endl;
             // std::cout << "Updated Y: " << Y << std::endl;
 
-            size_t last = Y.size() - 1;
+            std::vector<int>::size_type last = Y.size() - 1;
 
-            for(size_t idx = yidx ; idx < last && Y[idx] > Y[idx+1]; idx++) {
+            for(std::vector<int>::size_type idx = yidx ; idx < last && Y[idx] > Y[idx+1]; idx++) {
                 // std::cout << "idx: " << idx << ", last: " << last << std::endl;
                 temp = Y[idx];
                 Y[idx] = Y[idx+1];

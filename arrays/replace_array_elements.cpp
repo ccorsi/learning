@@ -35,9 +35,9 @@ void valhalla::arrays::replace_array_elements::Solution::rearrange(std::vector<i
     // we need to be able to iterate through the array without division....
     int tot = 1;
 
-    for (size_t idx = 0; idx < nums.size() ; idx++) {
+    for (std::vector<int>::size_type idx = 0; idx < nums.size() ; idx++) {
         int value = tot;
-        for (size_t i = idx + 1 ; i < nums.size() ; i++) {
+        for (std::vector<int>::size_type i = idx + 1 ; i < nums.size() ; i++) {
             value *= nums[i];
         } // for
         tot *= nums[idx];

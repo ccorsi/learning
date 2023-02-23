@@ -62,19 +62,19 @@ Output:
       8 ==>   4
 */
 void valhalla::matrices::rotate_matrix_two::Solution::rotate(std::vector<std::vector<int>> &mat) {
-    size_t size = mat.size();
+    std::vector<int>::size_type size = mat.size();
 
     if (size < 2) {
         // there is nothing to do so just return
         return;
     }
 
-    size_t steps = ( size - 1 ) * 2;
-    size_t rtop = 0, ctop = 0, rbot = size - 1, cbot = size - 1;
+    std::vector<int>::size_type steps = ( size - 1 ) * 2;
+    std::vector<int>::size_type rtop = 0, ctop = 0, rbot = size - 1, cbot = size - 1;
 
     while (rtop < rbot) {
-        for(size_t step = 0 ; step < steps ; step++) {
-            size_t currow = rtop, curcol = ctop + step;
+        for(std::vector<int>::size_type step = 0 ; step < steps ; step++) {
+            std::vector<int>::size_type currow = rtop, curcol = ctop + step;
 
             // correct the curcol and currow if step is too large
             if (curcol > cbot) {
@@ -82,7 +82,7 @@ void valhalla::matrices::rotate_matrix_two::Solution::rotate(std::vector<std::ve
                 curcol = cbot;
             }
 
-            size_t nextrow = rbot, nextcol = cbot;
+            std::vector<int>::size_type nextrow = rbot, nextcol = cbot;
 
             // correct the nextrow and nextcol if steps too large
             if (step > ( cbot - ctop )) {

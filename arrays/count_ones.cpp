@@ -31,11 +31,11 @@ int valhalla::arrays::count_ones::Solution::countOnes(std::vector<int> const & n
 
     if (nums.front() == 1) return nums.size();
 
-    size_t start = 0, end = nums.size() - 1;
-    const size_t size = nums.size();
+    std::vector<int>::size_type start = 0, end = nums.size() - 1;
+    const std::vector<int>::size_type size = nums.size();
 
     while (start < end && end < size) {
-        size_t mid = (start + end) / 2;
+        std::vector<int>::size_type mid = (start + end) / 2;
         if (nums[mid] == 0) {
             start = mid + 1;
         } else {

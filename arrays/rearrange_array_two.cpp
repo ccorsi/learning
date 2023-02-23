@@ -34,8 +34,8 @@ Output: [5, -1, 4, 6, 3] or [-1, 5, 4, 6, 3] or any other valid combination..
 */
 
 void valhalla::arrays::rearrange_array_two::Solution::rearrange(std::vector<int> & nums) {
-    size_t dest = 0, src = 0;
-    const size_t size = nums.size();
+    std::vector<int>::size_type dest = 0, src = 0;
+    const std::vector<int>::size_type size = nums.size();
 
     while (dest < size) {
         if ((dest % 2) == 0) {
