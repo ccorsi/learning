@@ -38,7 +38,7 @@ namespace valhalla {
                     for(std::vector<E> cmp : m_values) {
                         if (cmp.size() == values.size()) {
                             bool allFound = true;
-                            for(std::vector<E>::size_type idx = 0 ; allFound && idx < cmp.size() ; idx++)
+                            for(std::size_t idx = 0 ; allFound && idx < cmp.size() ; idx++)
                                 allFound &= cmp[idx] == values[idx];
                             contains |= allFound;
                         }
