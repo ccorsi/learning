@@ -38,9 +38,14 @@ jobs:
       run: |
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
+    - name: Find Test Results Files
+      if: always()
+      run: |
+        find . -name xunit_report.xml
+
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
         files: |
-          - $GITHUB_WORKSPACE/${{ env.BUILD_DIR }}/**/xunit_report.xml
+          - ${{ env.BUILD_DIR }}/**/xunit_report.xml
