@@ -17,6 +17,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 #include "debug.h"
 
@@ -135,6 +136,105 @@ namespace valhalla {
                         std::vector<T> container;
                         return container;
                     } // else
+                }
+            };
+
+            /**
+             * @brief This template is used to load a vector from an istream that is read from
+             *      a single line input stream.  The vector will be wrapped by the passed open
+             *      and close character.  For example:
+             *
+             *          [1 2 3 4 5]
+             *
+             *      Note that this class expects the open character is at the beginning of the
+             *      line.
+             *
+             * @tparam E The type entries that will be loaded in the container
+             * @tparam Container The container that will be used to add the entries to
+             */
+            template<typename E, typename Container = std::vector<E>>
+            class vectorLoader {
+                char m_open, m_close;
+                Container & m_container;
+            public:
+                vectorLoader() = default;
+                vectorLoader(char open, char close, Container &container) : m_open(open), m_close(close), m_container(container) {}
+
+                friend std::istream& operator>>(std::istream& in, vectorLoader & loader) {
+                    if (static_cast<char>(in.peek()) == loader.m_open) {
+                        char chr;
+                        in >> chr; // read the open character
+                        while (static_cast<char>(in.peek()) != loader.m_close) {
+                            E value;
+                            in >> value;
+                            loader.m_container.push_back(value); // insert the read value into the container
+                        } // while
+                        std::string line;
+                        std::getline(in, line); // read the close character and the end of line
+                    } else {
+                        throw std::runtime_error("Invalid input format was encounter"); // throw a runtime exception if an invalid format was passed
+                    } // else
+
+                    return in;
+                }
+            };
+
+            /**
+             * @brief This class can be used to load a matrix of values into a matrix structure.  The
+             *      instance will use the passed open and closed character that are used to delimit
+             *      the matrix.  It will then add the entries to the passed matrix.  The expected
+             *      format of the matrix will contain the open character and close character on a
+             *      single line.  While each row will contain the entries to that given row of the
+             *      matrix surrounded by the open and close character.  For example
+             *
+             *      [
+             *      [1 2 3 4]
+             *      [5 6 7 8]
+             *      [9 10 11 12]
+             *      [13 14 15 16]
+             *      ]
+             *
+             *      The above matrix used the '[' as the open character and the ']' as the close
+             *      character.  The entries in this case is a numeric type.  Note that the open
+             *      character is at the beginning of the line and the close character is at the
+             *      end of the line for each row.
+             *
+             * @tparam E The type of entries to be added to the matrix
+             * @tparam Container The type of row container that will hold the entries
+             * @tparam Matrix The type of matrix that will hold the entries of Container row types
+             */
+            template<
+                typename E,
+                typename Container = std::vector<E>,
+                typename Matrix = std::vector<std::vector<E>>
+            >
+            class matrixLoader {
+                char m_open, m_close;
+                Matrix & m_container;
+            public:
+                using container = Container;
+
+                matrixLoader(Matrix & container, char open = '[', char close = ']') : m_container(container), m_open(open), m_close(close) {}
+
+                friend std::istream& operator>>(std::istream& in, matrixLoader & loader) {
+                    // confirm that the first character is the open character
+                    if (static_cast<char>(in.peek()) == loader.m_open) {
+                        char chr;
+                        in >> chr; // read the open character
+                        while (static_cast<char>(in.peek()) != loader.m_close) {
+                            loader.m_container.push_back(loader.container()); // create a Container and add it to the matrix
+                            loader.container values = loader.m_container.back(); // get a reference to the newly created Container
+                            vectorLoader<E> vecLoader(loader.m_open, loader.m_close, values);
+                            in >> vecLoader; // read the current line of entries into the created Container instance
+                            loader.m_container.push_back(values); // insert the read value into the container
+                        } // while
+                        std::string line;
+                        std::getline(in, line); // read the close character and the end of line
+                    } else {
+                        throw std::runtime_error("An invalid matrix format was passed");
+                    } // else
+
+                    return in;
                 }
             };
         }

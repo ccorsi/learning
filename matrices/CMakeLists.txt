@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(matrices VERSION 0.1.4)
+project(matrices VERSION 0.1.5)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -15,7 +15,7 @@ include(GoogleTest)
 enable_testing()
 
 set(NAMES shift_matrix rotate_matrix rotate_matrix_two spiral_matrix spiral_matrix_two spiral_matrix_three convert_matrix
-        convert_matrix_two)
+        convert_matrix_two diagonal_matrix_traversal replace_matrix)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)
