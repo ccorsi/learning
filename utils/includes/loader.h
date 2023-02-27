@@ -219,16 +219,14 @@ namespace valhalla {
                 friend std::istream& operator>>(std::istream& in, matrixLoader & loader) {
                     // confirm that the first character is the open character
                     if (static_cast<char>(in.peek()) == loader.m_open) {
-                        char chr;
-                        in >> chr; // read the open character
+                        std::string line;
+                        std::getline(in, line); // read the open character and the end of line
                         while (static_cast<char>(in.peek()) != loader.m_close) {
-                            loader.m_container.push_back(loader.container()); // create a Container and add it to the matrix
-                            loader.container values = loader.m_container.back(); // get a reference to the newly created Container
+                            loader.m_container.push_back(Container()); // create a Container and add it to the matrix
+                            Container & values = loader.m_container.back(); // get a reference to the newly created Container
                             vectorLoader<E> vecLoader(loader.m_open, loader.m_close, values);
                             in >> vecLoader; // read the current line of entries into the created Container instance
-                            loader.m_container.push_back(values); // insert the read value into the container
                         } // while
-                        std::string line;
                         std::getline(in, line); // read the close character and the end of line
                     } else {
                         throw std::runtime_error("An invalid matrix format was passed");
