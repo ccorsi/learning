@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(tools VERSION 0.3.5
+project(tools VERSION 0.3.6
     DESCRIPTION "Data Structure and Algorithm Solutions"
     HOMEPAGE_URL "https://github.com/ccorsi/learning/tree/cpp_data_structs_and_algos"
     LANGUAGES CXX)
@@ -38,3 +38,4 @@ add_subdirectory(utils)
 add_subdirectory(arrays)
 add_subdirectory(matrices)
 add_subdirectory(strings)
+add_subdirectory(dynamic_programming)
