@@ -1,0 +1,34 @@
+[
+[A B C D]
+[E F G H I J K]
+[L M N O P Q]
+[R S T]
+[U V W X Y Z]
+]
+[0 2 0]
+{
+ALA
+AMA
+ANA
+AOA
+APA
+AQA
+BLB
+BMB
+BNB
+BOB
+BPB
+BQB
+CLC
+CMC
+CNC
+COC
+CPC
+CQC
+DLD
+DMD
+DND
+DOD
+DPD
+DQD
+}

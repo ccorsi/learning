@@ -1,0 +1,25 @@
+[
+[John Emma]
+[Plays Hates Watches]
+[Cricket Soccer Chess]
+]
+{
+John Plays Cricket
+John Plays Soccer
+John Plays Chess
+John Hates Cricket
+John Hates Soccer
+John Hates Chess
+John Watches Cricket
+John Watches Soccer
+John Watches Chess
+Emma Plays Cricket
+Emma Plays Soccer
+Emma Plays Chess
+Emma Hates Cricket
+Emma Hates Soccer
+Emma Hates Chess
+Emma Watches Cricket
+Emma Watches Soccer
+Emma Watches Chess
+}
