@@ -2,7 +2,7 @@
  * @file combinationstests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains tests for the problem https://www.techiedelight.com/?problem=Combinations
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-03
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -57,7 +57,8 @@ std::ostream& operator<<(std::ostream& out, const CombinationsData & data) {
 }
 
 std::istream& operator>>(std::istream& in, CombinationsData &data) {
-    in >> vectorLoader<int>('[', ']', data.m_input);
+    vectorLoader<int> outerLoader('[', ']', data.m_input);
+    in >> outerLoader;
     in >> data.m_k;
     std::string line;
     std::getline(in, line); // read end of line
@@ -65,7 +66,8 @@ std::istream& operator>>(std::istream& in, CombinationsData &data) {
         std::getline(in, line); // read the '{' line
         while (static_cast<char>(in.peek()) != '}') {
             std::vector<int> combination;
-            in >> vectorLoader<int>('[', ']', combination);
+            vectorLoader<int> innerLoader('[', ']', combination);
+            in >> innerLoader;
             data.m_expected.insert(combination);
         } // while
         std::getline(in, line); // read the '}' line
