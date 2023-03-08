@@ -2,7 +2,7 @@
  * @file combinations_fourtests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains tests for the problem https://www.techiedelight.com/?problem=CombinationsIV
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-03
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -57,7 +57,8 @@ std::ostream& operator<<(std::ostream& out, const CombinationsFourData & data) {
 }
 
 std::istream& operator>>(std::istream& in, CombinationsFourData &data) {
-    in >> vectorLoader<int>('[', ']', data.m_input);
+    vectorLoader<int> loader('[', ']', data.m_input);
+    in >> loader;
     // std::cout << "Loading input" << std::endl;
     in >> data.m_k;
     std::string line;
@@ -68,7 +69,8 @@ std::istream& operator>>(std::istream& in, CombinationsFourData &data) {
         // std::cout << "Read '{' line='" << line << "'" << std::endl;
         while (static_cast<char>(in.peek()) != '}') {
             std::vector<int> values;
-            in >> vectorLoader<int>('[', ']', values);
+            vectorLoader<int> innerLoader('[', ']', values);
+            in >> innerLoader;
             // std::cout << "Loading values" << std::endl;
             data.m_expected.insert(values);
         } // while

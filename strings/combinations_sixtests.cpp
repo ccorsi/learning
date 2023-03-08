@@ -2,7 +2,7 @@
  * @file combinations_sixtests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains tests for the problem https://www.techiedelight.com/?problem=CombinationsVI
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-03
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -70,11 +70,13 @@ std::istream& operator>>(std::istream& in, CombinationsSixData &data) {
             in >> chr; // read ':' character
             while (static_cast<char>(in.peek()) == ' ') in.get(); // skip white spaces
             std::vector<char> values;
-            in >> vectorLoader<char>('[', ']', values);
+            vectorLoader<char> loader('[', ']', values);
+            in >> loader;
             data.m_keypad[key] = values;
         } // while
         std::getline(in, line); // read '}' line
-        in >> vectorLoader<int>('[', ']', data.m_input);
+        vectorLoader<int> loader('[', ']', data.m_input);
+        in >> loader;
         if (static_cast<char>(in.peek()) == '{'){
             std::getline(in, line); // read '{' line
             while (static_cast<char>(in.peek()) != '}') {

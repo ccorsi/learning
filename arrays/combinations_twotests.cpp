@@ -2,7 +2,7 @@
  * @file combinations_twotests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains tests to the problem https://www.techiedelight.com/?problem=CombinationsII
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-03
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -60,7 +60,8 @@ std::istream& operator>>(std::istream& in, CombinationsTwoData &data) {
         std::getline(in, line); // read the '{' line
         while (static_cast<char>(in.peek()) != '}') {
             std::vector<int> combination;
-            in >> vectorLoader<int>('[',']', combination);
+            vectorLoader<int> loader('[',']', combination);
+            in >> loader;
             data.m_expected.insert(combination);
         } // while
         std::getline(in, line); // read the '}' line

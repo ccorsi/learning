@@ -2,7 +2,7 @@
  * @file combinations_seventests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains tests for the problem https://www.techiedelight.com/?problem=CombinationsVII
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-03
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -66,11 +66,13 @@ std::istream& operator>>(std::istream& in, CombinationsSevenData &data) {
         std::getline(in, line); // read the '[' line
         while (static_cast<char>(in.peek()) != ']') {
             std::vector<char> values;
-            in >> vectorLoader<char>('[', ']', values);
+            vectorLoader<char> loader('[', ']', values);
+            in >> loader;
             data.m_input.push_back(values);
         } // while
         std::getline(in, line); // read the ']' line
-        in >> vectorLoader<int>('[', ']', data.m_keys);
+        vectorLoader<int> loader('[', ']', data.m_keys);
+        in >> loader;
         if (static_cast<char>(in.peek()) == '{') {
             std::getline(in, line); // read the '{' line
             while (static_cast<char>(in.peek()) != '}') {

@@ -2,7 +2,7 @@
  * @file combinations_tentests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains tests for the problem https://www.techiedelight.com/?problem=CombinationsX
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-06
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -54,7 +54,8 @@ std::ostream& operator<<(std::ostream& out, const CombinationsTenData & data) {
 }
 
 std::istream& operator>>(std::istream& in, CombinationsTenData &data) {
-    in >> matrixLoader<char>(data.m_keypad, '{', '}');
+    matrixLoader<char> loader(data.m_keypad, '{', '}');
+    in >> loader;
     in >> data.m_input >> data.m_expected;
     std::string line;
     std::getline(in, line); // read end of line

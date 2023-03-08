@@ -2,7 +2,7 @@
  * @file combinations_fivetests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains tests for the problem https://www.techiedelight.com/?problem=CombinationsV
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-03
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -59,7 +59,8 @@ std::istream& operator>>(std::istream& in, CombinationsFiveData &data) {
         std::getline(in, line); // read '{' line
         while (static_cast<char>(in.peek()) != '}') {
             std::vector<int> values;
-            in >> vectorLoader<int>('[', ']', values);
+            vectorLoader<int> loader('[', ']', values);
+            in >> loader;
             data.m_expected.insert(values);
         } // while
         std::getline(in, line); // read '}' line
