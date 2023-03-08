@@ -14,7 +14,9 @@
 
 /*
 
-Given three strings, check if the third string is interleaving the first and second strings. In other words, check if third string is formed from all characters of the first and second string, and the order of characters is preserved.
+Given three strings, check if the third string is interleaving the first and second strings. In other words,
+check if third string is formed from all characters of the first and second string, and the order of
+characters is preserved.
 
 Input: X = "AB", Y = "CD", S = "ACDB"
 Output: true

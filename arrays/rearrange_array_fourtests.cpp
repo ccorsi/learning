@@ -15,9 +15,13 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
+#include "paths.h"
+#include "loader.h"
 #include "rearrange_array_four.h"
 
 using namespace valhalla::arrays::rearrange_array_four;
+using namespace valhalla::utils::loaders;
+using namespace valhalla::utils::paths;
 using ::testing::AnyOfArray;
 
 // Test Fixture Data Class
@@ -32,6 +36,7 @@ public:
      const std::vector<std::vector<int>> & get_expected() { return m_expected; }
 
      friend std::ostream& operator<<(std::ostream&, const RearrangeArrayFourData &);
+     friend std::istream& operator>>(std::istream&, RearrangeArrayFourData &);
 };
 
 std::ostream& operator<<(std::ostream& out, const RearrangeArrayFourData &data) {
@@ -49,6 +54,14 @@ std::ostream& operator<<(std::ostream& out, const RearrangeArrayFourData &data) 
     out << " ]";
 
     return out;
+}
+
+std::istream& operator>>(std::istream& in, RearrangeArrayFourData & data) {
+    vectorLoader<int> vecLoader('{', '}', data.m_input);
+    in >> vecLoader;
+    matrixLoader<int> matLoader(data.m_expected,'{', '}');
+    in >> matLoader;
+    return in;
 }
 
 // Test Fixture Class
@@ -72,11 +85,8 @@ TEST_P(RearrangeArrayFourFixture, RearrangeArrayFourTests) {
 }
 
 // Parameter Test Parameters
-INSTANTIATE_TEST_SUITE_P(RearrangeArrayFourTests, RearrangeArrayFourFixture, testing::Values(
-    RearrangeArrayFourData({9, -3, 5, -2, -8, -6, 1, 3}, {{-3, -2, -8, -6, 9, 5, 1, 3}, {-6, -3, -8, -2, 5, 9, 1, 3}}),
-    RearrangeArrayFourData({-4, -2, -7, -9}, {{-4, -2, -7, -9}}),
-    RearrangeArrayFourData({2, 4, 3, 1, 5}, {{2, 4, 3, 1, 5}}),
-    RearrangeArrayFourData({1, 2, 3, 4, 5, 6, -1, 3, -5, -9, 3, -10, 11, -13, -14, -20}, {{-20, -14, -13, -10, -9, -5, -1, 3, 6, 5, 3, 4, 11, 3, 2, 1}})
+INSTANTIATE_TEST_SUITE_P(RearrangeArrayFourTests, RearrangeArrayFourFixture, testing::ValuesIn(
+    Loader<RearrangeArrayFourData>()(find_path("arrays/data/rearrange_array_four.txt"))
 ));
 
 int main(int argc, char** argv) {
