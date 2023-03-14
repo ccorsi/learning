@@ -1,6 +1,6 @@
 # We need at least version 3.10.0 to be able to use the GoogleTest package
 cmake_minimum_required(VERSION 3.10.0)
-project(utils VERSION 0.1.2)
+project(utils VERSION 0.1.3)
 
 set(CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED true)
@@ -14,7 +14,7 @@ include(GoogleTest)
 enable_testing()
 
 # use a variable to be able to skip between the creation of a static or shared library
-set(SRCS debug.cpp paths.cpp)
+set(SRCS debug.cpp paths.cpp checkers.cpp)
 
 # generate a shared utilities library that can be used by the different projects
 # TODO: for the moment I am unable to determine how to link the shared library.
@@ -25,7 +25,7 @@ set(SRCS debug.cpp paths.cpp)
 # generate a static library
 add_library(utils STATIC ${SRCS})
 
-set(TESTS debugtests loadertests)
+set(TESTS debugtests loadertests vectorloadertests matrixloadertests setloadertests)
 
 foreach(name ${TESTS})
     message(STATUS "Setting up test: ${name}")
