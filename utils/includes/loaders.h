@@ -17,5 +17,6 @@
 #include "vector_loader.h"
 #include "set_loader.h"
 #include "matrix_loader.h"
+#include "pair_loader.h"
 
 #endif
