@@ -1,7 +1,7 @@
 /**
  * @file rotate_matrix_two.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
- * @brief 
+ * @brief This contains a solution to the problem https://www.techiedelight.com/?problem=RotateMatrixII
  * @version 0.1
  * @date 2023-01-04
  * 

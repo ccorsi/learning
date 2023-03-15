@@ -1,7 +1,7 @@
 /**
  * @file derive_stringtests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
- * @brief 
+ * @brief This contains tests to the problem https://www.techiedelight.com/?problem=DeriveStrings
  * @version 0.1
  * @date 2023-01-01
  * 

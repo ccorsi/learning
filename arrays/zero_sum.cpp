@@ -1,13 +1,13 @@
 /**
  * @file zero_sum.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
- * @brief This is an implementation of the problem
+ * @brief This is an implementation of the problem https://www.techiedelight.com/?problem=ZeroSum
  *        https://www.techiedelight.com/check-subarray-with-0-sum-exists-not/
  * @version 0.1
  * @date 2022-12-26
- * 
+ *
  * @copyright Copyright (c) 2022 Claudio Corsi
- * 
+ *
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 

@@ -1,12 +1,12 @@
 /**
  * @file sort_binary_array_inlinetests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
- * @brief 
+ * @brief This contains tests to the problem https://www.techiedelight.com/?problem=SortBinaryArray
  * @version 0.1
  * @date 2022-12-29
- * 
+ *
  * @copyright Copyright (c) 2022 Claudio Corsi
- * 
+ *
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 

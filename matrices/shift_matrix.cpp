@@ -1,12 +1,12 @@
 /**
  * @file shift_matrix.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
- * @brief 
+ * @brief This contains a solution to the problem https://www.techiedelight.com/?problem=ShiftMatrix
  * @version 0.1
  * @date 2023-01-01
- * 
+ *
  * @copyright Copyright (c) 2023 Claudio Corsi
- * 
+ *
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 
