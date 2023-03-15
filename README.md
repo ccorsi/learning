@@ -102,9 +102,9 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [84: Combinations X](https://www.techiedelight.com/?problem=CombinationsX) | Time Limit Exceeded | [combinations_ten.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/combinations_ten.cpp) |
 | [85: Subset Sum](https://www.techiedelight.com/?problem=SubsetSum) | not implemented | [subset_sum.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/subset_sum.cpp) |
 | [86: Ball Arrangements](https://www.techiedelight.com/?problem=BallArrangements) | Time Limit Exceeded | [ball_arrangements.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/ball_arrangements.cpp) |
-<!-- | [87: ](https://www.techiedelight.com/?problem=) | |
-| [88: ](https://www.techiedelight.com/?problem=) | |
-| [89: ](https://www.techiedelight.com/?problem=) | |
+| [87: Minimum Sum Subarray](https://www.techiedelight.com/?problem=MinimumSumSubarray) | done | [minimum_sum_subarray.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_sum_subarray.cpp) |
+| [88: Maximum Product Subarray](https://www.techiedelight.com/?problem=MaximumProductSubarray) | done | [maximum_product_subarray.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/maximum_product_subarray.cpp) |
+<!-- | [89: ](https://www.techiedelight.com/?problem=) | |
 | [90: ](https://www.techiedelight.com/?problem=) | |
 | [91: ](https://www.techiedelight.com/?problem=) | |
 | [92: ](https://www.techiedelight.com/?problem=) | |
