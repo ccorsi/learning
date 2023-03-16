@@ -105,7 +105,7 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [87: Minimum Sum Subarray](https://www.techiedelight.com/?problem=MinimumSumSubarray) | done | [minimum_sum_subarray.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_sum_subarray.cpp) |
 | [88: Maximum Product Subarray](https://www.techiedelight.com/?problem=MaximumProductSubarray) | done | [maximum_product_subarray.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/maximum_product_subarray.cpp) |
 | [89: K Sum Subarray](https://www.techiedelight.com/?problem=KSumSubarray) | done | [k_sum_subarray.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/k_sum_subarray.cpp) |
-| [90: K Sum Subarray II](https://www.techiedelight.com/?problem=KSumSubarrayII) | done | [k_sum_subarray_two](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/k_sum_subarray_two) |
+| [90: K Sum Subarray II](https://www.techiedelight.com/?problem=KSumSubarrayII) | done | [k_sum_subarray_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/k_sum_subarray_two.cpp) |
 | [91: Smallest Subarray](https://www.techiedelight.com/?problem=SmallestSubarray) | done | [smallest_subarray.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/smallest_subarray.cpp) |
 | [92: Smallest Window To Sort Array](https://www.techiedelight.com/?problem=SmallestWindowToSortArray) | partially correct | [smallest_window_to_sort_array.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/smallest_window_to_sort_array.cpp) |
 <!-- | [93: ](https://www.techiedelight.com/?problem=) | |
