@@ -108,11 +108,11 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [90: K Sum Subarray II](https://www.techiedelight.com/?problem=KSumSubarrayII) | done | [k_sum_subarray_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/k_sum_subarray_two.cpp) |
 | [91: Smallest Subarray](https://www.techiedelight.com/?problem=SmallestSubarray) | done | [smallest_subarray.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/smallest_subarray.cpp) |
 | [92: Smallest Window To Sort Array](https://www.techiedelight.com/?problem=SmallestWindowToSortArray) | partially correct | [smallest_window_to_sort_array.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/smallest_window_to_sort_array.cpp) |
-<!-- | [93: ](https://www.techiedelight.com/?problem=) | |
-| [94: ](https://www.techiedelight.com/?problem=) | |
-| [95: ](https://www.techiedelight.com/?problem=) | |
-| [96: ](https://www.techiedelight.com/?problem=) | |
-| [97: ](https://www.techiedelight.com/?problem=) | |
+| [93: Maximum Path Sum](https://www.techiedelight.com/?problem=MaximumPathSum) | partially correct | [maximum_path_sum.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/maximum_path_sum.cpp) |
+| [94: Buy N Sell Shares](https://www.techiedelight.com/?problem=BuyNSellShares) | done | [buy_n_sell_shares.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/buy_n_sell_shares.cpp) |
+| [95: Trapping Rain Water](https://www.techiedelight.com/?problem=TrappingRainWater) | not implemented | [trapping_rain_water.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/trapping_rain_water.cpp) |
+| [96: Minimum Platforms](https://www.techiedelight.com/?problem=MinimumPlatforms) | done | [minimum_platforms.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_platforms.cpp) | [minimum_platforms.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_platforms.cpp) |
+<!-- | [97: ](https://www.techiedelight.com/?problem=) | |
 | [98: ](https://www.techiedelight.com/?problem=) | |
 | [99: ](https://www.techiedelight.com/?problem=) | |
 | [100: ](https://www.techiedelight.com/?problem=) | |
