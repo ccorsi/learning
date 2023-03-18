@@ -7,10 +7,12 @@ If I am unable to implement any of these problems.  This will be reflected withi
 credit to the implementation that is part of Techie Delight.  Thus, I hope you enjoy my C++ implementations
 of the different problems.
 
-It is then my objective to upon completing all of the available problems on the Techie Delight </> web site.
+It is then my objective that upon completing all of the available problems on the Techie Delight </> web site.
 I then proceed to solve the problems on [Leet Code](https://leetcode.com/) and
-[Hacker Rank](https://www.hackerrank.com/).  In the meantime, I will continue to implement solution for the
-problems from Techie Delight </>.
+[Hacker Rank](https://www.hackerrank.com/).  With each of these sites there are several similar problems that
+can be solved by one of more of the solutions to the Techie Delight solutions that I implemented.  In those
+cases I will state that within my summaries below.  In the meantime, I will continue to implement solutions
+to the problems from Techie Delight </>.
 
 Here is a list of the problems from Techie Delight </> that I have attempted with their status.
 
@@ -110,10 +112,10 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [92: Smallest Window To Sort Array](https://www.techiedelight.com/?problem=SmallestWindowToSortArray) | partially correct | [smallest_window_to_sort_array.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/smallest_window_to_sort_array.cpp) |
 | [93: Maximum Path Sum](https://www.techiedelight.com/?problem=MaximumPathSum) | partially correct | [maximum_path_sum.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/maximum_path_sum.cpp) |
 | [94: Buy N Sell Shares](https://www.techiedelight.com/?problem=BuyNSellShares) | done | [buy_n_sell_shares.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/buy_n_sell_shares.cpp) |
-| [95: Trapping Rain Water](https://www.techiedelight.com/?problem=TrappingRainWater) | not implemented | [trapping_rain_water.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/trapping_rain_water.cpp) |
+| [95: Trapping Rain Water](https://www.techiedelight.com/?problem=TrappingRainWater) | partially correct | [trapping_rain_water.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/trapping_rain_water.cpp) |
 | [96: Minimum Platforms](https://www.techiedelight.com/?problem=MinimumPlatforms) | done | [minimum_platforms.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_platforms.cpp) | [minimum_platforms.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_platforms.cpp) |
-<!-- | [97: ](https://www.techiedelight.com/?problem=) | |
-| [98: ](https://www.techiedelight.com/?problem=) | |
+| [97: Decode Array](https://www.techiedelight.com/?problem=DecodeArray) | incorrectly implemented | [decode_array.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/decode_array.cpp) |
+<!-- | [98: ](https://www.techiedelight.com/?problem=) | |
 | [99: ](https://www.techiedelight.com/?problem=) | |
 | [100: ](https://www.techiedelight.com/?problem=) | |
 | [101: ](https://www.techiedelight.com/?problem=) | |
