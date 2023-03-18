@@ -2,7 +2,7 @@
  * @file decode_array.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains a solution to the problem https://www.techiedelight.com/?problem=DecodeArray
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-17
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -42,6 +42,17 @@ Input : [3, 4, 5]
 Output: [1, 2, 3]
 Explanation: [(1 + 2), (1 + 3), (2 + 3)]
 
+Input : [7, 8, 8, 9, 10, 9, 9, 10, 11, 10, 11, 12, 11, 12, 13]
+Output: [3, 4, 5, 5, 6, 7]
+Explanation: [(3 + 4), (3 + 5), (3 + 5), (3 + 6), (3 + 7), (4 + 5), (4 + 5), (4 + 6), (4 + 7), (5 + 5), (5 + 6), (5 + 7), (5 + 6), (5 + 7), (6 + 7)]
+
+Input : [6, 6, 7, 6, 7, 7]
+Output: [3, 3, 3, 4]
+Explanation: [(3, 3), (3, 3), (3, 4), (3, 3), (3, 4), (3, 4)]
+
+Input:  [8, 10, 12, 12, 14, 16]
+Output: [3, 5, 7, 9]
+Explanation: [(3 + 5), (3 + 7), (3 + 9), (5 + 7), (5 + 9), (7 + 9)]
 
 Note: Assume valid input and input size > 2
 
@@ -52,44 +63,19 @@ Note: Assume valid input and input size > 2
 
 std::vector<int> valhalla::arrays::decode_array::Solution::decode(std::vector<int> const & nums) {
     std::vector<int> decoded;
+    const int size = nums.size();
 
-    if ( ! nums.empty() ) {
-        std::vector<int> result = nums;
-        std::set<int> used;
-
+    if ( size > 1 ) {
+        std::vector<int> result(nums);
         std::sort(result.begin(), result.end());
 
-        const int sub = result[0];
-        int last = result[0];
+        const int last = result.back() / 2 + result.back() % 2;
+        const int start = result.front() / 2;
 
-        // ad the first entry since it will always be part of the pair solution
-        used.insert(last);
-
-        for (int num : result) {
-            if (num != last && num != sub) {
-                last = num;
-                // know that all of the values in used are less than num
-                // so let us see if we can find a combination.
-                int diff = num - sub;
-                // second == true means that the value was inserted
-                // used.insert(diff).second;
-                if (diff == sub || used.find(diff) == used.end()) {
-                    bool not_found = true;
-                    for (std::set<int>::const_reverse_iterator itr = used.rbegin() ; itr != used.rend() ; itr++) {
-                        int value = *itr;
-                        if (used.find(num - value) != used.end()) {
-                            not_found = false;
-                            break;
-                        } // if
-                    } // for
-                    if (not_found) {
-                        used.insert(diff);
-                    } // if
-                } // if
-            } // if
-        } // for
-
-        for (int value : used) {
+        // This doesn't completely solve all cases and doesn't manage
+        // the case that we need to include duplicate entries.
+        // It also doesn't cover the case that the values are not continuous.
+        for (int value = start ; value <= last ; value++) {
             decoded.push_back(value);
         } // for
     } // if

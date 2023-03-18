@@ -114,7 +114,7 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [94: Buy N Sell Shares](https://www.techiedelight.com/?problem=BuyNSellShares) | done | [buy_n_sell_shares.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/buy_n_sell_shares.cpp) |
 | [95: Trapping Rain Water](https://www.techiedelight.com/?problem=TrappingRainWater) | partially correct | [trapping_rain_water.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/trapping_rain_water.cpp) |
 | [96: Minimum Platforms](https://www.techiedelight.com/?problem=MinimumPlatforms) | done | [minimum_platforms.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_platforms.cpp) | [minimum_platforms.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_platforms.cpp) |
-| [97: Decode Array](https://www.techiedelight.com/?problem=DecodeArray) | incorrectly implemented | [decode_array.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/decode_array.cpp) |
+| [97: Decode Array](https://www.techiedelight.com/?problem=DecodeArray) | partially correct | [decode_array.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/decode_array.cpp) |
 <!-- | [98: ](https://www.techiedelight.com/?problem=) | |
 | [99: ](https://www.techiedelight.com/?problem=) | |
 | [100: ](https://www.techiedelight.com/?problem=) | |
