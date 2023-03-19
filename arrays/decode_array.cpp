@@ -66,11 +66,44 @@ std::vector<int> valhalla::arrays::decode_array::Solution::decode(std::vector<in
 
     if ( size > 1 ) {
         // We to determine the number of entries that are required to create the nums array
+
+        // This uses the technique that the size of the resulting array is equal to x * (x - 1) / 2 = n.
+        // Where n is the size of the nums array and x is the size of the decoding array.
+        // Using the quadratic equation we can then determine the size of the resulting array.  We only
+        // use the addition of the square root since the negative value will result in a negative size
+        // which is not correct.
         const int size = ( 1 + static_cast<int>(std::sqrt( 1 + 8 * nums.size() )) ) / 2;
 
+        // The solution of each entry in the decoded array is determined using the concept of linear
+        // algebra.  We note the following:
+        // x_1 + x_2                     = y_1
+        // x_1       + x_3               = y_2
+        // x_1             + x_4         = y_3
+        // ...                           = ...
+        // x_1                   ... x_n = y_n-1
+        //       x_2 + x_3               = y_n
+        //
+        // The above tells us that we can then solve for x_1 by using the following formula:
+        //
+        //     2 * x_1 = y_1 + y_2 - y_n
+        //
+        //     x_1 = ( y_1 + y_2 - y_n ) / 2
+        //
+        //  Therefore that other can be calculated as follows:
+        //
+        //     x_i = y_i-1 - y_1
+        //
+        //   for i from 2 to n - 1.
+        //
+
+        // The first entry in the decoded array is equal to the first two entries in the nums array
+        // minus the size - 1 entry all divided by 2.
         decoded.push_back(( nums[0] + nums[1] - nums[size - 1] ) / 2);
+        // The second entry in the decoded array is equal to the value of the first entry in nums
+        // minus the value of the first decoded entry
         decoded.push_back( nums[0] - decoded[0] );
 
+        // The next entries are solved using the idx - 1 nums entry minus the first decoded entry
         for (int idx = 2 ; idx < size ; idx++) {
             decoded.push_back(nums[idx-1] - decoded[0]);
         } // for
