@@ -115,11 +115,11 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [95: Trapping Rain Water](https://www.techiedelight.com/?problem=TrappingRainWater) | partially correct | [trapping_rain_water.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/trapping_rain_water.cpp) |
 | [96: Minimum Platforms](https://www.techiedelight.com/?problem=MinimumPlatforms) | done | [minimum_platforms.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_platforms.cpp) | [minimum_platforms.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/minimum_platforms.cpp) |
 | [97: Decode Array](https://www.techiedelight.com/?problem=DecodeArray) | done | [decode_array.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/decode_array.cpp) |
-<!-- | [98: ](https://www.techiedelight.com/?problem=) | |
-| [99: ](https://www.techiedelight.com/?problem=) | |
-| [100: ](https://www.techiedelight.com/?problem=) | |
-| [101: ](https://www.techiedelight.com/?problem=) | |
-| [102: ](https://www.techiedelight.com/?problem=) | |
+| [98: Sort Array Single Swap](https://www.techiedelight.com/?problem=SortArraySingleSwap) | done | [sort_array_single_swap.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/sort_array_single_swap.cpp) |
+| [99: 3 Sum](https://www.techiedelight.com/?problem=3Sum) | done but this can be improved | [three_sum.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/three_sum.cpp) |
+| [100: 3 Sum II](https://www.techiedelight.com/?problem=3SumII) | done but this can be improved | [three_sum_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/three_sum_two.cpp) |
+| [101: 3 Sum III](https://www.techiedelight.com/?problem=3SumIII) | done but this can be improved | [three_sum_three.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/three_sum_three.cpp) |
+<!-- | [102: ](https://www.techiedelight.com/?problem=) | |
 | [103: ](https://www.techiedelight.com/?problem=) | |
 | [104: ](https://www.techiedelight.com/?problem=) | |
 | [105: ](https://www.techiedelight.com/?problem=) | |
