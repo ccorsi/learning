@@ -2,7 +2,7 @@
  * @file decode_array.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains a solution to the problem https://www.techiedelight.com/?problem=DecodeArray
- * @version 0.2
+ * @version 0.3
  * @date 2023-03-17
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -11,6 +11,8 @@
  */
 
 #include "decode_array.h"
+
+#include <cmath>
 
 /*
 
@@ -58,25 +60,19 @@ Note: Assume valid input and input size > 2
 
 */
 
-#include <algorithm>
-#include <set>
-
 std::vector<int> valhalla::arrays::decode_array::Solution::decode(std::vector<int> const & nums) {
     std::vector<int> decoded;
     const int size = nums.size();
 
     if ( size > 1 ) {
-        std::vector<int> result(nums);
-        std::sort(result.begin(), result.end());
+        // We to determine the number of entries that are required to create the nums array
+        const int size = ( 1 + static_cast<int>(std::sqrt( 1 + 8 * nums.size() )) ) / 2;
 
-        const int last = result.back() / 2 + result.back() % 2;
-        const int start = result.front() / 2;
+        decoded.push_back(( nums[0] + nums[1] - nums[size - 1] ) / 2);
+        decoded.push_back( nums[0] - decoded[0] );
 
-        // This doesn't completely solve all cases and doesn't manage
-        // the case that we need to include duplicate entries.
-        // It also doesn't cover the case that the values are not continuous.
-        for (int value = start ; value <= last ; value++) {
-            decoded.push_back(value);
+        for (int idx = 2 ; idx < size ; idx++) {
+            decoded.push_back(nums[idx-1] - decoded[0]);
         } // for
     } // if
 
