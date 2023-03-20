@@ -12,6 +12,8 @@
 
 #include "maximum_path_sum.h"
 
+#include <climits>
+
 /*
 
 Given two sorted arrays of integers, find a maximum sum path involving elements of both
