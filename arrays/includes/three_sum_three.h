@@ -20,7 +20,7 @@ namespace valhalla {
     namespace arrays {
         namespace three_sum_three {
             class Solution {
-                void Solution::isTriplets(std::vector<int> &, const int, std::set<std::vector<int>> &, const int, std::vector<int> &, const int, const int);
+                void isTriplets(std::vector<int> &, const int, std::set<std::vector<int>> &, const int, std::vector<int> &, const int, const int);
             public:
                 std::set<std::vector<int>> getTriplets(std::vector<int> &, int);
             };
