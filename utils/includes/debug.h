@@ -4,7 +4,7 @@
  * @brief This file contains the debug class that can be used throughout to help debug the
  *      different implementations.  If will look for an environment variable and parse the
  *      debug level that we are going to use.
- * @version 0.1
+ * @version 0.2
  * @date 2022-03-28
  * 
  * @copyright Copyright (c) 2022 Claudio Corsi
@@ -33,6 +33,10 @@ struct debug_manager {
     static void debug(const char* filename, int lineno, const char* msg);
     static void warn(const char* filename, int lineno, const char* msg);
     static void error(const char* filename, int lineno, const char* msg);
+
+private:
+    static std::ostream & get_out();
+
 };
 
 // used for log level messages

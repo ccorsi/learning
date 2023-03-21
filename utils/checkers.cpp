@@ -2,7 +2,7 @@
  * @file checkers.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief Contains implementations for one or more concrete check structs.
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-08
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -12,10 +12,17 @@
 
 #include "checkers.h"
 
-bool valhalla::utils::checkers::is_space::operator()(int chr) {
-    return std::isspace(chr) != 0;
-}
+namespace valhalla {
+    namespace utils {
+        namespace checkers {
 
-bool valhalla::utils::checkers::is_wspace::operator()(wint_t chr) {
-    return iswspace(chr) != 0;
+            bool is_space::operator()(int chr) {
+                return std::isspace(chr) != 0;
+            }
+
+            bool is_wspace::operator()(wint_t chr) {
+                return iswspace(chr) != 0;
+            }
+        }
+    }
 }

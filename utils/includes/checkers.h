@@ -2,7 +2,7 @@
  * @file checkers.h
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This file contains different checker functions
- * @version 0.1
+ * @version 0.2
  * @date 2023-03-08
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -13,6 +13,7 @@
 #ifndef __CHECKERS_H__
 #define __CHECKERS_H__
 
+#include <istream>
 #include <cwctype>
 #include <cctype>
 
@@ -61,6 +62,13 @@ namespace valhalla {
 
                 bool operator()(wint_t chr) {
                     return std::iswspace(chr) || any_of(chr, Chars...);
+                }
+            };
+            template<typename Char, typename IsSpace>
+            struct skip_spaces {
+                IsSpace isSpace;
+                void operator()(std::basic_istream<Char> & in) {
+                    while (isSpace(static_cast<Char>(in.peek()))) in.get();
                 }
             };
             // This requres c++20 to build
