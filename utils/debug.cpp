@@ -120,7 +120,7 @@ std::ostream & debug_manager::get_out() {
 
             std::atexit([]() {
                 // delete the file when exiting program
-                std::cout << "Deleting " << debugfilename << " file." << std::endl;
+                // std::cout << "Deleting " << debugfilename << " file." << std::endl;
                 std::remove(debugfilename);
             });
 
