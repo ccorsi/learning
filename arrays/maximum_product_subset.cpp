@@ -12,6 +12,8 @@
 
 #include "maximum_product_subset.h"
 
+#include <climits>
+
 namespace valhalla {
     namespace arrays {
         namespace maximum_product_subset {
