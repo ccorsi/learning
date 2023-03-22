@@ -127,9 +127,9 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [107: Arithmetic Triplets](https://www.techiedelight.com/?problem=ArithmeticTriplets) | done | [arithmetic_triplets.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/arithmetic_triplets.cpp) |
 | [108: Geometric Triplets](https://www.techiedelight.com/?problem=GeometricTriplets) | done | [geometric_triplets.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/geometric_triplets.cpp) |
 | [109: Buy And Sell Stock](https://www.techiedelight.com/?problem=BuyAndSellStock) | partially implemented | [buy_and_sell_stock.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/buy_and_sell_stock.cpp) |
-<!-- | [110: Buy And Sell Stock II](https://www.techiedelight.com/?problem=BuyAndSellStockII) | |
-| [111: Buy And Sell Stock III](https://www.techiedelight.com/?problem=BuyAndSellStockIII) | |
-| [112: Group Elements](https://www.techiedelight.com/?problem=GroupElements) | |
+| [110: Buy And Sell Stock II](https://www.techiedelight.com/?problem=BuyAndSellStockII) | partially implemented | [buy_and_sell_stock_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/buy_and_sell_stock_two.cpp) |
+| [111: Buy And Sell Stock III](https://www.techiedelight.com/?problem=BuyAndSellStockIII) | done | [buy_and_sell_stock_three.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/buy_and_sell_stock_three.cpp) |
+<!-- | [112: Group Elements](https://www.techiedelight.com/?problem=GroupElements) | |
 | [113: Minimum Absolute Difference](https://www.techiedelight.com/?problem=MinimumAbsoluteDifference) | |
 | [114: Minimum Absolute Difference II](https://www.techiedelight.com/?problem=MinimumAbsoluteDifferenceII) | |
 | [115: Symmetric Pairs](https://www.techiedelight.com/?problem=SymmetricPairs) | |
