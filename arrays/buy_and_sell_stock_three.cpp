@@ -13,6 +13,9 @@
 
 #include "buy_and_sell_stock_three.h"
 
+#include <list>
+#include <array>
+
 namespace valhalla {
     namespace arrays {
         namespace buy_and_sell_stock_three {
@@ -53,6 +56,35 @@ namespace valhalla {
                 const int size = X.size();
 
                 checkMaximumProfit(X, 0, Y, 0, size, 0, 0, max);
+
+                // The following non-recursive solution is really slow compared to the recursive one!!!!
+
+                // const int X_SALES = 0, Y_SALES = 1, IDX = 2, TOTAL = 3;
+
+                // std::list<std::array<int, 4>> profits;
+
+                // profits.push_back({0, 0, 0, 0});
+
+                // while ( ! profits.empty() ) {
+                //     std::array profit = profits.front();
+                //     profits.pop_front();
+
+                //     if (profit[TOTAL] > max) {
+                //         max = profit[TOTAL];
+                //     } // if
+
+                //     if (profit[IDX] >= size) {
+                //         continue;
+                //     } // if
+
+                //     profits.push_back({profit[X_SALES] + 1, profit[Y_SALES], profit[IDX] + 1, profit[TOTAL] + X[profit[IDX]]});
+
+                //     if (profit[X_SALES] == 0 && profit[Y_SALES] == 0) {
+                //         profits.push_back({profit[X_SALES], profit[Y_SALES] + 1, profit[IDX] + 1, profit[TOTAL] + Y[profit[IDX]]});
+                //     } // if
+
+                //     profits.push_back({0, 0, profit[IDX] + 1, profit[TOTAL]});
+                // } // while
 
                 return max;
             } // findMaximumProfit
