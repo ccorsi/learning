@@ -18,6 +18,11 @@ navbar-links:
   Work Experience: "/resume"
   Projects:
     - Time Tracking Plugin: "/projects/timetracker"
+  Notes:
+    - CMake: "/notes/cmake"
+    - GoogleTests: "/notes/googletests"
+    - Visual Studio Code: "/notes/vscode"
+    - Limitless: "/notes/limitless"
 #  Resources:
 #    - Beautiful Jekyll: "https://beautifuljekyll.com"
 #    - Learn markdown: "https://www.markdowntutorial.com/"

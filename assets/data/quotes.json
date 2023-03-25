@@ -210,11 +210,12 @@
   {
      "quote":
      [
-      "If an egg is broken by am outside force, life ends.",
+      "If an egg is broken by an outside force, life ends.",
       "If broken by an inside force, life begins.",
       "Great things always begin from the inside."
      ],
-     "author": "Jim Kwik"
+     "author": "Jim Kwik",
+     "formatted": true
   },
   {
      "quote":
@@ -224,7 +225,8 @@
       "It's life's illusions I recall",
       "I really don't know life at all."
      ],
-     "author": "Joni Mitchell"
+     "author": "Joni Mitchell",
+     "formatted": true
   },
   {
      "quote":
@@ -254,7 +256,8 @@
       "We don't stop playing because we grow old;",
       "we grow old because we stop playing."
      ],
-     "author": "George Bernard Shaw"
+     "author": "George Bernard Shaw",
+     "formatted": true
   },
   {
      "quote":
@@ -263,7 +266,8 @@
       "spontaneous unpremediatated act without",
       "the benefit of experience."
      ],
-     "author": "Henry Miller"
+     "author": "Henry Miller",
+     "formatted": true
   },
   {
      "quote":
@@ -293,7 +297,8 @@
       "show me and I may remember;",
       "involve me and I will undrstand."
      ],
-     "author": "Chinese Proverb"
+     "author": "Chinese Proverb",
+     "formatted": true
   },
   {
      "quote":
@@ -337,7 +342,8 @@
       "It ain't what you don't know that gets you into trouble.",
       "It's what you know for sure that just ain't so."
      ],
-     "author": "Mark Twain"
+     "author": "Mark Twain",
+     "formatted": true
   },
   {
      "quote":
@@ -352,7 +358,8 @@
       "There is one grand lie--that we are limited.",
       "The only limits that we have are the limits we believe."
      ],
-     "author": "Wayne Dyer"
+     "author": "Wayne Dyer",
+     "formatted": true
   },
   {
      "quote":
@@ -369,7 +376,116 @@
       "common men hate a new idea, and are disposed more or less to ill-treat the orignal",
       "man who brings it."
      ],
-     "author": "Walter Bagehot"
+     "author": "Walter Bagehot",
+     "formatted": true
+  },
+  {
+     "quote":
+     [
+      "Those who were seen dancing were thought to be insane by those who could not hear the music."
+     ],
+     "author": "Friedrich Nietzsche"
+  },
+  {
+     "quote":
+     [
+      "I beseech you to treasure up in your hearts these my parting words. Be ashamed to die until",
+      "you have won some victory for humanity."
+     ],
+     "author": "Horace Mann"
+  },
+  {
+     "quote":
+     [
+      "Not everything that is faced can be changed, but nothing can be changed until it is faced."
+     ],
+     "author": "James Baldwin"
+  },
+  {
+     "quote":
+     [
+      "Life begins at the edge of your comfort zone."
+     ],
+     "author": "Neale Donald Walsch"
+  },
+  {
+   "quote":[
+      "We must love one another, or die."
+   ],
+   "author": "W. H. Auden"
+  },
+  {
+   "quote":[
+      "The life which is unexamined is not worth living."
+   ],
+   "author": "Plato"
+  },
+  {
+   "quote":[
+      "Thinking is the hardest work there is, which is the probable reason why so few engage in it."
+   ],
+   "author": "Henry Ford"
+  },
+  {
+   "quote":[
+      "The man who does not read good books has no advantage over the man that can't read them!"
+   ],
+   "author": "Mark Twain"
+  },
+  {
+   "quote":[
+      "All thoughts is a feat of associaton: having what's in front of you bring up something in",
+      "your mind that you almost didn't know that you knew."
+   ],
+   "author": "Robert Frost"
+  },
+  {
+   "quote":[
+      "The secret of a good memory is attention, and attention to the subject depends upon our",
+      "interest of it.  We rarely forget that which has made a deep impression on our minds."
+   ],
+   "author": "Tyron Edwards"
+  },
+  {
+   "quote":[
+      "Nothing has such a power to broaden the mind as the ability to investigate systematically."
+   ],
+   "author": "Marcus Aurelius"
+  },
+  {
+     "quote": [
+	   "Whenever you want to achieve something, keep your eyes open, concentrate, and make",
+      "sure you know exactly what it is you want.  No one can hit their target with their eyes closed."
+     ],
+    "author": "Paulo Coelho"
+  },
+  {
+   "quote": [
+      "The illerate of the 21st century will not be those that cannot read and write, but those who",
+      "cannot learn, unlearn and relearn."
+   ],
+   "author": "Alvin Toffler"
+  },
+  {
+   "quote": [
+      "The great tragedy of Science--the slaying of a beautiful hypothesis by an ugly fact."
+   ],
+   "author": "Thomas Henry Huxley"
+  },
+  {
+   "quote": [
+      "I do not pretend to understand the moral universe; the arc is a long one, my eye reaches but little ways;",
+      "I cannot calculate the curve and complete the figure by the experience of sight;  I can divine it by",
+      "conscience.  And from what I see I am sure it bends towards justice."
+   ],
+   "author": "Theodore Parker"
+  },
+  {
+   "quote": [
+      "I have a dream that my four little children will one day live in a nation where they will not be judged",
+      "by the color of their skin but by the content of their character."
+   ],
+   "author": "Martin Luther King Jr"
   },
   {
      "quote":
@@ -377,6 +493,7 @@
       "We do not need magic to transform our world.",
       "We carry all of the power we need inside ourselves already."
      ],
-      "author": "J. K. Rowling"
+     "author": "J. K. Rowling",
+     "formatted": true
   }
 ]
