@@ -10,6 +10,7 @@
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 
+#include <climits>
 
 #include "maximum_product_triplet.h"
 
