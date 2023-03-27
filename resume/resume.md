@@ -16,8 +16,8 @@ and documenting.
 <hr>
 
 ***Languages***: Java, C/C++, C#, Python, Groovy, Perl, Ruby, JavaScript  
-***Frameworks***: Mockito, PowerMock, JUnit, BCEL, ASM, Camel, RMI, JNDI, JDBC, JAXP, XML, XSLT, DOM, SAX, JNI, EJB, Servlet, JSP, JTA, JMS, JMX  
-***Developer Tools***: Visual Studio Code, Git, Docker, Visual Studio, Eclipse, Netbeans, IntelliJ, Emacs, XCode, Mercurial, Subversion, Ant, make, maven  
+***Frameworks***: Mockito, PowerMock, JUnit, BCEL, ASM, Camel, RMI, JNDI, JDBC, JAXP, XML, XSLT, DOM, SAX, JNI, EJB, Servlet, JSP, JTA, JMS, JMX, Jest, GoogleTest  
+***Developer Tools***: Visual Studio Code, Git, Docker, Visual Studio, Eclipse, Netbeans, IntelliJ, Emacs, XCode, Mercurial, Subversion, Ant, make, maven, PyCharm, Anacoda, CMake  
 ***Application Servers***: Weblogic Server, WebSphere Application Server, Tomcat, JBoss AS, ActiveMQ, Jetty  
 ***Operating Systems***: Windows, Linux, Mac OS X, FreeBSD, Solaris, SunOS, AIX  
 ***DBMS***: Oracle DBMS, MySQL, MSSQL, PostgreSQL, MongoDB, SQLite  
