@@ -43,9 +43,15 @@ namespace valhalla {
                  *      character is at the beginning of the line and the close character is at the
                  *      end of the line for each row.
                  *
+                 *      The class expects a struct or class that is used to skip space type characters
+                 *      by implementing the bool operator()(std::basic_stream<Char> &) operator.
+                 *
                  * @tparam E The type of entries to be added to the matrix
                  * @tparam Container The type of row container that will hold the entries
                  * @tparam Matrix The type of matrix that will hold the entries of Container row types
+                 * @tparam Char The unit type of input we are processing, char or wchar_t
+                 * @tparam IsSpace The struct or class used to skip space type unit types
+                 * @tparam VectorLoader A Loader class that is used to load each row of entries of type E
                  */
                 template<
                     typename E,
