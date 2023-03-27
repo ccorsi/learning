@@ -10,7 +10,7 @@
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 
-#include <limits>
+#include <climits>
 
 #include "minimum_product_triplet.h"
 

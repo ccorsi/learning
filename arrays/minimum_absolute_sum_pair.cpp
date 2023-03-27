@@ -11,7 +11,7 @@
  */
 
 #include <cmath>
-#include <limits>
+#include <climits>
 
 #include "minimum_absolute_sum_pair.h"
 

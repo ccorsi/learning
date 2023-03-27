@@ -47,10 +47,11 @@ TEST(DebugTestSuite, DebugOut) {
 
 int main(int argc, char** argv) {
     // std::cout << "Setting DEBUGTEST to 1" << std::endl;
+    char *env = "DEBUGTEST=1";
 #ifdef _WIN32
-    _putenv("DEBUGTEST=1");
+    _putenv(env);
 #else
-    putenv("DEBUGTEST=1");
+    putenv(env);
 #endif
     // std::cout << "Set DEBUGTEST to 1" << std::endl;
     ::testing::InitGoogleTest(&argc, argv);
