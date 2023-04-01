@@ -64,27 +64,27 @@ namespace valhalla {
                 class matrixLoader {
                     Char m_open, m_close;
                     Matrix & m_container;
-                    IsSpace m_isSpace;
+                    ::valhalla::utils::checkers::skip_spaces<Char, IsSpace> m_skipSpace;
                 public:
                     using container = Container;
 
                     matrixLoader(Matrix & container, Char open = '[', Char close = ']') : m_container(container), m_open(open), m_close(close) {}
 
                     friend std::basic_istream<Char>& operator>>(std::basic_istream<Char>& in, matrixLoader & loader) {
-                        while (loader.m_isSpace(in.peek())) in.get(); // skip space characters
+                        loader.m_skipSpace(in); // skip space characters
                         // confirm that the first character is the open character
                         if (static_cast<Char>(in.peek()) == loader.m_open) {
-                            std::basic_string<Char> line;
-                            std::getline(in, line); // read the open character and the end of line
+                            in.get(); // read the open character
+                            loader.m_skipSpace(in); // skip space characters
                             while (static_cast<char>(in.peek()) != loader.m_close) {
                                 loader.m_container.push_back(Container()); // create a Container and add it to the matrix
                                 Container & values = loader.m_container.back(); // get a reference to the newly created Container
                                 VectorLoader vecLoader(values, loader.m_open, loader.m_close);
                                 in >> vecLoader; // read the current line of entries into the created Container instance
-                                while (loader.m_isSpace(in.peek())) in.get(); // skip space characters
+                                loader.m_skipSpace(in); // skip space characters
                             } // while
-                            std::getline(in, line); // read the close character and the end of line
-                            while (loader.m_isSpace(in.peek())) in.get(); // skip space characters
+                            in.get(); // read the close character
+                            loader.m_skipSpace(in); // skip space characters
                         } else {
                             throw std::runtime_error("An invalid matrix format was passed");
                         } // else

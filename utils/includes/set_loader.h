@@ -42,25 +42,24 @@ namespace valhalla {
                 class setLoader {
                     Set & m_set;
                     Char m_open, m_close;
-                    IsSpace isSpace;
+                    ::valhalla::utils::checkers::skip_spaces<Char, IsSpace> skipSpace;
                 public:
                     setLoader() = default;
                     setLoader(Set & set, Char open = '{', Char close = '}') : m_set(set), m_open(open), m_close(close) {}
 
                     friend std::basic_istream<Char> & operator>>(std::basic_istream<Char> & in, setLoader & loader) {
-                        while (loader.isSpace(in.peek())) in.get(); // skip space characters
+                        loader.skipSpace(in); // skip space characters
                         if (static_cast<Char>(in.peek()) == loader.m_open) {
-                            Char chr;
-                            in >> chr; // read the open character
-                            while (loader.isSpace(in.peek())) in.get(); // skip space characters
+                            in.get(); // read the open character
+                            loader.skipSpace(in); // skip space characters
                             while (static_cast<Char>(in.peek()) != loader.m_close) {
                                 E value;
                                 in >> value;
                                 loader.m_set.insert(value); // insert the read value into the container
-                                while (loader.isSpace(in.peek())) in.get(); // skip space characters
+                                loader.skipSpace(in); // skip space characters
                             } // while
-                            std::basic_string<Char> line;
-                            std::getline(in, line); // read the close character and the end of line
+                            in.get(); // read the close character and the end of line
+                            loader.skipSpace(in); // skip space characters
                         } else {
                             throw std::runtime_error("Invalid input format was encounter"); // throw a runtime exception if an invalid format was passed
                         } // else

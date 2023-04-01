@@ -151,6 +151,7 @@ namespace valhalla {
              *
              * @tparam E The type entries that will be loaded in the container
              * @tparam Container The container that will be used to add the entries to
+             * @deprecated Use ::valhalla::utils::loaders::vectors::vectorLoader instead
              */
             template<typename E, typename Container = std::vector<E>>
             class vectorLoader {
@@ -202,6 +203,7 @@ namespace valhalla {
              * @tparam E The type of entries to be added to the matrix
              * @tparam Container The type of row container that will hold the entries
              * @tparam Matrix The type of matrix that will hold the entries of Container row types
+             * @deprecated Use ::valhalla::utils::loaders::matrix::matrixLoader instead
              */
             template<
                 typename E,
