@@ -26,11 +26,11 @@ and documenting.
 ### *Experience*
 <hr>
 
-| Member of the Technical Staff Engineer | 2022- |
+| Member of the Technical Staff | 2022- |
 | :--- | ---: |
 | Luvanni LLC | Burlington, MA |
 
-- Part of the team that implements a Task application.  That is used to organize ones Task and to keep track of progress
+- Part of the team that implements a Task application.  That is used to organize ones Tasks and keep track of their progress
 - Researched moving TaskAutomator application to Google Cloud
 - Implemented CI/CD workflow using GitHub Actions
 - Defined and implemented the Testing process using Jest
