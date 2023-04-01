@@ -18,5 +18,6 @@
 #include "set_loader.h"
 #include "matrix_loader.h"
 #include "pair_loader.h"
+#include "tuple_loader.h"
 
 #endif
