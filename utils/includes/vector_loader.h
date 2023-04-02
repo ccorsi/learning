@@ -1,5 +1,5 @@
 /**
- * @file vloader.h
+ * @file vector_loader.h
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This include file contains a loader that will load values into a vector
  * @version 0.1
