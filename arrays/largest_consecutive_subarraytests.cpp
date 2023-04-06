@@ -31,8 +31,8 @@ public:
     LargestConsecutiveSubarrayData() = default;
     LargestConsecutiveSubarrayData(std::vector<int> input, std::vector<std::vector<int>> expected) : m_input(input), m_expected(expected) {}
 
-    std::vector<int>& get_input() { return m_input; }
-    std::vector<std::vector<int>>& get_expected() { return m_expected; }
+    std::vector<int> const & get_input() { return m_input; }
+    std::vector<std::vector<int>> const & get_expected() { return m_expected; }
 
     friend std::ostream& operator<<(std::ostream&, const LargestConsecutiveSubarrayData &);
 };
@@ -63,7 +63,9 @@ TEST_P(LargestConsecutiveSubarrayFixture, LargestConsecutiveSubArrayTests) {
 
     Solution solution;
 
-    std::vector<int> actual = solution.findLargestSubarray(data.get_input());
+    std::vector<int> input = data.get_input();
+
+    std::vector<int> actual = solution.findLargestSubarray(input);
 
     std::vector<std::vector<int>> expected(data.get_expected());
 

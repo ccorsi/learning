@@ -17,10 +17,12 @@
 
 #include "paths.h"
 #include "loader.h"
+#include "checkers.h"
 #include "subset_sum.h"
 
 using namespace valhalla::utils::loaders;
 using namespace valhalla::utils::paths;
+using namespace valhalla::utils::checkers;
 using namespace valhalla::arrays::subset_sum;
 
 // Test Fixture Data Class
@@ -52,9 +54,16 @@ std::ostream& operator<<(std::ostream& out, const SubsetSumData & data) {
 std::istream& operator>>(std::istream& in, SubsetSumData &data) {
     vectorLoader<int> loader('[', ']', data.m_input);
     in >> loader;
-    in >> data.m_target >> data.m_expected;
-    std::string line;
-    std::getline(in, line); // read end of line
+
+    skip_spaces<char,is_space_or<','>> skipSpace;
+
+    skipSpace(in);
+    in >> data.m_target;
+
+    skipSpace(in);
+    in >> data.m_expected;
+
+    skipSpace(in);
 
     return in;
 }

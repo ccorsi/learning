@@ -25,8 +25,8 @@ public:
     MoveZeroesToEndData() = default;
     MoveZeroesToEndData(std::vector<int> input, std::vector<int> expected) : m_input(input), m_expected(expected) {}
 
-    std::vector<int> get_input() { return m_input; }
-    std::vector<int> get_expected() { return m_expected; }
+    std::vector<int> const & get_input() { return m_input; }
+    std::vector<int> const & get_expected() { return m_expected; }
 };
 
 // Test Fixture Class

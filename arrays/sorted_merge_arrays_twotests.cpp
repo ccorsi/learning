@@ -28,8 +28,8 @@ public:
      SortedMergeArraysTwoData() = default;
      SortedMergeArraysTwoData(std::vector<int> X, std::vector<int> Y, std::vector<int> expected) : m_x_input(X), m_y_input(Y), m_expected(expected) {}
 
-     std::vector<int> get_x_input() { return m_x_input; }
-     std::vector<int> get_y_input() { return m_y_input; }
+     std::vector<int> const & get_x_input() { return m_x_input; }
+     std::vector<int> const & get_y_input() { return m_y_input; }
      std::vector<int> const & get_expected() { return m_expected; }
 
      friend std::ostream& operator<<(std::ostream&, const SortedMergeArraysTwoData &);

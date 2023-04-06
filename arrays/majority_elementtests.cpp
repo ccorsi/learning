@@ -25,7 +25,7 @@ public:
     MajorityElementData() = default;
     MajorityElementData(std::vector<int> input, int expected) : m_input(input), m_expected(expected) {}
 
-    std::vector<int>& get_input() { return m_input; }
+    std::vector<int> const & get_input() { return m_input; }
     int get_expected() { return m_expected; }
 };
 
@@ -39,7 +39,9 @@ TEST_P(MajorityElementFixture, MajorityElementTests) {
 
     Solution solution;
 
-    int actual = solution.findMajorityElement(data.get_input());
+    std::vector<int> input = data.get_input();
+
+    int actual = solution.findMajorityElement(input);
 
     ASSERT_EQ(data.get_expected(), actual);
 }

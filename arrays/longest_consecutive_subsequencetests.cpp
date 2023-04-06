@@ -31,7 +31,7 @@ class LongestConsecutiveSubsequenceData {
 public:
     LongestConsecutiveSubsequenceData() = default;
 
-    std::vector<int> get_input() { return m_input; }
+    std::vector<int> const & get_input() { return m_input; }
     int get_expected() { return m_expected; }
 
     friend std::ostream& operator<<(std::ostream&, const LongestConsecutiveSubsequenceData &);
@@ -77,7 +77,9 @@ TEST_P(LongestConsecutiveSubsequenceFixture, LongestConsecutiveSubsequenceTests)
 
     Solution solution;
 
-    int actual = solution.findMaxLenSubseq(data.get_input());
+    std::vector<int> input = data.get_input();
+
+    int actual = solution.findMaxLenSubseq(input);
 
     ASSERT_EQ(actual, data.get_expected());
 }

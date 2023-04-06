@@ -47,22 +47,22 @@ void valhalla::arrays::subset_sum::Solution::countWay(std::set<std::vector<int>>
     if (idx < size) {
         int total = sum + nums[idx];
 
-        std::cout << "Checking entries [";
-        for (int entry : entries)
-            std::cout << " " << entry;
-        std::cout << " " << nums[idx] << " ] = "
-            << total << " against " << target << std::endl;
+        // std::cout << "Checking entries [";
+        // for (int entry : entries)
+        //     std::cout << " " << entry;
+        // std::cout << " " << nums[idx] << " ] = "
+        //     << total << " against " << target << std::endl;
 
         if (total == target) {
-            std::cout << "Found target:";
-            for (int entry : entries)
-                std::cout << " " << entry;
-            std::cout << " " << nums[idx] << " = " << target << std::endl;
+            // std::cout << "Found target:";
+            // for (int entry : entries)
+            //     std::cout << " " << entry;
+            // std::cout << " " << nums[idx] << " = " << target << std::endl;
             if (processed.insert(entries).second) {
-                std::cout << "Added target:";
-                for (int entry : entries)
-                    std::cout << " " << entry;
-                std::cout << " " << nums[idx] << " = " << target << std::endl;
+                // std::cout << "Added target:";
+                // for (int entry : entries)
+                //     std::cout << " " << entry;
+                // std::cout << " " << nums[idx] << " = " << target << std::endl;
             }
         } // if
 
@@ -77,10 +77,10 @@ void valhalla::arrays::subset_sum::Solution::countWay(std::set<std::vector<int>>
 void valhalla::arrays::subset_sum::Solution::processInput(std::set<std::vector<int>> & processed, std::vector<int> & nums, int target, int idx) {
     const int length = static_cast<int>(nums.size());
 
-    std::cout << "Processing nums [";
-    for (int num : nums)
-        std::cout << " " << num;
-    std::cout << " ] for idx = " << idx << std::endl;
+    // std::cout << "Processing nums [";
+    // for (int num : nums)
+    //     std::cout << " " << num;
+    // std::cout << " ] for idx = " << idx << std::endl;
 
     for (int start = 0 ; start < length ; start++) {
         std::vector<int> entries;
@@ -99,10 +99,10 @@ int valhalla::arrays::subset_sum::Solution::countWays(std::vector<int> const & n
     std::set<std::vector<int>> processed;
 
     if ( ! nums.empty() ) {
-        std::cout << "Input:";
-        for(int num : nums)
-            std::cout << " " << num;
-        std::cout << ", target = " << target << std::endl;
+        // std::cout << "Input:";
+        // for(int num : nums)
+        //     std::cout << " " << num;
+        // std::cout << ", target = " << target << std::endl;
 
         std::vector<int> inputs = nums;
 

@@ -31,7 +31,7 @@ class CombinationsFourData {
 public:
     CombinationsFourData() = default;
 
-    std::vector<int> & get_input() { return m_input; }
+    std::vector<int> const & get_input() { return m_input; }
     int get_k() { return m_k; }
     std::set<std::vector<int>> const & get_expected() { return m_expected; }
 
@@ -94,7 +94,9 @@ TEST_P(CombinationsFourFixture, CombinationsFourTests) {
 
     Solution solution;
 
-    std::set<std::vector<int>> actual = solution.findCombinations(data.get_input(), data.get_k());
+    std::vector<int> input = data.get_input();
+
+    std::set<std::vector<int>> actual = solution.findCombinations(input, data.get_k());
 
     ASSERT_EQ(actual, data.get_expected());
 }

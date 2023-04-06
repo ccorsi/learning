@@ -27,7 +27,7 @@ public:
      MaximumSumCircularSubarrayData() = default;
      MaximumSumCircularSubarrayData(std::vector<int> input, int expected) : m_input(input), m_expected(expected) {}
 
-     std::vector<int> get_input() { return m_input; }
+     std::vector<int> const & get_input() { return m_input; }
      int get_expected() { return m_expected; }
 
      friend std::ostream& operator<<(std::ostream&, const MaximumSumCircularSubarrayData &);

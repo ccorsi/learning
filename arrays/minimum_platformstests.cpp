@@ -32,8 +32,8 @@ class MinimumPlatformsData {
 public:
     MinimumPlatformsData() = default;
 
-    std::vector<double> get_arrivals() { return m_arrivals; }
-    std::vector<double> get_departures() { return m_departures; }
+    std::vector<double> const & get_arrivals() { return m_arrivals; }
+    std::vector<double> const & get_departures() { return m_departures; }
     int get_expected() { return m_expected; }
 
     friend std::ostream& operator<<(std::ostream&, const MinimumPlatformsData &);

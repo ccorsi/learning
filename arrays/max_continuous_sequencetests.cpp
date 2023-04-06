@@ -28,7 +28,7 @@ public:
     MaximumContinuousSequenceData(int expected, std::vector<int> nums) : m_expected(expected), m_nums(nums) {}
 
     int get_expected() { return m_expected; }
-    std::vector<int> get_input() { return m_nums; }
+    std::vector<int> const & get_input() { return m_nums; }
 
     std::ostream& operator<<(std::ostream& out) {
         out << "MaximumContinuousSequenceData [ expected=" << m_expected << ", input= [";
