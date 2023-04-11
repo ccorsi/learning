@@ -1,8 +1,8 @@
 /**
  * @file longest_palindromic_substringtests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
- * @brief
- * @version 0.1
+ * @brief This contains tests to the problem https://www.techiedelight.com/?problem=LongestPalindromicSubstring
+ * @version 0.2
  * @date 2023-02-13
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -66,9 +66,10 @@ TEST_P(LongestPalindromicSubstringFixture, LongestPalindromicSubstringTests) {
 // Parameter Test Parameters
 INSTANTIATE_TEST_SUITE_P(LongestPalindromicSubstringTests, LongestPalindromicSubstringFixture, testing::Values(
     LongestPalindromicSubstringData("bananas", {"anana"}),
-    LongestPalindromicSubstringData("abdcbcdbdcbbc", {"bdcbcdb", "bcdbdcb"}),
+    LongestPalindromicSubstringData("abdcbcdbdcbbc", {"bdcbcdb"}),
     LongestPalindromicSubstringData("abracadabra", {"aca"}),
-    LongestPalindromicSubstringData("dcabc", {"a", "b", "c", "d"})
+    LongestPalindromicSubstringData("dcabc", {"d"}),
+    LongestPalindromicSubstringData("ABCDCBA", {"ABCDCBA"})
 ));
 
 int main(int argc, char** argv) {

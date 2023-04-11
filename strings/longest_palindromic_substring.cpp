@@ -2,7 +2,7 @@
  * @file longest_palindromic_substring.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This is a solution to the problem https://www.techiedelight.com/?problem=LongestPalindromicSubstring
- * @version 0.1
+ * @version 0.2
  * @date 2023-02-13
  * 
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -20,11 +20,14 @@ Output: "anana"
 Input: "abdcbcdbdcbbc"
 Output: "bdcbcdb"
 
-The longest palindromic substring is not guaranteed to be unique. If multiple longest palindromic substring exists, the solution should return the one which appear first in the string.
+The longest palindromic substring is not guaranteed to be unique. If multiple longest palindromic
+substring exists, the solution should return the one which appear first in the string.
 
 Input: "abracadabra"
 Output: "aca"
-Explanation: There is no palindromic substring in a string "abracadabra" with a length greater than 3. There are two palindromic substrings with length 3, namely, "aca" and "ada". The solution returns "aca" as it appears before "ada" in the string.
+Explanation: There is no palindromic substring in a string "abracadabra" with a length greater
+than 3. There are two palindromic substrings with length 3, namely, "aca" and "ada". The solution
+returns "aca" as it appears before "ada" in the string.
 
 Input: "dcabc"
 Output: "d"
@@ -43,6 +46,29 @@ std::string valhalla::strings::longest_palindromic_substring::Solution::longestP
 
     if (s.empty()) return result;
 
+    const int size = s.length();
+    result = s[0];
+
+    for (int len = 2 ; len <= size ; len++) {
+        const int end = size - len + 1;
+        bool found = false;
+        for (int idx = 0 ; found == false && idx < end ; idx++) {
+            int front = idx, back = idx + len - 1;
+            while (front < back && s[front] == s[back]) {
+                front++; back--;
+            } // while
+            if (front >= back) {
+                found = true;
+                result = s.substr(idx, len);
+            } // if
+        } // for
+    } // for
+
+    /*
+        Version 1:
+        The following solution does correctly find different palindromic substrings within the passed string but
+        it doesn't return the *first* longest palindromic substring.  It thus doesn't properly implement the required
+        solution to this question
     std::list<std::string::size_type> next;
     std::set<std::string::size_type> checked;
 
@@ -121,6 +147,7 @@ std::string valhalla::strings::longest_palindromic_substring::Solution::longestP
             break;
         } // if
     } // while
+    */
 
     return result;
 }
