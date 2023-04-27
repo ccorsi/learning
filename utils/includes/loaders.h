@@ -19,5 +19,6 @@
 #include "matrix_loader.h"
 #include "pair_loader.h"
 #include "tuple_loader.h"
+#include "primitive_loader.h"
 
 #endif
