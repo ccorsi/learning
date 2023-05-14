@@ -2,7 +2,7 @@
  * @file search_nearly_sorted_arraytests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief These are tests for the problem https://www.techiedelight.com/?problem=SearchNearlySortedArray
- * @version 0.1
+ * @version 0.2
  * @date 2023-02-21
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -16,11 +16,12 @@
 #include "gmock/gmock.h"
 
 #include "paths.h"
-#include "loader.h"
+#include "loaders.h"
 #include "search_nearly_sorted_array.h"
 
 using namespace valhalla::utils::loaders;
 using namespace valhalla::utils::paths;
+using namespace valhalla::utils;
 using namespace valhalla::arrays::search_nearly_sorted_array;
 using testing::AnyOfArray;
 
@@ -55,32 +56,28 @@ std::ostream& operator<<(std::ostream& out, const SearchNearlySortedArrayData & 
 }
 
 std::istream& operator>>(std::istream& in, SearchNearlySortedArrayData &data) {
-    std::string line;
+    ::loaders::vectors::vectorLoader<
+        int,
+        std::vector<int>,
+        char,
+        ::checkers::is_space_or<','>
+    > inputLoader(data.m_input, '[', ']');
+    in >> inputLoader;
 
-    if (static_cast<char>(in.peek()) == '[') {
-        char chr;
-        in >> chr; // read the '[' character
-        while (static_cast<char>(in.peek()) != ']') {
-            int value;
-            in >> value;
-            data.m_input.push_back(value);
-        } // while
-        std::getline(in, line); // read ']' and end of line
-    } // if
+    ::loaders::primitive::primitiveLoader<
+      int,
+      char,
+      ::checkers::is_space_or<','>
+    > targetLoader(&data.m_target);
+    in >> targetLoader;
 
-    in >> data.m_target;
-    std::getline(in, line); // read end of line
-
-    if (static_cast<char>(in.peek()) == '(') {
-        char chr;
-        in >> chr; // read the '(' character
-        while (static_cast<char>(in.peek()) != ')') {
-            int value;
-            in >> value;
-            data.m_expected.push_back(value);
-        } // while
-        std::getline(in, line);  // read the ')' character and end of line
-    } // if
+    ::loaders::vectors::vectorLoader<
+      int,
+      std::vector<int>,
+      char,
+      ::checkers::is_space_or<','>
+    > expectedLoader(data.m_expected,'(', ')');
+    in >> expectedLoader;
 
     return in;
 }

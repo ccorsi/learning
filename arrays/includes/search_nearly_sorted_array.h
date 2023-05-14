@@ -19,6 +19,8 @@ namespace valhalla {
     namespace arrays {
         namespace search_nearly_sorted_array {
             class Solution {
+                int findIndex(std::vector<int> const &, int, std::vector<int>::size_type,
+                              std::vector<int>::size_type, std::vector<int>::size_type);
             public:
                 int findIndex(std::vector<int> const &, int);
             };

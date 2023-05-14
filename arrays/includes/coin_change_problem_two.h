@@ -1,28 +1,28 @@
 /**
- * @file three_partition_problem.h
+ * @file coin_change_problem_two.h
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief
  * @version 0.1
- * @date 2023-04-12
+ * @date 2023-05-03
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
  *
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 
-#ifndef __THREE_PARTITION_PROBLEM_H__
-#define __THREE_PARTITION_PROBLEM_H__
+#ifndef __COIN_CHANGE_PROBLEM_TWO_H__
+#define __COIN_CHANGE_PROBLEM_TWO_H__
 
 #include <vector>
 #include <set>
 
 namespace valhalla {
     namespace arrays {
-        namespace three_partition_problem {
+        namespace coin_change_problem_two {
             class Solution {
-                bool findSum(std::vector<int> const &, std::set<int> &, std::set<int> &, int, const int);
+                void findWay(std::vector<int> const &, int, int, int, int &);
             public:
-                bool partition(std::vector<int> const &);
+                int findWays(std::vector<int> const &, int);
             };
         }
     }

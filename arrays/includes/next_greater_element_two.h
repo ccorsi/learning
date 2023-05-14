@@ -1,28 +1,25 @@
 /**
- * @file three_partition_problem.h
+ * @file next_greater_element_two.h
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief
  * @version 0.1
- * @date 2023-04-12
+ * @date 2023-05-03
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
  *
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
-
-#ifndef __THREE_PARTITION_PROBLEM_H__
-#define __THREE_PARTITION_PROBLEM_H__
+#ifndef __NEXT_GREATER_ELEMENT_TWO_H__
+#define __NEXT_GREATER_ELEMENT_TWO_H__
 
 #include <vector>
-#include <set>
 
 namespace valhalla {
     namespace arrays {
-        namespace three_partition_problem {
+        namespace next_greater_element_two {
             class Solution {
-                bool findSum(std::vector<int> const &, std::set<int> &, std::set<int> &, int, const int);
             public:
-                bool partition(std::vector<int> const &);
+                std::vector<int> findNextGreaterElements(std::vector<int> const &);
             };
         }
     }
