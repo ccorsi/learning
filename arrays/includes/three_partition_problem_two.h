@@ -20,7 +20,7 @@ namespace valhalla {
     namespace arrays {
         namespace three_partition_problem_two {
             class Solution {
-                bool Solution::findSum(std::vector<std::vector<int>> &, std::vector<int> const &, std::set<int> &, std::set<int> &, int, const int);
+                bool findSum(std::vector<std::vector<int>> &, std::vector<int> const &, std::set<int> &, std::set<int> &, int, const int);
             public:
                 std::vector<std::vector<int>> partition(std::vector<int> const &);
             };
