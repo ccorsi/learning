@@ -47,7 +47,7 @@ TEST(DebugTestSuite, DebugOut) {
 
 int main(int argc, char** argv) {
     // std::cout << "Setting DEBUGTEST to 1" << std::endl;
-    char *env = "DEBUGTEST=1";
+    char env[] = "DEBUGTEST=1";
 #ifdef _WIN32
     _putenv(env);
 #else
