@@ -21,5 +21,6 @@
 #include "tuple_loader.h"
 #include "primitive_loader.h"
 #include "map_loader.h"
+#include "data_loader.h"
 
 #endif

@@ -76,6 +76,45 @@ namespace valhalla {
             // struct skip_chars {
             //     bool operator()(int chr) { return std::isspace(chr) || characters.find(chr) != characters.end(); }
             // };
+            template<typename Char>
+            struct is_character_noop {
+                bool operator()(std::basic_istream<Char> & in) {
+                    return true;
+                }
+            };
+
+            template<typename Char, Char... Chars>
+            struct is_character {
+                bool operator()(std::basic_istream<Char> & in, Char check) {
+                    if (static_cast<Char>(in.peek()) != check) {
+                        return false;
+                    } // if
+                    in.get(); // read check character
+                    return true;
+                }
+
+                template<typename... Rest>
+                bool operator()(std::basic_istream<Char> & in, Char check, Rest... rest) {
+                    if (static_cast<Char>(in.peek()) != check) {
+                        return false;
+                    } // if
+                    in.get(); // read check character
+                    return operator()(in, rest...);
+                }
+
+                bool operator()(std::basic_istream<Char> & in) {
+                    return operator()(in, Chars...);
+                }
+            };
+
+            template<typename Char>
+            struct is_no_character {
+                int m_count = 0;
+                bool operator()(std::basic_istream<Char> & in) {
+                    m_count = ++m_count % 2;
+                    return m_count == 0;
+                }
+            };
         }
     }
 }
