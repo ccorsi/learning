@@ -170,6 +170,7 @@ class ComplexDataType {
 public:
     ComplexDataType() = default;
     ComplexDataType(std::string & name, int age, long year) : m_name(name), m_age(age), m_a_year(year) {}
+    ComplexDataType(std::string name, int age, long year) : m_name(name), m_age(age), m_a_year(year) {}
 
     friend std::istream & operator>>(std::istream & in, ComplexDataType & data) {
 
@@ -325,7 +326,7 @@ std::istream & operator>>(std::istream & in, std::vector<std::vector<ComplexData
 };
 
 TEST(DataLoaderTestSuite, VectorOfVectorComplexDataLoaderV1Test) {
-    std::vector<std::vector<ComplexDataType>> actual, expected = { { ComplexDataType(std::string("Me"), 10,1900) } };
+    std::vector<std::vector<ComplexDataType>> actual, expected = { { { std::string("Me"), 10,1900 } } };
     std::stringstream in("[ [ ( Me 10, 1900 ) ] ]");
 
     valhalla::utils::loaders::loader::v1::dataLoader<
@@ -530,7 +531,7 @@ class AReader : public valhalla::utils::loaders::loader::v2::dataReader<A, Char,
     int m_a_x, m_a_y;
 protected:
     std::istream & load(std::istream & in) override {
-        switch(state()) {
+        switch(this->state()) {
             case 0:
                 // Load a
                 in >> m_a_x;
@@ -546,7 +547,7 @@ protected:
     }
 public:
     AReader() = default;
-    AReader(A & a) : dataReader(a) {}
+    AReader(A & a) : valhalla::utils::loaders::loader::v2::dataReader<A, Char, states>(a) {}
 };
 
 TEST(DataLoaderTestSuite, DataLoaderV2Test) {
@@ -632,20 +633,20 @@ class TypeExReader : public valhalla::utils::loaders::loader::v2::dataReader<Typ
     int m_x, y;
 protected:
     std::istream & load(std::istream & in) override {
-        switch(state()) {
+        switch(this->state()) {
             case 0:
                 in >> m_x;
                 break;
             case 1:
                 in >> y;
-                get_data() = Type(m_x, y);
+                this->get_data() = Type(m_x, y);
                 break;
         }
         return in;
     }
 public:
     TypeExReader() = default;
-    TypeExReader(Type & type) : dataReader(type) {}
+    TypeExReader(Type & type) : valhalla::utils::loaders::loader::v2::dataReader<Type,char,2>(type) {}
 };
 
 class CReaderEx : public valhalla::utils::loaders::loader::v2::dataReader<C,char,2> {
@@ -666,13 +667,13 @@ class CReaderEx : public valhalla::utils::loaders::loader::v2::dataReader<C,char
     }
 protected:
     std::istream & load(std::istream & in) override {
-        switch(state()) {
+        switch(this->state()) {
             case 0: // Load m_a
                 load(in, m_a);
                 break;
             case 1: // Load m_b
                 load(in, m_b);
-                get_data() = C(m_a, m_b);
+                this->get_data() = C(m_a, m_b);
                 break;
         } // switch
 
@@ -680,7 +681,7 @@ protected:
     }
 public:
     CReaderEx() = default;
-    CReaderEx(C & c) : dataReader(c) {}
+    CReaderEx(C & c) : valhalla::utils::loaders::loader::v2::dataReader<C,char,2>(c) {}
 };
 
 TEST(DataLoaderTestSuite, PiecewisePopulateCObjectV2DataLoaderV2Test) {
