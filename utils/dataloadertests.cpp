@@ -736,20 +736,20 @@ class MapEntryReader : public valhalla::utils::loaders::loader::v2::dataReader<T
     int key, value;
 protected:
     std::istream & load(std::istream & in) override {
-        switch(state()) {
+        switch(this->state()) {
             case 0:
                 in >> key;
                 break;
             case 1:
                 in >> value;
-                get_data()[key] = value;
+                this->get_data()[key] = value;
                 break;
         } // switch
         return in;
     }
 public:
  MapEntryReader() = default;
- MapEntryReader(Type & type) : dataReader(type) {}
+ MapEntryReader(Type & type) : valhalla::utils::loaders::loader::v2::dataReader<Type,char,2>(type) {}
 };
 
 template<typename Type>
@@ -763,12 +763,12 @@ protected:
             valhalla::utils::checkers::is_character<char,'{'>,
             valhalla::utils::checkers::is_character<char,'}'>,
             valhalla::utils::checkers::is_space_or<','>
-        > loader(get_data());
+        > loader(this->get_data());
         return in >> loader;
     }
 public:
  MapReader() = default;
- MapReader(Type & type) : dataReader(type) {}
+ MapReader(Type & type) : valhalla::utils::loaders::loader::v2::dataReader<Type,char,1>(type) {}
 };
 
 TEST(DataLoaderTestSuite, MapDataLoaderV2Test) {
