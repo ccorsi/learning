@@ -116,7 +116,6 @@ namespace valhalla {
                         dataLoader() = default;
                         dataLoader(Type & type) : m_type(type) {}
 
-                        template<typename pos_type = std::basic_istream<Char>::pos_type>
                         friend std::basic_istream<Char> & operator>>(std::basic_istream<Char> & in, dataLoader & loader) {
                             valhalla::utils::checkers::skip_spaces<Char, IsSpace> skipSpace;
                             IsOpenChar isOpenChar;
@@ -127,7 +126,7 @@ namespace valhalla {
                                 skipSpace(in); // skip space-like input
 
                                 Reader reader(loader.m_type);
-                                pos_type pos = in.tellg();
+                                std::streamoff pos = in.tellg();
                                 in >> reader;
                                 if (in.tellg() == pos) {
                                     throw std::runtime_error("No input was processed");
@@ -234,7 +233,6 @@ namespace valhalla {
                         dataLoader() = default;
                         dataLoader(Type & type) : m_type(type) {}
 
-                        template<typename pos_type = std::basic_istream<Char>::pos_type>
                         friend std::basic_istream<Char> & operator>>(std::basic_istream<Char> & in, dataLoader & dataloader) {
                             valhalla::utils::checkers::skip_spaces<Char, IsSpace> skipSpace;
                             IsOpenChar isOpenChar;
@@ -247,7 +245,7 @@ namespace valhalla {
                                 Reader reader(dataloader.m_type);
                                 while (isCloseChar(in) == false) {
                                     do {
-                                        pos_type pos = in.tellg();
+                                        std::streamoff pos = in.tellg();
                                         in >> reader;
                                         if (in.tellg() == pos) {
                                             throw std::runtime_error("No input was processed");
@@ -385,7 +383,6 @@ namespace valhalla {
                         dataLoader() = default;
                         dataLoader(Type & type) : m_type(type) {}
 
-                        template<typename pos_type = std::basic_istream<Char>::pos_type>
                         friend std::basic_istream<Char> & operator>>(std::basic_istream<Char> & in, dataLoader & dataloader) {
                             valhalla::utils::checkers::skip_spaces<Char, IsSpace> skipSpace;
                             IsOpenChar isOpenChar;
@@ -398,7 +395,7 @@ namespace valhalla {
                                 Reader reader(dataloader.m_type);
                                 while (isCloseChar(in) == false) {
                                     do {
-                                        pos_type pos = in.tellg();
+                                        std::streamoff pos = in.tellg();
                                         in >> reader;
                                         if (in.tellg() == pos) {
                                             throw std::runtime_error("No input was processed");
@@ -538,7 +535,6 @@ namespace valhalla {
                         dataLoader() = default;
                         dataLoader(Type & type) : m_type(type) {}
 
-                        template<typename pos_type = std::basic_istream<Char>::pos_type>
                         friend std::basic_istream<Char> & operator>>(std::basic_istream<Char> & in, dataLoader & dataloader) {
                             valhalla::utils::checkers::skip_spaces<Char, IsSpace> skipSpace;
                             IsOpenChar isOpenChar;
@@ -551,7 +547,7 @@ namespace valhalla {
                                 dataReader<Type,Char,Reader,states> reader(dataloader.m_type);
                                 while (isCloseChar(in) == false) {
                                     do {
-                                        pos_type pos = in.tellg();
+                                        std::streamoff pos = in.tellg();
                                         in >> reader;
                                         if (in.tellg() == pos) {
                                             throw std::runtime_error("No input was processed");
