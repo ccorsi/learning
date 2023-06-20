@@ -1,0 +1,5 @@
+[
+    ['M', 'S', 'E'],
+    ['R', 'A', 'T'],
+    ['L', 'O', 'N']
+], ["STAR", "NOTE", "SAND", "STONE"], {"STAR", "NOTE"}
