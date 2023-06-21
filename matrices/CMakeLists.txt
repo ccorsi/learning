@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(matrices VERSION 0.2.7)
+project(matrices VERSION 0.2.8)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -22,7 +22,8 @@ set(NAMES shift_matrix rotate_matrix rotate_matrix_two spiral_matrix spiral_matr
         matrix_path_three matrix_path_four matrix_path_five matrix_path_six matrix_path_seven minimum_cost_path
         minimum_cost_path_two longest_continuous_sequence_two longest_continuous_sequence_three collect_maximum_points
         tiles_problem largest_plus collect_coins duplicate_rows boggle_search submatrix_sum maximum_sub_submatrix
-        maximum_sub_submatrix_two alive_probability)
+        maximum_sub_submatrix_two alive_probability maximum_length_snake_sequence flood_fill_algorithm count_islands
+        construct_young_tableau extract_min_in_young_tableau)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)

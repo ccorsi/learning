@@ -1,0 +1,24 @@
+[
+    [Y, Y, Y, G, G, G, G, G, G, G],
+    [Y, Y, Y, Y, Y, Y, G, V, V, V],
+    [G, G, G, G, G, G, G, V, V, V],
+    [W, W, W, W, W, G, G, G, G, V],
+    [W, R, R, R, R, R, G, V, V, V],
+    [W, W, W, R, R, G, G, V, V, V],
+    [W, B, W, R, R, R, R, R, R, V],
+    [W, B, B, B, B, R, R, V, V, V],
+    [W, B, B, V, B, B, B, B, V, V],
+    [W, B, B, V, V, V, V, V, V, V]
+], 3, 9, O,
+[
+    [Y, Y, Y, G, G, G, G, G, G, G],
+    [Y, Y, Y, Y, Y, Y, G, O, O, O],
+    [G, G, G, G, G, G, G, O, O, O],
+    [W, W, W, W, W, G, G, G, G, O],
+    [W, R, R, R, R, R, G, O, O, O],
+    [W, W, W, R, R, G, G, O, O, O],
+    [W, B, W, R, R, R, R, R, R, O],
+    [W, B, B, B, B, R, R, O, O, O],
+    [W, B, B, O, B, B, B, B, O, O],
+    [W, B, B, O, O, O, O, O, O, O]
+]
