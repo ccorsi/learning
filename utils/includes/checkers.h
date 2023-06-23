@@ -20,6 +20,11 @@
 namespace valhalla {
     namespace utils {
         namespace checkers {
+            template<typename Type>
+            struct is_space_noop {
+                is_space_noop() = default;
+                bool operator()(Type chr) { return false; }
+            };
             struct is_space {
                 is_space() = default;
                 bool operator()(int chr);

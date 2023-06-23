@@ -1,0 +1,11 @@
+["CARS", "REPAID", "DUES", "NOSE", "SIGNED", "LANE", "PAIRED", "ARCS", "GRAB", "USED", "ONES", "BRAG", "SUED", "LEAN", "SCAR", "DESIGN"],
+{
+    ["CARS", "ARCS", "SCAR"],
+    ["REPAID", "PAIRED"],
+    ["SIGNED", "DESIGN"],
+    ["LANE", "LEAN"],
+    ["GRAB", "BRAG"],
+    ["NOSE", "ONES"],
+    ["DUES", "USED", "SUED"]
+}
+["CARS", "LANE", "ONES"], {}

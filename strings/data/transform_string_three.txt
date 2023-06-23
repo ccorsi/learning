@@ -1,0 +1,3 @@
+"CBAABCAB", "BA"
+"ADAABCB", "AD"
+"AACBBC", ""
