@@ -1,0 +1,4 @@
+"longestsubstr", "longest"
+"abbcdafeegh", "bcdafe"
+"aaaaaa", "a"
+"cbabc", "cba"

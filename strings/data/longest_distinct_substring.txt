@@ -1,0 +1,4 @@
+"abcbdbdbbdcdabd",  2, "bdbdbbd"
+"abcbdbdbbdcdabd",  3, "bcbdbdbbdcd"
+"abcbdbdbbdcdabd",  5, "abcbdbdbbdcdabd"
+"abcd", 3, "abc"
