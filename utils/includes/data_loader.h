@@ -564,6 +564,172 @@ namespace valhalla {
                         }
                     };
                 } // v4
+                namespace v5 {
+                    class State {
+                        int m_state;
+                        int m_states;
+                    public:
+                        State(const int states) : m_states(states), m_state(0) {
+                            if (m_states < 1) {
+                                throw std::runtime_error("Invalid states, has to be 1 or greater");
+                            }
+                        }
+
+                        bool operator()() {
+                            m_state++;
+                            bool state = m_state != m_states;
+                            m_state = m_state % m_states;
+                            return state;
+                        }
+
+                        int state() { return m_state; }
+                    };
+                    /**
+                     * @brief A template class used to populate the passed type using the passed basic_istream.  It
+                     *      implements the (std::basic_istream<Char>&, Type&, int) operator.
+                     *
+                     * @tparam Type The type that is being populated
+                     * @tparam Char The input character trait that is being used, char or wchar_t
+                     */
+                    template<
+                        typename Type,
+                        typename Char
+                    >
+                    struct reader {
+                        /**
+                         * @brief The operator is used to read the data passed.  It expects a reference to the
+                         *      instance that is being populated.  The passed state will provide details about
+                         *      which field we are reading.  For instance, if we are populating a class that
+                         *      contains n fields then this operator will be called n times with state 0 through
+                         *      n - 1.  This information can then be used to correctly load the data into its
+                         *      expected field type.  When state n - 1 was passed then we can instantiate the
+                         *      passed type using the gathered parameter values.  The version will just expect
+                         *      the Type to define the appropiate >> operator.
+                         *
+                         * @param in A reference to a basic_istream instance
+                         * @param type The instance that will be assigned.
+                         * @param state The current state of the input.
+                         * @return std::basic_istream<Char>& The passed input stream used to read the data from
+                         */
+                        virtual std::basic_istream<Char> & operator()(std::basic_istream<Char> & in, Type & type, int state) {
+                            return in >> type;
+                        }
+                    };
+                    /**
+                     * @brief This is a helper class that can be used to load a particular type Type using a basic_istream.
+                     *      The default implementation will expect the passed Type to implement that >> operator and the
+                     *      default implementation of the () operator will return false.  This operator is used to determine
+                     *      if more data needs to be processed to complete the populating of the instance.  The last entry
+                     *      is the states.  This is used to inform the dateLoader how many fields are being loaded that will
+                     *      be required to create an instance of type Type.  This is useful when each field is separated by
+                     *      one or more space-like characters.  The dataLoader will skip these characters after reading
+                     *      each field.
+                     *
+                     * @tparam Type The type of instance that will be populated using this Reader
+                     * @tparam Char The type of input that will be processed, one of char or wchar_t
+                     * @tparam Reader The type that is used to actually read the data used to populate the Type instance
+                     * @tparam states The states how many entries need to be read before completely populating Type instance, 1 or greater
+                     */
+                    template<
+                        typename Type,
+                        typename Char,
+                        typename Reader = reader<Type,Char>,
+                        int states = 1
+                    >
+                    class dataReader {
+                        Type & m_data;
+                        State m_state;
+                        Reader m_reader;
+
+                        std::basic_istream<Char> & load(std::basic_istream<Char> & in) { return m_reader(in, m_data, m_state.state()); }
+                    public:
+                        dataReader() = default;
+                        dataReader(Type & data) : m_data(data), m_state(states) {}
+
+                        friend std::basic_istream<Char> & operator>>(std::basic_istream<Char> & in, dataReader & reader) {
+                            return reader.load(in);
+                        }
+
+                        bool operator()() { return m_state(); }
+
+                        inline int state() { return m_state.state(); }
+                    };
+
+                    /**
+                     * @brief The template class can be used to load any type of instance.  From a regular primitive type,
+                     *      class type to a container and dictionary type instance.  It allows one to be able to determine
+                     *      how the instance can be loaded using the Reader type definition.  The Reader type needs to be
+                     *      able to define the >> operator as well as a () operator that returns a bool.  The first operator
+                     *      is obvious but the second operator is used to determine if we've completed loading the object
+                     *      of type Type.  This technique will allow one to create any type of Type that the loader can
+                     *      populate.
+                     *
+                     *      The states integer value is used to determine how many entries are associated with the loading
+                     *      type.  This allows one to be able to use the IsSpaceInner mechanism to skip space-like characters
+                     *      such that we can individually load the separate fields of the populating type.  This vale defaults
+                     *      to 1.  The IsOpenChar and IsCloseChar are used to check if a given prolog and epilog characters 
+                     *      where used.  These types need to implement that operator()(std::basic_istream<Char>&) operator
+                     *      that return a bool.
+                     *
+                     *      The IsSpaceOutter and IsSpaceInner is used to skip space-like characters that surround the input
+                     *      data or the is within the input data.  It provides the ability to purge unnecessary input that
+                     *      will conflict with the expected input data.
+                     *
+                     * @tparam Type The type that will be populated
+                     * @tparam Char The type of input used, char or wchar_t
+                     * @tparam Reader The reader type that will be used to populate the type, default reader<Type,Char>
+                     * @tparam states The number of fields that need to be read to create the Type type, default 1
+                     * @tparam IsOpenChar The type used to determine if the open character was encountered, default is_character_noop<Char>
+                     * @tparam IsCloseChar The type used to determine if the close character was encountered, default is_character_noop<Char>
+                     * @tparam IsSpaceOutter The type used to skip space-like characters when processing the input stream, default is_space
+                     * @tparam IsSpaceInner The type used to skip space-like characters when processing the input stream, default is_space
+                     */
+                    template<
+                        typename Type,
+                        typename Char = char,
+                        typename Reader = reader<Type,Char>,
+                        int states = 1,
+                        typename IsOpenChar = valhalla::utils::checkers::is_character_noop<Char>,
+                        typename IsCloseChar = valhalla::utils::checkers::is_character_noop<Char>,
+                        typename IsSpaceOuter = valhalla::utils::checkers::is_space,
+                        typename IsSpaceInner = IsSpaceOuter
+                    >
+                    class dataLoader {
+                        Type & m_type;
+                    public:
+                        dataLoader() = default;
+                        dataLoader(Type & type) : m_type(type) {}
+
+                        friend std::basic_istream<Char> & operator>>(std::basic_istream<Char> & in, dataLoader & dataloader) {
+                            valhalla::utils::checkers::skip_spaces<Char, IsSpaceOuter> skipSpaceOuter;
+                            valhalla::utils::checkers::skip_spaces<Char, IsSpaceInner> skipSpaceInner;
+                            IsOpenChar isOpenChar;
+                            IsCloseChar isCloseChar;
+
+                            skipSpaceOuter(in); // skip space-like input
+                            if (isOpenChar(in)) {
+                                skipSpaceOuter(in); // skip space-like input
+
+                                dataReader<Type,Char,Reader,states> reader(dataloader.m_type);
+                                while (isCloseChar(in) == false) {
+                                    do {
+                                        std::streamoff pos = in.tellg();
+                                        in >> reader;
+                                        if (in.tellg() == pos) {
+                                            throw std::runtime_error("No input was processed");
+                                        } // if
+                                        skipSpaceInner(in); // skip space-like input
+                                    } while (reader());
+                                } // while
+
+                                skipSpaceOuter(in); // skip space-like input
+                                return in;
+                            } // if
+
+                            throw std::runtime_error("Invalid input data encountered no open character found - dataLoader v4");
+                        }
+                    };
+                } // v5
             } // loader
         } // loaders
     } // utils

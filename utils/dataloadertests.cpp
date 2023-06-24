@@ -1621,6 +1621,626 @@ TEST(DataLoaderTestSuite, IntegerAMapMapDataLoaderV4Test) {
     ASSERT_EQ(actual, expected);
 }
 
+/******************************************************************************************
+ *
+ *  Version 5 Tests Status
+ *
+ *      [x] primitive types, mainly int
+ *      [x] simple object containing a single field
+ *      [x] simple object containing two or more fields
+ *      [x] complex object containing one or more non-primitive type fields
+ *      [x] container containing a primitive
+ *      [x] container containing a non-primitive type
+ *      [x] container of container of primitive
+ *      [x] container of container of non-primitve type
+ *      [x] map containing a primitive
+ *      [x] map containing a non-primitive type
+ *      [x] map of map of primitive
+ *      [x] map of map of non-primitve type
+ *      [x] load a simple string
+ *      [x] load a complex string with space-like characters
+ *
+ ******************************************************************************************/
+
+TEST(DataLoaderTestSuite, IntegerDataLoaderV5Test) {
+    int actual, expected = 13;
+    std::stringstream in(" 13 ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        int,
+        char,
+        valhalla::utils::loaders::loader::v5::reader<int,char>,
+        1,
+        valhalla::utils::checkers::is_character_noop<char>,
+        valhalla::utils::checkers::is_no_character<char>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+TEST(DataLoaderTestSuite, IntegerDataObjectDataLoaderV5Test) {
+    IntegerData actual, expected = { 13 };
+    std::stringstream in(" { 13 } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        IntegerData,
+        char,
+        valhalla::utils::loaders::loader::v5::reader<IntegerData,char>,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+TEST(DataLoaderTestSuite, AObjectDataLoaderV5Test) {
+    A actual, expected = { 13, 15 };
+    std::stringstream in(" { 13, 15 } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        A,
+        char,
+        AObjectReader,
+        2,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+class CObjectReaderV5 {
+    A m_a;
+public:
+    std::istream & operator()(std::istream & in, C & c, int state) {
+        switch(state) {
+            case 0:
+                {
+                    valhalla::utils::loaders::loader::v5::dataLoader<
+                        A,
+                        char,
+                        AObjectReader,
+                        2,
+                        valhalla::utils::checkers::is_character<char,'{'>,
+                        valhalla::utils::checkers::is_character<char,'}'>,
+                        valhalla::utils::checkers::is_space_or<','>
+                    > loader(m_a);
+                    in >> loader;
+                }
+                break;
+            case 1:
+                {
+                    B b;
+                    valhalla::utils::loaders::loader::v5::dataLoader<
+                        B,
+                        char,
+                        BObjectReader,
+                        2,
+                        valhalla::utils::checkers::is_character<char,'{'>,
+                        valhalla::utils::checkers::is_character<char,'}'>,
+                        valhalla::utils::checkers::is_space_or<','>
+                    > loader(b);
+                    in >> loader;
+                    c = C(m_a,b);
+                }
+                break;
+        } // switch
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, CObjectDataLoaderV5Test) {
+    C actual, expected = { { 13, 15 }, { 17, 21 } };
+    std::stringstream in(" { { 13, 15 }, { 17, 21 } } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        C,
+        char,
+        CObjectReaderV5,
+        2,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+TEST(DataLoaderTestSuite, IntegerVectorDataLoaderV5Test) {
+    std::vector<int> actual, expected = { 13, 15, 17, 21 };
+    std::stringstream in(" { 13, 15, 17, 21 } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::vector<int>,
+        char,
+        IntegerVectorReader,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct AVectorReaderV5 {
+    std::istream & operator()(std::istream & in, std::vector<A> & vec, int state) {
+        A a;
+        valhalla::utils::loaders::loader::v5::dataLoader<
+            A,
+            char,
+            AObjectReader,
+            2,
+            valhalla::utils::checkers::is_character<char,'{'>,
+            valhalla::utils::checkers::is_character<char,'}'>,
+            valhalla::utils::checkers::is_space_or<','>
+        > loader(a);
+        in >> loader;
+        vec.push_back(a);
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, AVectorDataLoaderV5Test) {
+    std::vector<A> actual, expected = { { 13, 15 }, { 17, 21 } };
+    std::stringstream in(" { { 13, 15 }, { 17, 21 } } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::vector<A>,
+        char,
+        AVectorReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct IntegerVectorVectorReaderV5 {
+    std::istream & operator()(std::istream & in, std::vector<std::vector<int>> & vecvec, int state) {
+        std::vector<int> vec;
+
+        valhalla::utils::loaders::loader::v5::dataLoader<
+            std::vector<int>,
+            char,
+            IntegerVectorReader,
+            1,
+            valhalla::utils::checkers::is_character<char,'{'>,
+            valhalla::utils::checkers::is_character<char,'}'>,
+            valhalla::utils::checkers::is_space_or<','>
+        > loader(vec);
+        in >> loader;
+
+        vecvec.push_back(vec);
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, IntegerVectorVectorDataLoaderV5Test) {
+    std::vector<std::vector<int>> actual, expected = { { 13, 15 }, { 17, 21 } };
+    std::stringstream in(" { { 13, 15 }, { 17, 21 } } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::vector<std::vector<int>>,
+        char,
+        IntegerVectorVectorReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct AVectorVectorReaderV5 {
+    std::istream & operator()(std::istream & in, std::vector<std::vector<A>> & vecvec, int state) {
+        std::vector<A> vec;
+
+        valhalla::utils::loaders::loader::v5::dataLoader<
+            std::vector<A>,
+            char,
+            AVectorReaderV5,
+            1,
+            valhalla::utils::checkers::is_character<char,'{'>,
+            valhalla::utils::checkers::is_character<char,'}'>,
+            valhalla::utils::checkers::is_space_or<','>
+        > loader(vec);
+        in >> loader;
+
+        vecvec.push_back(vec);
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, AVectorVectorDataLoaderV5Test) {
+    std::vector<std::vector<A>> actual, expected = { { { 13, 15 }, { 9, 10 } }, { { 17, 21 }, { 1, 3 } } };
+    std::stringstream in(" { { { 13, 15 }, { 9, 10 } }, { { 17, 21 }, { 1, 3 } } } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::vector<std::vector<A>>,
+        char,
+        AVectorVectorReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct IntegerPairReaderV5 {
+    std::istream & operator()(std::istream & in, std::pair<int,int> & entry, int state) {
+        int * value = nullptr;
+        switch(state) {
+            case 0:
+                value = &entry.first;
+                break;
+            case 1:
+                value = &entry.second;
+                break;
+            default:
+                throw std::runtime_error("Invalid state was passed");
+        } // switch
+
+        valhalla::utils::loaders::loader::v5::dataLoader<
+            int,
+            char,
+            valhalla::utils::loaders::loader::v5::reader<int,char>,
+            1,
+            valhalla::utils::checkers::is_character_noop<char>,
+            valhalla::utils::checkers::is_no_character<char>
+        > loader(*value);
+        in >> loader;
+
+        return in;
+    }
+};
+
+struct IntegerMapReaderV5 {
+    std::istream & operator()(std::istream & in, std::map<int,int> & dict, int state) {
+        std::pair<int,int> entry;
+
+        valhalla::utils::loaders::loader::v5::dataLoader<
+            std::pair<int,int>,
+            char,
+            IntegerPairReaderV5,
+            2,
+            valhalla::utils::checkers::is_character<char,'{'>,
+            valhalla::utils::checkers::is_character<char,'}'>,
+            valhalla::utils::checkers::is_space_or<','>
+        > loader(entry);
+        in >> loader;
+
+        dict[entry.first] = entry.second;
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, IntegerIntegerMapDataLoaderV5Test) {
+    std::map<int,int> actual, expected = { { 13, 15 }, { 9, 10 }, { 17, 21 }, { 1, 3 } };
+    std::stringstream in(" { { 13, 15 }, { 9, 10 }, { 17, 21 }, { 1, 3 } } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::map<int,int>,
+        char,
+        IntegerMapReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct IntegerAPairReaderV5 {
+    std::istream & operator()(std::istream & in, std::pair<int,A> & entry, int state) {
+        switch(state) {
+            case 0:
+                {
+                    valhalla::utils::loaders::loader::v5::dataLoader<
+                        int,
+                        char,
+                        valhalla::utils::loaders::loader::v5::reader<int,char>,
+                        1,
+                        valhalla::utils::checkers::is_character_noop<char>,
+                        valhalla::utils::checkers::is_no_character<char>
+                    > loader(entry.first);
+                    in >> loader;
+                }
+                break;
+            case 1:
+                {
+                    valhalla::utils::loaders::loader::v5::dataLoader<
+                        A,
+                        char,
+                        AObjectReader,
+                        2,
+                        valhalla::utils::checkers::is_character<char,'{'>,
+                        valhalla::utils::checkers::is_character<char,'}'>,
+                        valhalla::utils::checkers::is_space_or<','>
+                    > loader(entry.second);
+                    in >> loader;
+                }
+                break;
+            default:
+                throw std::runtime_error("Invalid state was passed");
+        } // switch
+
+        return in;
+    }
+};
+
+struct IntegerAMapReaderV5 {
+    std::istream & operator()(std::istream & in, std::map<int,A> & dict, int state) {
+        std::pair<int,A> entry;
+
+        valhalla::utils::loaders::loader::v5::dataLoader<
+            std::pair<int,A>,
+            char,
+            IntegerAPairReaderV5,
+            2,
+            valhalla::utils::checkers::is_character<char,'{'>,
+            valhalla::utils::checkers::is_character<char,'}'>,
+            valhalla::utils::checkers::is_space_or<','>
+        > loader(entry);
+        in >> loader;
+
+        dict[entry.first] = entry.second;
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, IntegerAMapDataLoaderV5Test) {
+    std::map<int,A> actual, expected = { { 13, { 15, 16 } }, { 9, { 10, 11 } }, { 17, { 21, 22 } }, { 1, { 3, 4 } } };
+    std::stringstream in(" { { 13, { 15, 16 } }, { 9, { 10, 11 } }, { 17, { 21, 22 } }, { 1, { 3, 4 } } } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::map<int,A>,
+        char,
+        IntegerAMapReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct IntegerMapPairReaderV5 {
+    std::istream & operator()(std::istream & in, std::pair<int,std::map<int,int>> & entry, int state) {
+        switch (state) {
+            case 0:
+                {
+                    valhalla::utils::loaders::loader::v5::dataLoader<
+                        int,
+                        char,
+                        valhalla::utils::loaders::loader::v5::reader<int,char>,
+                        1,
+                        valhalla::utils::checkers::is_character_noop<char>,
+                        valhalla::utils::checkers::is_no_character<char>
+                    > loader(entry.first);
+                    in >> loader;
+                }
+                break;
+
+            case 1:
+                {
+                    valhalla::utils::loaders::loader::v5::dataLoader<
+                        std::map<int,int>,
+                        char,
+                        IntegerMapReaderV5,
+                        1,
+                        valhalla::utils::checkers::is_character<char,'{'>,
+                        valhalla::utils::checkers::is_character<char,'}'>,
+                        valhalla::utils::checkers::is_space_or<','>
+                    > loader(entry.second);
+                    in >> loader;
+                }
+                break;
+
+            default:
+                throw std::runtime_error("IntegerMapPairReader invalid state was passed");
+        } // switch
+
+        return in;
+    }
+};
+
+struct IntegerMapMapReaderV5 {
+    std::istream & operator()(std::istream & in, std::map<int,std::map<int,int>> & dict, int state) {
+        std::pair<int,std::map<int,int>> entry;
+
+        valhalla::utils::loaders::loader::v5::dataLoader<
+            std::pair<int, std::map<int,int>>,
+            char,
+            IntegerMapPairReaderV5,
+            2,
+            valhalla::utils::checkers::is_character<char,'{'>,
+            valhalla::utils::checkers::is_character<char,'}'>,
+            valhalla::utils::checkers::is_space_or<','>
+        > loader(entry);
+        in >> loader;
+
+        dict[entry.first] = entry.second;
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, IntegerIntegerMapMapDataLoaderV5Test) {
+    std::map<int, std::map<int,int>> actual,
+        expected = { { 1, { { 13, 15 } } }, { 2, { { 9, 10 } } }, { 3, { { 17, 21 } } }, { 4, { { 1, 3 } } } };
+    std::stringstream in(" { { 1, { { 13, 15 } } }, { 2, { { 9, 10 } } }, { 3, { { 17, 21 } } }, { 4, { { 1, 3 } } } } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::map<int, std::map<int,int>>,
+        char,
+        IntegerMapMapReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct IntegerAMapPairReaderV5 {
+    std::istream & operator()(std::istream & in, std::pair<int,std::map<int,A>> & entry, int state) {
+        switch (state) {
+            case 0:
+                {
+                    valhalla::utils::loaders::loader::v5::dataLoader<
+                        int,
+                        char,
+                        valhalla::utils::loaders::loader::v5::reader<int,char>,
+                        1,
+                        valhalla::utils::checkers::is_character_noop<char>,
+                        valhalla::utils::checkers::is_no_character<char>
+                    > loader(entry.first);
+                    in >> loader;
+                }
+                break;
+
+            case 1:
+                {
+                    valhalla::utils::loaders::loader::v5::dataLoader<
+                        std::map<int,A>,
+                        char,
+                        IntegerAMapReaderV5,
+                        1,
+                        valhalla::utils::checkers::is_character<char,'{'>,
+                        valhalla::utils::checkers::is_character<char,'}'>,
+                        valhalla::utils::checkers::is_space_or<','>
+                    > loader(entry.second);
+                    in >> loader;
+                }
+                break;
+
+            default:
+                throw std::runtime_error("IntegerMapPairReader invalid state was passed");
+        } // switch
+
+        return in;
+    }
+};
+
+struct IntegerAMapMapReaderV5 {
+    std::istream & operator()(std::istream & in, std::map<int, std::map<int,A>> & dict, int state) {
+        std::pair<int,std::map<int,A>> entry;
+
+        valhalla::utils::loaders::loader::v5::dataLoader<
+            std::pair<int, std::map<int,A>>,
+            char,
+            IntegerAMapPairReaderV5,
+            2,
+            valhalla::utils::checkers::is_character<char,'{'>,
+            valhalla::utils::checkers::is_character<char,'}'>,
+            valhalla::utils::checkers::is_space_or<','>
+        > loader(entry);
+        in >> loader;
+
+        dict[entry.first] = entry.second;
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, IntegerAMapMapDataLoaderV5Test) {
+    std::map<int, std::map<int,A>> actual,
+        expected = { { 1, { { 13, { 15, 16 } } } }, { 2, { { 9, { 10, 11 } } } } };
+    std::stringstream in(" { { 1, { { 13, { 15, 16 } } } }, { 2, { { 9, { 10, 11 } } } } } ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::map<int, std::map<int,A>>,
+        char,
+        IntegerAMapMapReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct StringReaderV5 {
+    std::basic_istream<char> & operator()(std::basic_istream<char> & in, std::string & str, int state) {
+
+        if (static_cast<char>(in.peek()) != '"') {
+            str += static_cast<char>(in.get());
+        }
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, SimpleStringDataLoaderV5Test) {
+    std::string actual,
+        expected = "simple";
+    std::stringstream in(" \"simple\" ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::string,
+        char,
+        StringReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'"'>,
+        valhalla::utils::checkers::is_character<char,'"'>,
+        valhalla::utils::checkers::is_space_or<','>,
+        valhalla::utils::checkers::is_space_noop<char>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+TEST(DataLoaderTestSuite, ComplexStringDataLoaderV5Test) {
+    std::string actual,
+        expected = "This is a string with spaces in-between open and close characters";
+    std::stringstream in(" \"This is a string with spaces in-between open and close characters\" ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::string,
+        char,
+        StringReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'"'>,
+        valhalla::utils::checkers::is_character<char,'"'>,
+        valhalla::utils::checkers::is_space_or<','>,
+        valhalla::utils::checkers::is_space_noop<char>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
