@@ -3,7 +3,7 @@
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains a general loader loader template class used to load loader into an instance
  *      using a basic_istream instance.
- * @version 0.1
+ * @version 0.5
  * @date 2023-06-05
  *
  * @copyright Copyright (c) 2023 Claudio Corsi
@@ -726,7 +726,7 @@ namespace valhalla {
                                 return in;
                             } // if
 
-                            throw std::runtime_error("Invalid input data encountered no open character found - dataLoader v4");
+                            throw std::runtime_error("Invalid input data encountered no open character found - dataLoader v5");
                         }
                     };
                 } // v5

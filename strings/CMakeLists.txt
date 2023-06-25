@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(strings VERSION 0.2.0)
+project(strings VERSION 0.2.1)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -18,7 +18,8 @@ set(NAMES derive_string rotated_palindrome longest_palindromic_substring repeate
     interleaving_string interleaving_string_two isomorphic_strings longest_common_prefix combinations_six combinations_seven combinations_eight
     combinations_nine unattended_customers_count minimum_number_k_swaps check_circular_moves palindromic_substrings group_anagrams
     transform_string transform_string_two transform_string_three balanced_expression longest_palidromic_sum_substring print_string_zig_zag
-    run_length_encoding longest_distinct_substring longest_distinct_substring_two)
+    run_length_encoding longest_distinct_substring longest_distinct_substring_two palindromic_permutations anagram_substring
+    maximum_occurring_word permutations permutations_two)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)

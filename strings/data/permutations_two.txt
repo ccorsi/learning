@@ -1,0 +1,3 @@
+"ABC", ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"]
+"ABA", ["ABA", "AAB", "BAA"]
+"AAA", ["AAA"]
