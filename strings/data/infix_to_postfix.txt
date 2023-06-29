@@ -1,0 +1,4 @@
+"A*B+C", "AB*C+"
+"(A+B)*(C/D)", "AB+CD/*"
+"A*(B*C+D*E)+F", "ABC*DE*+*F+"
+"(A+B)*C+(D-E)/F+G", "AB+C*DE-F/+G+"
