@@ -1639,6 +1639,8 @@ TEST(DataLoaderTestSuite, IntegerAMapMapDataLoaderV4Test) {
  *      [x] map of map of non-primitve type
  *      [x] load a simple string
  *      [x] load a complex string with space-like characters
+ *      [x] load a simple tuple
+ *      [x] load a complex tuple
  *
  ******************************************************************************************/
 
@@ -2235,6 +2237,114 @@ TEST(DataLoaderTestSuite, ComplexStringDataLoaderV5Test) {
         valhalla::utils::checkers::is_character<char,'"'>,
         valhalla::utils::checkers::is_space_or<','>,
         valhalla::utils::checkers::is_space_noop<char>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct TupleStringReaderV5 {
+    std::basic_istream<char> & operator()(std::basic_istream<char> & in, std::tuple<std::string> & tup, int state) {
+        std::string entry;
+
+        ::loaders::loader::v5::dataLoader<
+            std::string,
+            char,
+            StringReaderV5,
+            1,
+            ::checkers::is_character<char,'"'>,
+            ::checkers::is_character<char,'"'>,
+            ::checkers::is_space_or<','>,
+            ::checkers::is_space_noop<int>
+        > entryLoader(entry);
+        in >> entryLoader;
+
+        tup = std::tuple<std::string>(entry);
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, SimpleTupleDataLoaderV5Test) {
+    std::tuple<std::string> actual,
+        expected = std::tuple<std::string>("This is a string with spaces in-between open and close characters");
+    std::stringstream in(" ( \"This is a string with spaces in-between open and close characters\" ) ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::tuple<std::string>,
+        char,
+        TupleStringReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'('>,
+        valhalla::utils::checkers::is_character<char,')'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+struct ComplexTupleReaderV5 {
+    std::basic_istream<char> & operator()(std::basic_istream<char> & in, std::tuple<std::string,int,long> & tup, int state) {
+        std::string eone;
+
+        ::loaders::loader::v5::dataLoader<
+            std::string,
+            char,
+            StringReaderV5,
+            1,
+            ::checkers::is_character<char,'"'>,
+            ::checkers::is_character<char,'"'>,
+            ::checkers::is_space_or<','>,
+            ::checkers::is_space_noop<int>
+        > entryLoader(eone);
+        in >> entryLoader;
+
+        int etwo;
+
+        ::loaders::loader::v5::dataLoader<
+            int,
+            char,
+            loaders::loader::v5::reader<int,char>,
+            1,
+            ::checkers::is_character_noop<char>,
+            ::checkers::is_no_character<char>,
+            ::checkers::is_space_or<','>
+        > etwoLoader(etwo);
+        in >> etwoLoader;
+
+        long ethree;
+
+        ::loaders::loader::v5::dataLoader<
+            long,
+            char,
+            loaders::loader::v5::reader<long,char>,
+            1,
+            ::checkers::is_character_noop<char>,
+            ::checkers::is_no_character<char>,
+            ::checkers::is_space_or<','>
+        > ethreeLoader(ethree);
+        in >> ethreeLoader;
+
+        tup = {eone, etwo, ethree};
+
+        return in;
+    }
+};
+
+TEST(DataLoaderTestSuite, ComplexTupleDataLoaderV5Test) {
+    std::tuple<std::string,int,long> actual,
+        expected = {"This is a string with spaces in-between open and close characters", 101, 1003 };
+    std::stringstream in(" ( \"This is a string with spaces in-between open and close characters\", 101, 1003 ) ");
+
+    valhalla::utils::loaders::loader::v5::dataLoader<
+        std::tuple<std::string,int,long>,
+        char,
+        ComplexTupleReaderV5,
+        1,
+        valhalla::utils::checkers::is_character<char,'('>,
+        valhalla::utils::checkers::is_character<char,')'>,
+        valhalla::utils::checkers::is_space_or<','>
     > loader(actual);
     in >> loader;
 
