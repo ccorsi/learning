@@ -1,0 +1,2 @@
+"ABCDBAGHC", 3
+"AAA", -1

@@ -1,0 +1,3 @@
+"abcbd", 3, {"abc", "abcb", "bcbd", "cbd"}
+"abcadce", 4, {"abcad", "abcadc", "bcad", "bcadc", "cadce", "adce"}
+"aa", 1, {"a", "aa"}
