@@ -1,0 +1,2 @@
+"Techie Delight", "el", 1
+"Techie Delight", "ei", 0

@@ -1,0 +1,3 @@
+{"Hi", "HiTech", "HiTechCity", "Hello", "HelloWorld", "HiTechLab"}, "HT", {"HiTech", "HiTechCity", "HiTechLab"}
+{"Hi", "HiTech", "HiTechCity", "Hello", "HelloWorld", "HiTechLab"}, "HTC", {"HiTechCity"}
+{"Hi", "HiTech", "HiTechCity", "Hello", "HelloWorld", "HiTechLab"}, "H", {"Hi", "HiTech", "HiTechCity", "Hello", "HelloWorld", "HiTechLab"}
