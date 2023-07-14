@@ -21,6 +21,8 @@ namespace dynamic_programming {
 namespace pattern_match_four {
 
 class Solution {
+    void count(std::string &, std::string::size_type, std::string::size_type, std::string &,
+               std::string::size_type, std::string::size_type, int &);
 public:
     int count(std::string, std::string);
 };

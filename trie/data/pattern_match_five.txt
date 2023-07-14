@@ -1,3 +1,10 @@
 {"Hi", "HiTech", "HiTechCity", "Hello", "HelloWorld", "HiTechLab"}, "HT", {"HiTech", "HiTechCity", "HiTechLab"}
 {"Hi", "HiTech", "HiTechCity", "Hello", "HelloWorld", "HiTechLab"}, "HTC", {"HiTechCity"}
 {"Hi", "HiTech", "HiTechCity", "Hello", "HelloWorld", "HiTechLab"}, "H", {"Hi", "HiTech", "HiTechCity", "Hello", "HelloWorld", "HiTechLab"}
+{}, "HT", { }
+{ "HiTechLab", "HiTech", "Hi", "Hello", "HiTechCity", "HelloWorld" }, "h", { }
+{ "HiTechLab", "HiTech", "Hi", "Hello", "HiTechCity", "HelloWorld" }, "ht", { }
+{ "HiTechLab", "HiTech", "Hi", "Hello", "HiTechCity", "HelloWorld" }, "htc", { }
+{ "HiTechCity" }, "HTC", { "HiTechCity" }
+{ "HiTechCity" }, "HT", { "HiTechCity" }
+{ "HiTechCity" }, "H", { "HiTechCity" }

@@ -1,2 +1,51 @@
 "Techie Delight", "el", 1
 "Techie Delight", "ei", 0
+"techie delight", "el", 1
+"techie delight", "ei", 0
+"aabbb", "ab", 1
+"cadeabbcd", "ab", 1
+"aeabcbd", "ab", 1
+"cadeabcb", "ab", 1
+"cdeab", "ab", 1
+"eabcd", "ab", 1
+"dabc", "ab", 1
+"eabcd", "bd", 1
+"bcdea", "bd", 1
+"cbabcd", "bd", 1
+"babcdc", "bd", 1
+"bcda", "bd", 1
+"abcd", "bd", 1
+"abcde", "bd", 1
+"cbaabcd", "bd", 1
+"baabcdc", "bd", 1
+"eabcd", "ad", 1
+"abcdcb", "ad", 1
+"cbabcd", "ad", 1
+"babcdc", "ad", 1
+"abcd", "ad", 1
+"abcde", "ad", 1
+"abdcbcdbdcbbc", "ad", 1
+"cbaabcd", "ad", 1
+"baabcdc", "ad", 1
+"deabc", "dc", 1
+"dabc", "dc", 1
+"ccbaab", "ca", 1
+"cdeab", "ca", 1
+"bcdea", "ca", 1
+"cbab", "ca", 1
+"bcba", "ca", 1
+"bcdcba", "ca", 1
+"cdcbab", "ca", 1
+"bcda", "ca", 1
+"cdab", "ca", 1
+"bccbaa", "ca", 1
+"bcdcbaa", "ca", 1
+"cdcbaab", "ca", 1
+"abdcbcdbdcbb", "ab", 1
+"baa", "ba", 1
+"abdcbcdbdcbc", "ab", 1
+"dcbabc", "dc", 1
+"abcb", "ab", 1
+"dcabc", "dc", 1
+"incest", "in", 1
+"cdeab", "cd", 1

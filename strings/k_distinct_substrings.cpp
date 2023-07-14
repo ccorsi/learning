@@ -12,6 +12,8 @@
 
 #include "k_distinct_substrings.h"
 
+#include <set>
+
 namespace valhalla {
     namespace strings {
         namespace k_distinct_substrings {
@@ -34,7 +36,20 @@ namespace valhalla {
             std::unordered_set<std::string> Solution::findDistinctSubstrings(std::string s, int k) {
                 std::unordered_set<std::string> substrings;
 
-
+                if (s.size() >= k) {
+                    const std::string::size_type size = s.size(), last = s.size() - k + 1;
+                    for (std::string::size_type start = 0 ; start < last ; start++) {
+                        std::set<char> distinct;
+                        for (std::string::size_type idx = start ; idx < size ; idx++) {
+                            distinct.insert(s[idx]);
+                            if (distinct.size() == k) {
+                                substrings.insert(s.substr(start, idx - start + 1));
+                            } else if (distinct.size() > k) {
+                                break;
+                            }
+                        } // for
+                    } // for
+                } // if
 
                 return substrings;
             } // findDistinctSubstrings

@@ -1,3 +1,51 @@
 "abcbd", 3, {"abc", "abcb", "bcbd", "cbd"}
 "abcadce", 4, {"abcad", "abcadc", "bcad", "bcadc", "cadce", "adce"}
 "aa", 1, {"a", "aa"}
+"ACAB", 2, { "AB", "CA", "AC", "ACA" }
+"ACAB", 3, { "CAB", "ACAB" }
+"GOOGLE", 2, { "LE", "GOO", "OOG", "OG", "GL", "GO", "GOOG" }
+"GOOGLE", 3, { "GLE", "OGL", "GOOGL", "OOGL" }
+"GOOGLE", 4, { "OGLE", "GOOGLE", "OOGLE" }
+"GOOG", 2, { "GOOG", "GO", "OG", "OOG", "GOO" }
+"GOO", 2, { "GOO", "GO" }
+"ADCB", 2, { "CB", "AD", "DC" }
+"ADCB", 3, { "DCB", "ADC" }
+"XYZ", 2, { "YZ", "XY" }
+"XBAXB", 2, { "AX", "XB", "BA" }
+"XBAXB", 3, { "AXB", "XBA", "XBAXB", "XBAX", "BAXB", "BAX" }
+"ABCABC", 2, { "CA", "AB", "BC" }
+"XBB", 2, { "XBB", "XB" }
+"ABCABCA", 2, { "CA", "AB", "BC" }
+"ABCBCBCBB", 3, { "ABCBCBCBB", "ABCBCBCB", "ABCB", "ABC", "ABCBCBC", "ABCBC", "ABCBCB" }
+"CCBAB", 2, { "AB", "BA", "BAB", "CCB", "CB" }
+"CCBAB", 3, { "CBAB", "CBA", "CCBA", "CCBAB" }
+"ABCBCBCBC", 3, { "ABCBCBCB", "ABCBCBCBC", "ABCB", "ABC", "ABCBCBC", "ABCBC", "ABCBCB" }
+"BABCC", 2, { "BC", "AB", "BA", "BCC", "BAB" }
+"BABCC", 3, { "ABCC", "ABC", "BABC", "BABCC" }
+"CABCAB", 2, { "BC", "CA", "AB" }
+"BCA", 2, { "CA", "BC" }
+"ADAABCB", 3, { "ABCB", "DAAB", "ADAAB", "AABC", "ABC", "AABCB" }
+"ADAABCB", 4, { "DAABCB", "DAABC", "ADAABC", "ADAABCB" }
+"ABACB", 2, { "CB", "BA", "AC", "AB", "ABA" }
+"ABACB", 3, { "BACB", "BAC", "ACB", "ABAC", "ABACB" }
+"CCCABABR", 4, { "CABABR", "CCCABABR", "CCABABR" }
+"CABABAB", 3, { "CABABAB", "CABABA", "CABAB", "CAB", "CABA" }
+"CDCABABR", 4, { "DCABAB", "CDCABA", "CDCAB", "CDCABAB", "DCAB", "CABABR", "DCABA" }
+"CDCABABR", 5, { "DCABABR", "CDCABABR" }
+"CBDCDCB", 2, { "CDC", "CD", "BD", "CB", "DC", "DCD", "DCDC" }
+"CDCDC", 2, { "DCDC", "CDC", "CDCD", "CD", "CDCDC", "DCD", "DC" }
+"DCC", 2, { "DCC", "DC" }
+"CBDCDC", 2, { "CDC", "CD", "BD", "CB", "DC", "DCD", "DCDC" }
+"CBDCDC", 3, { "CBDC", "BDCD", "CBD", "CBDCD", "BDCDC", "BDC", "CBDCDC" }
+"CDCC", 2, { "DCC", "DC", "CDCC", "CD", "CDC" }
+"CABAB", 2, { "BAB", "AB", "CA", "ABA", "ABAB", "BA" }
+"CABAB", 3, { "CABAB", "CAB", "CABA" }
+"ABABC", 2, { "BC", "AB", "ABA", "ABAB", "BA", "BAB" }
+"ABABC", 3, { "ABABC", "ABC", "BABC" }
+"ABABABABC", 3, { "ABC", "BABC", "BABABABC", "ABABABC", "ABABABABC", "BABABC", "ABABC" }
+"ABABABC", 3, { "ABC", "BABC", "ABABABC", "ABABC", "BABABC" }
+"CABABABAB", 3, { "CABABABA", "CABABABAB", "CAB", "CABA", "CABAB", "CABABA", "CABABAB" }
+"CABABC", 2, { "BC", "BAB", "AB", "CA", "ABA", "ABAB", "BA" }
+"CABABC", 3, { "ABC", "CAB", "ABABC", "BABC", "CABA", "CABAB", "CABABC" }
+"CABC", 2, { "BC", "CA", "AB" }
+"CABC", 3, { "ABC", "CAB", "CABC" }

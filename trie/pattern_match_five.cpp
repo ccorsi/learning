@@ -41,6 +41,19 @@ Output: {Hi, HiTech, HiTechCity, Hello, HelloWorld, HiTechLab}
 std::unordered_set<std::string> Solution::patternMatch(std::unordered_set<std::string> const & words, std::string pattern) {
     std::unordered_set<std::string> matches;
 
+    for(std::string word : words) {
+        std::string::const_iterator pitr = pattern.begin(), witr = word.begin();
+
+        while (pitr != pattern.end() && witr != word.end()) {
+            while (witr != word.end() && islower(*witr)) witr++;
+            if (witr == word.end()) break;
+            if (*pitr != *witr) break;
+            pitr++; witr++;
+        } // while
+
+        if (pitr == pattern.end()) matches.insert(word);
+
+    } // for
 
     return matches;
 } // patternMatch

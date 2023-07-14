@@ -262,12 +262,12 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [242: Lexicographic Permutations](https://www.techiedelight.com/?problem=LexicographicPermutations) |  not implemented | [lexicographic_permutations.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/lexicographic_permutations.cpp) |
 | [243: Lexicographic Rank](https://www.techiedelight.com/?problem=LexicographicRank) |  not implemented | [lexicographic_rank.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/lexicographic_rank.cpp) |
 | [244: Decode Sequence](https://www.techiedelight.com/?problem=DecodeSequence) |  not implemented | [decode_sequence.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/decode_sequence.cpp) |
-| [245: K Distinct Substrings](https://www.techiedelight.com/?problem=KDistinctSubstrings) |  not implemented | [k_distinct_substrings.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/k_distinct_substrings.cpp) |
-| [246: Pattern Match](https://www.techiedelight.com/?problem=PatternMatch) |  not implemented | [pattern_match.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/pattern_match.cpp) |
-| [247: Pattern Match II](https://www.techiedelight.com/?problem=PatternMatchII) |  not implemented | [pattern_match_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/pattern_match_two.cpp) |
+| [245: K Distinct Substrings](https://www.techiedelight.com/?problem=KDistinctSubstrings) |  done | [k_distinct_substrings.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/k_distinct_substrings.cpp) |
+| [246: Pattern Match](https://www.techiedelight.com/?problem=PatternMatch) |  done | [pattern_match.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/pattern_match.cpp) |
+| [247: Pattern Match II](https://www.techiedelight.com/?problem=PatternMatchII) |  done | [pattern_match_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/pattern_match_two.cpp) |
 | [248: Pattern Match III](https://www.techiedelight.com/?problem=PatternMatchIII) |  not implemented | [pattern_match_three.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/pattern_match_three.cpp) |
-| [249: Pattern Match IV](https://www.techiedelight.com/?problem=PatternMatchIV) |  not implemented | [pattern_match_four.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/pattern_match_four.cpp) |
-| [250: Pattern Match V](https://www.techiedelight.com/?problem=PatternMatchV) |  not implemented | [pattern_match_five.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/trie/pattern_match_five.cpp) |
+| [249: Pattern Match IV](https://www.techiedelight.com/?problem=PatternMatchIV) |  done | [pattern_match_four.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/pattern_match_four.cpp) |
+| [250: Pattern Match V](https://www.techiedelight.com/?problem=PatternMatchV) |  done | [pattern_match_five.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/trie/pattern_match_five.cpp) |
 <!-- | [251: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
 | [252: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
 | [253: ](https://www.techiedelight.com/?problem=) |  not implemented |  |

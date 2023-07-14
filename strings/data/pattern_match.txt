@@ -1,2 +1,52 @@
 ["leet", "abcd", "loot", "geek", "cool", "for", "peer", "dear", "seed", "meet", "noon", "otto", "mess", "loss"], "moon", {"leet", "loot", "geek", "cool", "peer", "seed", "meet"}
 ["leet", "abcd", "loot", "geek", "cool", "for", "peer", "dear", "seed", "meet", "noon", "otto", "mess", "loss"], "pqrs", {"abcd", "dear"}
+[ "loss", "mess", "otto", "geek", "cool", "loot", "leet", "abcd", "for", "dear", "seed", "peer", "meet", "noon", ], "moon", { "meet", "peer", "cool", "geek", "leet", "seed", "loot", }
+[ "leet", ], "moon", { "leet", }
+[ "abcd", "leet", ], "moon", { "leet", }
+[ "loot", "leet", "abcd", ], "moon", { "leet", "loot", }
+[ "geek", "loot", "leet", "abcd", ], "moon", { "leet", "geek", "loot", }
+[ "geek", "loot", "cool", "leet", "abcd", ], "moon", { "leet", "cool", "geek", "loot", }
+[ "for", "abcd", "leet", "loot", "cool", "geek", ], "moon", { "geek", "cool", "leet", "loot", }
+[ "peer", "for", "abcd", "leet", "loot", "cool", "geek", ], "moon", { "loot", "geek", "peer", "cool", "leet", }
+[ "dear", "peer", "for", "abcd", "leet", "loot", "cool", "geek", ], "moon", { "loot", "geek", "peer", "cool", "leet", }
+[ "dear", "peer", "for", "abcd", "seed", "leet", "loot", "cool", "geek", ], "moon", { "peer", "seed", "leet", "geek", "cool", "loot", }
+[ "meet", "dear", "peer", "for", "abcd", "seed", "leet", "loot", "cool", "geek", ], "moon", { "geek", "cool", "peer", "meet", "seed", "leet", "loot", }
+[ "noon", "meet", "dear", "peer", "for", "abcd", "seed", "leet", "loot", "cool", "geek", ], "moon", { "geek", "cool", "peer", "meet", "seed", "leet", "loot", }
+[ "otto", "geek", "cool", "loot", "leet", "abcd", "for", "dear", "seed", "peer", "meet", "noon", ], "moon", { "meet", "peer", "cool", "geek", "leet", "seed", "loot", }
+[ "mess", "otto", "geek", "cool", "loot", "leet", "abcd", "for", "dear", "seed", "peer", "meet", "noon", ], "moon", { "meet", "peer", "cool", "geek", "leet", "seed", "loot", }
+[ "abcd", ], "moon", { }
+[ "loot", "abcd", ], "moon", { "loot", }
+[ "geek", "abcd", "loot", ], "moon", { "loot", "geek", }
+[ "cool", "geek", "abcd", "loot", ], "moon", { "loot", "cool", "geek", }
+[ "cool", "for", "geek", "abcd", "loot", ], "moon", { "loot", "cool", "geek", }
+[ "peer", "loot", "abcd", "for", "geek", "cool", ], "moon", { "cool", "geek", "peer", "loot", }
+[ "dear", "peer", "loot", "abcd", "for", "geek", "cool", ], "moon", { "cool", "geek", "peer", "loot", }
+[ "seed", "dear", "peer", "loot", "abcd", "for", "geek", "cool", ], "moon", { "cool", "loot", "geek", "seed", "peer", }
+[ "meet", "seed", "dear", "peer", "loot", "abcd", "for", "geek", "cool", ], "moon", { "seed", "peer", "cool", "geek", "meet", "loot", }
+[ "noon", "meet", "seed", "dear", "peer", "loot", "abcd", "for", "geek", "cool", ], "moon", { "seed", "peer", "cool", "geek", "meet", "loot", }
+[ "noon", "meet", "seed", "dear", "otto", "peer", "loot", "abcd", "for", "geek", "cool", ], "moon", { "seed", "peer", "cool", "geek", "meet", "loot", }
+[ "mess", "cool", "geek", "for", "abcd", "loot", "otto", "dear", "peer", "seed", "meet", "noon", ], "moon", { "meet", "peer", "seed", "geek", "cool", "loot", }
+[ "loot", ], "moon", { "loot", }
+[ "geek", "loot", ], "moon", { "loot", "geek", }
+[ "cool", "loot", "geek", ], "moon", { "geek", "cool", "loot", }
+[ "cool", "loot", "for", "geek", ], "moon", { "geek", "cool", "loot", }
+[ "cool", "loot", "peer", "for", "geek", ], "moon", { "geek", "peer", "cool", "loot", }
+[ "dear", "for", "peer", "loot", "geek", "cool", ], "moon", { "cool", "geek", "peer", "loot", }
+[ "seed", "dear", "for", "peer", "loot", "geek", "cool", ], "moon", { "cool", "loot", "geek", "seed", "peer", }
+[ "meet", "seed", "dear", "for", "peer", "loot", "geek", "cool", ], "moon", { "seed", "peer", "cool", "geek", "meet", "loot", }
+[ "noon", "meet", "seed", "dear", "for", "peer", "loot", "geek", "cool", ], "moon", { "seed", "peer", "cool", "geek", "meet", "loot", }
+[ "noon", "meet", "seed", "dear", "for", "otto", "peer", "loot", "geek", "cool", ], "moon", { "seed", "peer", "cool", "geek", "meet", "loot", }
+[ "noon", "meet", "seed", "dear", "for", "mess", "otto", "peer", "loot", "geek", "cool", ], "moon", { "seed", "peer", "cool", "geek", "meet", "loot", }
+[ "geek", ], "moon", { "geek", }
+[ "cool", "geek", ], "moon", { "geek", "cool", }
+[ "for", "geek", "cool", ], "moon", { "cool", "geek", }
+[ "peer", "for", "geek", "cool", ], "moon", { "cool", "peer", "geek", }
+[ "peer", "for", "geek", "dear", "cool", ], "moon", { "cool", "peer", "geek", }
+[ "seed", "dear", "cool", "geek", "for", "peer", ], "moon", { "peer", "geek", "seed", "cool", }
+[ "meet", "seed", "dear", "cool", "geek", "for", "peer", ], "moon", { "cool", "meet", "peer", "geek", "seed", }
+[ "noon", "meet", "seed", "dear", "cool", "geek", "for", "peer", ], "moon", { "cool", "meet", "peer", "geek", "seed", }
+[ "noon", "meet", "seed", "dear", "cool", "geek", "for", "otto", "peer", ], "moon", { "cool", "meet", "peer", "geek", "seed", }
+[ "noon", "meet", "seed", "dear", "cool", "geek", "for", "mess", "otto", "peer", ], "moon", { "cool", "meet", "peer", "geek", "seed", }
+[ "cool", ], "moon", { "cool", }
+[ "for", "cool", ], "moon", { "cool", }
+[ "cool", "peer", "for", ], "moon", { "peer", "cool", }
