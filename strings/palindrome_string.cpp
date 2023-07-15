@@ -29,11 +29,18 @@ namespace valhalla {
             */
 
             bool Solution::isPalindrome(std::string s) {
-                bool is_palindrome = false;
+                if (s.empty()) return true;
 
+                std::string::size_type left = 0, right = s.size() - 1;
 
+                while (left < right) {
+                    if (s[left] != s[right]) {
+                        return false;
+                    }
+                    left++; right--;
+                } // while
 
-                return is_palindrome;
+                return true;
             } // isPalindrome
         }
     }

@@ -28,10 +28,27 @@ namespace valhalla {
             std::unordered_set<std::string> Solution::findLexicographicPermutations(std::string s) {
                 std::unordered_set<std::string> permutations;
 
-
+                for (char chr : s) {
+                    std::string current;
+                    current += chr;
+                    checkLexigraphicPermutations(s, current, permutations);
+                }
 
                 return permutations;
             } // findLexicographicPermutations
+
+            void Solution::checkLexigraphicPermutations(std::string & s, std::string current, std::unordered_set<std::string>  & permutations) {
+                if (current.length() == s.length()) {
+                    permutations.insert(current);
+                    return;
+                }
+
+                for (char chr : s) {
+                    std::string next = current + chr;
+                    checkLexigraphicPermutations(s, next, permutations);
+                }
+
+            } // checkLexigraphicPermutations
         }
     }
 }

@@ -27,6 +27,14 @@ namespace valhalla {
 
             void Solution::removeAdjacentDuplicates(std::string & s) {
 
+                for (std::string::iterator itr = s.begin() ; itr != s.end() ; itr++) {
+                    int count = 0;
+                    while ( (itr + count + 1) != s.end() && *itr == *(itr + count + 1)) count++;
+
+                    if (count > 0) {
+                        itr = s.erase(itr, (itr + count));
+                    }
+                }
 
 
             } // removeAdjacentDuplicates

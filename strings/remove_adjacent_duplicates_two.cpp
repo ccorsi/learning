@@ -35,11 +35,23 @@ namespace valhalla {
             */
 
             std::string Solution::removeAdjacentDuplicates(std::string s) {
-                std::string result;
+                bool reduced = true;
 
+                while (reduced) {
+                    reduced = false;
+                    for(std::string::iterator itr = s.begin(); itr != s.end() ; ) {
+                        int count = 0;
+                        while ( (itr + count + 1) != s.end() && *itr == *(itr + count + 1)) count++;
+                        if ( count > 0) {
+                            reduced = true;
+                            itr = s.erase(itr, (itr + count + 1));
+                            continue;
+                        } // if
+                        itr++;
+                    } // for
+                } // while
 
-
-                return result;
+                return s;
             } // removeAdjacentDuplicates
         }
     }

@@ -12,6 +12,10 @@
 
 #include "first_non_repeating_character.h"
 
+#include <iostream>
+#include <map>
+#include <vector>
+
 namespace valhalla {
     namespace strings {
         namespace first_non_repeating_character {
@@ -31,11 +35,23 @@ namespace valhalla {
             */
 
             int Solution::findFirstNonRepeating(std::string s) {
-                int index = -2;
+                int index = 0;
+                std::map<char,int> counts;
+                std::vector<std::pair<char,int>> count_refs;
 
+                for(char chr : s) {
+                    int count = ++counts[chr];
+                    if (count == 1) {
+                        count_refs.push_back(std::pair<char,int>(chr, index));
+                    } // for
+                    index++;
+                } // for
 
+                for (std::pair<char,int> count : count_refs) {
+                    if (counts[count.first] == 1) return count.second;
+                } // for
 
-                return index;
+                return -1;
             } // findFirstNonRepeating
         }
     }

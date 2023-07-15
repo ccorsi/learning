@@ -19,6 +19,7 @@ namespace valhalla {
     namespace strings {
         namespace lexicographic_permutations {
             class Solution {
+                void checkLexigraphicPermutations(std::string &, std::string, std::unordered_set<std::string>  &);
             public:
                 std::unordered_set<std::string> findLexicographicPermutations(std::string);
             };
