@@ -13,6 +13,8 @@
 
 #include "print_string_zig_zag.h"
 
+#include <iostream>
+
 namespace valhalla {
     namespace strings {
         namespace print_string_zig_zag {
@@ -39,9 +41,43 @@ namespace valhalla {
             */
 
             std::string Solution::printZigZag(std::string s, int k) {
-                std::string zigzag;
+                if (k < 1) {
+                    return "";
+                }
 
+                const std::string::size_type size = s.length();
 
+                if (k >= size || k == 1) {
+                    return s;
+                }
+
+                std::string zigzag(size, ' ');
+
+                std::string::size_type dest = 0;
+                const std::string::size_type tot = (k - 1) * 2;
+
+                // std::cout << "s: \"" << s << "\" k: " << k << " tot: " << tot << " size: " << size << std::endl;
+
+                for (std::string::size_type row = 0 ; row < k ; row++) {
+                    // determine the step size
+                    std::string::size_type step[2], next = 1;
+                    std::string::size_type remainder = ( row % ( k - 1 ) );
+                    step[0] = tot - ( remainder * 2 );
+                    if (remainder == 0) {
+                      step[1] = tot;
+                     } else {
+                      step[1] = tot - step[0];
+                    }
+                    // std::cout << "row: " << row << " step[0]: " << step[0] << " step[1]: " << step[1] << std::endl;
+                    for(std::string::size_type idx = row ; idx < size ; idx+=step[next]) {
+                        // std::cout << "size: " << size << " dest: " << dest << " idx: " << idx << std::endl;
+                        zigzag[dest++] = s[idx];
+                        next = ( next + 1 ) % 2;
+                    } // for
+                    // std::cout << "zipzag: " << zigzag << std::endl;
+                } // for
+
+                // std::cout << "returning zigzag: " << zigzag << std::endl;
 
                 return zigzag;
             } // printZigZag

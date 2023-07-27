@@ -12,6 +12,8 @@
 
 #include "evaluate_postfix_expression.h"
 
+#include <vector>
+
 namespace valhalla {
     namespace strings {
         namespace evaluate_postfix_expression {
@@ -38,11 +40,38 @@ namespace valhalla {
             */
 
             int Solution::evalPostfix(std::string s) {
-                int value = -1;
+                int left, right;
+                std::vector<int> values;
 
+                for (char entry : s) {
+                    switch(entry) {
+                        case '*':
+                            right = values.back(); values.pop_back();
+                            left = values.back(); values.pop_back();
+                            values.push_back(left * right);
+                            break;
+                        case '+':
+                            right = values.back(); values.pop_back();
+                            left = values.back(); values.pop_back();
+                            values.push_back(left + right);
+                            break;
+                        case '-':
+                            right = values.back(); values.pop_back();
+                            left = values.back(); values.pop_back();
+                            values.push_back(left - right);
+                            break;
+                        case '/':
+                            right = values.back(); values.pop_back();
+                            left = values.back(); values.pop_back();
+                            values.push_back(left / right);
+                            break;
+                        default:
+                            values.push_back(entry - '0');
+                            break;
+                    }
+                }
 
-
-                return value;
+                return values.empty() ? 0 :  values.back();
             } // evalPostfix
         }
     }

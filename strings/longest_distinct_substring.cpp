@@ -12,6 +12,10 @@
 
 #include "longest_distinct_substring.h"
 
+#include <iostream>
+#include <map>
+#include <set>
+
 namespace valhalla {
     namespace strings {
         namespace longest_distinct_substring {
@@ -46,7 +50,35 @@ namespace valhalla {
             std::string Solution::findLongestSubstring(std::string s, int k) {
                 std::string longest;
 
+                if (s.empty()) return longest;
 
+                std::map<std::string::size_type,std::set<char>> counts;
+                std::string::size_type start = 0, idx = 0, length = 0;
+
+                for ( ; idx < s.size(); idx++) {
+                    char chr = s[idx];
+                    std::string::size_type current = idx;
+                    while (counts[current].size() <= k) {
+                        counts[current].insert(chr);
+                        if (counts[current].size() <= k) {
+                            if (idx - current + 1 > length) {
+                                start = current;
+                                length = idx - current + 1;
+                            }
+                        } else if (counts[current].size() > k) {
+                            break;
+                        }
+
+                        if (current == 0) {
+                            break;
+                        }
+                        current--;
+                    }
+                }
+
+                if (length > 0) {
+                    longest = s.substr(start, length);
+                }
 
                 return longest;
             } // findLongestSubstring

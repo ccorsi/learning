@@ -13,6 +13,10 @@
 
 #include "longest_distinct_substring_two.h"
 
+#include <iostream>
+#include <map>
+#include <set>
+
 namespace valhalla {
     namespace strings {
         namespace longest_distinct_substring_two {
@@ -43,8 +47,31 @@ namespace valhalla {
 
             std::string Solution::findLongestSubstring(std::string s) {
                 std::string longest;
+                std::map<std::string::size_type, std::set<char>> counts;
+                std::string::size_type start = 0, length = 0;
 
+                for(std::string::size_type idx = 0 ; idx < s.size() ; idx++ ) {
+                    const char chr = s[idx];
+                    std::string::size_type current = idx;
+                    while ( current >= 0 ) {
+                        if (counts[current].insert(chr).second == false) {
+                            break;
+                        }
+                        const std::string::size_type size = counts[current].size();
+                        if (size == idx - current + 1 && size > length) {
+                            start = current;
+                            length = idx - current + 1;
+                        }
+                        if (current == 0) {
+                            break;
+                        }
+                        current--;
+                    } // while
+                } // for
 
+                if (length > 0) {
+                    longest = s.substr(start,length);
+                } // if
 
                 return longest;
             } // findLongestSubstring
