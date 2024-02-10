@@ -15,6 +15,7 @@
 #include <iostream>
 #include <set>
 #include <list>
+#include <exception>
 
 namespace valhalla {
     namespace matrices {
