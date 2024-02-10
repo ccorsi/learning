@@ -10,6 +10,8 @@
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 
+#include <cstddef>
+
 #include "largest_square_submatrix_two.h"
 
 namespace valhalla {
