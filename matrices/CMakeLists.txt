@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(matrices VERSION 0.2.9)
+project(matrices VERSION 0.3.0)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -26,6 +26,8 @@ set(NAMES shift_matrix rotate_matrix rotate_matrix_two spiral_matrix spiral_matr
         construct_young_tableau extract_min_in_young_tableau replace_element_in_young_tableau sort_with_young_tableau
         magnet_puzzle)
 
+set(largest_plustests_extra_args --timeout largest_plustests 30)
+
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)
     # mention which executable we are building
@@ -37,7 +39,12 @@ foreach(name IN LISTS NAMES)
     # set compiler C++
     target_compile_features(${name}tests PUBLIC cxx_std_17)
     # request that we discover all googletest tests for the given test executable
-    gtest_discover_tests(${name}tests)
+    if (DEFINED ${name}tests_extra_args)
+        message("${name}tests has a extra args defined")
+        gtest_add_tests(TARGET ${name}tests EXTRA_ARGS ${name}tests_extra_args)
+    else()
+        gtest_discover_tests(${name}tests)
+    endif()
     # mention that we've completed the building of the executable
     message("Built executable ${name}tests")
 endforeach()

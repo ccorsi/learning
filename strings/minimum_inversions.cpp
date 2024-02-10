@@ -12,6 +12,8 @@
 
 #include "minimum_inversions.h"
 
+#include <stack>
+
 namespace valhalla {
     namespace strings {
         namespace minimum_inversions {
@@ -40,8 +42,31 @@ namespace valhalla {
 
             int Solution::findMinimumInversions(std::string s) {
                 int min = -1;
+                std::string::size_type size = s.size();
 
+                if (size % 2 == 0) {
+                    min = 0;
+                    // check that we hava a balanced string
+                    std::stack<char> parans;
 
+                    for(char chr : s) {
+                        switch(chr) {
+                            case '{':
+                                parans.push(chr);
+                                break;
+                            case '}':
+                                if (parans.size() == 0) {
+                                    min++;
+                                    parans.push('{');
+                                } else {
+                                    if (parans.top() != '{') min++;
+                                    parans.pop();
+                                } // else
+                                break;
+                        } // switch
+                    } // for
+                    min += ( static_cast<int>( parans.size() ) / 2 );
+                } // if
 
                 return min;
             } // findMinimumInversions
