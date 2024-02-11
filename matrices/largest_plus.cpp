@@ -15,7 +15,7 @@
 #include <iostream>
 #include <set>
 #include <list>
-#include <exception>
+#include <stdexcept>
 
 namespace valhalla {
     namespace matrices {
@@ -236,14 +236,14 @@ namespace valhalla {
                 }
                 Perimeter & operator++() {
                     if (m_top.x() == 0) {
-                        throw std::exception("Unable to expand perimeter");
+                        throw std::out_of_range("Unable to expand perimeter");
                     }
                     *this = Perimeter(Point(m_top.x() - 1, m_top.y() - 1),Point(m_end.x() + 1, m_end.y() + 1));
                     return *this;
                 }
                 Perimeter operator++(int) {
                     if (m_top.x() == 0) {
-                        throw std::exception("Unable to expand perimeter");
+                        throw std::out_of_range("Unable to expand perimeter");
                     }
                     Perimeter original = *this;
                     *this = Perimeter(Point(m_top.x() - 1, m_top.y() - 1),Point(m_end.x() + 1, m_end.y() + 1));
