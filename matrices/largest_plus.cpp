@@ -190,6 +190,34 @@ namespace valhalla {
                 Perimeter(Point & point) : m_top(point), m_end(point) {
                     m_points.push_back(m_top);
                 }
+                Perimeter(Point top, Point end) {
+                    if (top == end) {
+                        m_end = top;
+                        m_top = top;
+                        m_points.push_back(m_top);
+                    } else {
+                        if (top < end) {
+                            m_top = top;
+                            m_end = end;
+                        } else {
+                            m_top = end;
+                            m_end = top;
+                        }
+                        // populate m_points
+                        for(size_t row = m_top.x() ; row <= m_end.x() ; row++) {
+                            m_points.push_back(Point(row, m_top.y()));
+                        }
+                        for(size_t col = m_top.y() + 1 ; col <= m_end.y() ; col++) {
+                            m_points.push_back(Point(m_end.x(), col));
+                        }
+                        for(size_t row = m_top.x() ; row < m_end.x() ; row++) {
+                            m_points.push_back(Point(row, m_end.y()));
+                        }
+                        for(size_t col = m_top.y() + 1; col < m_end.y() ; col++) {
+                            m_points.push_back(Point(m_top.x(), col));
+                        }
+                    }
+                }
                 Perimeter(Point & top, Point & end) {
                     if (top == end) {
                         m_end = top;
