@@ -72,8 +72,9 @@ namespace valhalla {
             template<typename Char, typename IsSpace>
             struct skip_spaces {
                 IsSpace isSpace;
-                void operator()(std::basic_istream<Char> & in) {
+                std::basic_istream<Char> & operator()(std::basic_istream<Char> & in) {
                     while (isSpace(static_cast<Char>(in.peek()))) in.get();
+                    return in;
                 }
             };
             // This requres c++20 to build
