@@ -50,9 +50,17 @@ namespace valhalla {
             */
 
             int Solution::findSubmatrixSum(std::vector<std::vector<int>> const & mat, int p, int q, int r, int s) {
-                int sum = -1;
+                int sum = 0;
 
+                if (mat.empty()) {
+                    return sum;
+                } // if (mat.empty())
 
+                for ( ; p <= r ; p++) {
+                    for (auto col = q ; col <= s ; col++) {
+                        sum += mat[p][col];
+                    } // for (auto col = q ; col <= s ; col++)
+                } // for ( ; p <= r ; p++)
 
                 return sum;
             } // findSubmatrixSum

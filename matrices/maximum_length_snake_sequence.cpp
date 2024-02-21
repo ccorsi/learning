@@ -15,6 +15,32 @@
 namespace valhalla {
     namespace matrices {
         namespace maximum_length_snake_sequence {
+
+            void Solution::check(std::vector<std::vector<int>> const & grid, const size_t row, const size_t col,
+                       const size_t size, const int cur, int & max) {
+                const int value =  grid[row][col];
+                if (col + 1 < size) {
+                    const int next = grid[row][col+1];
+                    if ((value + 1) == next || (value - 1) == next) {
+                        check(grid, row, col + 1, size, cur + 1, max);
+                    } else {
+                        if (cur > max) max = cur;
+                    }
+                } else {
+                    if (cur > max) max = cur;
+                } // if (col + 1 < size)
+                if (row + 1 < size) {
+                    const int next = grid[row+1][col];
+                    if ((value + 1) == next || (value - 1) == next) {
+                        check(grid, row + 1, col, size, cur + 1, max);
+                    } else {
+                        if (cur > max) max = cur;
+                    }
+                } else {
+                    if (cur > max) max = cur;
+                } // if (row + 1 < size)
+            }
+
             /*
 
             Given an integer square matrix, find the maximum length snake sequence in it and return
@@ -45,9 +71,14 @@ namespace valhalla {
             */
 
             int Solution::findMaxLengthSnakeSequence(std::vector<std::vector<int>> const & grid) {
-                int max = -1;
+                int max = 0;
+                const auto size = grid.size();
 
-
+                for (auto row = 0 ; row < size ; row++) {
+                    for (auto col = 0 ; col < size ; col++) {
+                        check(grid, row, col, size, 0, max);
+                    } // for (auto col = 0 ; col < size ; col++)
+                } // for (auto row = 0 ; row < size ; row++)
 
                 return max;
             } // findMaxLengthSnakeSequence

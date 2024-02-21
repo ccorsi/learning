@@ -20,6 +20,10 @@ namespace valhalla {
     namespace matrices {
         namespace boggle_search {
             class Solution {
+                bool find_next_letter(std::vector<std::vector<char>> const &, std::string const &,
+                                      const int, std::set<std::pair<int,int>> &, std::pair<int,int> const &);
+                bool check_for_word(std::vector<std::vector<char>> const &, std::string const &, const int,
+                                    const int, const int, std::set<std::pair<int,int>> &);
             public:
                 std::unordered_set<std::string> searchBoggle(std::vector<std::vector<char>> const &, std::unordered_set<std::string> const &);
             };
