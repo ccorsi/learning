@@ -11,7 +11,7 @@
  */
 
 #include <utility>
-#include <limits>
+#include <climits>
 
 #include "maximum_sum_submatrix.h"
 
