@@ -12,14 +12,15 @@
 #ifndef __MAXIMUM_LENGTH_SNAKE_SEQUENCE_H__
 #define __MAXIMUM_LENGTH_SNAKE_SEQUENCE_H__
 
+#include <cstddef>
 #include <vector>
 
 namespace valhalla {
     namespace matrices {
         namespace maximum_length_snake_sequence {
             class Solution {
-                void check(std::vector<std::vector<int>> const & grid, const size_t, const size_t,
-                           const size_t, const int, int &);
+                void check(std::vector<std::vector<int>> const & grid, const std::size_t,
+                           const std::size_t, const std::size_t, const int, int &);
             public:
                 int findMaxLengthSnakeSequence(std::vector<std::vector<int>> const &);
             };

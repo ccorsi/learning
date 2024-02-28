@@ -16,8 +16,8 @@ namespace valhalla {
     namespace matrices {
         namespace maximum_length_snake_sequence {
 
-            void Solution::check(std::vector<std::vector<int>> const & grid, const size_t row, const size_t col,
-                       const size_t size, const int cur, int & max) {
+            void Solution::check(std::vector<std::vector<int>> const & grid, const std::size_t row,
+                                 const std::size_t col, const std::size_t size, const int cur, int & max) {
                 const int value =  grid[row][col];
                 if (col + 1 < size) {
                     const int next = grid[row][col+1];
