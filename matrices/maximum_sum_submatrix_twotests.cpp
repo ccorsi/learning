@@ -1,5 +1,5 @@
 /**
- * @file maximum_sub_submatrix_twotests.cpp
+ * @file maximum_sum_submatrix_twotests.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This contains tests to the problem https://www.techiedelight.com/?problem=MaximumSumSubmatrixII
  * @version 0.1
@@ -16,29 +16,29 @@
 
 #include "paths.h"
 #include "loaders.h"
-#include "maximum_sub_submatrix_two.h"
+#include "maximum_sum_submatrix_two.h"
 
 using namespace valhalla::utils::loaders;
 using namespace valhalla::utils::paths;
 using namespace valhalla::utils;
-using namespace valhalla::matrices::maximum_sub_submatrix_two;
+using namespace valhalla::matrices::maximum_sum_submatrix_two;
 
 // Test Fixture Data Class
-class MaximumSubSubmatrixTwoData {
+class MaximumSumSubmatrixTwoData {
     std::vector<std::vector<int>> m_input, m_expected;
 public:
-    MaximumSubSubmatrixTwoData() = default;
+    MaximumSumSubmatrixTwoData() = default;
 
     std::vector<std::vector<int>> const & get_input() { return m_input; }
     std::vector<std::vector<int>> const & get_expected() { return m_expected; }
 
-    friend std::ostream& operator<<(std::ostream&, const MaximumSubSubmatrixTwoData &);
-    friend std::istream& operator>>(std::istream&, MaximumSubSubmatrixTwoData &);
+    friend std::ostream& operator<<(std::ostream&, const MaximumSumSubmatrixTwoData &);
+    friend std::istream& operator>>(std::istream&, MaximumSumSubmatrixTwoData &);
 
 };
 
-std::ostream& operator<<(std::ostream& out, const MaximumSubSubmatrixTwoData & data) {
-    out << "MaximumSubSubmatrixTwoData [ input=[";
+std::ostream& operator<<(std::ostream& out, const MaximumSumSubmatrixTwoData & data) {
+    out << "MaximumSumSubmatrixTwoData [ input=[";
     for (std::vector<int> values : data.m_input) {
         out << " [";
         for (int value : values) {
@@ -99,7 +99,7 @@ struct VectorVectorReader {
     }
 };
 
-std::istream& operator>>(std::istream& in, MaximumSubSubmatrixTwoData &data) {
+std::istream& operator>>(std::istream& in, MaximumSumSubmatrixTwoData &data) {
     ::loaders::loader::v4::dataLoader<
         std::vector<std::vector<int>>,
         char,
@@ -126,24 +126,24 @@ std::istream& operator>>(std::istream& in, MaximumSubSubmatrixTwoData &data) {
 }
 
 // Test Fixture Class
-class MaximumSubSubmatrixTwoFixture :
-    public testing::TestWithParam<MaximumSubSubmatrixTwoData> {
+class MaximumSumSubmatrixTwoFixture :
+    public testing::TestWithParam<MaximumSumSubmatrixTwoData> {
 };
 
 // Parameterized Test Definition
-TEST_P(MaximumSubSubmatrixTwoFixture, MaximumSubSubmatrixTwoTests) {
-    MaximumSubSubmatrixTwoData data = GetParam();
+TEST_P(MaximumSumSubmatrixTwoFixture, MaximumSumSubmatrixTwoTests) {
+    MaximumSumSubmatrixTwoData data = GetParam();
 
     Solution solution;
 
-    std::vector<std::vector<int>> actual = solution.findMaxSubSubmatrix(data.get_input());
+    std::vector<std::vector<int>> actual = solution.findMaxSumSubmatrix(data.get_input());
 
     ASSERT_EQ(actual, data.get_expected());
 }
 
 // Parameter Test Parameters
-INSTANTIATE_TEST_SUITE_P(MaximumSubSubmatrixTwoTests, MaximumSubSubmatrixTwoFixture, testing::ValuesIn(
-    Loader<MaximumSubSubmatrixTwoData>()(find_path("matrices/data/maximum_sub_submatrix_two.txt"))
+INSTANTIATE_TEST_SUITE_P(MaximumSumSubmatrixTwoTests, MaximumSumSubmatrixTwoFixture, testing::ValuesIn(
+    Loader<MaximumSumSubmatrixTwoData>()(find_path("matrices/data/maximum_sum_submatrix_two.txt"))
 ));
 
 int main(int argc, char** argv) {

@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(matrices VERSION 0.3.1)
+project(matrices VERSION 0.3.2)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -28,6 +28,7 @@ set(NAMES shift_matrix rotate_matrix rotate_matrix_two spiral_matrix spiral_matr
 
 set(largest_plustests_extra_args --timeout largest_plustests 30)
 set(boggle_searchtests_extra_args --timeout boggle_searchtests 30)
+set(longest_continuous_sequence_threetests_extra_args --timeout longest_continuous_sequence_threetests 30)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)

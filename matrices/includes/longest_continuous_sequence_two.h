@@ -18,6 +18,8 @@ namespace valhalla {
     namespace matrices {
         namespace longest_continuous_sequence_two {
             class Solution {
+                void check(std::vector<std::vector<int>> const &, const int, const int,
+                           std::vector<int> &, std::vector<int> &);
             public:
                 std::vector<int> findLongestPath(std::vector<std::vector<int>> const &);
             };

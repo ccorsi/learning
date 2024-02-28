@@ -15,6 +15,61 @@
 namespace valhalla {
     namespace matrices {
         namespace longest_continuous_sequence_three {
+
+            void Solution::check(std::vector<std::vector<char>> const & mat, const int row,
+                                 const int col, const char ch, int len, int & max) {
+                const char next = ch + 1;
+                bool found = false;
+
+                if (row > 0) {
+                    if (col > 0 && mat[row-1][col-1] == next) {
+                        check(mat, row-1, col-1, next, len+1, max);
+                        found = true;
+                    } // if (col > 0 && mat[row-1][col-1] == next)
+
+                    if (mat[row-1][col] == next) {
+                        check(mat, row-1, col, next, len+1, max);
+                        found = true;
+                    } // if (mat[row-1][col] == next)
+
+                    if (col + 1 < mat[row].size() &&  mat[row-1][col+1] == next) {
+                        check(mat, row-1, col+1, next, len+1, max);
+                        found = true;
+                    } // if (col + 1 < mat[row].size() &&  mat[row-1][col+1] == next)
+                } // if (row > 0)
+
+                if (col > 0 && mat[row][col-1] == next) {
+                    check(mat, row, col-1, next, len+1, max);
+                    found = true;
+                } // if (col > 0 && mat[row][col-1] == next)
+
+                if (col + 1 < mat[row].size() && mat[row][col+1] == next) {
+                    check(mat, row, col+1, next, len+1, max);
+                    found = true;
+                } // if (col + 1 < mat[row].size() && mat[row][col+1] == next)
+
+                if (row + 1 < mat.size()) {
+                    if (col > 0 && mat[row+1][col-1] == next) {
+                        check(mat, row+1, col-1, next, len+1, max);
+                        found = true;
+                    } // if (col > 0 && mat[row+1][col-1] == next)
+
+                    if (mat[row+1][col] == next) {
+                        check(mat, row+1, col, next, len+1, max);
+                        found = true;
+                    } // if (mat[row+1][col] == next)
+
+                    if (col + 1 < mat[row+1].size() && mat[row+1][col+1] == next) {
+                        check(mat, row+1, col+1, next, len+1, max);
+                        found;
+                    } // if (col + 1 < mat[row+1].size() && mat[row+1][col+1] == next)
+                } // if (row + 1 < mat.size())
+
+                if (found == false && len > max) {
+                    max = len;
+                } // if (found == false && len > max)
+            } // check
+
             /*
 
             Given an `M × N` matrix of characters, find the length of the longest path in
@@ -54,11 +109,23 @@ namespace valhalla {
             */
 
             int Solution::findMaxLength(std::vector<std::vector<char>> const & mat, char ch) {
-                int max = -1;
+                int max = 0;
 
+                if (mat.empty()) {
+                    return max;
+                }
 
+                const auto rows = mat.size(), cols = mat[0].size();
 
-                return max = -1;
+                for (auto row = 0 ; row < rows ; row++) {
+                    for (auto col = 0 ; col < cols ; col++) {
+                        if (mat[row][col] == ch) {
+                            check(mat, row, col, ch, 1, max);
+                        } // if (mat[row][col] == ch)
+                    } // for (auto col = 0 ; col < cols ; col++)
+                } // for (auto row = 0 ; row < rows ; row++)
+
+                return max;
             } // findMaxLength
         }
     }

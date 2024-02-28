@@ -10,6 +10,9 @@
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 
+#include <climits>
+#include <set>
+
 #include "minimum_cost_path_two.h"
 
 namespace valhalla {
@@ -59,10 +62,37 @@ namespace valhalla {
 
             */
 
+            void Solution::check(std::vector<std::vector<int>> const & cost, int stop, std::set<int> & stops,
+                                 int total, int & min) {
+                if (stop == cost.size() - 1) {
+                    if (total < min) {
+                        min = total;
+                    } // if (total < min)
+                    return;
+                } // if (stop == cost[0].size() - 1)
+
+                for (auto city = 0 ; city < cost.size() ; city++) {
+                    if (stops.insert(city).second) {
+                        check(cost, city, stops, total + cost[stop][city], min);
+                        stops.erase(city);
+                    } // if (stops.find(city) == stops.end())
+                } // for (auto city = 0 ; city < cost.size() ; city++)
+            } // check
+
             int Solution::findMinCost(std::vector<std::vector<int>> const & cost) {
-                int min = -1;
+                if (cost.empty()) {
+                    return 0;
+                } // if (cost.empty()) {
 
+                if (cost.size() == 1 && cost[0].size() == 1) {
+                    return cost[0][0];
+                } // if (cost.size() == 1 && cost[0].size() == 1)
 
+                int min = INT_MAX;
+
+                std::set<int> stops({0});
+
+                check(cost, 0, stops, 0, min);
 
                 return min;
             } // findMinCost

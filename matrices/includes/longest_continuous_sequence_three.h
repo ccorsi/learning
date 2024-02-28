@@ -18,6 +18,8 @@ namespace valhalla {
     namespace matrices {
         namespace longest_continuous_sequence_three {
             class Solution {
+                void check(std::vector<std::vector<char>> const &, const int, const int,
+                           const char, int, int &);
             public:
                 int findMaxLength(std::vector<std::vector<char>> const &, char);
             };

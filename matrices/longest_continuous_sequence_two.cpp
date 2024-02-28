@@ -41,10 +41,63 @@ namespace valhalla {
 
             */
 
+            void Solution::check(std::vector<std::vector<int>> const & mat, const int row,
+                                 const int col, std::vector<int> & current, std::vector<int> & path) {
+                bool found = false;
+                const int next = mat[row][col] + 1;
+
+                if (col + 1 < mat.size() && next == mat[row][col+1]) {
+                    found = true;
+                    current.push_back(next);
+                    check(mat, row, col+1, current, path);
+                    current.pop_back();
+                } // if (col + 1 < mat.size() && next == mat[row][col+1])
+
+                if (col > 0 && next == mat[row][col-1]) {
+                    found = true;
+                    current.push_back(next);
+                    check(mat, row, col-1, current, path);
+                    current.pop_back();
+                } // if (col > 0 && next == mat[row][col-1])
+
+                if (row > 0 && next == mat[row-1][col]) {
+                    found = true;
+                    current.push_back(next);
+                    check(mat, row-1, col, current, path);
+                    current.pop_back();
+                } // if (row > 0 && next == mat[row-1][col])
+
+                if (row + 1 < mat.size() && next == mat[row+1][col]) {
+                    found = true;
+                    current.push_back(next);
+                    check(mat, row+1, col, current, path);
+                    current.pop_back();
+                } // if (row + 1 < mat.size() && next == mat[row+1][col])
+
+                if (found == false) {
+                    if (current.size() > path.size()) {
+                        path = current;
+                    } // if (current.size() > path.size())
+                } // if (found == false)
+            } // check
+
             std::vector<int> Solution::findLongestPath(std::vector<std::vector<int>> const & mat) {
                 std::vector<int> path;
 
+                if (mat.empty()) {
+                    return path;
+                } // if (mat.empty())
 
+                const auto size = mat.size();
+                std::vector<int> current;
+
+                for (auto row = 0 ; row < size ; row++) {
+                    for (auto col = 0 ; col < size ; col++) {
+                        current.push_back(mat[row][col]);
+                        check(mat, row, col, current, path);
+                        current.pop_back();
+                    } // for (auto col = 0 ; col < size ; col++)
+                } // for (auto row = 0 ; row < size ; row++)
 
                 return path;
             } // findLongestPath

@@ -18,6 +18,8 @@ namespace valhalla {
     namespace matrices {
         namespace minimum_cost_path {
             class Solution {
+                void check(std::vector<std::vector<int>> const &, const int, const int,
+                           const int, int &);
             public:
                 int findMinCost(std::vector<std::vector<int>> const &);
             };
