@@ -24,33 +24,34 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Configure CMake
+    - name: Configure CMake for Data Loader
       run: |
         cmake -S. -B${{ env.BUILD_DIR }} -DCMAKE_BUILD_TYPE=Debug
 
-    - name: Build
+    - name: Build Data Loader
       run: |
         cmake --build ${{ env.BUILD_DIR }} --config Debug
 
-    - name: Test
+    - name: Test Data Loader
       env:
         GTEST_OUTPUT: xml:testResults/
       run: |
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure
 
-    - name: Publish Test Results
+    - name: Publish Data Loader Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
         files: |
           build/**/testResults/*.xml
 
-    # This report might exceed the github report limit so it might need to be commented out
-    - name: Publish Test Results II
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: CTest Tests
-        path: build/**/testResults/*.xml
-        reporter: java-junit
+    # This report might exceed the github report limit so it might need to be commented out but at
+    # the moment it is removed because the generate report is not very useful.
+    # - name: Publish Test Results II
+    #   uses: dorny/test-reporter@v1
+    #   if: always()
+    #   with:
+    #     name: CTest Tests
+    #     path: build/**/testResults/*.xml
+    #     reporter: java-junit
 
