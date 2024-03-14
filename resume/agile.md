@@ -35,17 +35,17 @@ changes are solid.  This was done by creating tests for all of the different fea
 the current code.  Then I would go ahead and refractor the code and insure that the code passes all of the tests that
 were created for the original code.  This is how I have used this technique to improve a products code base.
 
-While the number of techniques associated with agile development is pretty extensive and include different types of
+While the number of techniques associated with agile development is pretty extensive and includes different types of
 techniques that are similar yet different.  The ability to be able to use all of these techniques is not realistic but
 the ability to use some of the techniques is always possible.  I do see myself continuing to use these techniques since
 I have seen and experienced their benefits for the team and organization in general.  I have seen first hand how these
 techniques can benefit a team and an organization when working for Riverbed.  Our team implemented several agile
 concepts like scrum standup meetings, retrospectives, continuous integration, testing, pair programming and other
-techniques.  For instance, our group brought in the use of cd/ci using Jenkins to build and test our product on a
+techniques.  For instance, our group brought in the use of CD/CI using Jenkins to build and test our product on a
 daily bases.  The integration of this tool led other groups to ask about what we do and saw this technique expand to
 other groups within the organizations.  I have then seen that the only way that these types of concepts will be used
 within an organization is with the support and openness of management to these ideas.  This does not mean that
-management should just accept whenever a team implement these concepts.  The important aspect is to be able to see if
+management should just accept whenever a team implements these concepts.  The important aspect is to be able to see if
 these solutions work within their organizations.  Our team leader was always open to new ideas and was willing to see
 if they work but we also understood that if it doesn't work that we shouldn't continue to use those techniques.  This
 is a very important view that any team should follow.  If it doesn't work then move on to somethine else.
@@ -86,8 +86,8 @@ In conclusion, the above is some of the techniques that I have come to enjoy and
 This does not imply that that is all there is to it.  It only means that the above are some that I have used but it does
 not imply that I would not be open to other techniques in the future.  The main thing is that one needs to be keep in
 mind that agility also implies being open minded.  This is what I think is the most important point of using agile
-techniques.  This does imply that you just use the next big thing blindly, you need to investigate it to insure that it
-does offer an improvement over what you are currently using.
+techniques.  This doesn't imply that you just use the next big thing blindly, you need to investigate it to insure that
+it does offer an improvement over what you are currently using.
 
 
 {% comment %}

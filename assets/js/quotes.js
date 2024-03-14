@@ -1,7 +1,3 @@
----
-layout: null
----
-
 /*
   License:
 
@@ -47,8 +43,8 @@ function getQuote(url, elm) {
         div.append(document.createElement('br'));
      });
      elm.append(div);
-     var div = document.createElement('div');
-     div.setAttribute('style','text-align: right;');
+     div = document.createElement('div');
+     div.setAttribute('style','text-align: left;');
      div.append(document.createElement('br'));
      div.append('"');
      div.append(quote.author);

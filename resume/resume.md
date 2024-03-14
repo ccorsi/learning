@@ -17,24 +17,24 @@ and documenting.
 
 ***Languages***: Java, C/C++, C#, Python, Groovy, Perl, Ruby, JavaScript  
 ***Frameworks***: Mockito, PowerMock, JUnit, BCEL, ASM, Camel, RMI, JNDI, JDBC, JAXP, XML, XSLT, DOM, SAX, JNI, EJB, Servlet, JSP, JTA, JMS, JMX, Jest, GoogleTest  
-***Developer Tools***: Visual Studio Code, Git, Docker, Visual Studio, Eclipse, Netbeans, IntelliJ, Emacs, XCode, Mercurial, Subversion, Ant, make, maven, PyCharm, Anacoda, CMake  
+***Developer Tools***: Visual Studio Code, Git, Docker, Visual Studio, Eclipse, Netbeans, IntelliJ, Emacs, XCode, Mercurial, Subversion, Ant, make, maven, PyCharm, Anaconda, CMake  
 ***Application Servers***: Weblogic Server, WebSphere Application Server, Tomcat, JBoss AS, ActiveMQ, Jetty  
 ***Operating Systems***: Windows, Linux, Mac OS X, FreeBSD, Solaris, SunOS, AIX  
-***DBMS***: Oracle DBMS, MySQL, MSSQL, PostgreSQL, MongoDB, SQLite  
+***DBMS***: Oracle DBMS, MySQL, MSSQL, PostgreSQL, MongoDB, SQLite, FireBase  
 ***Office Tools***: Microsoft Office, Google Office Suite  
 
 ### *Experience*
 <hr>
 
-| Member of the Technical Staff | 2022- |
+| Software Engineer | 2022- |
 | :--- | ---: |
 | Luvanni LLC | Burlington, MA |
 
-- Part of the team that implements a Task application.  That is used to organize ones Tasks and keep track of their progress
-- Researched moving TaskAutomator application to Google Cloud
-- Implemented CI/CD workflow using GitHub Actions
-- Defined and implemented the Testing process using Jest
-- This is implemented using NodeJS, SQLite, Google Sheets on Google Cloud
+- Part of the team that implements a productivity application using NodeJS, SQLite, Firebase and Google Sheets
+- Architected, designed and implemented the synchronization of data between FireBase, SQLite and Google Sheet data sources
+- Researched moving the TaskAutomator productivity application to a cloud platform by comparing Google Cloud Platform, Amazon AWS and Microsoft Azure platforms
+- Implemented CD/CI workflow using GitHub Actions
+- Researched different the JavaScript Testing frameworks and settled on using the Jest framework
 
 | Member of the Technical Staff | 2012-2020 |
 | :--- | ---: |

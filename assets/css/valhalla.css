@@ -1,0 +1,79 @@
+/*
+   The following definition is used to create the resume specific tables that will be different than
+   the default table settings.
+
+   The objective of this file is to create specific class definitions that can then be used by different
+   style configurations throughout the website.
+*/
+
+/* The following style will only be used within a table tr element. */
+/*  Temporarily commenting this out.
+table tr.resume:nth-child(odd) {
+  background-color: #f8f8f8;
+}
+table tr.resume:nth-child(even) {
+  background-color: #c0c0c0;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.p {
+  color: black;
+}
+*/
+
+/*
+.nc {
+  color: red;
+}
+*/
+
+.c1 {
+  color: green;
+}
+.n {
+  color: green;
+}
+.nc {
+  color: green;
+}
+.k {
+  color: blue;
+}
+.kt {
+  color: blue;
+}
+/*
+.o {
+  color:chartreuse;
+}
+
+.kt {
+  color: darkgreen;
+}
+
+.mi {
+  color: aquamarine;
+}
+
+.sc {
+  color: burlywood;
+}
+
+.k {
+  color: aliceblue;
+} */

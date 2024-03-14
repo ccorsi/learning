@@ -65,7 +65,8 @@ class DataFixture : public testing::WithParamInterface<Data> {
 ```
 
 While the above TEST_P definition will define the parameterized test, it doesn't provide the ability to pass parameters to the given parameterized test.
-This is done using the [INSTANTIATE_TEST_SUITE_P](INSTANTIATE_TEST_SUITE_P){:target="_blank"} macro:
+This is done using the [INSTANTIATE_TEST_SUITE_P](http://google.github.io/googletest/reference/testing.html#INSTANTIATE_TEST_SUITE_P){:target="_blank"}
+macro:
 
 ```cpp
 INSTANTIATE_TEST_SUITE(InstantiationName, TestSuiteName, param_generator [, name_generator ]);

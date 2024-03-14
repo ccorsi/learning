@@ -25,8 +25,8 @@ a reference to a pdf file.  Let us now move to the next phase and talk about my 
 # Work Experience
 
 As I have mentioned above, I will now talk about my work experience and how this will be showcased [here](../resume).  Let me then start by stating that
-I have been a software engineer for more than 25 years.  Throughout this time, I have had a chance to learn many different aspect for being a software
-engineer, this include different programming languages, operating systems, architecting, designing, testing, concurrency, parallel, etc.  I will be
+I have been a software engineer for more than 25 years.  Throughout this time, I have had a chance to learn many different aspects of being a software
+engineer, this includes different programming languages, operating systems, architecting, designing, testing, concurrency, parallel, etc.  I will be
 expanding on these details within the experience section referenced above.
 
 # Blogging

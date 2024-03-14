@@ -116,8 +116,8 @@ servers that I have had an oppurtunity to work with.
 
 
 {% comment %}
-TODO: We should include the different application servers that I have worked with and
-also application servers that I have also learned about outside of a job environment.
+TODO: I should include the different application servers that I have worked with and
+also application servers that I have also learned outside of a job environment.
 
 The list of application servers that I have actually work with in a working environent
 are:

@@ -42,9 +42,9 @@ libraries from the Archiva server.
 
 # Conclusion
 
-While I have mentioned many build tools here.  They are not the only ones that I have worked with.  There are others that I have had a chance to with outside
-of a work environment.   For instance, I have worked somewhat with the gradle build tool but not enough to be comfortable with since I have not had a need to
-understand that tool.  This is just an example of what I have touch on but not necessarily mastered.
+While I have mentioned many build tools here.  They are not the only ones that I have worked with.  There are others that I have had a chance to work with
+outside of a work environment.   For instance, I have worked somewhat with the gradle build tool but not enough to be comfortable with since I have not had
+a need to understand that tool.  This is just an example of what I have touch on but not necessarily mastered.
 
 {% comment %}
 
