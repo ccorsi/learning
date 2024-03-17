@@ -19,13 +19,13 @@ navbar-links:
   Projects:
     - Time Tracking Plugin: "/projects/timetracker"
   Notes:
+    - Java: "/notes/java"
     - CMake: "/notes/cmake"
     - GoogleTests: "/notes/googletests"
     - Visual Studio Code: "/notes/vscode"
     - Limitless: "/notes/limitless"
     - General: "/notes/general"
     - Make It Stick: "/notes/makeitstick"
-    - Java: "/notes/java"
 #  Resources:
 #    - Beautiful Jekyll: "https://beautifuljekyll.com"
 #    - Learn markdown: "https://www.markdowntutorial.com/"

@@ -6,7 +6,11 @@ page-width: lg
 ---
 
 This will contain more information about how one can use [Maven](https://maven.apache.org/){:target="_blank"}
-to build, test and deploy a java project.  This will page will answer the following questions:
+to build, test and deploy a java project.  While the prior [Java page](../) contain some information about how
+to use Maven.  This page will contain more information on how to use Maven to build, test and deploy Maven
+projects.
+
+
 
     - How to build, test and package a project in Maven.
     - How to manage dependencies

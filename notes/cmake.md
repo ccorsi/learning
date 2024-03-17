@@ -50,7 +50,7 @@ managed properly to be able to successfully generate a succesful CMake project.
 When on creates a CMake project, we start by creating a CMakeLists.txt file.  This file will initially include one or more source files
 that we build and test against.  When our project starts to grow we realize that we should divide our project into different modules
 that perform different tasks that are then combined.  We then create a top-level CMakeLists.txt file that then uses the
-[add\_subdirectory](https://cmake.org/cmake/help/latest/command/add_subdirectory.html){target=":_blank"} function to include the
+[add\_subdirectory](https://cmake.org/cmake/help/latest/command/add_subdirectory.html){:target="_blank"} function to include the
 different modules to be built.  As part of this we also include some general settings that are required and any external libraries
 that are needed for the build.  For instance, we can create the following top-level CMakeLists.txt that includes the need for
 GoogleTests to be able to build and test our project.
@@ -72,7 +72,7 @@ include(FetchContent)
 FetchContent_Declare(
     googletest
     GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG release-1.12.1
+    GIT_TAG main
 )
 
 # For Windows: Prevent overriding the parent project's compiler/linker settings
@@ -91,7 +91,7 @@ project.  This change con be applied by someone within the group and when they e
 tested and packaged as expected.  They then go and commit and push this up to their SCM server.  When the CI/CD kicks off it fails
 by stating that it was not able to find any test files.  Well, you might be wondering why is this the case all of a sudden.  Well,
 the reason is that we need to include the
-[enable_testing](ihttps://cmake.org/cmake/help/latest/command/enable_testing.html){target=":_blank} call to be able to generate
+[enable_testing](https://cmake.org/cmake/help/latest/command/enable_testing.html){:target="_blank"} call to be able to generate
 the required testing builds.  You would also need to include the CPack to be able to generate the required package build files.
 You then need to add the following lines to the top-level CMakeLists.txt file.
 
