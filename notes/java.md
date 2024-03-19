@@ -14,6 +14,8 @@ __Table of Contents__
 [Gradle](#gradle)\
 [IntelliJ IDEA](#intellij)
 
+---
+
 # Introduction {#introduction}
 
 The following page will contain information about the Java Programming Language ecosystem.  We will look
