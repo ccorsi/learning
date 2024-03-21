@@ -11,6 +11,7 @@ __Table of Contents__
 [Java](#java)\
 [JUnit](#junit)\
 [Maven](#maven)\
+[JaCoCo](#jacoco)\
 [Gradle](#gradle)\
 [IntelliJ IDEA](#intellij)
 
@@ -469,7 +470,16 @@ target will generate a jar file that contains the built files from the src/main 
 
 The above information should is a good starting point when using Maven but alas there are many more
 options that one needs to know about Maven and this will be discussed further in its seperate
-[Maven notes file](maven/).
+[Maven notes page](maven/).
+
+## JaCoCo {#jacoco}
+
+[JaCoCo](https://www.jacoco.org/jacoco/index.html){:target="_blank"} is a Java code coverage library that
+can be used to determine how extensive your tests execute the different features of your java project.  This
+is very useful tool to help determine if you've tested a certain amount of your source code.  It also
+allows you the ability to determine which part of your code was tested and which wasn't.  This provides
+a developer the ability to focus on writing tests that cover a specific section of their code.  We will
+discuss how this tool can be used within the [JaCoCo notes page](jacoco/).
 
 ## Gradle {#gradle}
 
