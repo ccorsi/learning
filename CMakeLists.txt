@@ -11,7 +11,7 @@ include(CTest)
 enable_testing()
 
 # setup the minimum C++ requirements
-set(CXX_STANDARD 17)
+set(CXX_STANDARD 20)
 set(CXX_STANDARD_REQUIRED true)
 
 # Set the default library build to static instead of shared
@@ -51,9 +51,9 @@ foreach(name ${TESTS})
     # link in the googletest library for each googletest test
     target_link_libraries(${name} PUBLIC gtest_main gmock_main)
     # set compiler C++
-    target_compile_features(${name} PUBLIC cxx_std_17)
+    target_compile_features(${name} PUBLIC cxx_std_20)
     # request that we discover all googletest tests for the given test executable
-    gtest_discover_tests(${name} WORKING_DIRECTORY ${WORKING_DIRECTORY})
+    gtest_discover_tests(${name} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 endforeach()
 
 # I need to create a package of the current include files that can be downloaded by groups that

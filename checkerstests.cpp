@@ -83,6 +83,28 @@ TEST(CheckersTestSuite, IsSpaceBaseThrowsRuntimeErrorExceptionTest) {
     ASSERT_THROW(check('i'), std::runtime_error);
 }
 
+struct MyString { static const std::string str; };
+const std::string MyString::str = "abc";
+struct MyWString { static const std::wstring str; };
+const std::wstring MyWString::str = L"abc";
+
+TEST(CheckersTestSuite, UserDefinedContainerTypeTests) {
+    skip_chars<MyString> chars;
+    skip_characters<MyString> schars;
+    skip_wcharacters<MyWString> wchars;
+
+    MyString::str.npos;
+    EXPECT_TRUE(chars('a')) << "chars('a') = " << chars('a');
+    EXPECT_TRUE(schars('a')) << "schars('a') = " << schars('a');
+    EXPECT_TRUE(wchars(L'a')) << "wchars('a') = " << wchars(L'a');
+    EXPECT_FALSE(chars('d')) << "chars('d') = " << chars('d');
+    EXPECT_FALSE(schars('d')) << "schars('d') = " << schars('d');
+    EXPECT_FALSE(wchars(L'd')) << "wchars('d') = " << wchars(L'd');
+    EXPECT_TRUE(chars(' ')) << "chars(' ') = " << chars(' ');
+    EXPECT_TRUE(schars(' ')) << "schars(' ') = " << schars(' ');
+    ASSERT_TRUE(wchars(L' ')) << "wchars(' ') = " << wchars(L' ');
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

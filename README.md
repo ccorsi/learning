@@ -254,7 +254,7 @@ std::istream& foo(std::istream& in, point & pt) {
 }
 ```
 
-The above will then populate the passed pt point to the dataLoader instance
+The above will then populate the passed pt point using the dataLoader instance
 with the data that is processed within the input stream.  The above is one
 example of how one can use the data loader template class to populate
 instances.  The examples sub-directory contains example on how you can use

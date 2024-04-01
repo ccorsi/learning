@@ -25,12 +25,24 @@ namespace valhalla
 namespace checkers
 {
 
+/**
+ * @brief Used in the case that no character are supposed to be skipped.
+ *
+ * @tparam Type The character stream we are going to use, char or wchar_t.
+ */
 template<typename Type>
 struct is_space_noop {
     is_space_noop() = default;
     bool operator()(Type chr) { return false; }
 };
 
+/**
+ * @brief Based implementation that uses the standard isspace or iswspace
+ *      methods to determine if a space should be skipped or not.
+ *
+ * @tparam Type The character stream we are going to use, char or wchar_t.
+ * @tparam IntType The value type expected, int or wint_t.
+ */
 template<typename Type, typename IntType>
 struct is_space_base {
     is_space_base() = default;
@@ -47,48 +59,112 @@ struct is_space_base {
         }
     }
 };
+/**
+ * @brief char based space character check.
+ *
+ */
 struct is_space : public is_space_base<char,int> {
     is_space() = default;
 };
+/**
+ * @brief wchar_t based space character check.
+ *
+ */
 struct is_wspace : public is_space_base<wchar_t, wint_t> {
     is_wspace() = default;
 };
-// template<typename Container>
-// struct skip_chars {
-//     Container characters;
-//     skip_chars(Container chars) : characters(chars) {}
-//     bool operator()(int chr) { return std::isspace(chr) || characters.find(chr) != characters.end(); }
-// };
-template<char... Chars>
-struct is_space_or {
-    bool any_of(int chr, char check) {
-        return chr == check;
+/**
+ * @brief Variable length string of characters to compare with.
+ *
+ * @tparam Char The type of characters we are comparing, char or wchar_t
+ * @tparam IntType The type of parameter type the operator() expects
+ * @tparam Characters A class or struct that contains a static str string field
+ */
+template<typename Char, typename IntType, typename Characters>
+struct skip_characters_base {
+    bool operator()(IntType chr) {
+        if constexpr (std::is_same_v<char, Char>) {
+            return std::isspace(chr) || Characters::str.find(chr) != Characters::str.npos;
+        } else {
+            if constexpr (std::is_same_v<wchar_t, Char>) {
+                return std::iswspace(chr) || Characters::str.find(chr) != Characters::str.npos;
+            } else {
+                // #error "Incorrect character type, only char or wchar_t are valid types "
+                throw std::runtime_error(std::string("Unknown character type: ") + std::string(typeid(Char).name()));
+            }
+        }
     }
-
-    template<typename... Rest>
-    bool any_of(int chr, char check, Rest... rest) {
-        return chr == check || any_of(chr, rest...);
-    }
-
+};
+template<typename Characters>
+struct skip_characters : skip_characters_base<char, int, Characters> {
+};
+template<typename Characters>
+struct skip_wcharacters : skip_characters_base<wchar_t, wint_t, Characters> {
+};
+template<typename Characters>
+struct skip_chars {
+    std::string characters;
+    skip_chars() : characters(Characters::str) {}
     bool operator()(int chr) {
-        return std::isspace(chr) || any_of(chr, Chars...);
+        return std::isspace(chr) || characters.find(chr) != characters.npos;
     }
 };
-template<wchar_t... Chars>
-struct is_wspace_or {
-    bool any_of(wint_t chr, wchar_t check) {
+/**
+ * @brief variable length character check method used to determine if a given
+ *      character should be skipped or not.
+ *
+ * @tparam Type The character stream we are going to use, char or wchar_t.
+ * @tparam IntType The value type expected, int or wint_t.
+ * @tparam Chars Variable length of characters that should be skipped.
+ */
+template<typename Type, typename IntType, Type... Chars>
+struct is_space_or_base {
+    // is_space_or_base() = default;
+    bool any_of(IntType chr, Type check) {
         return chr == check;
     }
 
     template<typename... Rest>
-    bool any_of(wint_t chr, wchar_t check, Rest... rest) {
+    bool any_of(IntType chr, Type check, Rest... rest) {
         return chr == check || any_of(chr, rest...);
     }
 
-    bool operator()(wint_t chr) {
-        return std::iswspace(chr) || any_of(chr, Chars...);
+    bool operator()(IntType chr) {
+        if constexpr (std::is_same_v<char, Type>) {
+            return std::isspace(chr) || any_of(chr, Chars...);
+        } else {
+            if constexpr (std::is_same_v<wchar_t, Type>) {
+                return std::iswspace(chr) || any_of(chr, Chars...);
+            } else {
+                // #error "Incorrect character type, only char or wchar_t are valid types "
+                throw std::runtime_error(std::string("Unknown character type: ") + std::string(typeid(Type).name()));
+            }
+        }
     }
 };
+/**
+ * @brief Variable length character skipping for char input stream.
+ *
+ * @tparam Chars Variable length char characters that should be skipped.
+ */
+template<char... Chars>
+struct is_space_or : public is_space_or_base<char, int,Chars...> {
+};
+/**
+ * @brief Variable length character skipping for wchar_t input stream.
+ *
+ * @tparam Chars Variable length wchar_t characters that should be skipped.
+ */
+template<wchar_t... Chars>
+struct is_wspace_or : public is_space_or_base<wchar_t, wint_t,Chars...> {
+};
+/**
+ * @brief Used to skip zero or more characters using the passed IsSpace
+ *      struct.
+ *
+ * @tparam Char The character stream we are going to use, char or wchar_t.
+ * @tparam IsSpace The space skipping struct used to check if a space should be skipped
+ */
 template<typename Char, typename IsSpace>
 struct skip_spaces {
     IsSpace isSpace;
@@ -102,6 +178,12 @@ struct skip_spaces {
 // struct skip_chars {
 //     bool operator()(int chr) { return std::isspace(chr) || characters.find(chr) != characters.end(); }
 // };
+/**
+ * @brief Used to determine if current character in the input stream is the
+ *      expected character.  In this case, it will always return true.
+ *
+ * @tparam Char The character stream we are going to use, char or wchar_t.
+ */
 template<typename Char>
 struct is_character_noop {
     bool operator()(std::basic_istream<Char> & in) {
@@ -109,6 +191,14 @@ struct is_character_noop {
     }
 };
 
+/**
+ * @brief Used to determine if the current character in the input stream is the
+ *      expected character.  In this case, it will determine if the passed
+ *      character if part of the passed variable length Chars.
+ *
+ * @tparam Char The character stream we are going to use, char or wchar_t.
+ * @tparam Chars Variable length of expected characters.
+ */
 template<typename Char, Char... Chars>
 struct is_character {
     bool operator()(std::basic_istream<Char> & in, Char check) {
@@ -133,6 +223,16 @@ struct is_character {
     }
 };
 
+/**
+ * @brief Used to determine if the current character in the input stream is the
+ *      expected character.  In this case, it will return true for every other
+ *      characters processed.  This was created to handle a unique issue with
+ *      the data loader template class.
+ *
+ * @todo confirm that the above statement is true.
+ *
+ * @tparam Char The character stream we are going to use, char or wchar_t.
+ */
 template<typename Char>
 struct is_no_character {
     int m_count = 0;
