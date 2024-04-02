@@ -44,7 +44,7 @@ jobs:
       if: always()
       with:
         files: |
-          build/**/testResults/*.xml
+          **/testResults/*.xml
 
     # This report might exceed the github report limit so it might need to be commented out but at
     # the moment it is removed because the generate report is not very useful.
