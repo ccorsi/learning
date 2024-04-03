@@ -56,6 +56,7 @@ foreach(name ${TESTS})
     gtest_discover_tests(${name} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endforeach()
 
+# add examples directory to the build process
 add_subdirectory(examples)
 
 # I need to create a package of the current include files that can be downloaded by groups that
