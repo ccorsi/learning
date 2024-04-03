@@ -1,8 +1,8 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
 project("Data Loader"
-    VERSION 0.9.0
-    DESCRIPTION "Template Based Data Loader Classes"
+    VERSION 0.9.1 # Update the examples/CMakeLists.txt file
+    DESCRIPTION "Template Based Data Loader Class"
     HOMEPAGE_URL "https://github.com/ccorsi/learning/tree/dataloader"
     LANGUAGES C CXX)
 
@@ -53,8 +53,10 @@ foreach(name ${TESTS})
     # set compiler C++
     target_compile_features(${name} PUBLIC cxx_std_20)
     # request that we discover all googletest tests for the given test executable
-    gtest_discover_tests(${name} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+    gtest_discover_tests(${name} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endforeach()
+
+add_subdirectory(examples)
 
 # I need to create a package of the current include files that can be downloaded by groups that
 # don't use CMake's FetchContent tool or other build tools similar features.

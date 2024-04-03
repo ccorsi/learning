@@ -243,7 +243,7 @@ load data into an instance of a point class.
 using namespace valhalla::loader;
 using namespace valhalla::checkers;
 
-std::istream& foo(std::istream& in, point & pt) {
+std::istream& load_point(std::istream& in, point & pt) {
     dataLoader<
         point,
         char,
