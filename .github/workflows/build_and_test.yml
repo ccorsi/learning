@@ -38,7 +38,9 @@ jobs:
         GTEST_OUTPUT: xml:${{ env.BUILD_DIR }}/${{ env.TESTRESULTS_DIR }}/
       run: |
         rm -r ${{ env.BUILD_DIR }}/${{ env.TESTRESULTS_DIR }}
+        find . -name ${{ env.TESTRESULTS_DIR }}
         ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure --output-junit ${{ env.TESTRESULTS_DIR }}/examples.xml
+        find . -name ${{ env.TESTRESULTS_DIR }}
 
     - name: Publish Data Loader Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
