@@ -10,7 +10,8 @@ on:
 
 env:
   BUILD_DIR: build
-  TESTRESULTS_DIR: testResults
+  # TESTRESULTS_DIR: testResults
+  TESTRESULTS_OUTPUT: testResults/tests.xml
 
 jobs:
   build:
@@ -34,25 +35,25 @@ jobs:
         cmake --build ${{ env.BUILD_DIR }} --config Debug
 
     - name: Test Data Loader
-      env:
-        GTEST_OUTPUT: xml:${{ env.BUILD_DIR }}/${{ env.TESTRESULTS_DIR }}/
+      # env:
+      #   GTEST_OUTPUT: xml:${{ env.BUILD_DIR }}/${{ env.TESTRESULTS_DIR }}/
       run: |
-        ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure --output-junit ${{ env.TESTRESULTS_DIR }}/examples.xml
+        ctest --test-dir ${{ env.BUILD_DIR }} -C Debug -T test --output-on-failure --output-junit ${{ env.TESTRESULTS_OUTPUT }}
 
-    # - name: Publish Data Loader Test Results
-    #   uses: EnricoMi/publish-unit-test-result-action@v2
-    #   if: always()
-    #   with:
-    #     files: |
-    #       **/${{ env.BUILD_DIR }}/${{ env.TESTRESULTS_DIR }}/*.xml
-
-    # This report might exceed the github report limit so it might need to be commented out but at
-    # the moment it is removed because the generate report is not very useful.
     - name: Publish Data Loader Test Results
-      uses: dorny/test-reporter@v1
+      uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        name: CTest Tests
-        path: ${{ env.BUILD_DIR }}/${{ env.TESTRESULTS_DIR }}/*.xml
-        reporter: java-junit
+        files: |
+          ${{ env.BUILD_DIR }}/${{ env.TESTRESULTS_OUTPUT }}
+
+    # # This report might exceed the github report limit so it might need to be commented out but at
+    # # the moment it is removed because the generate report is not very useful.
+    # - name: Publish Data Loader Test Results
+    #   uses: dorny/test-reporter@v1
+    #   if: always()
+    #   with:
+    #     name: CTest Tests
+    #     path: ${{ env.BUILD_DIR }}/${{ env.TESTRESULTS_OUTPUT }}
+    #     reporter: java-junit
 
