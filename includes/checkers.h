@@ -32,7 +32,6 @@ namespace checkers
  */
 template<typename Type>
 struct is_space_noop {
-    is_space_noop() = default;
     bool operator()(Type chr) { return false; }
 };
 
@@ -45,7 +44,6 @@ struct is_space_noop {
  */
 template<typename Type, typename IntType>
 struct is_space_base {
-    is_space_base() = default;
     bool operator()(IntType chr) {
         if constexpr (std::is_same_v<char, Type>) {
             return std::isspace(chr) != 0;
@@ -64,14 +62,12 @@ struct is_space_base {
  *
  */
 struct is_space : public is_space_base<char,int> {
-    is_space() = default;
 };
 /**
  * @brief wchar_t based space character check.
  *
  */
 struct is_wspace : public is_space_base<wchar_t, wint_t> {
-    is_wspace() = default;
 };
 /**
  * @brief Variable length string of characters to compare with.
@@ -119,7 +115,6 @@ struct skip_chars {
  */
 template<typename Type, typename IntType, Type... Chars>
 struct is_space_or_base {
-    // is_space_or_base() = default;
     bool any_of(IntType chr, Type check) {
         return chr == check;
     }
@@ -212,10 +207,10 @@ struct is_character {
     template<typename... Rest>
     bool operator()(std::basic_istream<Char> & in, Char check, Rest... rest) {
         if (static_cast<Char>(in.peek()) != check) {
-            return false;
+            return operator()(in, rest...);
         } // if
         in.get(); // read check character
-        return operator()(in, rest...);
+        return true;
     }
 
     bool operator()(std::basic_istream<Char> & in) {
@@ -227,7 +222,8 @@ struct is_character {
  * @brief Used to determine if the current character in the input stream is the
  *      expected character.  In this case, it will return true for every other
  *      characters processed.  This was created to handle a unique issue with
- *      the data loader template class.
+ *      the data loader template class.  Specifically the case in which the
+ *      character being checked will not be consumed.
  *
  * @todo confirm that the above statement is true.
  *

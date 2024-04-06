@@ -10,6 +10,9 @@
  * @license MIT License https://raw.githubusercontent.com/ccorsi/learning/main/LICENSE
  */
 
+#include <string>
+#include <sstream>
+
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
@@ -17,6 +20,9 @@
 
 using namespace valhalla::checkers;
 
+/*******************************************
+             IS_SPACE TESTS
+********************************************/
 TEST(CheckersTestSuite, IsSpaceCheckerTest) {
     std::stringstream in("    1");
     skip_spaces<char, is_space> skipSpace;
@@ -103,6 +109,54 @@ TEST(CheckersTestSuite, UserDefinedContainerTypeTests) {
     EXPECT_TRUE(chars(' ')) << "chars(' ') = " << chars(' ');
     EXPECT_TRUE(schars(' ')) << "schars(' ') = " << schars(' ');
     ASSERT_TRUE(wchars(L' ')) << "wchars(' ') = " << wchars(L' ');
+}
+
+/**************************************************************
+                      IS CHARACTER TESTS
+***************************************************************/
+
+TEST(CheckersTestSuite, IsCharacterCharMultipleChoicesTest) {
+    is_character<char, '\'', '"'> check;
+    std::stringstream ss("'\" ");
+
+    EXPECT_TRUE(check(ss));
+    EXPECT_TRUE(check(ss));
+    ASSERT_FALSE(check(ss));
+}
+
+TEST(CheckersTestSuite, IsCharacterWChar_tMultipleChoicesTest) {
+    is_character<wchar_t, '\'', '"'> check;
+    std::wstringstream ss(L"'\" ");
+
+    EXPECT_TRUE(check(ss));
+    EXPECT_TRUE(check(ss));
+    ASSERT_FALSE(check(ss));
+}
+
+TEST(CheckersTestSuite, IsCharacterNoopCharTest) {
+    is_character_noop<char> check;
+    std::stringstream ss(" ");
+
+    EXPECT_TRUE(check(ss));
+    ASSERT_EQ(' ', static_cast<char>(ss.get()));
+    ASSERT_EQ(std::string::traits_type::eof(), ss.get());
+}
+
+TEST(CheckersTestSuite, IsCharacterNoopWchar_tTest) {
+    is_character_noop<wchar_t> check;
+    std::wstringstream ss(L" ");
+
+    EXPECT_TRUE(check(ss));
+    ASSERT_EQ(' ', static_cast<char>(ss.get()));
+    ASSERT_EQ(std::wstring::traits_type::eof(), ss.get());
+}
+
+TEST(CheckersTestSuite, IsNoCharacterCharTest) {
+    is_no_character<char> check;
+    std::stringstream ss(" ");
+
+    EXPECT_FALSE(check(ss));
+    ASSERT_TRUE(check(ss));
 }
 
 int main(int argc, char** argv) {
