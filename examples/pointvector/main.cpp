@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
 
         std::vector<point> points;
 
-        // define the dataLoader for a int primitive...
+        // define the dataLoader for a point vector...
         dataLoader<
             std::vector<point>,
             char,
@@ -81,7 +81,7 @@ int main(int argc, char** argv) {
             is_space,
             is_space_or<','>
         > loader(points);
-        // ...initialize the points
+        // ...initialize the point vector
         in >> loader;
 
         std::cout << "points = [ ";

@@ -28,6 +28,14 @@ The [multiple reader call](multiple/README) example is an example on how you
 can define the defined the reader such that it is called __n__ times for each
 field of section of the type that is being loaded.
 
+The [string reader call](string/README) example will show how you can define
+different readers that will be used to load a string using the dataloader
+template class.  This example will display two different ways that one can
+go about loading a data string.  The first version is loads the complete string
+while the second version will load a single character at the time until the
+closing character was encountered.  Both solutions are viable implementations
+so this example shows how one can choose to use the dataloader template class.
+
 ## Container Type Data Initialization
 
 The [integer vector reader](intvector/README) example is an example on how you

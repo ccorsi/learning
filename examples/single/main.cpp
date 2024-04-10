@@ -42,25 +42,30 @@ struct point_reader {
 int main(int argc, char** argv) {
     std::cout << "Calling single reader example\n";
 
-    // create an input stream
-    std::fstream in("data.txt");
+    try {
+        // create an input stream
+        std::fstream in("data.txt");
 
-    point value;
+        point value;
 
-    // define the dataLoader for a int primitive...
-    dataLoader<
-        point,
-        char,
-        point_reader,
-        1,
-        is_character<char,'{'>,
-        is_character<char,'}'>,
-        is_space
-    > loader(value);
-    // ...initialize the value
-    in >> loader;
+        // define the dataLoader for a point instance...
+        dataLoader<
+            point,
+            char,
+            point_reader,
+            1,
+            is_character<char,'{'>,
+            is_character<char,'}'>,
+            is_space
+        > loader(value);
+        // ...initialize the point value
+        in >> loader;
 
-    std::cout << "value = " << value << "\n";
+        std::cout << "value = " << value << "\n";
 
-    return 0;
+        return 0;
+    } catch (std::exception & ex) {
+        std::cout << "An exception was caught: " << ex.what() << "\n";
+        return 1;
+    } // catch (std::exception & ex)
 }

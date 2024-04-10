@@ -119,6 +119,7 @@ struct header_reader {
                 // std::cout << "count = " << count << "\n";
                 while (count-- > 0) {
                     point pt;
+                    // initialize a point data loader instance...
                     dataLoader<
                         point,
                         char,
@@ -128,8 +129,10 @@ struct header_reader {
                         is_no_character<char>,
                         is_space_noop<char>
                     > loader(pt);
+                    // ... populate the point instance
                     in >> loader;
 
+                    // add the populated point instance to the point vector
                     points.push_back(pt);
                 } // while (count-- > 0)
 
@@ -152,37 +155,46 @@ void store_uint16_t(uint16_t v, std::fstream &out) {
     out.put(e);
 }
 
+void create_data_file()
+{
+    std::fstream out{"data", out.binary | out.out | out.trunc};
+
+    const int size = (sizeof(magic) / sizeof(magic[0]));
+
+    for (auto v : magic) {
+        out.put(v);
+        // std::cout << "Stored: '0x" << std::hex << static_cast<uint32_t>(v) << std::dec << "\n";
+    } // for (auto v : magic)
+
+    const uint16_t
+        major = 1,
+        minor = 3,
+        patch = 13;
+
+    store_uint16_t(major, out);
+    store_uint16_t(minor, out);
+    store_uint16_t(patch, out);
+
+    std::vector<uint16_t> points = {
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+    };
+
+    uint16_t count = static_cast<uint16_t>(points.size()) / 2;
+
+    store_uint16_t(count, out);
+
+    for (uint16_t v : points) {
+        store_uint16_t(v, out);
+    } // for (uint16_t v : points)
+
+    out.close();
+}
+
 int main(int argc, char** argv) {
     std::cout << "Calling protocol reader example\n";
 
     try {
-        std::fstream out{ "data", out.binary | out.out | out.trunc };
-
-        const int size = (sizeof(magic) / sizeof(magic[0]));
-
-        for (auto v : magic) {
-            out.put(v);
-            // std::cout << "Stored: '0x" << std::hex << static_cast<uint32_t>(v) << std::dec << "\n";
-        }
-
-        const uint16_t major = 1, minor = 3, patch = 13;
-
-        store_uint16_t(major, out);
-        store_uint16_t(minor, out);
-        store_uint16_t(patch, out);
-
-        std::vector<uint16_t> points = {
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-        };
-
-        uint16_t count = static_cast<uint16_t>(points.size()) / 2;
-
-        store_uint16_t(count, out);
-
-        for (uint16_t v : points)
-            store_uint16_t(v, out);
-
-        out.close();
+        create_data_file();
 
         // create an input stream
         std::fstream in{ "data", in.binary | in.in };
@@ -192,7 +204,7 @@ int main(int argc, char** argv) {
         if (in.peek() == std::char_traits<char>::eof()) {
             std::cout << "Input file is empty.\n";
             return 1;
-        }
+        } // if (in.peek() == std::char_traits<char>::eof())
 
         header value;
 
@@ -206,7 +218,7 @@ int main(int argc, char** argv) {
             is_no_character<char>,
             is_space_noop<char>
         > loader(value);
-        // ...initialize the value
+        // ...initialize the header value
         in >> loader;
 
         std::cout << "value = " << value << "\n";

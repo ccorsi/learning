@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.10.0)
 project("Data Loader Examples"
-    VERSION 0.9.1
     LANGUAGES C CXX)
 
 include(CTest)
@@ -15,3 +14,4 @@ add_subdirectory(intvector)
 add_subdirectory(pointvector)
 add_subdirectory(protocol)
 add_subdirectory(repeat)
+add_subdirectory(string)
