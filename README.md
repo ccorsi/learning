@@ -46,7 +46,7 @@ The [doc](https://github.com/ccorsi/learning/tree/doc) branch was started becaus
 
 The [menucli](https://github.com/ccorsi/learning/tree/menucli) branch was created because of my work on the python-machine-learning branch.  I wanted to create a shell like menu that I can use to choose which machine learning implementation I would like to run.  The command line menu became useful and provided the flexibilty that I was looking for.  This work then lead me to move this code into its own repository called [menucli](https://github.com/ccorsi/menucli/).
 
-The [multiversion-jar](https://github.com/ccorsi/learning/tree/mutliversion-jar)
+The [multiversion-jar](https://github.com/ccorsi/learning/tree/multiversion-jar)
 branch was created to just practically implement and test how to create a jar
 file that contains version specific classes using the multi-release feature of
 the jar specification.
