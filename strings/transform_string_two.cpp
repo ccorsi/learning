@@ -44,11 +44,40 @@ namespace valhalla {
             */
 
             bool Solution::isTransformable(std::string X, std::string Y) {
-                bool isTransformable = false;
 
+                if (X.size() == Y.size()) {
+                    // We need to find a single character that is different
+                    if (X == Y) {
+                        // No transformation since the two strings are the same
+                        return false;
+                    } // if (X == Y)
 
+                    int cnt = 0;
 
-                return isTransformable;
+                    for (auto idx = 0 ; cnt < 2 && idx < X.size() ; idx++) {
+                        if (X[idx] != Y[idx]) cnt++;
+                    } // for (auto idx = 0 ; idx < X.size() ; idx++)
+
+                    return cnt == 1;
+                } // if (X.size() == Y.size())
+
+                if (X.size() + 1 != Y.size() && X.size() != Y.size() + 1) {
+                    // The strings differ by at least 2 so it is not possible to change a single character.
+                    return false;
+                } // if (X.size() + 1 != Y.size() && X.size() != Y.size() + 1)
+
+                auto cnt = 0;
+                if (X.size() > Y.size()) {
+                    for (auto idx = 0 ; cnt < 2 && idx < Y.size() ; idx++) {
+                        if (Y[idx] != X[idx + cnt]) cnt++;
+                    } // for (auto idx = 0 ; cnt < 2 && idx < Y.size() ; idx++)
+                } else {
+                    for (auto idx = 0 ; cnt < 2 && idx < X.size() ; idx++) {
+                        if (X[idx] != Y[idx + cnt]) cnt++;
+                    } // for (auto idx = 0 ; cnt < 2 && idx < Y.size() ; idx++)
+                } // if (X.size() > Y.size())
+
+                return cnt < 2;
             } // isTransformable
         }
     }

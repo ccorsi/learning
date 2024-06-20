@@ -16,6 +16,10 @@ namespace valhalla {
     namespace matrices {
         namespace tiles_problem {
             class Solution {
+                long combination_one(int, int);
+                long combination_two(int, int);
+                long combination_three(int, int);
+                long combination(int, int);
             public:
                 long findTotalWays(int);
             };

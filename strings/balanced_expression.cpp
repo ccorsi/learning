@@ -12,6 +12,10 @@
 
 #include "balanced_expression.h"
 
+#include <stack>
+#include <stdexcept>
+#include <map>
+
 namespace valhalla {
     namespace strings {
         namespace balanced_expression {
@@ -38,11 +42,30 @@ namespace valhalla {
             */
 
             bool Solution::isBalanced(std::string s) {
-                bool isBalanced = false;
+                std::stack<char> letters;
+                static std::map<char,char> validate = {
+                    { ']', '[' },
+                    { ')', '(' },
+                    { '}', '{' },
+                };
 
+                for (char chr : s) {
+                    switch (chr) {
+                        case '[': case '{': case '(':
+                            letters.push(chr);
+                            break;
+                        case ')': case '}': case ']':
+                            if (letters.empty() || validate[chr] != letters.top()) {
+                                return false;
+                            } // if (letters.empty() || validate[chr] != letters.top())
+                            letters.pop();
+                            break;
+                        default:
+                            throw std::runtime_error("unknown input character");
+                    } // switch (chr)
+                } // for (char chr : s)
 
-
-                return isBalanced;
+                return letters.empty();
             } // isBalanced
         }
     }
