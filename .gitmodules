@@ -1,0 +1,4 @@
+[submodule "winreg"]
+	path = winreg
+	url = git@github.com:GiovanniDicanio/WinReg.git
+	branch = v6.3.0
