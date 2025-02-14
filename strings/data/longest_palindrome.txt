@@ -1,0 +1,2 @@
+"ABBDAB", 6
+"ABCDD", 5
