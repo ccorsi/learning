@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 
+#include "loaders.h"
+
 namespace valhalla
 {
 
@@ -51,7 +53,7 @@ struct SimpleVectorReader {
         Type & data = vec.back();
 
         // Populate the newly added vector element and return
-        ::loaders::loader::v6::dataLoader<Type,Char> PrimitiveLoader(data);
+        valhalla::utils::loaders::loader::v6::dataLoader<Type,Char> PrimitiveLoader(data);
         return in >> PrimitiveLoader;
     }
 };
@@ -68,7 +70,7 @@ struct BasicSetReader {
         Type value;
 
         // Populate the set element
-        ::loaders::loader::v6::dataLoader<Type,Char> SetLoader(value);
+        valhalla::utils::loaders::loader::v6::dataLoader<Type,Char> SetLoader(value);
         in >> SetLoader;
 
         // add the populated value
