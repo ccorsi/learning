@@ -3187,6 +3187,44 @@ TEST(DataLoaderTestSuite, StringWithDynamicEscapeCharactersV6Test) {
     ASSERT_EQ(actual, expected);
 }
 
+TEST(DataLoaderTestSuite, EmptyContainerV6Test) {
+    std::vector<int> actual, expected;
+    std::stringstream in(" {} ");
+
+    ::loaders::loader::v6::dataLoader<
+        std::vector<int>,
+        char,
+        IntegerVectorReader,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space_or<','>
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
+// This test will fail until I figure out how to skip spaces in this case but not
+// in the case above with a string that contains spaces within its '"' above.
+TEST(DataLoaderTestSuite, EmptyContainerWithSpacesV6Test) {
+    std::vector<int> actual, expected;
+    std::stringstream in(" {\n \n} ");
+
+    ::loaders::loader::v6::dataLoader<
+        std::vector<int>,
+        char,
+        IntegerVectorReader,
+        1,
+        valhalla::utils::checkers::is_character<char,'{'>,
+        valhalla::utils::checkers::is_character<char,'}'>,
+        valhalla::utils::checkers::is_space
+    > loader(actual);
+    in >> loader;
+
+    ASSERT_EQ(actual, expected);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

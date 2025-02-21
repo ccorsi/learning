@@ -32,7 +32,7 @@ namespace readers
 template<typename Char, Char chr>
 struct BasicStringReader {
     std::basic_istream<Char> & operator()(std::basic_istream<Char> & in, std::basic_string<Char> & str, int state) {
-        if (static_cast<Char>(in.peek()) != chr) {
+        while (static_cast<Char>(in.peek()) != chr) {
             str += static_cast<Char>(in.get());
         }
 
