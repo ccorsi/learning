@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(backtracking VERSION 0.0.3)
+project(backtracking VERSION 0.0.4)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -14,7 +14,7 @@ include(GoogleTest)
 
 enable_testing()
 
-set(NAMES pattern_match_three wildcard_pattern_matching)
+set(NAMES pattern_match_three wildcard_pattern_matching n_digit_numbers_six)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)
