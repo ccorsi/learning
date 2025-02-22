@@ -278,9 +278,9 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [258: N Digit Numbers III](https://www.techiedelight.com/?problem=NDigitNumbersIII) |  done | [n_digit_numbers_three.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/n_digit_numbers_three.cpp) |
 | [259: N Digit Numbers IV](https://www.techiedelight.com/?problem=NDigitNumbersIV) |  done | [n_digit_numbers_four.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/n_digit_numbers_four.cpp) |
 | [260: N Digit Numbers V](https://www.techiedelight.com/?problem=NDigitNumbersV) |  done | [n_digit_numbers_five.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/strings/n_digit_numbers_five.cpp) |
-| [261: N Digit Numbers V](https://www.techiedelight.com/?problem=NDigitNumbersVI) |  done | [n_digit_numbers_six.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/backtracking/n_digit_numbers_six.cpp) |
-<!-- | [262: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
-| [263: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
+| [261: N Digit Numbers VI](https://www.techiedelight.com/?problem=NDigitNumbersVI) |  done | [n_digit_numbers_six.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/backtracking/n_digit_numbers_six.cpp) |
+| [262: N Digit Numbers VII](https://www.techiedelight.com/?problem=NDigitNumbersVII) |  done | [n_digit_numbers_seven.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/n_digit_numbers_seven.cpp) |
+<!-- | [263: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
 | [264: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
 | [265: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
 | [266: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
