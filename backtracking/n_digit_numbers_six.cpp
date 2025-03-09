@@ -14,6 +14,7 @@
 
 #include <list>
 #include <cassert>
+#include <cstdlib>
 
 namespace valhalla {
 
