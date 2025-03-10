@@ -747,7 +747,7 @@ std::vector<std::string> attempt_one(std::unordered_set<std::string> const & wor
             } // else of if (head.m_key.empty() && head.m_children.empty())
         } // trie_entry const & add(std::string & key)
 
-        void populate(std::vector<std::string> & results, std::string & prefix) {
+        void populate(std::vector<std::string> & results, std::string prefix) {
             if (m_children.empty()) {
                 results.push_back(prefix + m_key);
             } else {
