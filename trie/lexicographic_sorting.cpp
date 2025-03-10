@@ -40,12 +40,12 @@ std::vector<std::string> attempt_five(std::unordered_set<std::string> const & wo
             std::list<trie_entry> m_children;
 
             trie_entry() = default;
-            trie_entry(std::string & key, bool end = false) :
+            trie_entry(std::string key, bool end = false) :
                 m_key(key), m_end(end) {}
-            trie_entry(std::string & key, bool end, std::list<trie_entry> & children) :
+            trie_entry(std::string key, bool end, std::list<trie_entry> & children) :
                 m_key(key), m_end(end), m_children(children) {}
 
-            trie_entry const & add(std::string & key) {
+            trie_entry const & add(std::string key) {
                 // Determine if this is the head trie_entry and this is the first key being added
                 if (m_key.empty() && m_children.empty()) {
                     m_key = key;
@@ -679,13 +679,13 @@ std::vector<std::string> attempt_one(std::unordered_set<std::string> const & wor
         std::list<trie_entry> m_children;
         trie_entry() = default;
 
-        trie_entry(std::string & key)
+        trie_entry(std::string key)
             : m_key(key) {}
 
-        trie_entry(std::string & key, std::list<trie_entry> & children)
+        trie_entry(std::string key, std::list<trie_entry> & children)
             : m_key(key), m_children(children) {}
 
-        trie_entry const & add(std::string & key) {
+        trie_entry const & add(std::string key) {
             if (m_key.empty() && m_children.empty()) {
                 m_key = key;
                 return *this;
