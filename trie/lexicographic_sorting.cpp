@@ -2,7 +2,7 @@
  * @file lexicographic_sorting.cpp
  * @author Claudio Corsi (clcorsi@yahoo.com)
  * @brief This is a solution to the problem https://www.techiedelight.com/?problem=LexicographicSorting
- * @version 0.1
+ * @version 0.2
  * @date 2025-02-23
  *
  * @copyright Copyright (c) 2025 Claudio Corsi
@@ -40,7 +40,9 @@ std::vector<std::string> attempt_five(std::unordered_set<std::string> const & wo
             std::list<trie_entry> m_children;
 
             trie_entry() = default;
-            trie_entry(std::string & key, bool end = false, std::list<trie_entry> & children = std::list<trie_entry>()) :
+            trie_entry(std::string & key, bool end = false) :
+                m_key(key), m_end(end) {}
+            trie_entry(std::string & key, bool end, std::list<trie_entry> & children) :
                 m_key(key), m_end(end), m_children(children) {}
 
             trie_entry const & add(std::string & key) {
