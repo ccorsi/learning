@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(bit_manipulation VERSION 0.0.4)
+project(bit_manipulation VERSION 0.0.5)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -17,7 +17,8 @@ enable_testing()
 set(NAMES turn_off_kth_bit turn_on_kth_bit is_kth_bit_set toggle_kth_bit unset_rightmost_set_bit
     position_of_rightmost_set_bit count_set_bits count_flipped_bits next_power_of_two
     previous_power_of_two parity_of_number swap_bits swap_bits_two power_of_four power_of_eight
-    reverse_bits swap_adjacent_bits adjacent_set_bits decimal_to_binary)
+    reverse_bits swap_adjacent_bits adjacent_set_bits decimal_to_binary add_binary circular_shift
+    xor_without_xoring)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)
