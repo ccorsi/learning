@@ -214,7 +214,7 @@ public:
 };
 
 template<typename Container,
-    typename Type = Container::value_type,
+    typename Type = typename Container::value_type,
     typename Allocator = ElementAllocator<Type>
 >
 class ContainerGenerator {
