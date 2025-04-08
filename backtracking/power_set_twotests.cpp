@@ -181,7 +181,9 @@ TEST_P(PowerSetTwoFixture, PowerSetTwoTests) {
 
     Solution solution;
 
-    auto actual = solution.findPowerSet(data.get_S());
+    auto S = data.get_S();
+
+    auto actual = solution.findPowerSet(S);
     auto expected = data.get_expected();
 
     for (auto & vec : actual) {
