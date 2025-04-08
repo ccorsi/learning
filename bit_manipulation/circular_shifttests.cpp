@@ -227,14 +227,14 @@ public:
 
         while (count-- > 0) {
 
-            if constexpr (std::is_same_v<Container, std::vector<Container::value_type>> ||
-                std::is_same_v<Container, std::deque<Container::value_type>> ||
-                std::is_same_v<Container, std::list<Container::value_type>>) {
+            if constexpr (std::is_same_v<Container, std::vector<typename Container::value_type>> ||
+                std::is_same_v<Container, std::deque<typename Container::value_type>> ||
+                std::is_same_v<Container, std::list<typename Container::value_type>>) {
                 container.push_back(allocator());
-            } else if constexpr (std::is_same_v<Container, std::forward_list<Container::value_type>>) {
+            } else if constexpr (std::is_same_v<Container, std::forward_list<typename Container::value_type>>) {
                 container.push_front(allocator());
-            } else if constexpr (std::is_same_v<Container, std::set<Container::value_type>> ||
-                std::is_same_v<Container, std::unordered_set<Container::value_type>>) {
+            } else if constexpr (std::is_same_v<Container, std::set<typename Container::value_type>> ||
+                std::is_same_v<Container, std::unordered_set<typename Container::value_type>>) {
                 container.insert(allocator());
             }
         } // while (count-- > 0)
@@ -255,11 +255,11 @@ public:
 };
 
 template<typename Container,
-    typename Allocator = ElementAllocator<Container::value_type>
+    typename Allocator = ElementAllocator<typename Container::value_type>
 >
 Container populate_container(int count) {
     // Log log("populate_container");
-    ContainerGenerator<Container, Container::value_type, Allocator> generator;
+    ContainerGenerator<Container, typename Container::value_type, Allocator> generator;
 
     return generator(count);
 }
