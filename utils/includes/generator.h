@@ -105,7 +105,7 @@ public:
         Map dictionary;
 
         while (count-- > 0) {
-            dictionary.insert(m_allocator());
+            dictionary.insert(this->m_allocator());
         } // while (count-- > 0)
 
         return dictionary;
@@ -145,18 +145,18 @@ public:
             if constexpr (std::is_same_v<Container, std::vector<typename Container::value_type>> ||
                 std::is_same_v<Container, std::deque<typename Container::value_type>> ||
                 std::is_same_v<Container, std::list<typename Container::value_type>>) {
-                container.push_back(m_allocator());
+                container.push_back(this->m_allocator());
             } else if constexpr (std::is_same_v<Container, std::forward_list<typename Container::value_type>>) {
-                container.push_front(m_allocator());
+                container.push_front(this->m_allocator());
             } else if constexpr (std::is_same_v<Container, std::set<typename Container::value_type>> ||
                 std::is_same_v<Container, std::multiset<typename Container::value_type>> ||
                 std::is_same_v<Container, std::unordered_multiset<typename Container::value_type>> ||
                 std::is_same_v<Container, std::unordered_set<typename Container::value_type>>) {
-                container.insert(m_allocator());
+                container.insert(this->m_allocator());
             } else if constexpr (std::is_same_v<Container, std::queue<typename Container::value_type>> ||
                 std::is_same_v<Container, std::stack<typename Container::value_type>> ||
                 std::is_same_v<Container, std::priority_queue<typename Container::value_type>>) {
-                container.push(m_allocator());
+                container.push(this->m_allocator());
             }
         } // while (count-- > 0)
 
