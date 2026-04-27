@@ -323,7 +323,7 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [303: Check Min Heap](https://www.techiedelight.com/?problem=CheckMinHeap) |  done | [check_min_heap.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/heap/check_min_heap.cpp) |
 | [304: Max Heap To Min Heap](https://www.techiedelight.com/?problem=MaxHeapToMinHeap) |  incorrect implementation | [max_heap_to_min_heap.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/heap/max_heap_to_min_heap.cpp)  |
 | [305: Kth Smallest Element](https://www.techiedelight.com/?problem=KthSmallestElement) |  done | [kth_smallest_element.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/kth_smallest_element.cpp) |
-| [306: Kth Largest Element](https://www.techiedelight.com/?problem=KthLargestElement) |  done | [kth_largest_element.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/arrays/kth_largest_element.cpp) |
+| [306: Kth Largest Element](https://www.techiedelight.com/?problem=KthLargestElement) |  done | [kth_largest_element.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/heap/kth_largest_element.cpp) |
 | [307: Kth Largest Element II](https://www.techiedelight.com/?problem=KthLargestElementII) |  done | [kth_largest_element_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/heap/kth_largest_element_two.cpp) |
 | [308: Merge Sorted Lists](https://www.techiedelight.com/?problem=MergeSortedLists) |  done | [merge_sorted_lists.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/heap/merge_sorted_lists.cpp) |
 <!-- | [309: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
