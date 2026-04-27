@@ -1,6 +1,6 @@
 # We need at least version 3.10.0 to be able to use the GoogleTest package
 cmake_minimum_required(VERSION 3.10.0)
-project(utils VERSION 0.2.2)
+project(utils VERSION 0.2.3)
 
 set(CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED true)
@@ -26,7 +26,7 @@ set(SRCS debug.cpp paths.cpp checkers.cpp)
 add_library(utils STATIC ${SRCS})
 
 set(TESTS debugtests loadertests vectorloadertests matrixloadertests setloadertests checkerstests primitiveLoadertests
-          maploadertests tupleloadertests dataloadertests readerstests)
+          maploadertests tupleloadertests dataloadertests readerstests generatortests)
 
 foreach(name ${TESTS})
     message(STATUS "Setting up test: ${name}")

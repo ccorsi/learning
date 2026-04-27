@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(arrays VERSION 0.4.5)
+project(arrays VERSION 0.4.6)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -33,7 +33,7 @@ set(NAMES two_sum zero_sum zero_sum_arrays sort_binary_array_inline maximum_leng
     sort_with_duplicates largest_number surpasser_count three_partition_problem three_partition_problem_two k_partition_problem minimum_merge_operations
     coin_change_problem coin_change_problem_two next_greater_element next_greater_element_two previous_smaller_element longest_increasing_subsequence
     longest_increasing_subsequence_two merging_overlapping_intervals maximum_overlapping_intervals rod_cutting shrink_array sort_k_sorted_array
-    job_sequencing_problem)
+    job_sequencing_problem kth_smallest_element)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)
