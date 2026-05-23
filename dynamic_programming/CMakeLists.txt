@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(dynamic_programming VERSION 0.0.8)
+project(dynamic_programming VERSION 0.0.9)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -16,7 +16,8 @@ enable_testing()
 
 set(NAMES combinations_ten ball_arrangements rod_cutting_two employees_manager_mapping pattern_match_four
     wildcard_pattern_matching_two n_digit_numbers_seven k_palindrome_string minimum_delete_operations
-    minimum_cut_palindromic_partition)
+    minimum_cut_palindromic_partition longest_common_subsequence longest_common_subsequence_two
+    longest_common_subsequence_three)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)

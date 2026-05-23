@@ -1,6 +1,6 @@
 # We are using the integrated version of GoogleTest with our builds and this is only supported in CMake 3.10.0 or greater
 cmake_minimum_required(VERSION 3.10.0)
-project(heap VERSION 0.0.1)
+project(heap VERSION 0.0.2)
 
 # setup the minimum C++ requirements
 set(CXX_STANDARD 17)
@@ -14,7 +14,8 @@ include(GoogleTest)
 
 enable_testing()
 
-set(NAMES check_min_heap max_heap_to_min_heap kth_largest_element kth_largest_element_two merge_sorted_lists)
+set(NAMES check_min_heap max_heap_to_min_heap kth_largest_element kth_largest_element_two merge_sorted_lists
+    connect_n_ropes replace_elements_with_rank)
 
 # build the different implementations and its tests
 foreach(name IN LISTS NAMES)
