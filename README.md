@@ -328,9 +328,9 @@ Here is a list of the problems from Techie Delight </> that I have attempted wit
 | [308: Merge Sorted Lists](https://www.techiedelight.com/?problem=MergeSortedLists) |  done | [merge_sorted_lists.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/heap/merge_sorted_lists.cpp) |
 | [309: Connect N Ropes](https://www.techiedelight.com/?problem=ConnectNRopes) |  done | [connect_n_ropes.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/heap/connect_n_ropes.cpp) |
 | [310: Replace Elements With Rank](https://www.techiedelight.com/?problem=ReplaceElementsWithRank) |  done | [replace_elements_with_rank.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/heap/replace_elements_with_rank.cpp) |
-| [311: ](https://www.techiedelight.com/?problem=LongestCommonSubsequence) |  done | [longest_common_subsequence.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/longest_common_subsequence.cpp) |
-| [312: ](https://www.techiedelight.com/?problem=LongestCommonSubsequenceII) |  done | [longest_common_subsequence_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/longest_common_subsequence_two.cpp) |
-| [313: ](https://www.techiedelight.com/?problem=LongestCommonSubsequenceIII) |  done | [longest_common_subsequence_three.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/longest_common_subsequence_three.cpp) |
+| [311: Longest Common Subsequence ](https://www.techiedelight.com/?problem=LongestCommonSubsequence) |  done | [longest_common_subsequence.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/longest_common_subsequence.cpp) |
+| [312: Longest Common Subsequence II ](https://www.techiedelight.com/?problem=LongestCommonSubsequenceII) |  done | [longest_common_subsequence_two.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/longest_common_subsequence_two.cpp) |
+| [313: Longest Common Subsequence III ](https://www.techiedelight.com/?problem=LongestCommonSubsequenceIII) |  done | [longest_common_subsequence_three.cpp](https://github.com/ccorsi/learning/blob/cpp_data_structs_and_algos/dynamic_programming/longest_common_subsequence_three.cpp) |
 <!-- | [314: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
 | [315: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
 | [316: ](https://www.techiedelight.com/?problem=) |  not implemented |  |
